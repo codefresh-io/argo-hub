@@ -20,4 +20,8 @@ spec:
             value: '{{inputs.parameters.CF_API_KEY}}'
           - name: PIPELINE_NAME
             value: '{{inputs.parameters.PIPELINE_NAME}}'
-  entrypoint: codefresh
+          - name: CF_BRANCH
+            value: '{{inputs.parameters.CF_BRANCH}}'
+          - name: TRIGGER_NAME
+            value: '{{inputs.parameters.TRIGGER_NAME}}'
+    entrypoint: codefresh
