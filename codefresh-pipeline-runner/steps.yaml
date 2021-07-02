@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: run-codefresh
+  namespace: argo
+  labels:
+    workflows.argoproj.io/creator: system-serviceaccount-argo-argo-server
+spec:
+  templates:
+    - name: codefresh
+      inputs:
+        parameters:
+          - name: CF_API_KEY
+          - name: PIPELINE_NAME
+      container:
+        name: main
+        image: codefresh/argo-codefresh-pipeline-runner
+        env:
+          - name: CF_API_KEY
+            value: '{{inputs.parameters.CF_API_KEY}}'
+          - name: PIPELINE_NAME
+            value: '{{inputs.parameters.PIPELINE_NAME}}'
+  entrypoint: codefresh
