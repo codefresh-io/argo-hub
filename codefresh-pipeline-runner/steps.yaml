@@ -6,12 +6,15 @@ metadata:
   labels:
     workflows.argoproj.io/creator: system-serviceaccount-argo-argo-server
 spec:
+  entrypoint: codefresh
   templates:
     - name: codefresh
       inputs:
         parameters:
           - name: CF_API_KEY
           - name: PIPELINE_NAME
+          - name: CF_BRANCH
+          - name: TRIGGER_NAME
       container:
         name: main
         image: codefresh/argo-codefresh-pipeline-runner
@@ -24,4 +27,3 @@ spec:
             value: '{{inputs.parameters.CF_BRANCH}}'
           - name: TRIGGER_NAME
             value: '{{inputs.parameters.TRIGGER_NAME}}'
-    entrypoint: codefresh
