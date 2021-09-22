@@ -17,3 +17,4 @@ COPY . .
 
 CMD [ "node", "index.js" ]
 
+
