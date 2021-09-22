@@ -17,7 +17,7 @@ spec:
           - name: GITHUB_TOKEN_SECRET
       container:
         name: main
-        image: codefresh/v2-github-commit-status
+        image: quay.io/codefreshplugins/v2-github-commit-status:main
         command:
           - node
           - index.js
