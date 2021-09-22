@@ -13,13 +13,13 @@ spec:
           - name: TRIGGER_NAME
       container:
         name: main
-        image: codefresh/argo-codefresh-pipeline-runner
+        image: codefresh/cli
+        command:
+          - codefresh
+          - run
+          - '{{inputs.parameters.PIPELINE_NAME}}'
+          - '-s {{inputs.parameters.CF_BRANCH}}'
+          - '-t {{inputs.parameters.TRIGGER_NAME}}'
         env:
           - name: CF_API_KEY
             value: '{{inputs.parameters.CF_API_KEY}}'
-          - name: PIPELINE_NAME
-            value: '{{inputs.parameters.PIPELINE_NAME}}'
-          - name: CF_BRANCH
-            value: '{{inputs.parameters.CF_BRANCH}}'
-          - name: TRIGGER_NAME
-            value: '{{inputs.parameters.TRIGGER_NAME}}'
