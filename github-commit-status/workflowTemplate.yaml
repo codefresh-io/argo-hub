@@ -1,14 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+kind: WorkflowTemplate
 metadata:
-  generateName: run-codefresh-
-  namespace: argo
-  labels:
-    workflows.argoproj.io/creator: system-serviceaccount-argo-argo-server
+  name: github-commit-status
 spec:
-  entrypoint: codefresh
   templates:
-    - name: codefresh
+    - name: main
       inputs:
         parameters:
           - name: CF_API_KEY
