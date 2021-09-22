@@ -7,7 +7,6 @@ spec:
     - name: main
       inputs:
         parameters:
-          - name: RUNTIME_VERSION
           - name: BUILD_BASE_URL
           - name: REPO_OWNER
           - name: REPO_NAME
@@ -23,8 +22,6 @@ spec:
           - node
           - index.js
         env:
-          - name: RUNTIME_VERSION
-            value: '{{ inputs.parameters.RUNTIME_VERSION }}'
           - name: CF_BUILD_ID
             value: '{{ workflow.name }}'
           - name: CF_BUILD_BASE_URL
