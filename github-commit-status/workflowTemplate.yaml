@@ -4,7 +4,7 @@ metadata:
   name: github-commit-status
 spec:
   templates:
-    - name: github-commit-status
+    - name: main
       inputs:
         parameters:
           - name: RUNTIME_VERSION
