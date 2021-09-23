@@ -23,4 +23,3 @@ spec:
         env:
           - name: CF_API_KEY
             value: '{{inputs.parameters.CF_API_KEY}}'
-
