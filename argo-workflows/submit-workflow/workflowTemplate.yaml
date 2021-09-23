@@ -5,18 +5,12 @@ metadata:
 spec:
   templates:
     - name: main
-      inputs:
-        parameters:
-          - name: ARGO_TOKEN_SECRET
+#      inputs:
+#        parameters:
+#          - name: ARGO_TOKEN_SECRET
       container:
         name: main
         image: argoproj/argocli
         command:
           - argo
           - list
-        env:
-          - name: ARGO_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.ARGO_TOKEN_SECRET }}'
-                key: token
