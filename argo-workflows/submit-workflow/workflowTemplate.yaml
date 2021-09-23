@@ -5,18 +5,19 @@ metadata:
 spec:
   templates:
     - name: main
-#      inputs:
-#        parameters:
-#          - name: CF_API_KEY
-#          - name: PIPELINE_NAME
-#          - name: CF_BRANCH
-#          - name: TRIGGER_NAME
+      inputs:
+        parameters:
+          - name: ARGO_TOKEN_SECRET
       container:
         name: main
         image: argoproj/argocli
         command:
           - argo
-          - --help
-#        env:
-#          - name: CF_API_KEY
-#            value: '{{inputs.parameters.CF_API_KEY}}'
+          - list
+          - -A
+        env:
+          - name: ARGO_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.ARGO_TOKEN_SECRET }}'
+                key: token
