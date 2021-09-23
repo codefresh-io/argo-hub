@@ -14,7 +14,6 @@ spec:
         command:
           - argo
           - list
-          - -A
         env:
           - name: ARGO_TOKEN
             valueFrom:
