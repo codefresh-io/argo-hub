@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh.submit-workflow
+spec:
+  templates:
+    - name: main
+#      inputs:
+#        parameters:
+#          - name: CF_API_KEY
+#          - name: PIPELINE_NAME
+#          - name: CF_BRANCH
+#          - name: TRIGGER_NAME
+      container:
+        name: main
+        image: argoproj/argocli
+        command:
+          - argo
+          - --help
+#        env:
+#          - name: CF_API_KEY
+#            value: '{{inputs.parameters.CF_API_KEY}}'
