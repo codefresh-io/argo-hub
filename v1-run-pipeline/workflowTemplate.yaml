@@ -9,8 +9,8 @@ spec:
         parameters:
           - name: CF_API_KEY_SECRET
           - name: PIPELINE_NAME
-          - name: CF_BRANCH
           - name: TRIGGER_NAME
+          - name: CF_BRANCH
       container:
         name: main
         image: codefresh/cli
