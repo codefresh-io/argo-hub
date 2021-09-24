@@ -9,7 +9,8 @@ spec:
         parameters:
           - name: TEMPLATE_NAME
           - name: ENTRYPOINT
-          - name: MESSAGE
+          - name: GIT_REPO
+          - name: GIT_REVISION
       container:
         name: main
         image: argoproj/argocli
@@ -18,5 +19,6 @@ spec:
           - submit
           - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
           - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
-          - -p=MESSAGE={{ inputs.parameters.MESSAGE }}
+          - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
+          - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
           - --watch
