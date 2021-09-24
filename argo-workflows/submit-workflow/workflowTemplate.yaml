@@ -19,4 +19,4 @@ spec:
           - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
           - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
           - -p=MESSAGE={{ inputs.parameters.MESSAGE }}
-          - --wait
+          - --watch
