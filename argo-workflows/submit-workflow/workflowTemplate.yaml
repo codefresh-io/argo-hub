@@ -5,12 +5,13 @@ metadata:
 spec:
   templates:
     - name: main
-#      inputs:
-#        parameters:
-#          - name: ARGO_TOKEN_SECRET
+      inputs:
+        parameters:
+          - name: TEMPLATE_NAME
       container:
         name: main
         image: argoproj/argocli
         command:
           - argo
-          - list
+          - submit
+          - --from '{{ inputs.parameters.TEMPLATE_NAME }}'
