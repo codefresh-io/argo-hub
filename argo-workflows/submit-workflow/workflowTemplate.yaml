@@ -8,10 +8,14 @@ spec:
       inputs:
         parameters:
           - name: TEMPLATE_NAME
+          - name: ENTRYPOINT
+          - name: MESSAGE
       container:
         name: main
         image: argoproj/argocli
         command:
           - argo
           - submit
-          - --from '{{ inputs.parameters.TEMPLATE_NAME }}'
+          - --from wftmpl/'{{ inputs.parameters.TEMPLATE_NAME }}'
+          - --entrypoint {{ inputs.parameters.ENTRYPOINT }}
+          - -p 'MESSAGE={{ inputs.parameters.MESSAGE }}'
