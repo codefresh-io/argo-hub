@@ -18,8 +18,8 @@ spec:
           - codefresh
           - run
           - '{{inputs.parameters.PIPELINE_NAME}}'
-          - '-s {{inputs.parameters.CF_BRANCH}}'
-          - '-t {{inputs.parameters.TRIGGER_NAME}}'
+          - '-s={{inputs.parameters.CF_BRANCH}}'
+          - '-t={{inputs.parameters.TRIGGER_NAME}}'
         env:
           - name: CF_API_KEY
             valueFrom:
