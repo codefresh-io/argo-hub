@@ -21,4 +21,3 @@ spec:
           - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
           - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
           - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
-          - --watch
