@@ -16,6 +16,6 @@ spec:
         command:
           - argo
           - submit
-          - --from 'wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}'
-          - --entrypoint '{{ inputs.parameters.ENTRYPOINT }}'
+          - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
+          - --entrypoint {{ inputs.parameters.ENTRYPOINT }}
           - -p 'MESSAGE={{ inputs.parameters.MESSAGE }}'
