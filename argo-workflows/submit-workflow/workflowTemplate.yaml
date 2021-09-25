@@ -7,8 +7,8 @@ spec:
     - name: main
       inputs:
         parameters:
-          #- name: TEMPLATE_NAME
-          - name: ENTRYPOINT
+          - name: TEMPLATE_NAME
+          #- name: ENTRYPOINT
           - name: GIT_REPO
           - name: GIT_REVISION
       container:
