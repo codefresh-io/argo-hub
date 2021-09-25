@@ -7,7 +7,7 @@ spec:
     - name: main
       inputs:
         parameters:
-          - name: TEMPLATE_NAME
+          #- name: TEMPLATE_NAME
           - name: ENTRYPOINT
           - name: GIT_REPO
           - name: GIT_REVISION
