@@ -19,9 +19,7 @@ spec:
         image: quay.io/codefreshplugins/v2-github-create-pr:main
         command: [sh]
         source: |
-          ls
-          git status
-          git branch
+          git checkout {{inputs.parameters.BRANCH}}
           hub pull-request --base main --head {{inputs.parameters.BRANCH}} -m {{inputs.parameters.MESSAGE}} --no-edit -m "$(curl {{inputs.parameters.PR_TEMPLATE}} )"
         env:
           - name: GITHUB_TOKEN
