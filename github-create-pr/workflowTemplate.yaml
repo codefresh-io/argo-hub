@@ -20,7 +20,7 @@ spec:
         command: [sh]
         source: |
           git checkout {{inputs.parameters.BRANCH}}
-          hub pull-request --base main --head {{inputs.parameters.BRANCH}} -m {{inputs.parameters.MESSAGE}} --no-edit -m "$(curl {{inputs.parameters.PR_TEMPLATE}} )"
+          hub pull-request --base main --head {{ inputs.parameters.BRANCH }} -m {{ inputs.parameters.MESSAGE }} --no-edit -m "$(curl {{ inputs.parameters.PR_TEMPLATE }} )"
         env:
           - name: GITHUB_TOKEN
             valueFrom:
