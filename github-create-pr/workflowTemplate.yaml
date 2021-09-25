@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh.github-create-pr
+spec:
+  templates:
+    - name: main
+      inputs:
+        parameters:
+          - name: HEAD
+          - name: MESSAGE
+          - name: PR_TEMPLATE
+          - name: GITHUB_TOKEN_SECRET
+      container:
+        name: main
+        image: quay.io/codefreshplugins/v2-github-commit-status:main
+        command:
+          - node
+          - index.js
+        env:
+          - name: CF_BUILD_ID
+            value: '{{ workflow.name }}'
+          - name: CF_BUILD_BASE_URL
+            value: '{{ inputs.parameters.BUILD_BASE_URL }}'
+          - name: CF_REPO_OWNER
+            value: '{{ inputs.parameters.REPO_OWNER }}'
+          - name: CF_REPO_NAME
+            value: '{{ inputs.parameters.REPO_NAME }}'
+          - name: CF_REVISION
+            value: '{{ inputs.parameters.REVISION }}'
+          - name: STATE
+            value: '{{ inputs.parameters.STATE }}'
+          - name: CONTEXT
+            value: '{{ inputs.parameters.CONTEXT }}'
+          - name: DESCRIPTION
+            value: '{{ inputs.parameters.DESCRIPTION }}'
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
+                key: token
