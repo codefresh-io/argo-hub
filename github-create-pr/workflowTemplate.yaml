@@ -28,3 +28,4 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
                 key: token
+
