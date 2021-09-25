@@ -14,7 +14,7 @@ spec:
       container:
         name: main
         image: quay.io/codefreshplugins/v2-github-create-pr:main
-        command:
+        args:
           - pull-request
           - --base=main
           - --head={{inputs.parameters.BRANCH}}
