@@ -18,6 +18,6 @@ spec:
           - argo
           - submit
           - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
-          - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
+          #- --entrypoint={{ inputs.parameters.ENTRYPOINT }}
           - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
           - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
