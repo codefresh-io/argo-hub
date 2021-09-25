@@ -6,10 +6,9 @@ spec:
   templates:
     - name: main
       inputs:
-        inputs:
-          artifacts:
-            - name: repo
-              path: /code
+        artifacts:
+          - name: repo
+            path: /code
         parameters:
           - name: BRANCH
           - name: MESSAGE
