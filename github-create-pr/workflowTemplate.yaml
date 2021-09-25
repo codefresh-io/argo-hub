@@ -14,21 +14,36 @@ spec:
           - name: MESSAGE
           - name: PR_TEMPLATE
           - name: GITHUB_TOKEN_SECRET
-      container:
+      script:
         workingDir: '{{ inputs.artifacts.repo.path }}'
-        name: main
         image: quay.io/codefreshplugins/v2-github-create-pr:main
-        command:
-          - hub
-          - pull-request
-          - --base=main
-          - --head={{inputs.parameters.BRANCH}}
-          - -m={{inputs.parameters.MESSAGE}}
-          - --no-edit
-          - -m="$(curl ${{PR_TEMPLATE}} )"
+        command: [sh]
+        source: |
+          ls
+          git status
+          git branch
+          hub pull-request --base main --head {{inputs.parameters.BRANCH}} -m {{inputs.parameters.MESSAGE}} --no-edit -m "$(curl {{inputs.parameters.PR_TEMPLATE}} )"
         env:
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
                 key: token
+#      container:
+#        workingDir: '{{ inputs.artifacts.repo.path }}'
+#        name: main
+#        image: quay.io/codefreshplugins/v2-github-create-pr:main
+#        command:
+#          - hub
+#          - pull-request
+#          - --base=main
+#          - --head={{inputs.parameters.BRANCH}}
+#          - -m={{inputs.parameters.MESSAGE}}
+#          - --no-edit
+#          - -m="$(curl ${{PR_TEMPLATE}} )"
+#        env:
+#          - name: GITHUB_TOKEN
+#            valueFrom:
+#              secretKeyRef:
+#                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
+#                key: token
