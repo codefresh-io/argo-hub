@@ -7,33 +7,21 @@ spec:
     - name: main
       inputs:
         parameters:
-          - name: HEAD
+          - name: BRANCH
           - name: MESSAGE
           - name: PR_TEMPLATE
           - name: GITHUB_TOKEN_SECRET
       container:
         name: main
-        image: quay.io/codefreshplugins/v2-github-commit-status:main
+        image: quay.io/codefreshplugins/v2-github-create-pr:main
         command:
-          - node
-          - index.js
+          - pull-request
+          - --base=main
+          - --head={{inputs.parameters.BRANCH}}
+          - -m={{inputs.parameters.MESSAGE}}
+          - --no-edit
+          - -m="$(curl ${{PR_TEMPLATE}} )"
         env:
-          - name: CF_BUILD_ID
-            value: '{{ workflow.name }}'
-          - name: CF_BUILD_BASE_URL
-            value: '{{ inputs.parameters.BUILD_BASE_URL }}'
-          - name: CF_REPO_OWNER
-            value: '{{ inputs.parameters.REPO_OWNER }}'
-          - name: CF_REPO_NAME
-            value: '{{ inputs.parameters.REPO_NAME }}'
-          - name: CF_REVISION
-            value: '{{ inputs.parameters.REVISION }}'
-          - name: STATE
-            value: '{{ inputs.parameters.STATE }}'
-          - name: CONTEXT
-            value: '{{ inputs.parameters.CONTEXT }}'
-          - name: DESCRIPTION
-            value: '{{ inputs.parameters.DESCRIPTION }}'
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
