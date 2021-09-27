@@ -8,8 +8,11 @@ spec:
       inputs:
         parameters:
           - name: NAME
+            default: ''
           - name: LABEL_SELECTOR
+            default: ''
           - name: FIELD_SELECTOR
+            default: ''
       container:
         name: main
         image: argoproj/argocli
