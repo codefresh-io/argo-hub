@@ -20,7 +20,6 @@ spec:
           - '{{inputs.parameters.PIPELINE_NAME}}'
           - '-b={{inputs.parameters.CF_BRANCH}}'
           - '-t={{inputs.parameters.TRIGGER_NAME}}'
-          - '-d'
         env:
           - name: CF_API_KEY
             valueFrom:
