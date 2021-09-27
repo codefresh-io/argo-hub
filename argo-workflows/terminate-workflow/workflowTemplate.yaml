@@ -21,6 +21,6 @@ spec:
           - terminate
           - '{{ inputs.parameters.NAME }}'
           - --selector
-          - '"{{ inputs.parameters.LABEL_SELECTOR }},workflows.argoproj.io/phase=Running"'
+          - "{{ inputs.parameters.LABEL_SELECTOR }},workflows.argoproj.io/phase=Running"
           - --field-selector
-          - '"{{ inputs.parameters.FIELD_SELECTOR }}"'
+          - "{{ inputs.parameters.FIELD_SELECTOR }}"
