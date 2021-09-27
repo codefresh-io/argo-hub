@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh.terminate-workflow
+spec:
+  templates:
+    - name: main
+      inputs:
+        parameters:
+          - name: NAME
+          - name: LABEL_SELECTOR
+          - name: FIELD_SELECTOR
+      container:
+        name: main
+        image: argoproj/argocli
+        command:
+          - argo
+          - terminate
+          - {{ inputs.parameters.NAME }}
+          - -l {{ inputs.parameters.LABEL_SELECTOR }}
+          - --field-selector {{ inputs.parameters.FIELD_SELECTOR }}
