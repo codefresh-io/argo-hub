@@ -16,6 +16,6 @@ spec:
         command:
           - argo
           - terminate
-          - {{ inputs.parameters.NAME }}
+          - '{{ inputs.parameters.NAME }}'
           - -l {{ inputs.parameters.LABEL_SELECTOR }}
           - --field-selector {{ inputs.parameters.FIELD_SELECTOR }}
