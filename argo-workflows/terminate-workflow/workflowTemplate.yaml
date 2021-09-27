@@ -20,5 +20,5 @@ spec:
           - argo
           - terminate
           - '{{ inputs.parameters.NAME }}'
-          - -l {{ inputs.parameters.LABEL_SELECTOR }}
-          - --field-selector {{ inputs.parameters.FIELD_SELECTOR }}
+          - -l "{{ inputs.parameters.LABEL_SELECTOR }},workflows.argoproj.io/phase=Running"
+          - --field-selector "{{ inputs.parameters.FIELD_SELECTOR }}"
