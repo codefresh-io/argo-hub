@@ -15,6 +15,7 @@ spec:
             default: ''
       container:
         name: main
+        imagePullPolicy: Always
         image: argoproj/argocli
         command:
           - argo
