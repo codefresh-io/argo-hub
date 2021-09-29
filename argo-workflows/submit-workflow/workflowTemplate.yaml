@@ -24,4 +24,4 @@ spec:
           - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
           - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
           - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
-          - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }}
+          - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }}
