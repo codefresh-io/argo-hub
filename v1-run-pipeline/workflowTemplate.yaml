@@ -27,3 +27,29 @@ spec:
               secretKeyRef:
                 name: '{{inputs.parameters.CF_API_KEY_SECRET}}'
                 key: token
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh.v1-run-pipeline-mock
+spec:
+  templates:
+
+    - name: build
+      inputs:
+        parameters:
+          - name: CF_API_KEY_SECRET
+          - name: PIPELINE_NAME
+          - name: TRIGGER_NAME
+          - name: CF_BRANCH
+      dag:
+        tasks:
+          - name: mock
+            templateRef:
+              name: util
+              template: print-message
+            arguments:
+              parameters:
+                - name: MESSAGE
+                  value: '{{ inputs.parameters }}'
