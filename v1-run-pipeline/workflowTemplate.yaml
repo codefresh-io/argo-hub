@@ -35,8 +35,7 @@ metadata:
   name: codefresh.v1-run-pipeline-mock
 spec:
   templates:
-
-    - name: build
+    - name: main
       inputs:
         parameters:
           - name: CF_API_KEY_SECRET
