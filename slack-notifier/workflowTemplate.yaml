@@ -14,7 +14,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/v2-slack-notifier:slack
+        image: quay.io/codefreshplugins/v2-slack-notifier:main
         env:
           - name: MODE
             value: '{{ inputs.parameters.MODE }}'
