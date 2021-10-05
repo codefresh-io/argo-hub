@@ -10,9 +10,7 @@ COPY package.json ./
 COPY yarn.lock ./
 
 # install cf-api required binaries
-RUN yarn install --frozen-lockfile --production && \
-    yarn cache clean && \
-    rm -rf /tmp/*
+RUN yarn install --frozen-lockfile --production
 
 # copy app files
 COPY . ./
