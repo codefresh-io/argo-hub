@@ -15,6 +15,9 @@ spec:
         name: main
         imagePullPolicy: Always
         image: quay.io/codefreshplugins/v2-slack-notifier:main
+        command:
+          - node
+          - /app/index.js
         env:
           - name: MODE
             value: '{{ inputs.parameters.MODE }}'
