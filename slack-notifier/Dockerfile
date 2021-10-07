@@ -1,19 +1,18 @@
 FROM node:14.17.0-stretch-slim
 
-RUN apk add --no-cache bash git openssh-client
-
 # Create app directory
-WORKDIR /app/
+WORKDIR /usr/src/app
 
-COPY package.json ./
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-COPY yarn.lock ./
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
-# install cf-api required binaries
-RUN yarn install --frozen-lockfile --production
+# Bundle app source
+COPY . .
 
-# copy app files
-COPY . ./
-
-# run application
 CMD ["node", "/app/index.js"]
