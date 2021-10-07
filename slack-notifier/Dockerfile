@@ -1,4 +1,4 @@
-FROM node:10.13.0-stretch-slim
+FROM node:14.17.0-stretch-slim
 
 RUN apk add --no-cache bash git openssh-client
 
