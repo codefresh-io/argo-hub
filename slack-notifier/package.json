@@ -7,8 +7,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "slack-webhook": "^1.0.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.21",
+    "slack-webhook": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^4.18.2",
