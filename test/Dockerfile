@@ -1,0 +1,3 @@
+FROM nginx:1.21.3
+
+EXPOSE 4200
