@@ -5,6 +5,11 @@ metadata:
 spec:
   templates:
     - name: main
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
       inputs:
         parameters:
           - name: BUILD_BASE_URL
