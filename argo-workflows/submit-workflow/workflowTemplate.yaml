@@ -11,6 +11,7 @@ spec:
           - name: ENTRYPOINT
           - name: GIT_REPO
           - name: GIT_REVISION
+          - name: GIT_REVISION_SHORT
           - name: GIT_BRANCH
       container:
         name: main
@@ -23,5 +24,6 @@ spec:
           - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
           - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
           - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
+          - -p=GIT_REVISION_SHORT={{ inputs.parameters.GIT_REVISION_SHORT }}
           - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
           - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }}
