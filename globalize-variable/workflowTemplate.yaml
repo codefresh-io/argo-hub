@@ -4,7 +4,7 @@ metadata:
   name: codefresh.globalize-variable
 spec:
   templates:
-  - name: globalize-variable
+  - name: main
     inputs:
       parameters:
       - name: NAME
