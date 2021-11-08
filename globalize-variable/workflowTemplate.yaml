@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh.globalize-variable
+spec:
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: NAME
+      - name: VALUE
+    outputs:
+      parameters:
+      - name: VARIABLE
+        value: '{{ inputs.parameters.VALUE }}'
+        globalName: '{{ inputs.parameters.NAME }}'
+    script:
+      image: alpine
+      command: [sh]
+      source: |
+        echo {{ inputs.parameters.VARIABLE }}
