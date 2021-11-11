@@ -11,6 +11,8 @@ spec:
           - name: PIPELINE_NAME
           - name: TRIGGER_NAME
           - name: CF_BRANCH
+          - name: EXTRA_OPTIONS
+            default: ''
       container:
         name: main
         imagePullPolicy: Always
@@ -21,6 +23,7 @@ spec:
           - '{{inputs.parameters.PIPELINE_NAME}}'
           - '-b={{inputs.parameters.CF_BRANCH}}'
           - '-t={{inputs.parameters.TRIGGER_NAME}}'
+          - '{{inputs.parameters.EXTRA_OPTIONS}}'
         env:
           - name: CF_API_KEY
             valueFrom:
