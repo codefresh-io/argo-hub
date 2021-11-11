@@ -11,9 +11,8 @@ spec:
       - name: VALUE
     outputs:
       parameters:
-      - name: VARIABLE
+      - globalName: '{{ inputs.parameters.NAME }}'
         value: '{{ inputs.parameters.VALUE }}'
-        globalName: '{{ inputs.parameters.NAME }}'
     script:
       image: alpine
       command: [sh]
