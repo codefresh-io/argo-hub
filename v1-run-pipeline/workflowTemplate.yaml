@@ -13,23 +13,29 @@ spec:
           - name: CF_BRANCH
           - name: EXTRA_OPTIONS
             default: ''
-      container:
+          - name: VARIABLES
+            default: ''
+      script:
         name: main
         imagePullPolicy: Always
         image: codefresh/cli
-        command:
-          - codefresh
-          - run
-          - '{{inputs.parameters.PIPELINE_NAME}}'
-          - '-b={{inputs.parameters.CF_BRANCH}}'
-          - '-t={{inputs.parameters.TRIGGER_NAME}}'
-          - '{{inputs.parameters.EXTRA_OPTIONS}}'
         env:
+          - name: VARIABLES
+            value: '{{ inputs.parameters.VARIABLES }}'
           - name: CF_API_KEY
             valueFrom:
               secretKeyRef:
-                name: '{{inputs.parameters.CF_API_KEY_SECRET}}'
+                name: '{{ inputs.parameters.CF_API_KEY_SECRET }}'
                 key: token
+        command: [sh]
+        source: |
+          codefresh \
+          run \
+          '{{ inputs.parameters.PIPELINE_NAME }}' \
+          '-b={{ inputs.parameters.CF_BRANCH }}' \
+          '-t={{ inputs.parameters.TRIGGER_NAME }}' \
+          $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
+          '{{ inputs.parameters.EXTRA_OPTIONS }}'
 
 ---
 apiVersion: argoproj.io/v1alpha1
