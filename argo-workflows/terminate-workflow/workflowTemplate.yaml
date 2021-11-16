@@ -4,7 +4,7 @@ metadata:
   name: codefresh.terminate-workflow
   labels:
     icon-type: svg
-    icon-url: https://cdn.jsdelivr.net/gh/codefresh-io/steps/graduated/build/icon-2.svg
+    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/steps/graduated/build/icon-2.svg"
     icon-background: "#81D4FA"
 spec:
   templates:
