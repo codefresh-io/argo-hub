@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.argo-workflows-utils.0.0.1
+  annotations:
+    codefresh-marketplace/version: '0.0.1'
+    codefresh-marketplace/categories: 'argo'
+    icon-type: svg
+    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/2.0-marketplace/workflows/argo-workflows-utils/assets/argo.svg"
+    icon-background: "#81D4FA"
+
+spec:
+  serviceAccount: codefresh-marketplace.argo-workflows-utils.0.0.1
+  templates:
+
+    - name: echo
+      metadata:
+        annotations:
+          icon-type: svg
+          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/2.0-marketplace/workflows/argo-workflows-utils/assets/argo.svg"
+          icon-background: "#81D4FA"
+      inputs:
+        parameters:
+          - name: TEXT
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine
+        command: [echo]
+        args: ["{{ inputs.parameters.TEXT }}"]
+
+    - name: globalize-variable
+      metadata:
+        annotations:
+          icon-type: svg
+          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/2.0-marketplace/workflows/argo-workflows-utils/assets/argo.svg"
+          icon-background: "#81D4FA"
+      inputs:
+        parameters:
+          - name: NAME
+          - name: VALUE
+      outputs:
+        parameters:
+          - name: VARIABLE
+            value: '{{ inputs.parameters.VALUE }}'
+            globalName: '{{ inputs.parameters.NAME }}'
+      script:
+        image: alpine
+        command: [sh]
+        source: |
+          echo {{ inputs.parameters.VARIABLE }}

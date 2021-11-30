@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.starting-template.0.0.1
+  annotations:
+    codefresh-marketplace/version: '0.0.1'
+    codefresh-marketplace/categories: 'argo'
+    icon-type: svg
+    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/2.0-marketplace/utils/starting-template/assets/icon.svg"
+    icon-background: "#81D4FA"
+
+spec:
+  serviceAccount: codefresh-marketplace.starting-template.0.0.1
+  templates:
+
+    - name: task
+      metadata:
+        annotations:
+          icon-type: svg
+          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/2.0-marketplace/utils/starting-template/assets/icon.svg"
+          icon-background: "#81D4FA"
+      inputs:
+        parameters:
+          - name: TEXT
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine
+        command:
+          - echo {{ inputs.parameters.TEXT }}
