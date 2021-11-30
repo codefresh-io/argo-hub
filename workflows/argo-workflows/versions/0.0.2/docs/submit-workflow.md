@@ -3,7 +3,9 @@
 ## Summary
 A wrapper on top of argo cli submit operation.
 
-The template provides the easy ability to submit new workflows
+The template provides the easy ability to submit new workflows without waiting for their result.
+
+This is useful in case you want to trigger a new workflowTemplate without having to wait for its execution or have it affect on your own final satus
 
 ## Inputs/Outputs
 
@@ -18,14 +20,24 @@ no outputs
 
 ### Submit a workflow 
 ```
-      - name: submit
-        templateRef:
-          name: codefresh-marketplace.argo-workflows.0.0.2
-          template: submit-workflow
-        arguments:
-          parameters:
-            - name: TEMPLATE_NAME
-              value: my-template
-            - name: ENTRYPOINT
-              value: main
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: argo-workflows-submit-workflow-
+spec:
+  entrypoint: main
+  templates:
+    - name: main
+      dag:
+        tasks:
+          - name: submit
+            templateRef:
+              name: codefresh-marketplace.argo-workflows.0.0.2
+              template: submit-workflow
+            arguments:
+              parameters:
+                - name: TEMPLATE_NAME
+                  value: 'codefresh-marketplace.argo-workflows-utils.0.0.1'
+                - name: ENTRYPOINT
+                  value: 'echo'
 ```

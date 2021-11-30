@@ -10,10 +10,9 @@ metadata:
     icon-background: "#81D4FA"
 
 spec:
-  serviceAccount: codefresh-marketplace.argo-workflows-utils.0.0.1
   templates:
-
     - name: echo
+      serviceAccountName: codefresh-marketplace.argo-workflows-utils.0.0.1
       metadata:
         annotations:
           icon-type: svg
@@ -22,6 +21,7 @@ spec:
       inputs:
         parameters:
           - name: TEXT
+            default: 'default'
       container:
         name: main
         imagePullPolicy: Always
@@ -30,6 +30,7 @@ spec:
         args: ["{{ inputs.parameters.TEXT }}"]
 
     - name: globalize-variable
+      serviceAccountName: codefresh-marketplace.argo-workflows-utils.0.0.1
       metadata:
         annotations:
           icon-type: svg
@@ -48,4 +49,4 @@ spec:
         image: alpine
         command: [sh]
         source: |
-          echo {{ inputs.parameters.VARIABLE }}
+          echo exposing new variable {{ inputs.parameters.NAME }}:{{ inputs.parameters.VALUE }}

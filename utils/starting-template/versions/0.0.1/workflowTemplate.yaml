@@ -10,10 +10,9 @@ metadata:
     icon-background: "#81D4FA"
 
 spec:
-  serviceAccount: codefresh-marketplace.starting-template.0.0.1
   templates:
-
     - name: task
+      serviceAccountName: codefresh-marketplace.starting-template.0.0.1
       metadata:
         annotations:
           icon-type: svg

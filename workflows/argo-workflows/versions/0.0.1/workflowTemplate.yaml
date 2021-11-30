@@ -10,10 +10,9 @@ metadata:
     icon-background: "#81D4FA"
 
 spec:
-  serviceAccount: codefresh-marketplace.argo-workflows.0.0.1
   templates:
-
     - name: submit-workflow
+      serviceAccountName: codefresh-marketplace.argo-workflows.0.0.1
       metadata:
         annotations:
           icon-type: svg

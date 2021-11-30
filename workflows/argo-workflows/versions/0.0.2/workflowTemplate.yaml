@@ -10,10 +10,9 @@ metadata:
     icon-background: "#81D4FA"
 
 spec:
-  serviceAccount: codefresh-marketplace.argo-workflows.0.0.2
   templates:
-
     - name: submit-workflow
+      serviceAccountName: codefresh-marketplace.argo-workflows.0.0.2
       metadata:
         annotations:
           icon-type: svg
@@ -24,9 +23,13 @@ spec:
           - name: TEMPLATE_NAME
           - name: ENTRYPOINT
           - name: GIT_REPO
+            value: ''
           - name: GIT_REVISION
+            value: ''
           - name: GIT_REVISION_SHORT
+            value: ''
           - name: GIT_BRANCH
+            value: ''
       container:
         name: main
         imagePullPolicy: Always
@@ -44,6 +47,7 @@ spec:
 
 
     - name: terminate-workflow
+      serviceAccountName: codefresh-marketplace.argo-workflows.0.0.2
       metadata:
         annotations:
           icon-type: svg
