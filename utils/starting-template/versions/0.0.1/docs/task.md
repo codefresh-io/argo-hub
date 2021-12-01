@@ -1,31 +1,20 @@
-# submit-workflow
+# task
 
 ## Summary
-A wrapper on top of argo cli submit operation.
-
-The template provides the easy ability to submit new workflows
+Summary
 
 ## Inputs/Outputs
 
 ### Inputs
-TEMPLATE_NAME (required) - The template name
-ENTRYPOINT (required) - The specific template to use as an entrypoint
+VAR_1 (required) - explanation
+VAR_2 (optional) - explanation
 
 ### Outputs
 no outputs
 
 ## Examples
 
-### Submit a workflow 
+### task Example
 ```
-      - name: submit
-        templateRef:
-          name: codefresh-marketplace.starting-template.0.0.1
-          template: submit-workflow
-        arguments:
-          parameters:
-            - name: TEMPLATE_NAME
-              value: my-template
-            - name: ENTRYPOINT
-              value: main
+
 ```

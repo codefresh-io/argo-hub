@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "diff.js",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "@octokit/rest": "^18.10.0"
   }
 }
