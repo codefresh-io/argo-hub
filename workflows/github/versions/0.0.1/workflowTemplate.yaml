@@ -48,7 +48,7 @@ spec:
           - name: CF_BUILD_ID
             value: '{{ workflow.name }}'
           - name: CF_BUILD_BASE_URL
-            value: '{{ inputs.parameters.BUILD_ BASE_URL }}'
+            value: '{{ inputs.parameters.BUILD_BASE_URL }}'
           - name: CF_REPO_OWNER
             value: '{{ inputs.parameters.REPO_OWNER }}'
           - name: CF_REPO_NAME
