@@ -5,7 +5,7 @@ metadata:
   annotations:
     codefresh-marketplace/description: 'Execute operations against Monday'
     codefresh-marketplace/categories: 'task management'
-    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/monday/icon.svg"
-    codefresh-marketplace/icon/background: "#f4f4f4"
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/monday/icon.svg"
+    codefresh-marketplace/icon_background: "#f4f4f4"
 spec:
   templates: []

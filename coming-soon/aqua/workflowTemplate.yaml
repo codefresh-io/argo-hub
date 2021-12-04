@@ -5,7 +5,7 @@ metadata:
   annotations:
     codefresh-marketplace/description: 'Execute operations against Aqua'
     codefresh-marketplace/categories: 'security'
-    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/aqua/icon.svg"
-    codefresh-marketplace/icon/background: "#f4f4f4"
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/aqua/icon.svg"
+    codefresh-marketplace/icon_background: "#f4f4f4"
 spec:
   templates: []

@@ -6,22 +6,22 @@ metadata:
     codefresh-marketplace/version: '0.0.1'
     codefresh-marketplace/description: 'Operate against Codefresh classic platform'
     codefresh-marketplace/license: 'MIT'
-    codefresh-marketplace/owner/name: 'Itai Gendler'
-    codefresh-marketplace/owner/email: 'itai@codefresh.io'
-    codefresh-marketplace/owner/avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
-    codefresh-marketplace/owner/url: 'https://github.com/itai-codefresh'
+    codefresh-marketplace/owner_name: 'Itai Gendler'
+    codefresh-marketplace/owner_email: 'itai@codefresh.io'
+    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
     codefresh-marketplace/categories: 'codefresh'
-    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
-    codefresh-marketplace/icon/background: "#ffffff"
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
+    codefresh-marketplace/icon_background: "#ffffff"
 spec:
   templates:
     - name: run-pipeline
       serviceAccountName: codefresh-marketplace.codefresh-classic.0.0.1
       metadata:
         annotations:
-          codefresh-marketplace/template/description: 'A wrapper on top of Codefresh cli run operation'
-          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
-          codefresh-marketplace/template/icon/background: "#ffffff"
+          codefresh-marketplace-template/description: 'A wrapper on top of Codefresh cli run operation'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#ffffff"
       inputs:
         parameters:
           - name: CF_API_KEY_SECRET
