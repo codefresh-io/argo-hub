@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.codefresh-classic-mock.0.0.1
+  annotations:
+    codefresh-marketplace/version: '0.0.1'
+    codefresh-marketplace/categories: 'argo'
+    icon-type: svg
+    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
+    icon-background: "#81D4FA"
+spec:
+  entrypoint: main
+  templates:
+    - name: run-pipeline
+      inputs:
+        parameters:
+          - name: CF_API_KEY_SECRET
+          - name: PIPELINE_NAME
+          - name: TRIGGER_NAME
+          - name: CF_BRANCH
+          - name: EXTRA_OPTIONS
+            default: ''
+          - name: VARIABLES
+            default: ''
+      dag:
+        tasks:
+          - name: mock
+            templateRef:
+              name: codefresh-marketplace.argo-workflows-utils.0.0.1
+              template: echo
+            arguments:
+              parameters:
+                - name: TEXT
+                  value: '{{ inputs.parameters }}'
