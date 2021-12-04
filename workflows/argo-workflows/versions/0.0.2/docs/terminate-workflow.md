@@ -22,7 +22,7 @@ no outputs
       - name: terminate
         templateRef:
           name: codefresh-marketplace.argo-workflows.0.0.2
-          template: main
+          template: terminate-workflow
         arguments:
           parameters:
             - name: NAME
@@ -34,7 +34,7 @@ no outputs
       - name: terminate
         templateRef:
           name: codefresh-marketplace.argo-workflows.0.0.2
-          template: main
+          template: terminate-workflow
         arguments:
           parameters:
             - name: LABEL_SELECTOR
@@ -46,7 +46,7 @@ no outputs
       - name: terminate
         templateRef:
           name: codefresh-marketplace.argo-workflows.0.0.2
-          template: main
+          template: terminate-workflow
         arguments:
           parameters:
             - name: FIELD_SELECTOR
@@ -58,7 +58,7 @@ no outputs
       - name: terminate
         templateRef:
           name: codefresh-marketplace.argo-workflows.0.0.2
-          template: main
+          template: terminate-workflow
         arguments:
           parameters:
             - name: LABEL_SELECTOR
