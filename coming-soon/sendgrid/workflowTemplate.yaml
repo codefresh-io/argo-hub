@@ -5,7 +5,7 @@ metadata:
   annotations:
     codefresh-marketplace/description: 'Execute operations against Sendgrid'
     codefresh-marketplace/categories: 'messaging'
-    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/sendgrid/icn.svg"
+    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/sendgrid/icon.svg"
     codefresh-marketplace/icon/background: "#f4f4f4"
 spec:
   templates: []
