@@ -2,12 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: codefresh-marketplace.codefresh-classic-mock.0.0.1
-  annotations:
-    codefresh-marketplace/version: '0.0.1'
-    codefresh-marketplace/categories: 'argo'
-    icon-type: svg
-    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
-    icon-background: "#81D4FA"
 spec:
   entrypoint: main
   templates:

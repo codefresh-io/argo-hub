@@ -11,8 +11,7 @@ metadata:
     codefresh-marketplace/owner/avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
     codefresh-marketplace/categories: 'codefresh'
     codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
-    codefresh-marketplace/icon/background: "#81D4FA"
-
+    codefresh-marketplace/icon/background: "#ffffff"
 spec:
   templates:
     - name: run-pipeline
