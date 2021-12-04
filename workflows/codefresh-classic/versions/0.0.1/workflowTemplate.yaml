@@ -19,9 +19,9 @@ spec:
       serviceAccountName: codefresh-marketplace.codefresh-classic.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/utils/codefresh-classic/assets/icon.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'A wrapper on top of Codefresh cli run operation'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#ffffff"
       inputs:
         parameters:
           - name: CF_API_KEY_SECRET

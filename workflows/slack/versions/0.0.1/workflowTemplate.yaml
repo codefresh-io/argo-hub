@@ -19,9 +19,9 @@ spec:
       serviceAccountName: codefresh-marketplace.slack.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/slack/assets/icon.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'Send a message to a Slack channel using a hook url'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/slack/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#49154B"
       retryStrategy:
         limit: "10"
         retryPolicy: "Always"

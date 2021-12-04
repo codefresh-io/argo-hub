@@ -19,9 +19,9 @@ spec:
       serviceAccountName: codefresh-marketplace.github.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'Report a commit status check'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#f4f4f4"
       retryStrategy:
         limit: "10"
         retryPolicy: "Always"
@@ -71,9 +71,9 @@ spec:
       serviceAccountName: codefresh-marketplace.github.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'Create a pull request'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#f4f4f4"
       inputs:
         artifacts:
           - name: repo

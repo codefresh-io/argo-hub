@@ -19,9 +19,9 @@ spec:
       serviceAccountName: codefresh-marketplace.argo-workflows-utils.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/argo.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'Print some text'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#f4f4f4"
       inputs:
         parameters:
           - name: TEXT
@@ -37,9 +37,9 @@ spec:
       serviceAccountName: codefresh-marketplace.argo-workflows-utils.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/argo.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'Easily expose a new variable globally'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#f4f4f4"
       inputs:
         parameters:
           - name: NAME

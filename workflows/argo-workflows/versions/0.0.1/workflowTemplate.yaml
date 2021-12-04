@@ -19,9 +19,9 @@ spec:
       serviceAccountName: codefresh-marketplace.argo-workflows.0.0.1
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/argo-workflows/assets/argo.svg"
-          icon-background: "#81D4FA"
+          codefresh-marketplace/template/description: 'A wrapper on top of argo cli submit operation'
+          codefresh-marketplace/template/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows/assets/icon.svg"
+          codefresh-marketplace/template/icon/background: "#f4f4f4"
       inputs:
         parameters:
           - name: TEMPLATE_NAME
