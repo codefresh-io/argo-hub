@@ -4,7 +4,6 @@ metadata:
   name: codefresh-marketplace.github.0.0.1
   annotations:
     codefresh-marketplace/version: '0.0.1'
-    eks.amazonaws.com/role-arn: arn:aws:iam::559963890471:role/argo-worklfows-s3-artifact-repo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
