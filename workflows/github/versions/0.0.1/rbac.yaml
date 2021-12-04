@@ -4,6 +4,7 @@ metadata:
   name: codefresh-marketplace.github.0.0.1
   annotations:
     codefresh-marketplace/version: '0.0.1'
+    eks.amazonaws.com/role-arn: arn:aws:iam::559963890471:role/argo-worklfows-s3-artifact-repo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -27,44 +28,6 @@ rules:
     verbs:
       - get
       - watch
-  - apiGroups:
-      - ""
-    resources:
-      - pods/exec
-    verbs:
-      - create
-  - apiGroups:
-      - ""
-    resources:
-      - configmaps
-    verbs:
-      - create
-      - get
-      - update
-  - apiGroups:
-      - argoproj.io
-    resources:
-      - workflows
-      - workflowtemplates
-    verbs:
-      - create
-      - delete
-      - list
-      - get
-      - watch
-      - update
-      - patch
-  - apiGroups:
-      - argoproj.io
-    resources:
-      - workflowtasksets
-      - workflowtasksets/finalizers
-    verbs:
-      - list
-      - watch
-      - get
-      - update
-      - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
