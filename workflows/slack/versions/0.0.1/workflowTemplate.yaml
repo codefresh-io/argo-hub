@@ -4,11 +4,14 @@ metadata:
   name: codefresh-marketplace.slack.0.0.1
   annotations:
     codefresh-marketplace/version: '0.0.1'
-    codefresh-marketplace/categories: 'argo'
-    icon-type: svg
-    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/slack/assets/icon.svg"
-    icon-background: "#81D4FA"
-
+    codefresh-marketplace/description: 'Execute operations against Slack'
+    codefresh-marketplace/license: 'MIT'
+    codefresh-marketplace/owner/name: 'Itai Gendler'
+    codefresh-marketplace/owner/email: 'itai@codefresh.io'
+    codefresh-marketplace/owner/avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/categories: 'messaging'
+    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/slack/assets/icon.svg"
+    codefresh-marketplace/icon/background: "#81D4FA"
 spec:
   templates:
     - name: send-message
