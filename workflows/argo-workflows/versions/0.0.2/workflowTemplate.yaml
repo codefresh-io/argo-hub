@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: submit-workflow
-      serviceAccountName: codefresh-marketplace.argo-workflows.0.0.2
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'A wrapper on top of argo cli submit operation'
@@ -51,7 +50,6 @@ spec:
 
 
     - name: terminate-workflow
-      serviceAccountName: codefresh-marketplace.argo-workflows.0.0.2
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'A wrapper on top of argo cli terminate operation'

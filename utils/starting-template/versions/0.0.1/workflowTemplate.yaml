@@ -12,7 +12,6 @@ metadata:
 spec:
   templates:
     - name: task
-      serviceAccountName: codefresh-marketplace.starting-template.0.0.1
       metadata:
         annotations:
           icon-type: svg

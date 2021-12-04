@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: send-message
-      serviceAccountName: codefresh-marketplace.slack.0.0.1
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Send a message to a Slack channel using a hook url'

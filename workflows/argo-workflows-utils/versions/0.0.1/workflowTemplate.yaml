@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: echo
-      serviceAccountName: codefresh-marketplace.argo-workflows-utils.0.0.1
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Print some text'
@@ -34,7 +33,6 @@ spec:
         args: ["{{ inputs.parameters.TEXT }}"]
 
     - name: globalize-variable
-      serviceAccountName: codefresh-marketplace.argo-workflows-utils.0.0.1
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Easily expose a new variable globally'
