@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.jira
+  annotations:
+    codefresh-marketplace/description: 'Execute operations against Jira'
+    codefresh-marketplace/categories: 'task management'
+    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/jira/icon.svg"
+    codefresh-marketplace/icon/background: "#f4f4f4"
+spec:
+  templates: []

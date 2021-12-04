@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.kaniko
+  annotations:
+    codefresh-marketplace/description: 'Build container images in Kubernetes'
+    codefresh-marketplace/categories: 'docker,containers'
+    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/kaniko/icon.svg"
+    codefresh-marketplace/icon/background: "#f4f4f4"
+spec:
+  templates: []

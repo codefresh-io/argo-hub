@@ -4,7 +4,7 @@ metadata:
   name: codefresh-marketplace.newrelic
   annotations:
     codefresh-marketplace/description: 'Execute operations against New Relic'
-    codefresh-marketplace/categories: 'messaging'
+    codefresh-marketplace/categories: 'monitoring'
     codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/coming-soon/newrelic/icon.svg"
     codefresh-marketplace/icon/background: "#f4f4f4"
 spec:
