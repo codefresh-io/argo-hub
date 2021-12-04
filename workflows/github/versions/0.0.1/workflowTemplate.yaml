@@ -40,7 +40,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/v2-github-commit-status:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.1-images-commit-status:new_struct
         command:
           - node
           - index.js
@@ -86,7 +86,7 @@ spec:
       script:
         workingDir: '{{ inputs.artifacts.repo.path }}'
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/v2-github-create-pr:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.1-images-create-pr:new_struct
         command: [sh]
         source: |
           git checkout {{inputs.parameters.BRANCH}}
