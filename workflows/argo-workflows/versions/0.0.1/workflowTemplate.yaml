@@ -10,7 +10,7 @@ metadata:
     codefresh-marketplace/owner/email: 'itai@codefresh.io'
     codefresh-marketplace/owner/avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
     codefresh-marketplace/categories: 'argo'
-    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/argo-workflows/assets/argo.svg"
+    codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows/assets/icon.svg"
     codefresh-marketplace/icon/background: "#81D4FA"
 spec:
   templates:
