@@ -9,6 +9,7 @@ metadata:
     codefresh-marketplace/owner/name: 'Itai Gendler'
     codefresh-marketplace/owner/email: 'itai@codefresh.io'
     codefresh-marketplace/owner/avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/owner/url: 'https://github.com/itai-codefresh'
     codefresh-marketplace/categories: 'messaging'
     codefresh-marketplace/icon/url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/slack/assets/icon.svg"
     codefresh-marketplace/icon/background: "#49154B"
