@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.slack.0.0.1
+  annotations:
+    codefresh-marketplace/version: '0.0.1'
+    codefresh-marketplace/description: 'Execute operations against Slack'
+    codefresh-marketplace/license: 'MIT'
+    codefresh-marketplace/owner_name: 'Itai Gendler'
+    codefresh-marketplace/owner_email: 'itai@codefresh.io'
+    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
+    codefresh-marketplace/categories: 'messaging'
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
+    codefresh-marketplace/icon_background: "#49154B"
+spec:
+  templates:
+    - name: send-message
+      metadata:
+        annotations:
+          codefresh-marketplace-template/description: 'Send a message to a Slack channel using a hook url'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#49154B"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: MODE
+            value: "simple"
+          - name: SLACK_HOOK_URL
+          - name: SLACK_TEXT
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-slack-versions-0.0.1-images-send-message:main
+        command:
+          - node
+          - /app/index.js
+        env:
+          - name: MODE
+            value: '{{ inputs.parameters.MODE }}'
+          - name: SLACK_HOOK_URL
+            value: '{{ inputs.parameters.SLACK_HOOK_URL }}'
+          - name: SLACK_TEXT
+            value: '{{ inputs.parameters.SLACK_TEXT }}'

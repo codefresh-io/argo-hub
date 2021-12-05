@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.heroku
+  annotations:
+    codefresh-marketplace/description: 'Execute operations against Heroku'
+    codefresh-marketplace/categories: 'deployment'
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/heroku/icon.svg"
+    codefresh-marketplace/icon_background: "#333D47"
+spec:
+  templates: []

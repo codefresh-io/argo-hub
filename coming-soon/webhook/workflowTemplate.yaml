@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.webhook
+  annotations:
+    codefresh-marketplace/description: 'Execute generic webhooks'
+    codefresh-marketplace/categories: 'webhook'
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/webhook/icon.svg"
+    codefresh-marketplace/icon_background: "#f4f4f4"
+spec:
+  templates: []

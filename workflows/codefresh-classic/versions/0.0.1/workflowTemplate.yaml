@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.codefresh-classic.0.0.1
+  annotations:
+    codefresh-marketplace/version: '0.0.1'
+    codefresh-marketplace/description: 'Operate against Codefresh classic platform'
+    codefresh-marketplace/license: 'MIT'
+    codefresh-marketplace/owner_name: 'Itai Gendler'
+    codefresh-marketplace/owner_email: 'itai@codefresh.io'
+    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
+    codefresh-marketplace/categories: 'codefresh'
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
+    codefresh-marketplace/icon_background: "#ffffff"
+spec:
+  templates:
+    - name: run-pipeline
+      metadata:
+        annotations:
+          codefresh-marketplace-template/description: 'A wrapper on top of Codefresh cli run operation'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#ffffff"
+      inputs:
+        parameters:
+          - name: CF_API_KEY_SECRET
+          - name: PIPELINE_NAME
+          - name: TRIGGER_NAME
+          - name: CF_BRANCH
+          - name: EXTRA_OPTIONS
+            default: ''
+          - name: VARIABLES
+            default: ''
+      script:
+        name: main
+        imagePullPolicy: Always
+        image: codefresh/cli
+        env:
+          - name: VARIABLES
+            value: '{{ inputs.parameters.VARIABLES }}'
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY_SECRET }}'
+                key: token
+        command: [sh]
+        source: |
+          codefresh \
+          run \
+          '{{ inputs.parameters.PIPELINE_NAME }}' \
+          '-b={{ inputs.parameters.CF_BRANCH }}' \
+          '-t={{ inputs.parameters.TRIGGER_NAME }}' \
+          $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
+          '{{ inputs.parameters.EXTRA_OPTIONS }}'

@@ -1,0 +1,77 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.argo-workflows.0.0.2
+  annotations:
+    codefresh-marketplace/version: '0.0.2'
+    codefresh-marketplace/description: 'Interact with your argo workflow instance'
+    codefresh-marketplace/license: 'MIT'
+    codefresh-marketplace/owner_name: 'Itai Gendler'
+    codefresh-marketplace/owner_email: 'itai@codefresh.io'
+    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
+    codefresh-marketplace/categories: 'argo'
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg"
+    codefresh-marketplace/icon_background: "#f4f4f4"
+spec:
+  templates:
+    - name: submit-workflow
+      metadata:
+        annotations:
+          codefresh-marketplace-template/description: 'A wrapper on top of argo cli submit operation'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: TEMPLATE_NAME
+          - name: ENTRYPOINT
+          - name: GIT_REPO
+            value: ''
+          - name: GIT_REVISION
+            value: ''
+          - name: GIT_REVISION_SHORT
+            value: ''
+          - name: GIT_BRANCH
+            value: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: argoproj/argocli
+        command:
+          - argo
+          - submit
+          - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
+          - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
+          - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
+          - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
+          - -p=GIT_REVISION_SHORT={{ inputs.parameters.GIT_REVISION_SHORT }}
+          - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
+          - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }}
+
+
+    - name: terminate-workflow
+      metadata:
+        annotations:
+          codefresh-marketplace-template/description: 'A wrapper on top of argo cli terminate operation'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+          - name: LABEL_SELECTOR
+            default: ''
+          - name: FIELD_SELECTOR
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: argoproj/argocli
+        command:
+          - argo
+          - terminate
+          - '{{ inputs.parameters.NAME }}'
+          - --selector
+          - "{{ inputs.parameters.LABEL_SELECTOR }},workflows.argoproj.io/phase=Running"
+          - --field-selector
+          - "{{ inputs.parameters.FIELD_SELECTOR }}"

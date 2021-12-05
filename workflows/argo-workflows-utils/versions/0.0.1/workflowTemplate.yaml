@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: codefresh-marketplace.argo-workflows-utils.0.0.1
+  annotations:
+    codefresh-marketplace/version: '0.0.1'
+    codefresh-marketplace/description: 'Useful utils to enrich your argo workflow templates'
+    codefresh-marketplace/license: 'MIT'
+    codefresh-marketplace/owner_name: 'Itai Gendler'
+    codefresh-marketplace/owner_email: 'itai@codefresh.io'
+    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
+    codefresh-marketplace/categories: 'argo'
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
+    codefresh-marketplace/icon_background: "#f4f4f4"
+spec:
+  templates:
+    - name: echo
+      metadata:
+        annotations:
+          codefresh-marketplace-template/description: 'Print some text'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: TEXT
+            default: 'default'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine
+        command: [echo]
+        args: ["{{ inputs.parameters.TEXT }}"]
+
+    - name: globalize-variable
+      metadata:
+        annotations:
+          codefresh-marketplace-template/description: 'Easily expose a new variable globally'
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
+          codefresh-marketplace-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: NAME
+          - name: VALUE
+      outputs:
+        parameters:
+          - name: VARIABLE
+            value: '{{ inputs.parameters.VALUE }}'
+            globalName: '{{ inputs.parameters.NAME }}'
+      script:
+        image: alpine
+        command: [sh]
+        source: |
+          echo exposing new variable {{ inputs.parameters.NAME }}:{{ inputs.parameters.VALUE }}
