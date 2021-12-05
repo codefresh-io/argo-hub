@@ -11,7 +11,7 @@ metadata:
     codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
     codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
     codefresh-marketplace/categories: 'codefresh'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
     codefresh-marketplace/icon_background: "#ffffff"
 spec:
   templates:
@@ -19,7 +19,7 @@ spec:
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'A wrapper on top of Codefresh cli run operation'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/codefresh-classic/assets/icon.svg"
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
           codefresh-marketplace-template/icon_background: "#ffffff"
       inputs:
         parameters:

@@ -11,7 +11,7 @@ metadata:
     codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
     codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
     codefresh-marketplace/categories: 'argo'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/icon.svg"
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
     codefresh-marketplace/icon_background: "#f4f4f4"
 spec:
   templates:
@@ -19,7 +19,7 @@ spec:
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Print some text'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/icon.svg"
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
           codefresh-marketplace-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -36,7 +36,7 @@ spec:
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Easily expose a new variable globally'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/argo-workflows-utils/assets/icon.svg"
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
           codefresh-marketplace-template/icon_background: "#f4f4f4"
       inputs:
         parameters:

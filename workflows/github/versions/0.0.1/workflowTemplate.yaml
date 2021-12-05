@@ -11,7 +11,7 @@ metadata:
     codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
     codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
     codefresh-marketplace/categories: 'git'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
+    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
     codefresh-marketplace/icon_background: "#f4f4f4"
 spec:
   templates:
@@ -19,7 +19,7 @@ spec:
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Report a commit status check'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
           codefresh-marketplace-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "10"
@@ -39,7 +39,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.1-images-commit-status:new_struct
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.1-images-commit-status:main
         command:
           - node
           - index.js
@@ -70,7 +70,7 @@ spec:
       metadata:
         annotations:
           codefresh-marketplace-template/description: 'Create a pull request'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@new_struct/workflows/github/assets/icon.svg"
+          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
           codefresh-marketplace-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -84,7 +84,7 @@ spec:
       script:
         workingDir: '{{ inputs.artifacts.repo.path }}'
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.1-images-create-pr:new_struct
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.1-images-create-pr:main
         command: [sh]
         source: |
           git checkout {{inputs.parameters.BRANCH}}
