@@ -34,6 +34,9 @@ Anyone who builds a lot of Argo workflows knows that after a while you end up re
 You can access a fully featured visualized experience here https://codefresh.io/argo/hub/
 
 ### WorkflowTemplate manifest conventions
+* Every workflow template will have a name that follows the pattern `argo-hub.{NAME}.{VERSION}`
+* every template inside the workflowTempalte must reference the service account that is declared in the rbac.yaml manifest
+
 In order to be able to build an extensive ui but still making use of the original kuberntes manifest we are leverging annotations
 
 #### WorkflowTemplate annotations
@@ -55,7 +58,24 @@ In order to be able to build an extensive ui but still making use of the origina
 
 
 ### Hub file system Structure
-X
+The argo hub repository main folder is `workflows` <br>
+Each folder represents a workflowTemplate (group of templates) and will appear as a unique item in the main list of argo hub site <br><br>
+
+* the file names are important and must be followed
+
+Inside every workflowTempalte folder you will find the following structure and files <br>
+* CHANGELOG.md - a shared changelog md file between all the versions
+* assets folder - in which you can store your icons to reference inside the workflowTemplate
+* versions folder - a folder that will contain all supported versions
+
+<br>
+
+Inside each version folder you will find the following structure and files <br>
+* workflowTemplate.yaml - the main manifest that follows the [conventions](#WorkflowTemplate-manifest-conventions)
+* rbac.yaml - a single file with 3 required manifests that will provide the permissions for workflow template
+* images folder - each sub folder will cause a docker build according to the inner Dockerfile and will be automatically built scanned and pushed to argo-hub registry: `quay.io/codefreshplugins/argo-hub-workflows-{NAME}-versions-${VERSION}-${IMAGE_FOLDER_NAME}:main`
+* docs folder - contains documentation for every template inside the workflowTemplate (name must follow exactly the template name)
+
 
 ### Versioning
 X
