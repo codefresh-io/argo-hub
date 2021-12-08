@@ -34,7 +34,7 @@ spec:
       tasks:
       - name: hello-world
         templateRef:
-          name: codefresh-marketplace.codefresh-classic.0.0.1
+          name: argo-hub.codefresh-classic.0.0.1
           template: run-pipeline
         arguments:
           parameters:

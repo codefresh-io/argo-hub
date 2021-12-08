@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.telegram
+  name: argo-hub.telegram
   annotations:
-    codefresh-marketplace/description: 'Execute operations against Telegram'
-    codefresh-marketplace/categories: 'messaging'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/telegram/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against Telegram'
+    argo-hub/categories: 'messaging'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/telegram/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

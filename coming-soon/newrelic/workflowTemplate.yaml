@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.newrelic
+  name: argo-hub.newrelic
   annotations:
-    codefresh-marketplace/description: 'Execute operations against New Relic'
-    codefresh-marketplace/categories: 'monitoring'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/newrelic/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against New Relic'
+    argo-hub/categories: 'monitoring'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/newrelic/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

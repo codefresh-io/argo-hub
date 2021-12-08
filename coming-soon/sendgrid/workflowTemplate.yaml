@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.sendgrid
+  name: argo-hub.sendgrid
   annotations:
-    codefresh-marketplace/description: 'Execute operations against Sendgrid'
-    codefresh-marketplace/categories: 'messaging'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/sendgrid/icn.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against Sendgrid'
+    argo-hub/categories: 'messaging'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/sendgrid/icn.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

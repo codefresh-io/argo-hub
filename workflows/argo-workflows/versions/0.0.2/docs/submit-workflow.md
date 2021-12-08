@@ -32,12 +32,12 @@ spec:
         tasks:
           - name: submit
             templateRef:
-              name: codefresh-marketplace.argo-workflows.0.0.2
+              name: argo-hub.argo-workflows.0.0.2
               template: submit-workflow
             arguments:
               parameters:
                 - name: TEMPLATE_NAME
-                  value: 'codefresh-marketplace.argo-workflows-utils.0.0.1'
+                  value: 'argo-hub.argo-workflows-utils.0.0.1'
                 - name: ENTRYPOINT
                   value: 'echo'
 ```

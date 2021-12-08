@@ -27,7 +27,7 @@ spec:
       tasks:
       - name: hello-world
         templateRef:
-          name: codefresh-marketplace.argo-workflows-utils.0.0.1
+          name: argo-hub.argo-workflows-utils.0.0.1
           template: echo
         arguments:
           parameters:

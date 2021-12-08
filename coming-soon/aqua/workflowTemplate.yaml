@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.aqua
+  name: argo-hub.aqua
   annotations:
-    codefresh-marketplace/description: 'Execute operations against Aqua'
-    codefresh-marketplace/categories: 'security'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/aqua/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against Aqua'
+    argo-hub/categories: 'security'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/aqua/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

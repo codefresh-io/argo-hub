@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.starting-template.0.0.1
+  name: argo-hub.starting-template.0.0.1
   annotations:
-    codefresh-marketplace/version: '0.0.1'
-    codefresh-marketplace/categories: 'argo'
+    argo-hub/version: '0.0.1'
+    argo-hub/categories: 'argo'
     icon-type: svg
     icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
     icon-background: "#81D4FA"

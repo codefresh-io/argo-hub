@@ -32,7 +32,7 @@ spec:
         tasks:
           - name: globalize-varible
             templateRef:
-              name: codefresh-marketplace.argo-workflows-utils.0.0.1
+              name: argo-hub.argo-workflows-utils.0.0.1
               template: globalize-variable
             arguments:
               parameters:
@@ -46,7 +46,7 @@ spec:
         tasks:
         - name: exit
           templateRef:
-            name: codefresh-marketplace.argo-workflows-utils.0.0.1
+            name: argo-hub.argo-workflows-utils.0.0.1
             template: echo
           arguments:
             parameters:

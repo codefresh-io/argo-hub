@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.npm
+  name: argo-hub.npm
   annotations:
-    codefresh-marketplace/description: 'Execute npm operations'
-    codefresh-marketplace/categories: 'registry,node'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/npm/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute npm operations'
+    argo-hub/categories: 'registry,node'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/npm/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

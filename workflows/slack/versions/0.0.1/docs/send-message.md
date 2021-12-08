@@ -28,7 +28,7 @@ spec:
       tasks:
       - name: send-message
         templateRef:
-          name: codefresh-marketplace.slack.0.0.1
+          name: argo-hub.slack.0.0.1
           template: send-message
         arguments:
           parameters:
