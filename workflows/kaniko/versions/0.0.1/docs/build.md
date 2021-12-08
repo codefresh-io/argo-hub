@@ -57,4 +57,6 @@ spec:
             value: 'https://github.com/codefresh-io/argo-hub'
           - name: IMAGE_NAME
             value: 'codefresh/argo-hub'
+          - name: GIT_TOKEN_SECRET
+            value: 'git-token'
 ```
