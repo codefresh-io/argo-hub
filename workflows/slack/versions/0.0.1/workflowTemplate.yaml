@@ -6,10 +6,10 @@ metadata:
     codefresh-marketplace/version: '0.0.1'
     codefresh-marketplace/description: 'Execute operations against Slack'
     codefresh-marketplace/license: 'MIT'
-    codefresh-marketplace/owner_name: 'Itai Gendler'
-    codefresh-marketplace/owner_email: 'itai@codefresh.io'
-    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
-    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
+    codefresh-marketplace/owner_name: 'Pasha Kostohrys'
+    codefresh-marketplace/owner_email: 'pavel@codefresh.io'
+    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
+    codefresh-marketplace/owner_url: 'https://github.com/pasha-codefresh'
     codefresh-marketplace/categories: 'messaging'
     codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
     codefresh-marketplace/icon_background: "#49154B"
