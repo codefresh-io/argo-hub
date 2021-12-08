@@ -1,4 +1,4 @@
-<p align="center"><img src="./utils/icons/codefresh.png" alt="Codefresh"></p>
+<p align="center"><img src="./utils/icons/logo.png" alt="Codefresh"></p>
 
 # Codefresh Hub for Argo
 
@@ -31,10 +31,10 @@ Anyone who builds a lot of Argo workflows knows that after a while you end up re
 * [Easily write custom scripts with your favorite language](#Easily-write-custom-scripts-with-your-favorite-language)
 
 ### Extensive ui for visualization and navigation
-X
+You can access a fully featured visualized experience here https://codefresh.io/argo/hub/
 
 ### WorkflowTemplate and inner template breakdown
-X
+
 
 ### WorkflowTemplate manifest conventions
 X
