@@ -21,14 +21,14 @@ Anyone who builds a lot of Argo workflows knows that after a while you end up re
 
 ## Main Features
 * [Extensive ui for visualization and navigation](#Extensive-ui-for-visualization-and-navigation) 
-* [WorkflowTemplate and inner template breakdown](#WorkflowTemplate and inner template breakdown)
-* [WorkflowTemplate manifest conventions](#WorkflowTemplate manifest conventions)
-* [Hub file system Structure](#Hub file system Structure)
+* [WorkflowTemplate and inner template breakdown](#WorkflowTemplate-and-inner-template-breakdown)
+* [WorkflowTemplate manifest conventions](#WorkflowTemplate-manifest-conventions)
+* [Hub file system Structure](#Hub-file-system-Structure)
 * [Versioning](#Versioning)
-* [Full release life cycle](#Full release life cycle)
-* [Automatic image building and security scanning](#Automatic image building and security scanning)
-* [Pods security](#Pods security)
-* [Easily write custom scripts with your favorite language](#Easily write custom scripts with your favorite language)
+* [Full release life cycle](#Full-release-life-cycle)
+* [Automatic image building and security scanning](#Automatic-image-building-and-security-scanning)
+* [Pods security](#Pods-security)
+* [Easily write custom scripts with your favorite language](#Easily-write-custom-scripts-with-your-favorite-language)
 
 ### Extensive ui for visualization and navigation
 X
