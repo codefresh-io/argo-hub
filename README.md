@@ -106,7 +106,6 @@ just use `kubectl apply -f {file}` and apply a specific filer or folder
 Argo CD application manifest
 
 ```
-sd
 
 ```
 
