@@ -5,7 +5,7 @@
 Share and Reuse Your Argo Workflows with the Codefresh Argo Hub.
 
 ## Motivation
-Anyone who builds a lot of Argo workflows knows that after a while you end up reusing the same basic steps over and over again. While Argo Workflows has a great mechanism to prevent repetitive work using templates, these templates remain in private user repositories that have not been shared with the broader community.
+Anyone who builds many Argo workflows knows that after a while you end up reusing the same basic steps over and over again. While Argo Workflows has a great mechanism to prevent repetitive work using templates, these templates remain in private user repositories that have not been shared with the broader community.
 
 ## Goals
 * Allow people to easily find useful steps and flows and build even more awesome workflows
@@ -96,7 +96,7 @@ Templates in the hub must specify their required permissions, which are then enf
 
 ## Installation and Usage
 Eventually Argo Hub is simple, being a set of reusable Kubernetes manifests (workflowTemplates and RBAC related resources).<br>
-There are different ways to be able to consume the workflowTemplates
+There are different ways to be able to consume the workflowTemplates:
 
 * Applying a workflow template directly to your Kubernetes cluster
 just use `kubectl apply -f {file}` and apply a specific filer or folder 
