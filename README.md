@@ -59,7 +59,38 @@ X
 ## Installation and Usage
 X
 
+### Applying a workflow template directly to your kubernetes cluster
+X
+
+### Using Argo CD
+You can easily get the entire argo hub by getting it automatically applied to your cluster using the GitOps approach using Argo CD. <br>
+
+Using Argo CD app
+```
+sd
+
+```
+
+Using Argo CD application set with following config file
+```
+{
+  "appName": "marketplace-git-source",
+  "userGivenName": "marketplace-git-source",
+  "destNamespace": "codefresh-v2-production",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": ".",
+  "srcRepoURL": "https://github.com/codefresh-io/argo-hub.git",
+  "srcTargetRevision": "",
+  "labels": { "codefresh_io_entity": "git-source" },
+  "exclude": "**/images/**/*",
+  "include": "workflows/**/*.yaml"
+}
+```
+
+##
+
 ## How to Contribute
+X
 
 ### Enhancing existing workflows
 X
