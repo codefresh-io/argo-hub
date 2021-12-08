@@ -103,12 +103,6 @@ just use `kubectl apply -f {file}` and apply a specific filer or folder
 
 * Using Argo CD you can easily get the entire argo hub by getting it automatically applied to your cluster using the GitOps approach. <br>
 
-Argo CD application manifest
-
-```
-
-```
-
 Using Argo CD application set with following config file
 ```
 {
