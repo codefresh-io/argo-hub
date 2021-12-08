@@ -83,7 +83,7 @@ A full release life cycle has been built to do the following:
 * validate that the changes adhere the conventions (coming soon for now manually by reviewer)
 * build all images defined in the `image` folder (#Automatic-image-building-and-security-scanning)
 * scan the built images
-* push the images into public quay registry
+* push the images into public quay registry 
 
 ### Automatic image building and security scanning
 Workflow tasks often involve complex scripts with dependencies that have to be installed manually, wasting valuable execution time and complexing the workflow. <br>
