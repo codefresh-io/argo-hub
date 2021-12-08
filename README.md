@@ -12,7 +12,7 @@ Anyone who builds a lot of Argo workflows knows that after a while you end up re
 * Help the Argo community grow faster by knowledge reuse
 
 ## Table of Contents
-* [Main features](#Main features)
+* [Main features](#Main Features)
 * [Installation and Usage](#Installation and Usage)
 * [How to Contribute](#How to Contribute)
 * [Ask for a new Workflow](#Ask for a new Workflow)
