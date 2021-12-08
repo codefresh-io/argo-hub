@@ -33,11 +33,26 @@ Anyone who builds a lot of Argo workflows knows that after a while you end up re
 ### Extensive ui for visualization and navigation
 You can access a fully featured visualized experience here https://codefresh.io/argo/hub/
 
-### WorkflowTemplate and inner template breakdown
-
-
 ### WorkflowTemplate manifest conventions
-X
+In order to be able to build an extensive ui but still making use of the original kuberntes manifest we are leverging annotations
+
+#### WorkflowTemplate annotations
+* `argo-hub/version` - sem version (0.0.2)
+* `argo-hub/description` - description to be shown
+* `argo-hub/license` - license (MIT)
+* `argo-hub/owner_name` - github user name to appear in the site
+* `argo-hub/owner_email` - email for contact
+* `argo-hub/owner_avatar` - github user avatar icon
+* `argo-hub/owner_url` - github user profile
+* `argo-hub/categories` - categories to appear in the site
+* `argo-hub/icon_url` - svg (only) icon
+* `argo-hub/icon_background` - background color for the icon
+
+#### Inner template annotations
+* `argo-hub-template/description` - description for specific template
+* `argo-hub-template/icon_url` - icon for specific template
+* `argo-hub-template/icon_background` - background for icon 
+
 
 ### Hub file system Structure
 X
