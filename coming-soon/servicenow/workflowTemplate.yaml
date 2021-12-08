@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.servicenow
+  name: argo-hub.servicenow
   annotations:
-    codefresh-marketplace/description: 'Execute operations against Srvicenow'
-    codefresh-marketplace/categories: 'monitoring'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/servicenow/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against Srvicenow'
+    argo-hub/categories: 'monitoring'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/servicenow/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

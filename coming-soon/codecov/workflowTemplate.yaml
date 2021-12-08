@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.codecov
+  name: argo-hub.codecov
   annotations:
-    codefresh-marketplace/description: 'Execute operations against Codecov'
-    codefresh-marketplace/categories: 'coverage'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/codecov/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against Codecov'
+    argo-hub/categories: 'coverage'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/codecov/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

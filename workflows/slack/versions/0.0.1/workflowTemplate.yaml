@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.slack.0.0.1
+  name: argo-hub.slack.0.0.1
   annotations:
-    codefresh-marketplace/version: '0.0.1'
-    codefresh-marketplace/description: 'Execute operations against Slack'
-    codefresh-marketplace/license: 'MIT'
-    codefresh-marketplace/owner_name: 'Pasha Kostohrys'
-    codefresh-marketplace/owner_email: 'pavel@codefresh.io'
-    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
-    codefresh-marketplace/owner_url: 'https://github.com/pasha-codefresh'
-    codefresh-marketplace/categories: 'messaging'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
-    codefresh-marketplace/icon_background: "#49154B"
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Execute operations against Slack'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Pasha Kostohrys'
+    argo-hub/owner_email: 'pavel@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
+    argo-hub/owner_url: 'https://github.com/pasha-codefresh'
+    argo-hub/categories: 'messaging'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
+    argo-hub/icon_background: "#49154B"
 spec:
   templates:
     - name: send-message
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'Send a message to a Slack channel using a hook url'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#49154B"
+          argo-hub-template/description: 'Send a message to a Slack channel using a hook url'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/slack/assets/icon.svg"
+          argo-hub-template/icon_background: "#49154B"
       retryStrategy:
         limit: "10"
         retryPolicy: "Always"

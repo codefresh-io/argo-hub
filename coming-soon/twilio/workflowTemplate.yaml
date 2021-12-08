@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.twilio
+  name: argo-hub.twilio
   annotations:
-    codefresh-marketplace/description: 'Execute operations against twilio'
-    codefresh-marketplace/categories: 'messaging,sms'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/twilio/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against twilio'
+    argo-hub/categories: 'messaging,sms'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/twilio/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

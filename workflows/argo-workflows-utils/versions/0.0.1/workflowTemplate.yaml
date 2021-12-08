@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.argo-workflows-utils.0.0.1
+  name: argo-hub.argo-workflows-utils.0.0.1
   annotations:
-    codefresh-marketplace/version: '0.0.1'
-    codefresh-marketplace/description: 'Useful utils to enrich your argo workflow templates'
-    codefresh-marketplace/license: 'MIT'
-    codefresh-marketplace/owner_name: 'Vadim Gusev'
-    codefresh-marketplace/owner_email: 'vadim.gusev@codefresh.io'
-    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/77272973?v=4'
-    codefresh-marketplace/owner_url: 'https://github.com/vadimgusev-codefresh'
-    codefresh-marketplace/categories: 'argo'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Useful utils to enrich your argo workflow templates'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Vadim Gusev'
+    argo-hub/owner_email: 'vadim.gusev@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/77272973?v=4'
+    argo-hub/owner_url: 'https://github.com/vadimgusev-codefresh'
+    argo-hub/categories: 'argo'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates:
     - name: echo
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'Print some text'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#f4f4f4"
+          argo-hub-template/description: 'Print some text'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: TEXT
@@ -35,9 +35,9 @@ spec:
     - name: globalize-variable
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'Easily expose a new variable globally'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#f4f4f4"
+          argo-hub-template/description: 'Easily expose a new variable globally'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows-utils/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: NAME

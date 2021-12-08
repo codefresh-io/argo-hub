@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.bitbucket
+  name: argo-hub.bitbucket
   annotations:
-    codefresh-marketplace/description: 'Execute operations against Bitbucket'
-    codefresh-marketplace/categories: 'git'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/bitbucket/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against Bitbucket'
+    argo-hub/categories: 'git'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/bitbucket/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []

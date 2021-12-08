@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.codefresh-classic.0.0.1
+  name: argo-hub.codefresh-classic.0.0.1
   annotations:
-    codefresh-marketplace/version: '0.0.1'
-    codefresh-marketplace/description: 'Operate against Codefresh classic platform'
-    codefresh-marketplace/license: 'MIT'
-    codefresh-marketplace/owner_name: 'Itai Gendler'
-    codefresh-marketplace/owner_email: 'itai@codefresh.io'
-    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
-    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
-    codefresh-marketplace/categories: 'codefresh'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
-    codefresh-marketplace/icon_background: "#ffffff"
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Operate against Codefresh classic platform'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Itai Gendler'
+    argo-hub/owner_email: 'itai@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    argo-hub/owner_url: 'https://github.com/itai-codefresh'
+    argo-hub/categories: 'codefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
+    argo-hub/icon_background: "#ffffff"
 spec:
   templates:
     - name: run-pipeline
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'A wrapper on top of Codefresh cli run operation'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#ffffff"
+          argo-hub-template/description: 'A wrapper on top of Codefresh cli run operation'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
+          argo-hub-template/icon_background: "#ffffff"
       inputs:
         parameters:
           - name: CF_API_KEY_SECRET

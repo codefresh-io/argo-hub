@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.kubernetes
+  name: argo-hub.kubernetes
   annotations:
-    codefresh-marketplace/description: 'Execute operations against a Kubernetes cluster'
-    codefresh-marketplace/categories: 'deployment'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/kubernetes/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/description: 'Execute operations against a Kubernetes cluster'
+    argo-hub/categories: 'deployment'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/kubernetes/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates: []
