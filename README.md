@@ -134,7 +134,7 @@ First thing to do is to fork the repository.
 
 ### Writing a new Workflow
 1. Copy the `utils/starting-template` folder into the main `workflows` folder.
-2. Globally replace the words `starting-template` and `startgin template` with your workflowTemplate name
+2. Globally replace the words `starting-template` and `starting template` with your workflowTemplate name
 2. Open a pull request and wait for a review <br>
 3. Once approved you'll immediately see your changes in the argo hub site
 
