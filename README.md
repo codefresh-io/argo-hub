@@ -1,3 +1,5 @@
+<p align="center"><img src="./utils/icons/codefresh.png" alt="Codefresh"></p>
+
 # Codefresh Hub for Argo
 
 Share and Reuse Your Argo Workflows with the Codefresh Argo Hub.
