@@ -14,13 +14,13 @@ Anyone who builds a lot of Argo workflows knows that after a while you end up re
 * Help the Argo community grow faster by knowledge reuse
 
 ## Table of Contents
-* [Main features](#Main Features)
-* [Installation and Usage](#Installation and Usage)
-* [How to Contribute](#How to Contribute)
-* [Ask for a new Workflow](#Ask for a new Workflow)
+* [Main features](#Main-Features)
+* [Installation and Usage](#Installation-and-Usage)
+* [How to Contribute](#How-to-Contribute)
+* [Ask for a new Workflow](#Ask-for-a-new-Workflow)
 
 ## Main Features
-* [Extensive ui for visualization and navigation](#Extensive ui for visualization and navigation) 
+* [Extensive ui for visualization and navigation](#Extensive-ui-for-visualization-and-navigation) 
 * [WorkflowTemplate and inner template breakdown](#WorkflowTemplate and inner template breakdown)
 * [WorkflowTemplate manifest conventions](#WorkflowTemplate manifest conventions)
 * [Hub file system Structure](#Hub file system Structure)
