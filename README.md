@@ -86,25 +86,25 @@ A full release life cycle has been built to do the following:
 * push the images into public quay registry
 
 ### Automatic image building and security scanning
-X
+Workflow tasks often involve complex scripts with dependencies that have to be installed manually, wasting valuable execution time and complexing the workflow. <br>
+Many developers overcome this complexity by building a Docker image that contains all required dependencies (i.e `npm install`) plus the scripts them self. <br>
+The usual problem that developers will notice is that the work on the workflowTemplate it self is detached from the release life cycle and development of the Docker image. <br>
+Argo hub solves this issue by taking a modern approach and maintaining all required depdenceis and scripts along side the workflowTemplate and Argo Hub will do all the heavy lifting for you with its [release life cycle](#Full-release-life-cycle) 
 
 ### Pods security
-X
-
-### Easily write custom scripts with your favorite language
-X
-
+Templates in the hub must specify their required permissions which are then enforced within Kubernetes. Using default permissions is considered an anti-pattern for workflow templates and they are not supported out of the box. Defining clear permissions creates a clear contract between consumers and their templates.
 
 ## Installation and Usage
-X
+Eventually argo hub is simple, it is a set of reusable kubernetes manifests (workflowTempaltes and rbac related resources)<br>
+There are different ways to be able to consume the workflowTemplates
 
-### Applying a workflow template directly to your kubernetes cluster
-X
+* Applying a workflow template directly to your kubernetes cluster
+just use `kubectl apply -f {file}` and apply a specific filer or folder 
 
-### Using Argo CD
-You can easily get the entire argo hub by getting it automatically applied to your cluster using the GitOps approach using Argo CD. <br>
+* Using Argo CD you can easily get the entire argo hub by getting it automatically applied to your cluster using the GitOps approach. <br>
 
-Using Argo CD app
+Argo CD application manifest
+
 ```
 sd
 
@@ -129,13 +129,20 @@ Using Argo CD application set with following config file
 ##
 
 ## How to Contribute
-X
-
-### Enhancing existing workflows
-X
+The easiest way to contribute is by either enhancing an existing workflowTemplate by adding additional tasks (templates). <br>
+First thing to do is to fork the repository.
 
 ### Writing a new Workflow
-X
+1. Copy the `utils/starting-template` folder into the main `workflows` folder.
+2. Globally replace the words `starting-template` and `startgin template` with your workflowTemplate name
+2. Open a pull request and wait for a review <br>
+3. Once approved you'll immediately see your changes in the argo hub site
+
+### Enhancing existing workflows
+1. Pick an existing workflowTemplate and follow the [conventions](#WorkflowTemplate-manifest-conventions) and the [file system structure](#Hub-file-system-Structure) <br>
+2. Open a pull request and wait for a review <br>
+3. Once approved you'll immediately see your changes in the argo hub site
+
 
 ## Ask for a new Workflow
 
