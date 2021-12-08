@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.kaniko.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Build Docker image using kaniko'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Vadim Gusev'
+    argo-hub/owner_email: 'vadim.gusev@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/77272973?v=4'
+    argo-hub/owner_url: 'https://github.com/vadimgusev-codefresh'
+    argo-hub/categories: 'docker,image'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/kaniko/assets/icon.svg"
+    argo-hub/icon_background: "#ffffff"
+spec:
+  templates:
+    - name: build
+      serviceAccountName: argo-hub.kaniko.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of kaniko CLI'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/kaniko/assets/icon.svg"
+          argo-hub-template/icon_background: "#ffffff"
+      inputs:
+        artifacts:
+          - name: repo
+            path: /tmp/repo
+            git:
+              repo: '{{ inputs.parameters.REPO }}'
+              revision: '{{ inputs.parameters.REVISION }}'
+              usernameSecret:
+                name: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                key: token
+        parameters:
+          - name: REPO
+          - name: REVISION
+            default: 'main'
+          - name: GIT_TOKEN_SECRET
+          - name: DOCKERFILE
+            default: Dockerfile
+          - name: IMAGE_NAME
+          - name: TAG
+            default: latest
+          - name: CONTEXT
+            default: .
+      container:
+        image: gcr.io/kaniko-project/executor:v1.7.0
+        workingDir: '{{ inputs.artifacts.repo.path }}'
+        command: ["/kaniko/executor"]
+        args:
+          - --cache
+          - --cache-copy-layers
+          - --cache-repo={{ inputs.parameters.IMAGE_NAME }}-cache
+          - --reproducible
+          - --context={{ inputs.parameters.CONTEXT }}
+          - --dockerfile={{ inputs.parameters.DOCKERFILE }}
+          - --destination={{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}
+        volumeMounts:
+          - mountPath: /kaniko/.docker/
+            name: docker-config
