@@ -6,8 +6,8 @@ Send a message to a Slack channel using a hook url
 ## Inputs/Outputs
 
 ### Inputs
-SLACK_HOOK_URL (required) - the slack hook url
-SLACK_TEXT (required) - the text to send
+* SLACK_HOOK_URL (required) - the slack hook url
+* SLACK_TEXT (required) - the text to send
 
 ### Outputs
 no outputs

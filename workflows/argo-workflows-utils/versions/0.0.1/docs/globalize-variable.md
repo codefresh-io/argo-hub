@@ -6,8 +6,8 @@ Easily expose a new variable globally.
 ## Inputs/Outputs
 
 ### Inputs
-NAME (required) - the name of the new variable to be created
-VALUE (required) - the value of the new variable
+* NAME (required) - the name of the new variable to be created
+* VALUE (required) - the value of the new variable
 
 ### Outputs
 exposes a `globalName` variable

@@ -8,12 +8,12 @@ The template provides the easy ability to trigger pipelines.
 ## Inputs/Outputs
 
 ### Inputs
-CF_API_KEY_SECRET (required) - K8s secret name that contains a key named `token` with codefresh [api key](https://codefresh.io/docs/docs/integrations/codefresh-api/#authentication-instructions).
-PIPELINE_NAME (required) - Pipeline name
-TRIGGER_NAME (required) - Trigger name
-CF_BRANCH (required) - Branch name
-EXTRA_OPTIONS (optional) - Additional cli flags
-VARIABLES (optional) - Variables to pass to the build
+* CF_API_KEY_SECRET (required) - K8s secret name that contains a key named `token` with codefresh [api key](https://codefresh.io/docs/docs/integrations/codefresh-api/#authentication-instructions).
+* PIPELINE_NAME (required) - Pipeline name
+* TRIGGER_NAME (required) - Trigger name
+* CF_BRANCH (required) - Branch name
+* EXTRA_OPTIONS (optional) - Additional cli flags
+* VARIABLES (optional) - Variables to pass to the build
 
 ### Outputs
 no outputs

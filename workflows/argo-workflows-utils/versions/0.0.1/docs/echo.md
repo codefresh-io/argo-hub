@@ -6,7 +6,7 @@ Print some text
 ## Inputs/Outputs
 
 ### Inputs
-TEXT (required) - a freestyle text to print
+* TEXT (required) - a freestyle text to print
 
 ### Outputs
 no outputs

@@ -10,8 +10,8 @@ This is useful in case you want to trigger a new workflowTemplate without having
 ## Inputs/Outputs
 
 ### Inputs
-TEMPLATE_NAME (required) - The template name
-ENTRYPOINT (required) - The specific template to use as an entrypoint
+* TEMPLATE_NAME (required) - The template name
+* ENTRYPOINT (required) - The specific template to use as an entrypoint
 
 ### Outputs
 no outputs

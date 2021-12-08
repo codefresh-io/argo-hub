@@ -8,9 +8,9 @@ The template provides the easy ability to terminate a specific workflow by its n
 ## Inputs/Outputs
 
 ### Inputs
-NAME (optional) - a string specifiying an explicit name of a workflow to terminate
-LABEL_SELECTOR (optional) - a comma separated list of labels to filter on
-FIELD_SELECTOR (optional) - a comma separated list of fields to filter on
+* NAME (optional) - a string specifiying an explicit name of a workflow to terminate
+* LABEL_SELECTOR (optional) - a comma separated list of labels to filter on
+* FIELD_SELECTOR (optional) - a comma separated list of fields to filter on
 
 ### Outputs
 no outputs
