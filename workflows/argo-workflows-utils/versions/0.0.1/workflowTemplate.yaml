@@ -16,6 +16,7 @@ metadata:
 spec:
   templates:
     - name: echo
+      serviceAccountName: argo-hub.argo-workflows-utils.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Print some text'
@@ -33,6 +34,7 @@ spec:
         args: ["{{ inputs.parameters.TEXT }}"]
 
     - name: globalize-variable
+      serviceAccountName: argo-hub.argo-workflows-utils.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Easily expose a new variable globally'

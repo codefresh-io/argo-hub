@@ -16,6 +16,7 @@ metadata:
 spec:
   templates:
     - name: submit-workflow
+      serviceAccountName: argo-hub.argo-workflows.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'A wrapper on top of argo cli submit operation'
