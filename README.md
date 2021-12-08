@@ -74,12 +74,16 @@ Inside each version folder you will find the following structure and files <br>
 * `images` folder - each sub folder will cause a docker build according to the inner Dockerfile and will be automatically built scanned and pushed to argo-hub registry: `quay.io/codefreshplugins/argo-hub-workflows-{NAME}-versions-${VERSION}-${IMAGE_FOLDER_NAME}:main`
 * `docs` folder - contains documentation for every template inside the workflowTemplate (name must follow exactly the template name)
 
-
 ### Versioning
-X
+Each workflow template is versioned and can be referenced by specific versions. The Codefresh Hub provides a clear structure for both owners and consumers to pick and use the versions that make sense for their use cases. Users can also use multiple versions to test changes without fully upgrading.
+Checkout the [file system structure](#Hub-file-system-Structure) and the [workflow template conventions](#WorkflowTemplate-manifest-conventions)
 
 ### Full release life cycle
-X
+A full release life cycle has been built to do the following:
+* validate that the changes adhere the conventions (coming soon for now manually by reviewer)
+* build all images defined in the `image` folder (#Automatic-image-building-and-security-scanning)
+* scan the built images
+* push the images into public quay registry
 
 ### Automatic image building and security scanning
 X
