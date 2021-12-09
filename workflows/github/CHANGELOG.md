@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.2 (8.12.2021)
+
+### get-github-info
+
+Parses the GitHub Event Payload (JSON) and output the most useful payload fields as artifact files.
+
 ## v0.0.1 (1.12.2021)
 
 ### commit-status
