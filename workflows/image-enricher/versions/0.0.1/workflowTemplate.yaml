@@ -51,7 +51,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/github-enricher:latest
+        image: quay.io/codefreshplugins/git-enricher:latest
         command:
           - node
           - /app/src/index.js
