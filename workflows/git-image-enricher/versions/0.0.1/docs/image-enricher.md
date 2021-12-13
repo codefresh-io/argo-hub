@@ -1,7 +1,7 @@
-# send-message
+# git-image-enricher
 
 ## Summary
-Enrich codefresh image with PRs and Issues info
+Enrich codefresh image with PRs and Issues info.
 
 ## Inputs/Outputs
 
@@ -15,7 +15,6 @@ Enrich codefresh image with PRs and Issues info
 * GITHUB_API (optional) - support on-premises github host api
 * API_PATH_PREFIX (optional) - support on-premises github path prefix
 * GITHUB_TOKEN (optional) - github token
-* GIT_PROVIDER_NAME (optional) - name of git provider to use from Codefresh integrations screen
 
 ### Outputs
 no outputs
@@ -27,17 +26,17 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: image-enricher-
+  generateName: git-image-enricher-
 spec:
   entrypoint: main
   templates:
   - name: main
     dag:
       tasks:
-      - name: image-enricher
+      - name: git-image-enricher
         templateRef:
-          name: argo-hub.image-enricher.0.0.1
-          template: image-enricher
+          name: argo-hub.git-image-enricher.0.0.1
+          template: git-image-enricher
         arguments:
           parameters:
           - name: IMAGE

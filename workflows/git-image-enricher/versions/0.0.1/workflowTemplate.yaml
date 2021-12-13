@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.image-enricher.0.0.1
+  name: argo-hub.git-image-enricher.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
     argo-hub/description: 'Enrich codefresh image with PRs and Issues info'
@@ -11,16 +11,16 @@ metadata:
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
     argo-hub/owner_url: 'https://github.com/pasha-codefresh'
     argo-hub/categories: 'messaging'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/image-enricher/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-image-enricher/assets/icon.svg"
     argo-hub/icon_background: "#49154B"
 spec:
   templates:
-    - name: image-enricher
-      serviceAccountName: argo-hub.image-enricher.0.0.1
+    - name: git-image-enricher
+      serviceAccountName: argo-hub.git-image-enricher.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich codefresh image with PRs and Issues info'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/image-enricher/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-image-enricher/assets/icon.svg"
           argo-hub-template/icon_background: "#49154B"
       retryStrategy:
         limit: "10"
