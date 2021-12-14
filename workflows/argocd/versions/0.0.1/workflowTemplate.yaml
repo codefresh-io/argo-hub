@@ -226,7 +226,7 @@ spec:
     serviceAccountName: *serviceAccountName
     metadata:
       annotations:
-        argo-hub-template/description: 'Show an application's history in ArgoCD'
+        argo-hub-template/description: "Show an application's history in ArgoCD"
         <<: *annotations
     container:
       <<: *container
