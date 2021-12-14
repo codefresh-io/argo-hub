@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_url: 'https://github.com/itai-codefresh'
     argo-hub/categories: 'codefresh'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
-    argo-hub/icon_background: "#ffffff"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates:
     - name: run-pipeline
@@ -21,7 +21,7 @@ spec:
         annotations:
           argo-hub-template/description: 'A wrapper on top of Codefresh cli run operation'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
-          argo-hub-template/icon_background: "#ffffff"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: CF_API_KEY_SECRET
