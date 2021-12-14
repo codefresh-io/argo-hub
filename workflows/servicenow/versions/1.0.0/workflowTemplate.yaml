@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.servicenow.1.0.0
+  annotations:
+    argo-hub/version: '1.0.0'
+    argo-hub/categories: 'utilities'
+    argo-hub/description: 'Execute operations against a Service Now instance'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Laurent Rochette'
+    argo-hub/owner_email: 'laurent.rochette@codefresh.io'
+    argo-hub/owner_url: "https://github.com/settings/profile"
+    icon-type: svg
+    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+    icon-background: "#81D4FA"
+
+spec:
+  templates:
+    - name: createcr
+      metadata:
+        annotations:
+          icon-type: svg
+          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          icon-background: "#81D4FA"
+      inputs:
+        parameters:
+          - name: SN_INSTANCE          # aka https://instance.service-now.com
+          - name: SN_AUTH              # secret name
+          - name: CR_DATA
+          - name: DEBUG
+      outputs:
+        parameters:
+          - name: CR_SYSID
+            valueFrom:
+              path: /tmp/CR_SYSID
+          - name: CR_NUMBER
+            valueFrom:
+              path: /tmp/CR_NUMBER
+      container:
+        name: createcr
+        imagePullPolicy: Always
+        #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        env:
+        - name: ACTION
+          value: 'createcr'
+        - name: SN_INSTANCE
+          value: '{{ inputs.parameters.SN_INSTANCE }}'
+        - name: SN_USER
+          valueFrom:
+            secretKeyRef:
+              name: '{{ inputs.parameters.SN_AUTH }}'
+              key: username
+        - name: SN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: '{{ inputs.parameters.SN_AUTH }}'
+              key: password
+        - name: CR_DATA
+          value: '{{ inputs.parameters.CR_DATA }}'
+        - name: DEBUG
+          value: "true"
