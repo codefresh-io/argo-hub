@@ -59,4 +59,4 @@ spec:
         - name: CR_DATA
           value: '{{ inputs.parameters.CR_DATA }}'
         - name: DEBUG
-          value: "true"
+          value: true
