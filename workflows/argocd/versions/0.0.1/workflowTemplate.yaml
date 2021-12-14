@@ -81,14 +81,32 @@ spec:
     # Parameters users can set/override
     inputs: &inputs
       parameters:
+      # The app to run the argo command against
       - name: app
+        value: ""
+      # Flags specific to the command you are running (i.e. -l "my-label")
       - name: flags
+        value: ""
+      # The url for communicating with the ArgoCD server
+      # i.e. argocd-server.<namespace>.svc.cluster.local
       - name: serverUrl
+        value: ""
+      # Global command line options to pass to the ArgoCD CLI
       - name: opts
+        value: ""
+      # The Kubernetes secret with the token to communicate with ArgoCD
       - name: tokenSecret
+        value: "argocd-token"
+      # The key name in the Kubernetes secret with the token to communicate with ArgoCD
       - name: tokenSecretKey
-      - name: appKind # used for app 'actions' commands
+        value: "token"
+      # The Kubernetes 'Kind' to use with argo app actions command
+      - name: appKind
+        value: "Rollout"
+      # The ID to roll back to if performing a rollback
       - name: rollbackId
+        value: ""
+      # Set xtrace or not (echo the command before running it). Valid options are -o (xtrace on) and +o (xtrace off). default is -o
       - name: xtraceOption
 
   # Wait for an app status
