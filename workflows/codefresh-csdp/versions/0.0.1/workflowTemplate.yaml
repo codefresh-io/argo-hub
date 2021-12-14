@@ -1,0 +1,76 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.codefresh-csdp.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Operate against Codefresh csdp platform'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Pasha Kostohrys'
+    argo-hub/owner_email: 'pavel@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
+    argo-hub/owner_url: 'https://github.com/pasha-codefresh'
+    argo-hub/categories: 'messaging'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+    argo-hub/icon_background: "#171A2D"
+spec:
+  templates:
+    - name: image-enricher-git
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Enrich codefresh image with PRs and Issues info'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: API_PATH_PREFIX
+            default: ''
+          - name: GITHUB_API
+            default: ''
+          - name: CF_URL
+            default: ''
+          - name: GITHUB_HOST
+            default: 'github.com'
+          - name: GITHUB_TOKEN
+            default: ''
+          - name: GIT_PROVIDER_NAME
+            default: ''
+          - name: IMAGE
+          - name: BRANCH
+          - name: REPO
+          - name: CF_API_KEY
+
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.1-images-image-enricher-git:main
+        command:
+          - node
+          - /app/src/index.js
+        env:
+          - name: API_PATH_PREFIX
+            value: '{{ inputs.parameters.API_PATH_PREFIX }}'
+          - name: GITHUB_API
+            value: '{{ inputs.parameters.GITHUB_API }}'
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
+          - name: GITHUB_HOST
+            value: '{{ inputs.parameters.GITHUB_HOST }}'
+          - name: GITHUB_TOKEN
+            value: '{{ inputs.parameters.GITHUB_TOKEN }}'
+          - name: IMAGE
+            value: '{{ inputs.parameters.IMAGE_SHA }}'
+          - name: BRANCH
+            value: '{{ inputs.parameters.BRANCH }}'
+          - name: REPO
+            value: '{{ inputs.parameters.REPO }}'
+          - name: GIT_PROVIDER_NAME
+            value: '{{ inputs.parameters.GIT_PROVIDER_NAME }}'
+          - name: CF_API_KEY
+            value: '{{ inputs.parameters.CF_API_KEY }}'
