@@ -29,8 +29,6 @@ spec:
           duration: "5s"
       inputs:
         parameters:
-          - name: ARGO_PLATFORM
-            default: 'true'
           - name: API_PATH_PREFIX
             default: ''
           - name: GITHUB_API
@@ -51,13 +49,11 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/git-enricher:latest
+        image: quay.io/codefreshplugins/argo-hub-workflows-git-image-enricher-versions-0.0.1-images-git-image-enricher:main
         command:
           - node
           - /app/src/index.js
         env:
-          - name: ARGO_PLATFORM
-            value: '{{ inputs.parameters.ARGO_PLATFORM }}'
           - name: API_PATH_PREFIX
             value: '{{ inputs.parameters.API_PATH_PREFIX }}'
           - name: GITHUB_API
