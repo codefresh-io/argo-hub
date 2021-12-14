@@ -29,7 +29,7 @@ rules:
       - watch
   - apiGroups:
       - ""
-    resource:
+    resources:
       - secrets
     verbs:
       - get
