@@ -36,27 +36,26 @@ spec:
           - name: CR_NUMBER
             valueFrom:
               path: /tmp/CR_NUMBER
-      container:
-        name: createcr
+      script:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         env:
-        - name: ACTION
-          value: 'createcr'
-        - name: SN_INSTANCE
-          value: '{{ inputs.parameters.SN_INSTANCE }}'
-        - name: SN_USER
-          valueFrom:
-            secretKeyRef:
-              name: '{{ inputs.parameters.SN_AUTH }}'
-              key: username
-        - name: SN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: '{{ inputs.parameters.SN_AUTH }}'
-              key: password
-        - name: CR_DATA
-          value: '{{ inputs.parameters.CR_DATA }}'
-        - name: DEBUG
-          value: "true"
+          - name: ACTION
+            value: 'createcr'
+          - name: SN_INSTANCE
+            value: '{{ inputs.parameters.SN_INSTANCE }}'
+          - name: SN_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: username
+          - name: SN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
+          - name: CR_DATA
+            value: '{{ inputs.parameters.CR_DATA }}'
+          - name: DEBUG
+            value: "true"
