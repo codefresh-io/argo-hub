@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: secret
+metadata:
+  name: sn_auth
+type: Opaque
+stringData:
+  username: <string value>
+data:
+  password: <base64 value>
