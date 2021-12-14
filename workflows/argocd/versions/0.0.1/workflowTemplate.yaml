@@ -239,4 +239,3 @@ spec:
       - name: history
         valueFrom:
           path: /tmp/app.history
-
