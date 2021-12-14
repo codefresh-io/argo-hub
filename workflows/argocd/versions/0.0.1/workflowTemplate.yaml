@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_url: 'https://github.com/jcantosz'
     argo-hub/categories: 'argocd,deploy'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argocd/assets/icon.svg"
-    argo-hub/icon_background: "#49154B"
+    argo-hub/icon_background: "#f4f4f4"
 
 spec:
   # default arguments

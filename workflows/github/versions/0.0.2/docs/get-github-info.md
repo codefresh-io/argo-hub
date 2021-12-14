@@ -1,4 +1,4 @@
-# get-github-info
+# extract-webhook-variables
 
 ## Summary
 Parse the GitHub Event Payload (JSON). Output the most useful payload fields as artifact files, which can be mapped into global workflow outputs, and then consumed by any subsequent templates. The list of fields closely matches the pipeline variables that were previously  established in Codefresh's [Classic platform](https://codefresh.io/docs/docs/codefresh-yaml/variables).
@@ -6,33 +6,33 @@ Parse the GitHub Event Payload (JSON). Output the most useful payload fields as 
 ## Inputs/Outputs
 
 ### Inputs
-GITHUB_JSON (required) - GitHub event payload (JSON) string from a GitHub EventSource + Sensor.
+* GITHUB_JSON (required) - GitHub event payload (JSON) string from a GitHub EventSource + Sensor.
 
 ### Outputs
-CF_REPO_OWNER - Repository owner.
-CF_REPO_NAME - Repository name.
-CF_BRANCH - Branch name (or Tag depending on the payload json) of the Git repository of the main pipeline, at the time of execution.
-CF_BASE_BRANCH - The base branch used during creation of Tag.
-CF_PULL_REQUEST_ACTION - The pull request action.
-CF_PULL_REQUEST_TARGET - The pull request target branch.
-CF_PULL_REQUEST_NUMBER - The pull request number.
-CF_PULL_REQUEST_ID - The pull request id.
-CF_PULL_REQUEST_LABELS - The labels of pull request.
-CF_COMMIT_AUTHOR - Commit author.
-CF_COMMIT_USERNAME - Commit username.
-CF_COMMIT_EMAIL - Commit email.
-CF_COMMIT_URL - Commit url.
-CF_COMMIT_MESSAGE - Commit message of the Git repository revision, at the time of execution.
-CF_REVISION - Revision of the Git repository of the main pipeline, at the time of execution.
-CF_SHORT_REVISION - The abbreviated 7-character revision hash, as used in Git.
-CF_RELEASE_NAME - GitHub release title.
-CF_RELEASE_TAG - Git tag version.
-CF_RELEASE_ID - Internal ID for this release.
-CF_PRERELEASE_FLAG - "true" if the release is marked as non-production ready, "false" if it is ready for production.
-CF_PULL_REQUEST_MERGED - "true" if the pull request was merged to base branch.
-CF_PULL_REQUEST_HEAD_BRANCH - The head branch of the PR (the branch that we want to merge to master).
-CF_PULL_REQUEST_MERGED_COMMIT_SHA - The commit SHA on the base branch after the pull request was merged (in most cases it will be master).
-CF_PULL_REQUEST_HEAD_COMMIT_SHA - The commit SHA on the head branch (the branch that we want to push).
+* CF_REPO_OWNER - Repository owner.
+* CF_REPO_NAME - Repository name.
+* CF_BRANCH - Branch name (or Tag depending on the payload json) of the Git repository of the main pipeline, at the time of execution.
+* CF_BASE_BRANCH - The base branch used during creation of Tag.
+* CF_PULL_REQUEST_ACTION - The pull request action.
+* CF_PULL_REQUEST_TARGET - The pull request target branch.
+* CF_PULL_REQUEST_NUMBER - The pull request number.
+* CF_PULL_REQUEST_ID - The pull request id.
+* CF_PULL_REQUEST_LABELS - The labels of pull request.
+* CF_COMMIT_AUTHOR - Commit author.
+* CF_COMMIT_USERNAME - Commit username.
+* CF_COMMIT_EMAIL - Commit email.
+* CF_COMMIT_URL - Commit url.
+* CF_COMMIT_MESSAGE - Commit message of the Git repository revision, at the time of execution.
+* CF_REVISION - Revision of the Git repository of the main pipeline, at the time of execution.
+* CF_SHORT_REVISION - The abbreviated 7-character revision hash, as used in Git.
+* CF_RELEASE_NAME - GitHub release title.
+* CF_RELEASE_TAG - Git tag version.
+* CF_RELEASE_ID - Internal ID for this release.
+* CF_PRERELEASE_FLAG - "true" if the release is marked as non-production ready, "false" if it is ready for production.
+* CF_PULL_REQUEST_MERGED - "true" if the pull request was merged to base branch.
+* CF_PULL_REQUEST_HEAD_BRANCH - The head branch of the PR (the branch that we want to merge to master).
+* CF_PULL_REQUEST_MERGED_COMMIT_SHA - The commit SHA on the base branch after the pull request was merged (in most cases it will be master).
+* CF_PULL_REQUEST_HEAD_COMMIT_SHA - The commit SHA on the head branch (the branch that we want to push).
 
 ## Examples
 
@@ -91,10 +91,10 @@ spec:
     - name: example-steps
       steps:
       # 1. Store GitHub info as global workflow outputs
-      - - name: get-github-info
+      - - name: extract-webhook-variables
           templateRef:
             name: argo-hub.github.0.0.2
-            template: get-github-info
+            template: extract-webhook-variables
           arguments:
             parameters:
             - name: GITHUB_JSON

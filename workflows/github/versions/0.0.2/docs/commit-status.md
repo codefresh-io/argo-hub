@@ -6,14 +6,14 @@ Reports a commit status check.
 ## Inputs/Outputs
 
 ### Inputs
-GITHUB_TOKEN_SECRET (required) - K8s secret name that contains a key named `token` with github access token
-BUILD_BASE_URL (required) - Your argo workflow exposed instance url
-REPO_OWNER (required) - Repository Owner
-REPO_NAME (required) - Repository Name
-REVISION (required) - commit sha
-STATE (required) - one of the possible states
-CONTEXT (required) - context to report
-DESCRIPTION (required) - general description
+* GITHUB_TOKEN_SECRET (required) - K8s secret name that contains a key named `token` with github access token
+* BUILD_BASE_URL (required) - Your argo workflow exposed instance url
+* REPO_OWNER (required) - Repository Owner
+* REPO_NAME (required) - Repository Name
+* REVISION (required) - commit sha
+* STATE (required) - one of the possible states
+* CONTEXT (required) - context to report
+* DESCRIPTION (required) - general description
 
 ### Outputs
 no outputs
