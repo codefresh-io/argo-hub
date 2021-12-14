@@ -36,7 +36,7 @@ spec:
           - name: CR_NUMBER
             valueFrom:
               path: /tmp/CR_NUMBER
-      script:
+      container:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
