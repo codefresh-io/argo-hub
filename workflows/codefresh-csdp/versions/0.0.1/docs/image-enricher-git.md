@@ -1,4 +1,4 @@
-# git-image-enricher
+# image-enricher-git
 
 ## Summary
 Enrich codefresh image with PRs and Issues info. Adds pull request information to an image.
@@ -26,17 +26,17 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: git-image-enricher-
+  generateName: image-enricher-git-
 spec:
   entrypoint: main
   templates:
   - name: main
     dag:
       tasks:
-      - name: git-image-enricher
+      - name: image-enricher-git
         templateRef:
-          name: argo-hub.git-image-enricher.0.0.1
-          template: git-image-enricher
+          name: argo-hub.image-enricher-git.0.0.1
+          template: image-enricher-git
         arguments:
           parameters:
           - name: IMAGE
