@@ -1,7 +1,7 @@
 # Changelog
 
-## v0.0.1 (1.12.2021)
+## v0.0.1 (14.12.2021)
 
-### run-pipeline
+### image-enricher-git
 
-A wrapper on top of Codefresh cli run operation.
+Enrich codefresh image with PRs and Issues info. Adds pull request information to an image.
