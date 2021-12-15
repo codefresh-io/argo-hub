@@ -35,7 +35,7 @@ spec:
         tasks:
         - name: report-commit-status-start
           templateRef:
-            name: codefresh-marketplace.github.0.0.2
+            name: argo-hub.github.0.0.2
             template: commit-status
           arguments:
             parameters:
@@ -61,7 +61,7 @@ spec:
           - - name: report-commits-status-failure
               when: '{{workflow.status}} =~ "Failed|Error"'
               templateRef:
-                name: codefresh-marketplace.github.0.0.2
+                name: argo-hub.github.0.0.2
                 template: commit-status
               arguments:
                 parameters:
@@ -85,7 +85,7 @@ spec:
           - - name: report-commits-status-success
               when: '{{workflow.status}} == Succeeded'
               templateRef:
-                name: codefresh-marketplace.github.0.0.2
+                name: argo-hub.github.0.0.2
                 template: commit-status
               arguments:
                 parameters:
