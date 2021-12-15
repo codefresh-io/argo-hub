@@ -39,7 +39,7 @@ spec:
         image: quay.io/codefreshplugins/argo-hub-workflows-slack-versions-0.0.1-images-send-message:main
         command:
           - node
-          - /app/index.js
+          - /usr/src/app/index.js
         env:
           - name: MODE
             value: '{{ inputs.parameters.MODE }}'
