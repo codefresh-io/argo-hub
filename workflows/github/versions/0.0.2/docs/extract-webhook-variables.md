@@ -68,7 +68,7 @@ spec:
               spec:
                 workflowTemplateRef:
                   name: example-steps
-                serviceAccountName: codefresh-marketplace.github.0.0.2
+                serviceAccountName: argo-hub.github.0.0.2
                 arguments:
                   parameters:
                     - name: GITHUB_JSON

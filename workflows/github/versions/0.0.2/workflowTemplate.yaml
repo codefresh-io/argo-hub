@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: codefresh-marketplace.github.0.0.2
+  name: argo-hub.github.0.0.2
   annotations:
-    codefresh-marketplace/version: '0.0.2'
-    codefresh-marketplace/description: 'Execute operations against Github'
-    codefresh-marketplace/license: 'MIT'
-    codefresh-marketplace/owner_name: 'Itai Gendler'
-    codefresh-marketplace/owner_email: 'itai@codefresh.io'
-    codefresh-marketplace/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
-    codefresh-marketplace/owner_url: 'https://github.com/itai-codefresh'
-    codefresh-marketplace/categories: 'git'
-    codefresh-marketplace/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
-    codefresh-marketplace/icon_background: "#f4f4f4"
+    argo-hub/version: '0.0.2'
+    argo-hub/description: 'Execute operations against Github'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Itai Gendler'
+    argo-hub/owner_email: 'itai@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    argo-hub/owner_url: 'https://github.com/itai-codefresh'
+    argo-hub/categories: 'git'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates:
     - name: commit-status
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'Report a commit status check'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#f4f4f4"
+          argo-hub-template/description: 'Report a commit status check'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "10"
         retryPolicy: "Always"
@@ -69,9 +69,9 @@ spec:
     - name: create-pr
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'Create a pull request'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#f4f4f4"
+          argo-hub-template/description: 'Create a pull request'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
           - name: repo
@@ -100,9 +100,9 @@ spec:
     - name: extract-webhook-variables
       metadata:
         annotations:
-          codefresh-marketplace-template/description: 'Parses the GitHub Event Payload (JSON) and output the most useful payload fields as artifact files.'
-          codefresh-marketplace-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
-          codefresh-marketplace-template/icon_background: "#f4f4f4"
+          argo-hub-template/description: 'Parses the GitHub Event Payload (JSON) and output the most useful payload fields as artifact files.'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
         - name: GITHUB_JSON
