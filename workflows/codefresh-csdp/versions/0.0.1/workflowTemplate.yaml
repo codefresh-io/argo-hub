@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: image-enricher-git
-      serviceAccountName: argo-hub.codefresh-csdp.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich codefresh image with PRs and Issues info'

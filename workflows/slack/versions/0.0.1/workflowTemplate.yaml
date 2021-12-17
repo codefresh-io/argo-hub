@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: send-message
-      serviceAccountName: argo-hub.slack.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Send a message to a Slack channel using a hook url'

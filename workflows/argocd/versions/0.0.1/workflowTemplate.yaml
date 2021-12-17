@@ -51,7 +51,6 @@ spec:
   # ArgoCD app sync
   # Cannot just anchor the whole list item because overrides will not function properlc
   - name: sync
-    serviceAccountName: &serviceAccountName argo-hub.argocd.0.0.1
     metadata:
       annotations: &annotations
         argo-hub-template/description: 'Sync an application in ArgoCD'
@@ -111,7 +110,6 @@ spec:
 
   # Wait for an app status
   - name: wait
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Wait for an application to get into a desired state in ArgoCD'
@@ -124,7 +122,6 @@ spec:
       <<: *inputs
 
   - name: rollback
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Rollback an application to a given ID in ArgoCD'
@@ -151,7 +148,6 @@ spec:
 
   # Abort a rollout
   - name: action-abort
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Run the abort action against an application (rollout) in ArgoCD'
@@ -165,7 +161,6 @@ spec:
 
   # Promote-full a rollout
   - name: action-promote-full
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Run the promote-full action against an application (rollout) in ArgoCD'
@@ -179,7 +174,6 @@ spec:
 
   # Restart a rollout
   - name: action-restart
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Run the restart action against an application in ArgoCD'
@@ -193,7 +187,6 @@ spec:
 
   # Resume a rollout
   - name: action-resume
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Run the resume action against an application (rollout) in ArgoCD'
@@ -207,7 +200,6 @@ spec:
 
   # Retry a rollout
   - name: action-retry
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'Run the retry action against an application (rollout) in ArgoCD'
@@ -221,7 +213,6 @@ spec:
 
   # List applications
   - name: list
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: 'List applications in ArgoCD'
@@ -241,7 +232,6 @@ spec:
 
   # Get application history
   - name: history
-    serviceAccountName: *serviceAccountName
     metadata:
       annotations:
         argo-hub-template/description: "Show an application's history in ArgoCD"

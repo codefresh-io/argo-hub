@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: task
-      serviceAccountName: argo-hub.starting-template.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'task'

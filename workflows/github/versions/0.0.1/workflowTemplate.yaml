@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: commit-status
-      serviceAccountName: argo-hub.github.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Report a commit status check'
@@ -68,7 +67,6 @@ spec:
                 key: token
 
     - name: create-pr
-      serviceAccountName: argo-hub.github.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Create a pull request'

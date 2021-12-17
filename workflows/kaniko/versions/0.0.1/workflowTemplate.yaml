@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: build
-      serviceAccountName: argo-hub.kaniko.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'A wrapper on top of kaniko CLI'
