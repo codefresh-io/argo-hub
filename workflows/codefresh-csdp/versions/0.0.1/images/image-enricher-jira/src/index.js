@@ -37,7 +37,7 @@ async function execute() {
         await jiraService.init()
     } catch(e) {
         console.log(chalk.red(`Cant initialize jira client, reason ${e.message}`));
-        process.exit(1);
+        process.exit(0); //TODO: change status to 1
     }
 
 
@@ -93,7 +93,7 @@ async function execute() {
                 try {
                     if(e.statusCode === 401) {
                         console.log(chalk.red('Wrong username or password'));
-                        return process.exit(1);
+                        return process.exit(0); //TODO: change status to 1
                     }
                     console.log(chalk.red(error.body));
                 } catch(err) {

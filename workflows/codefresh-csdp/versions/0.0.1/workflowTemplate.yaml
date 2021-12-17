@@ -91,7 +91,7 @@ spec:
           - name: CF_URL
             default: ''
           - name: FAIL_ON_NOT_FOUND
-            default: ''
+            default: 'false'
           - name: JIRA_CONTEXT
             default: ''
           - name: JIRA_EMAIL
