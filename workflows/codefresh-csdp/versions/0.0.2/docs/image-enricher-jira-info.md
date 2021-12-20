@@ -1,7 +1,7 @@
-# image-enricher-jira
+# image-enricher-jira-info
 
 ## Summary
-Extract jira issue from message and convert it to image annotation. Adds jira ticket information to an image.
+Enrich images with metadata and annotation such as ticket number, title, assignee, status.
 
 ## Inputs/Outputs
 

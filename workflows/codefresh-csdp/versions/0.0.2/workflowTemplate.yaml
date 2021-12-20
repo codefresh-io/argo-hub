@@ -1,0 +1,150 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.codefresh-csdp.0.0.2
+  annotations:
+    argo-hub/version: '0.0.2'
+    argo-hub/description: 'Operate against Codefresh csdp platform'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Pasha Kostohrys'
+    argo-hub/owner_email: 'pavel@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
+    argo-hub/owner_url: 'https://github.com/pasha-codefresh'
+    argo-hub/categories: 'messaging'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+    argo-hub/icon_background: "#171A2D"
+spec:
+  templates:
+    - name: image-enricher-git-info
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.2
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Enrich images with metadata and annotation such as PR, commits, committers'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: API_PATH_PREFIX
+            default: ''
+          - name: GITHUB_API
+            default: ''
+          - name: CF_URL
+            default: ''
+          - name: GITHUB_HOST
+            default: 'github.com'
+          - name: GITHUB_TOKEN
+            default: ''
+          - name: GIT_PROVIDER_NAME
+            default: ''
+          - name: IMAGE
+          - name: BRANCH
+          - name: REPO
+          - name: CF_API_KEY
+
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.2-images-image-enricher-git-info:main
+        command:
+          - node
+          - /app/src/index.js
+        env:
+          - name: API_PATH_PREFIX
+            value: '{{ inputs.parameters.API_PATH_PREFIX }}'
+          - name: GITHUB_API
+            value: '{{ inputs.parameters.GITHUB_API }}'
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
+          - name: GITHUB_HOST
+            value: '{{ inputs.parameters.GITHUB_HOST }}'
+          - name: IMAGE
+            value: '{{ inputs.parameters.IMAGE_SHA }}'
+          - name: BRANCH
+            value: '{{ inputs.parameters.BRANCH }}'
+          - name: REPO
+            value: '{{ inputs.parameters.REPO }}'
+          - name: GIT_PROVIDER_NAME
+            value: '{{ inputs.parameters.GIT_PROVIDER_NAME }}'
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY }}'
+                key: token
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN }}'
+                key: token
+    - name: image-enricher-jira-info
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.2
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Enrich images with metadata and annotation such as ticket number, title, assignee, status'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: CF_URL
+            default: ''
+          - name: FAIL_ON_NOT_FOUND
+            default: 'false'
+          - name: JIRA_CONTEXT
+            default: ''
+          - name: JIRA_EMAIL
+            default: ''
+          - name: JIRA_HOST
+            default: ''
+          - name:  JIRA_API_TOKEN
+            default: ''
+          - name: JIRA_PROJECT_PREFIX
+          - name: CF_API_KEY
+          - name: IMAGE
+          - name: MESSAGE
+
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.2-images-image-enricher-jira-info:main
+        command:
+          - node
+          - /app/src/index.js
+        env:
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
+          - name: FAIL_ON_NOT_FOUND
+            value: '{{ inputs.parameters.FAIL_ON_NOT_FOUND }}'
+          - name: JIRA_CONTEXT
+            value: '{{ inputs.parameters.JIRA_CONTEXT }}'
+          - name: JIRA_HOST
+            value: '{{ inputs.parameters.JIRA_HOST }}'
+          - name: JIRA_PROJECT_PREFIX
+            value: '{{ inputs.parameters.JIRA_PROJECT_PREFIX }}'
+          - name: IMAGE
+            value: '{{ inputs.parameters.IMAGE }}'
+          - name: MESSAGE
+            value: '{{ inputs.parameters.MESSAGE }}'
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY }}'
+                key: token
+          - name: JIRA_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_TOKEN }}'
+                key: token
+          - name: JIRA_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_EMAIL }}'
+                key: token

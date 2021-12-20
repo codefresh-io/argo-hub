@@ -1,1 +1,0 @@
-# jira-issue-extractor
