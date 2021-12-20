@@ -1,7 +1,7 @@
 # image-enricher-git
 
 ## Summary
-Enrich codefresh image with PRs info. Adds pull request information to an image.
+Enrich codefresh image with PRs and Issues info. Adds pull request information to an image.
 
 ## Inputs/Outputs
 
