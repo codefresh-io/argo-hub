@@ -26,17 +26,17 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: image-enricher-git-
+  generateName: image-enricher-git-info-
 spec:
   entrypoint: main
   templates:
   - name: main
     dag:
       tasks:
-      - name: image-enricher-git
+      - name: image-enricher-git-info
         templateRef:
-          name: argo-hub.image-enricher-git.0.0.1
-          template: image-enricher-git
+          name: argo-hub.codefresh-csdp.0.0.2
+          template: image-enricher-git-info
         arguments:
           parameters:
           - name: IMAGE

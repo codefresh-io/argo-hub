@@ -26,17 +26,17 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: image-enricher-jira-
+  generateName: image-enricher-jira-info-
 spec:
   entrypoint: main
   templates:
   - name: main
     dag:
       tasks:
-      - name: image-enricher-jira
+      - name: image-enricher-jira-info
         templateRef:
-          name: argo-hub.image-enricher-jira.0.0.1
-          template: image-enricher-jira
+          name: argo-hub.codefresh-csdp.0.0.2
+          template: image-enricher-jira-info
         arguments:
           parameters:
           - name: IMAGE
