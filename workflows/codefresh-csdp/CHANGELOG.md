@@ -15,5 +15,3 @@ Enrich images with metadata and annotation such as ticket number, title, assigne
 ### image-enricher-git
 
 Enrich codefresh image with PRs and Issues info. Adds pull request information to an image.
-
-
