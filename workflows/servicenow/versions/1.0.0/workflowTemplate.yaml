@@ -40,22 +40,128 @@ spec:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
             value: 'createcr'
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
+            #value: admin
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.SN_AUTH }}'
                 key: username
           - name: SN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.SN_AUTH }}'
-                key: password
+            value: rancor.trimeter.hedge.globular.I464
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: '{{ inputs.parameters.SN_AUTH }}'
+            #     key: password
           - name: CR_DATA
             value: '{{ inputs.parameters.CR_DATA }}'
           - name: DEBUG
-            value: "true"
+            value: '{{ inputs.parameters.DEBUG }}'
+
+    - name: updatecr
+      metadata:
+        annotations:
+          icon-type: svg
+          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          icon-background: "#81D4FA"
+      outputs:
+        parameters:
+          - name: FULL_JSON
+            valueFrom:
+              path: /tmp/CR_UPDATE_JSON
+      inputs:
+        parameters:
+          - name: SN_INSTANCE          # aka https://instance.service-now.com
+          - name: SN_AUTH              # secret name
+          - name: CR_DATA
+          - name: CR_SYSID
+          - name: DEBUG
+      container:
+        imagePullPolicy: Always
+        #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        command: ["python3", "/snow/snow.py"]
+        env:
+          - name: ACTION
+            value: 'updatecr'
+          - name: SN_INSTANCE
+            value: '{{ inputs.parameters.SN_INSTANCE }}'
+          - name: SN_USER
+            value: admin
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: '{{ inputs.parameters.SN_AUTH }}'
+            #     key: username
+          - name: SN_PASSWORD
+            value: rancor.trimeter.hedge.globular.I464
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: '{{ inputs.parameters.SN_AUTH }}'
+            #     key: password
+          - name: CR_DATA
+            value: '{{ inputs.parameters.CR_DATA }}'
+          - name: CR_SYSID
+            value: '{{ inputs.parameters.CR_SYSID }}'
+          - name: DEBUG
+            value: '{{ inputs.parameters.DEBUG }}'
+
+    - name: closecr
+      metadata:
+        annotations:
+          icon-type: svg
+          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          icon-background: "#81D4FA"
+      outputs:
+        parameters:
+          - name: FULL_JSON
+            valueFrom:
+              path: /tmp/CR_CLOSE_JSON
+      inputs:
+        parameters:
+          - name: SN_INSTANCE          # aka https://instance.service-now.com
+          - name: SN_AUTH              # secret name
+          - name: CR_DATA
+            value: '{}'
+          - name: CR_SYSID
+          - name: DEBUG
+          - name: CR_CLOSE_CODE
+            value: "successful"
+          - name: CR_CLOSE_NOTES
+            value: "Closed automatically by Argo-Hub ServiceNow workflow template"
+      container:
+        imagePullPolicy: Always
+        #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        command: ["python3", "/snow/snow.py"]
+        env:
+          - name: ACTION
+            value: 'updatecr'
+          - name: SN_INSTANCE
+            value: '{{ inputs.parameters.SN_INSTANCE }}'
+          - name: SN_USER
+            value: admin
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: '{{ inputs.parameters.SN_AUTH }}'
+            #     key: username
+          - name: SN_PASSWORD
+            value: rancor.trimeter.hedge.globular.I464
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: '{{ inputs.parameters.SN_AUTH }}'
+            #     key: password
+          - name: CR_DATA
+            value: '{{ inputs.parameters.CR_DATA }}'
+          - name: CR_SYSID
+            value: '{{ inputs.parameters.CR_SYSID }}'
+          - name: CR_CLOSE_CODE
+            value: '{{ inputs.parameters.CR_CLOSE_CODE }}'
+          - name: CR_CLOSE_NOTES
+            value: '{{ inputs.parameters.CR_CLOSE_NOTES }}'
+          - name: DEBUG
+            value: '{{ inputs.parameters.DEBUG }}'
