@@ -28,6 +28,7 @@ spec:
           - name: SN_AUTH              # secret name
           - name: CR_DATA
           - name: DEBUG
+            value: false
       outputs:
         parameters:
           - name: CR_SYSID
@@ -47,17 +48,15 @@ spec:
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
-            #value: admin
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.SN_AUTH }}'
                 key: username
           - name: SN_PASSWORD
-            value: rancor.trimeter.hedge.globular.I464
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: '{{ inputs.parameters.SN_AUTH }}'
-            #     key: password
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
           - name: CR_DATA
             value: '{{ inputs.parameters.CR_DATA }}'
           - name: DEBUG
@@ -81,6 +80,7 @@ spec:
           - name: CR_DATA
           - name: CR_SYSID
           - name: DEBUG
+            value: false
       container:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
@@ -92,17 +92,15 @@ spec:
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
-            value: admin
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: '{{ inputs.parameters.SN_AUTH }}'
-            #     key: username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: username
           - name: SN_PASSWORD
-            value: rancor.trimeter.hedge.globular.I464
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: '{{ inputs.parameters.SN_AUTH }}'
-            #     key: password
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
           - name: CR_DATA
             value: '{{ inputs.parameters.CR_DATA }}'
           - name: CR_SYSID
@@ -129,6 +127,7 @@ spec:
             value: '{}'
           - name: CR_SYSID
           - name: DEBUG
+            value: false
           - name: CR_CLOSE_CODE
             value: "successful"
           - name: CR_CLOSE_NOTES
@@ -144,17 +143,15 @@ spec:
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
-            value: admin
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: '{{ inputs.parameters.SN_AUTH }}'
-            #     key: username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: username
           - name: SN_PASSWORD
-            value: rancor.trimeter.hedge.globular.I464
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: '{{ inputs.parameters.SN_AUTH }}'
-            #     key: password
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
           - name: CR_DATA
             value: '{{ inputs.parameters.CR_DATA }}'
           - name: CR_SYSID
