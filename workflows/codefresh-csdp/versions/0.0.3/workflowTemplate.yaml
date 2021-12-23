@@ -62,8 +62,8 @@ spec:
             value: '{{ inputs.parameters.CF_URL }}'
           - name: GITHUB_HOST
             value: '{{ inputs.parameters.GITHUB_HOST }}'
-          - name: IMAGE
-            value: '{{ inputs.parameters.IMAGE_SHA }}'
+          - name: IMAGE_SHA
+            value: '{{ inputs.parameters.IMAGE }}'
           - name: BRANCH
             value: '{{ inputs.parameters.BRANCH }}'
           - name: REPO
