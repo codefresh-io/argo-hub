@@ -8,7 +8,7 @@ Enrich images with metadata and annotation such as ticket number, title, assigne
 ### Inputs
 * IMAGE (required) - your image to which you want assign issues
 * JIRA_HOST (required) - jira host, should be without protocol and / in the end
-* JIRA_CREDENTIALS (required) - secret name with jira email and token that you generate in jira
+* JIRA_CREDENTIALS (required) - name of secret that contains a jira email and token that you generate in jira
 * JIRA_PROJECT_PREFIX (required) - jira project prefix like: SAAS, CF, etc
 * CF_API_KEY (required) - Codefresh API key
 * MESSAGE (required) - message from which you want retrieve issue name, can be a branch, commit message, whatever
