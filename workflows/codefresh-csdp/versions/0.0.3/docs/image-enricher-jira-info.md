@@ -49,7 +49,7 @@ spec:
             value: 'jira.atlassian.net'
           - name: JIRA_EMAIL
             value: 'jira@test.io' 
-          - name: JIRA_EMAIL
+          - name: JIRA_API_TOKEN
             value: 'JIRA_API_TOKEN' 
           - name: CF_API_KEY
             value: 'CODEFRESH_API_KEY'                            
