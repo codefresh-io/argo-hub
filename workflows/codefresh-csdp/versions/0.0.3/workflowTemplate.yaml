@@ -100,11 +100,9 @@ spec:
             default: 'false'
           - name: JIRA_CONTEXT
             default: ''
-          - name: JIRA_EMAIL
-            default: ''
           - name: JIRA_HOST
             default: ''
-          - name:  JIRA_API_TOKEN
+          - name:  JIRA_CREDENTIALS
             default: ''
           - name: JIRA_PROJECT_PREFIX
           - name: CF_API_KEY
@@ -141,12 +139,12 @@ spec:
           - name: JIRA_API_TOKEN
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.JIRA_API_TOKEN }}'
+                name: '{{ inputs.parameters.JIRA_CREDENTIALS }}'
                 key: token
           - name: JIRA_EMAIL
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.JIRA_EMAIL }}'
+                name: '{{ inputs.parameters.JIRA_CREDENTIALS }}'
                 key: email
     - name: report-image-info
       serviceAccountName: argo-hub.codefresh-csdp.0.0.3
