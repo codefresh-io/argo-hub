@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.3 (21.12.2021)
+
+### report-image-info
+
+Report image info to argo platform.
+
 ## v0.0.2 (20.12.2021)
 
 ### image-enricher-git-info
