@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.4 (21.12.2021)
+
+### image-enricher-jira-info
+
+Enrich images with jira avatarURL.
+
 ## v0.0.3 (21.12.2021)
 
 ### report-image-info
