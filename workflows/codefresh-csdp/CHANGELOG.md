@@ -1,10 +1,14 @@
 # Changelog
 
-## v0.0.4 (21.12.2021)
+## v0.0.4 (29.12.2021)
 
 ### image-enricher-jira-info
 
-Enrich images with jira avatarURL.
+Enrich images with jira avatarURL
+
+### report-image-info
+
+Default value for secret parameters was removed
 
 ## v0.0.3 (21.12.2021)
 
