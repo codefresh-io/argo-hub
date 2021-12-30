@@ -8,10 +8,10 @@ Report image info to argo platform.
 ### Inputs
 * IMAGE_URI (required) - your image to which you want to report
 * CF_API_KEY (required) - Codefresh API key          
-* GIT_BRANCH (required) - git branch
-* GIT_REVISION (required) - git revision
-* GIT_COMMIT_MESSAGE (required) - git commit message
-* GIT_COMMIT_URL (required) - git commit url
+* GIT_BRANCH (optional) - git branch
+* GIT_REVISION (optional) - git revision
+* GIT_COMMIT_MESSAGE (optional) - git commit message
+* GIT_COMMIT_URL (optional) - git commit url
 * GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
 * AWS_ACCESS_KEY (required) - Amazon access key
 * AWS_SECRET_KEY (required) - Amazon secret key

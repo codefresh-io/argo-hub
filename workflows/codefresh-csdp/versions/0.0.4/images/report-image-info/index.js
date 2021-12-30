@@ -123,13 +123,28 @@ const init = async () => {
     console.log(JSON.stringify(data, null, 2))
 }
 
+const validateRequiredEnvs = () => {
+    if (_.isEmpty(process.env.IMAGE_URI)) {
+        throw new Error('IMAGE_URI is required parameter. Add this parameter in your workflow to continue.');
+    }
+    if (_.isEmpty(process.env.CF_API_KEY)) {
+        throw new Error('CF_API_KEY is required parameter. Add this parameter in your workflow to continue.');
+    }
+    if ((_.isEmpty(process.env.DOCKER_USERNAME) || _.isEmpty(process.env.DOCKER_PASSWORD))
+        && (_.isEmpty(process.env.USERNAME) || _.isEmpty(process.env.PASSWORD) || _.isEmpty(process.env.DOMAIN))
+        && (_.isEmpty(process.env.AWS_ACCESS_KEY) || _.isEmpty(process.env.AWS_SECRET_KEY) || _.isEmpty(process.env.AWS_REGION))
+        && _.isEmpty(process.env.GCR_KEY_FILE_PATH)) {
+        throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN');
+    }
+}
 
 const main = async () => {
     try {
+        validateRequiredEnvs();
         await init();
     } catch (err) {
         console.error(err.stack);
-        process.exit(0);
+        process.exit(1);
     }
 };
 
