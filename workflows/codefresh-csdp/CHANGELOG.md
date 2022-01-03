@@ -4,6 +4,7 @@
 
 ### report-image-info
 
+Added volume for gcr key file
 All registry secrets parameters were set to optional
 
 ## v0.0.4 (30.12.2021)

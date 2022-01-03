@@ -31,7 +31,7 @@ function createRegistryClient() {
         });
     }
 
-    if (process.env.GCR_KEY_FILE_PATH && process.env.GCR_KEY_FILE_PATH!==CF_NOT_EXIST) {
+    if (process.env.GCR_KEY_FILE_PATH) {
         return new GcrRegistry({
             keyfile: fs.readFileSync(process.env.GCR_KEY_FILE_PATH),
             request: { host: 'gcr.io' }
