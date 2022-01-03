@@ -10,7 +10,7 @@ const CF_NOT_EXIST = 'cf-not-exist';
 function createRegistryClient() {
 
     if (process.env.DOCKER_USERNAME && process.env.DOCKER_PASSWORD
-        &&process.env.DOCKER_USERNAME!==CF_NOT_EXIST && process.env.DOCKER_PASSWORD!==CF_NOT_EXIST) {
+        && process.env.DOCKER_USERNAME!==CF_NOT_EXIST && process.env.DOCKER_PASSWORD!==CF_NOT_EXIST) {
         return new DockerhubRegistry({
             username: process.env.DOCKER_USERNAME,
             password: process.env.DOCKER_PASSWORD
@@ -18,7 +18,7 @@ function createRegistryClient() {
     }
 
     if (process.env.USERNAME && process.env.PASSWORD && process.env.DOMAIN
-        &&process.env.USERNAME!==CF_NOT_EXIST && process.env.PASSWORD!==CF_NOT_EXIST && process.env.DOMAIN!==CF_NOT_EXIST) {
+        && process.env.USERNAME!==CF_NOT_EXIST && process.env.PASSWORD!==CF_NOT_EXIST && process.env.DOMAIN!==CF_NOT_EXIST) {
         return new StandardRegistry({
             request: {
                 protocol: process.env.INSECURE === 'true' ? 'http' : 'https',
