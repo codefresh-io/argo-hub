@@ -155,6 +155,14 @@ spec:
         retryPolicy: "Always"
         backoff:
           duration: "5s"
+      volumes:
+        - name: gcr-key-file
+          secret:
+            items:
+              - key: .keyjson
+                path: key.json
+            secretName: gcr-key-file
+            optional: true
       inputs:
         parameters:
           - name: AWS_ACCESS_KEY
@@ -164,7 +172,7 @@ spec:
           - name: AWS_REGION
             default: 'cf-not-exist'
           - name: GCR_KEY_FILE_PATH
-            default: 'cf-not-exist'
+            default: ''
           - name: DOCKER_USERNAME
             default: 'cf-not-exist'
           - name: DOCKER_PASSWORD
@@ -199,6 +207,9 @@ spec:
         name: main
         imagePullPolicy: Always
         image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.5-images-report-image-info:main
+        volumeMounts:
+          - name: gcr-key-file
+            mountPath: /gcr/
         command:
           - node
           - index.js
@@ -246,12 +257,6 @@ spec:
                 name: '{{ inputs.parameters.AWS_REGION }}'
                 optional: true
                 key: aws-region
-          - name: GCR_KEY_FILE_PATH
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.GCR_KEY_FILE_PATH }}'
-                optional: true
-                key: gcr-key-file-path
           - name: DOCKER_USERNAME
             valueFrom:
               secretKeyRef:
