@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.5 (3.1.2022)
+
+### report-image-info
+
+All registry secrets parameters were set to optional
+
 ## v0.0.4 (30.12.2021)
 
 ### image-enricher-jira-info
