@@ -12,7 +12,7 @@
   "dependencies": {
     "@octokit/rest": "18.0.0",
     "bluebird": "3.7.2",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "request-promise": "4.2.5",
     "request": "2.88.2",
     "chalk": "^4.1.0"
