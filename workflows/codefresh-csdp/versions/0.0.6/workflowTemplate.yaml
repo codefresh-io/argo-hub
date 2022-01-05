@@ -1,0 +1,336 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.codefresh-csdp.0.0.4
+  annotations:
+    argo-hub/version: '0.0.4'
+    argo-hub/description: 'Operate against Codefresh csdp platform'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Pasha Kostohrys'
+    argo-hub/owner_email: 'pavel@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/39732895?v=4'
+    argo-hub/owner_url: 'https://github.com/pasha-codefresh'
+    argo-hub/categories: 'messaging'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+    argo-hub/icon_background: "#171A2D"
+spec:
+  templates:
+    - name: image-enricher-git-info
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.4
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Enrich images with metadata and annotation such as PR, commits, committers'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: API_PATH_PREFIX
+            default: ''
+          - name: GITHUB_API
+            default: ''
+          - name: CF_URL
+            default: ''
+          - name: GITHUB_HOST
+            default: 'github.com'
+          - name: GITHUB_TOKEN
+            default: ''
+          - name: GIT_PROVIDER_NAME
+            default: ''
+          - name: IMAGE
+          - name: BRANCH
+          - name: REPO
+          - name: CF_API_KEY
+
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.4-images-image-enricher-git-info:main
+        command:
+          - node
+          - /app/src/index.js
+        env:
+          - name: API_PATH_PREFIX
+            value: '{{ inputs.parameters.API_PATH_PREFIX }}'
+          - name: GITHUB_API
+            value: '{{ inputs.parameters.GITHUB_API }}'
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
+          - name: GITHUB_HOST
+            value: '{{ inputs.parameters.GITHUB_HOST }}'
+          - name: IMAGE_SHA
+            value: '{{ inputs.parameters.IMAGE }}'
+          - name: BRANCH
+            value: '{{ inputs.parameters.BRANCH }}'
+          - name: REPO
+            value: '{{ inputs.parameters.REPO }}'
+          - name: GIT_PROVIDER_NAME
+            value: '{{ inputs.parameters.GIT_PROVIDER_NAME }}'
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY }}'
+                key: token
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN }}'
+                key: token
+    - name: image-enricher-jira-info
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.4
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Enrich images with metadata and annotation such as ticket number, title, assignee, status'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: CF_URL
+            default: ''
+          - name: FAIL_ON_NOT_FOUND
+            default: 'false'
+          - name: JIRA_CONTEXT
+            default: ''
+          - name: JIRA_HOST
+            default: ''
+          - name:  JIRA_API_TOKEN_SECRET
+            default: ''
+          - name: JIRA_PROJECT_PREFIX
+          - name: CF_API_KEY
+          - name: IMAGE
+          - name: MESSAGE
+
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.4-images-image-enricher-jira-info:main
+        command:
+          - node
+          - /app/src/index.js
+        env:
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
+          - name: FAIL_ON_NOT_FOUND
+            value: '{{ inputs.parameters.FAIL_ON_NOT_FOUND }}'
+          - name: JIRA_CONTEXT
+            value: '{{ inputs.parameters.JIRA_CONTEXT }}'
+          - name: JIRA_HOST
+            value: '{{ inputs.parameters.JIRA_HOST }}'
+          - name: JIRA_PROJECT_PREFIX
+            value: '{{ inputs.parameters.JIRA_PROJECT_PREFIX }}'
+          - name: IMAGE
+            value: '{{ inputs.parameters.IMAGE }}'
+          - name: MESSAGE
+            value: '{{ inputs.parameters.MESSAGE }}'
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY }}'
+                key: token
+          - name: JIRA_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_TOKEN_SECRET }}'
+                key: token
+          - name: JIRA_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_TOKEN_SECRET }}'
+                key: email
+
+    - name: report-image-info
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Get image info from a registry and report it to Codefresh'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      inputs:
+          parameters:
+          - name: PLATFORM
+            default: 'linux/amd64' # Windows users must set windwows/amd64
+          # Add option to format in the future (need to escape curly braces)
+          - name: IMAGE_URI
+          - name: DOCKERCONFIG_VOLUME
+            default: docker-config
+      dag:
+        tasks:
+        - name: get-image-metadata
+          template: regctl
+          arguments:
+            parameters:
+              - name: COMMAND
+                value: inspect
+              - name: PLATFORM
+                value: '{{ inputs.parameters.PLATFORM }}'
+              - name: IMAGE_URI
+                value: '{{ inputs.parameters.IMAGE_URI }}'
+              - name: DOCKERCONFIG_VOLUME
+                value: '{{ inputs.parameters.DOCKERCONFIG_VOLUME }}'
+              - name: INSECURE
+                default: 'false'
+              - name: CF_HOST
+                default: 'https://g.codefresh.io'
+              - name: CF_API_KEY_SECRET
+                default: codefresh-token
+              - name: CF_API_KEY_SECRET_KEY
+                default: token
+              - name: GIT_BRANCH
+              - name: GIT_REVISION
+              - name: GIT_COMMIT_MESSAGE
+              - name: GIT_COMMIT_URL
+        # can expand these 3 items from a list of tasks and use that list for the COMMAND parameter
+        - name: get-image-manifest
+          template: regctl
+          arguments:
+            parameters:
+              - name: COMMAND
+                value: manifest
+              - name: PLATFORM
+                value: '{{ inputs.parameters.PLATFORM }}'
+              - name: IMAGE_URI
+                value: '{{ inputs.parameters.IMAGE_URI }}'
+              - name: DOCKERCONFIG_VOLUME
+                value: '{{ inputs.parameters.DOCKERCONFIG_VOLUME }}'
+        - name: get-image-digest
+          template: regctl
+          arguments:
+            parameters:
+              - name: COMMAND
+                value: digest
+              - name: PLATFORM
+                value: '{{ inputs.parameters.PLATFORM }}'
+              - name: IMAGE_URI
+                value: '{{ inputs.parameters.IMAGE_URI }}'
+              - name: DOCKERCONFIG_VOLUME
+                value: '{{ inputs.parameters.DOCKERCONFIG_VOLUME }}'
+        - name: image-info-reporter
+          depends: "get-image-metadata && get-image-manifest && get-image-digest"
+          template: image-info-reporter
+          arguments:
+            parameters:
+              - name: INSECURE
+                value: '{{ inputs.parameters.INSECURE }}'
+              - name: CF_HOST
+                value: '{{ inputs.parameters.CF_HOST }}'
+              - name: IMAGE_URI
+                value: '{{ inputs.parameters.IMAGE_URI }}'
+              - name: IMAGE_MANIFEST
+                value: '{{ tasks.get-image-manifest.outputs.parameters.out-json }}'
+              - name: IMAGE_METADATA
+                value: '{{ tasks.get-image-metadata.outputs.parameters.out-json }}'
+              - name: IMAGE_DIGEST
+                value: '{{ tasks.get-image-digest.outputs.parameters.out-json }}'
+              - name: CF_API_KEY_SECRET
+                value: '{{ inputs.parameters.CF_API_KEY_SECRET }}'
+              - name: CF_API_KEY_SECRET_KEY
+                value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+              - name: GIT_BRANCH
+                value: '{{ inputs.parameters.GIT_BRANCH }}'
+              - name: GIT_REVISION
+                value: '{{ inputs.parameters.GIT_REVISION }}'
+              - name: GIT_COMMIT_MESSAGE
+                value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
+              - name: GIT_COMMIT_URL
+                value: '{{ inputs.parameters.GIT_COMMIT_URL }}'
+
+    # This should be pulled out to its own argo-hub template
+    - name: regctl
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.4
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Get image info from registry'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      container:
+        image: regclient/regctl:v0.3-alpine
+        command: ["sh", "-o", "xtrace", "-c"]
+        args: ["regctl image {{inputs.parameters.COMMAND}}  {{inputs.parameters.IMAGE_URI}} --platform {{inputs.parameters.PLATFORM}} | tee /home/appuser/out.json"]
+      inputs:
+        parameters:
+          - name: COMMAND
+          - name: PLATFORM
+            default: 'linux/amd64' # Windows users must set windwows/amd64
+          # Add option to format (--format) in the future (need to escape curly braces)
+          - name: IMAGE_URI
+          - name: DOCKERCONFIG_VOLUME
+            default: docker-config
+      volumeMounts:
+        - mountPath: /home/appuser/.docker/
+          name: '{{ inputs.parameters.DOCKERCONFIG_VOLUME_MOUNT }}'
+      outputs:
+        parameters:
+          - name: out-json
+            valueFrom:
+              path: /home/appuser/out.json
+    - name: image-info-reporter
+      serviceAccountName: argo-hub.codefresh-csdp.0.0.4
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Report image info to argo platform'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+          argo-hub-template/icon_background: "#171A2D"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: INSECURE
+            default: 'false'
+          - name: CF_HOST
+            default: 'https://g.codefresh.io'
+          - name: IMAGE_URI
+          - name: CF_API_KEY_SECRET
+            default: codefresh-token
+          - name: CF_API_KEY_SECRET_KEY
+            default: token
+          - name: GIT_BRANCH
+          - name: GIT_REVISION
+          - name: GIT_COMMIT_MESSAGE
+          - name: GIT_COMMIT_URL
+          - name: IMAGE_MANIFEST
+          - name: IMAGE_METADATA
+          - name: IMAGE_DIGEST
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.4-images-report-image-info:main
+        command:
+          - node
+          - index.js
+        env:
+          - name: CF_HOST
+            value: '{{ inputs.parameters.CF_HOST }}'
+          - name: IMAGE_URI
+            value: '{{ inputs.parameters.IMAGE_URI }}'
+          - name: IMAGE_MANIFEST
+            value: '{{ inputs.parameters.IMAGE_MANIFEST }}'
+          - name: IMAGE_METADATA
+            value: '{{ inputs.parameters.IMAGE_METADATA }}'
+          - name: IMAGE_DIGEST
+            value: '{{ inputs.parameters.IMAGE_DIGEST }}'
+          - name: GIT_BRANCH
+            value: '{{ inputs.parameters.GIT_BRANCH }}'
+          - name: GIT_REVISION
+            value: '{{ inputs.parameters.GIT_REVISION }}'
+          - name: GIT_COMMIT_MESSAGE
+            value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
+          - name: GIT_COMMIT_URL
+            value: '{{ inputs.parameters.GIT_COMMIT_URL }}'
+          - name: INSECURE
+            value: '{{ inputs.parameters.INSECURE }}'
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY_SECRET }}'
+                key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'

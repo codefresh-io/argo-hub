@@ -1,0 +1,9 @@
+{
+  "name": "report-image-info",
+  "version": "1.0.0",
+  "main": "diff.js",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-request": "^3.7.0"
+  }
+}

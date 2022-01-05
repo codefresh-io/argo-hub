@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.4 (04.01.2022)
+
+### report-image-info
+
+Decouple image reporting from getting image info
+
 ## v0.0.3 (21.12.2021)
 
 ### report-image-info
