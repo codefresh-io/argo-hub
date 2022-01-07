@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.0.6 (7.1.2022)
+
+### image-enricher-jira-info
+Add additional variables to allow users to select the keys in the secrets they are referencing
+
+### image-enricher-git-info
+Add additional variables to allow users to select the keys in the secrets they are referencing
+
+### report-image-info
+Add additional variables to allow users to select the keys in the secrets they are referencing
+
 ## v0.0.5 (3.1.2022)
 
 ### report-image-info
