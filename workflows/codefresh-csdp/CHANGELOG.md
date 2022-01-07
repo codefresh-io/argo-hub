@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.0.5 (3.1.2022)
+
+### report-image-info
+
+Added volume for gcr key file
+All registry secrets parameters were set to optional
+
+## v0.0.4 (30.12.2021)
+
+### image-enricher-jira-info
+
+Enrich images with jira avatarURL
+
+### report-image-info
+
+Default value for secret parameters was removed
+Added parameters validation
+
 ## v0.0.3 (21.12.2021)
 
 ### report-image-info
