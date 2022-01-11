@@ -77,14 +77,15 @@ spec:
           - name: REPO
             path: /tmp/repo
 
+      # func commit(MESSAGE, GIT_USER_NAME, GIT_USER_EMAIL, GIT_FILES='.') REPO artifact {
+      # ...
+      # }
     - name: commit
       inputs:
         parameters:
           - name: MESSAGE
           - name: GIT_USER_NAME
-            default: "unspecified-username"
           - name: GIT_USER_EMAIL
-            default: "unspecified.email@acme.io"
           - name: GIT_FILES
             default: '.'
         artifacts:
