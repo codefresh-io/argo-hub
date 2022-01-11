@@ -49,3 +49,61 @@ spec:
         workingDir: '{{ inputs.artifacts.repo.path }}'
         command: [sh, -c]
         args: ["ls"]
+
+    # func clone(REPOURL, REVISION=main, GIT_TOKEN_SECRET) REPO artifact {
+    # ...
+    # }
+    - name: clone
+      inputs:
+        parameters:
+          - name: REPOURL
+          - name: REVISION
+          - name: GIT_TOKEN_SECRET
+      script:
+        image: quay.io/bitnami/git
+        command: [ bash ]
+        source: |
+          REPOURL="{{inputs.parameters.REPOURL}}"
+          REVISION="{{inputs.parameters.REVISION}}"
+          TOKEN="{{inputs.parameters.GIT_TOKEN_SECRET}}"
+          DIRPATH="{{ outputs.artifacts.REPO.path }}"
+          echo "inputs  REPO:$REPO REVISION:$REVISION DIRPATH:$DIRPATH"
+          mkdir -p $DIRPATH && cd $DIRPATH
+          PATTERN="https://" && CHANGE="https://token:$TOKEN@" && TOKEN_REPO="${REPOURL/$PATTERN/"$CHANGE"}"
+          CLONE="git clone $TOKEN_REPO $DIRPATH -b $REVISION"
+          echo $CLONE && eval $CLONE && ls -ltr
+      outputs:
+        artifacts:
+          - name: REPO
+            path: /tmp/repo
+
+    - name: commit
+      inputs:
+        parameters:
+          - name: MESSAGE
+          - name: GIT_USER_NAME
+            default: "unspecified-username"
+          - name: GIT_USER_EMAIL
+            default: "unspecified.email@acme.io"
+          - name: GIT_FILES
+            default: '.'
+        artifacts:
+          - name: REPO
+            path: /tmp/repo
+      script:
+        image: quay.io/bitnami/git
+        command: [ bash ]
+        source: |
+          MESSAGE="{{inputs.parameters.MESSAGE}}"
+          GIT_USER_NAME="{{inputs.parameters.GIT_USER_NAME}}"
+          GIT_USER_EMAIL="{{inputs.parameters.GIT_USER_EMAIL}}"
+          GIT_FILES="{{inputs.parameters.GIT_FILES}}"
+          DIRPATH="{{ inputs.artifacts.REPO.path }}"  && cd $DIRPATH
+          # REPOURL=$(git config --get remote.origin.url)
+          echo "Using User details/message:{ GIT_USER_NAME:$GIT_USER_NAME, GIT_USER_EMAIL:$GIT_USER_EMAIL, MESSAGE:$MESSAGE }"
+          # config user/email
+          CMD="git config user.name \"${GIT_USER_NAME}\" && git config --global user.email \"${GIT_USER_EMAIL}\""
+          eval $CMD
+          # add commit & push
+          COMMIT="git add $GIT_FILES  && git commit -am \"$MESSAGE\" && git push"
+          echo "Using remote.origin.url $COMMIT" && eval $COMMIT
