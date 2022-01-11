@@ -70,8 +70,8 @@ spec:
           echo "inputs  REPO:$REPO REVISION:$REVISION DIRPATH:$DIRPATH"
           mkdir -p $DIRPATH && cd $DIRPATH
           PATTERN="https://" && CHANGE="https://token:$TOKEN@" && TOKEN_REPO="${REPOURL/$PATTERN/"$CHANGE"}"
-          CLONE="git clone $TOKEN_REPO $DIRPATH -b $REVISION"
-          echo $CLONE && eval $CLONE && ls -ltr
+          git clone $TOKEN_REPO $DIRPATH -b $REVISION
+          ls -ltr
       outputs:
         artifacts:
           - name: REPO
