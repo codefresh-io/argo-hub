@@ -50,7 +50,6 @@ spec:
         command: [sh, -c]
         args: ["ls"]
 
-    # def clone(REPOURL, REVISION=main, GIT_TOKEN_SECRET) REPO artifact
     - name: clone
       metadata:
         annotations:
@@ -80,7 +79,6 @@ spec:
           - name: REPO
             path: /tmp/repo
 
-    # func commit(MESSAGE, GIT_USER_NAME, GIT_USER_EMAIL, GIT_FILES='.') REPO artifact
     - name: commit
       metadata:
         annotations:
