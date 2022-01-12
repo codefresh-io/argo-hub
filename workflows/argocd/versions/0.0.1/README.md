@@ -1,4 +1,4 @@
-# Slack
+# ArgoCD
 
 ## Summary
 
