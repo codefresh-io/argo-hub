@@ -50,14 +50,18 @@ spec:
         command: [sh, -c]
         args: ["ls"]
 
-    # func clone(REPOURL, REVISION=main, GIT_TOKEN_SECRET) REPO artifact {
-    # ...
-    # }
+    # def clone(REPOURL, REVISION=main, GIT_TOKEN_SECRET) REPO artifact
     - name: clone
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Clone a git http(s) url to into a specified output artifact (requires git token).'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: REPOURL
           - name: REVISION
+            default: main
           - name: GIT_TOKEN_SECRET
       script:
         image: quay.io/bitnami/git
@@ -71,16 +75,18 @@ spec:
           mkdir -p $DIRPATH && cd $DIRPATH
           PATTERN="https://" && CHANGE="https://token:$TOKEN@" && TOKEN_REPO="${REPOURL/$PATTERN/"$CHANGE"}"
           git clone $TOKEN_REPO $DIRPATH -b $REVISION
-          ls -ltr
       outputs:
         artifacts:
           - name: REPO
             path: /tmp/repo
 
-      # func commit(MESSAGE, GIT_USER_NAME, GIT_USER_EMAIL, GIT_FILES='.') REPO artifact {
-      # ...
-      # }
+    # func commit(MESSAGE, GIT_USER_NAME, GIT_USER_EMAIL, GIT_FILES='.') REPO artifact
     - name: commit
+      metadata:
+        annotations:
+          argo-hub-template/description: 'commit and push a git (input) artifact repository, Requirements: remote origin already in, check by "git config --get remote.origin.url" '
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: MESSAGE
@@ -100,7 +106,6 @@ spec:
           GIT_USER_EMAIL="{{inputs.parameters.GIT_USER_EMAIL}}"
           GIT_FILES="{{inputs.parameters.GIT_FILES}}"
           DIRPATH="{{ inputs.artifacts.REPO.path }}"  && cd $DIRPATH
-          # REPOURL=$(git config --get remote.origin.url)
           echo "Using User details/message:{ GIT_USER_NAME:$GIT_USER_NAME, GIT_USER_EMAIL:$GIT_USER_EMAIL, MESSAGE:$MESSAGE }"
           # config user/email
           git config user.name "${GIT_USER_NAME}" && git config --global user.email "${GIT_USER_EMAIL}"
