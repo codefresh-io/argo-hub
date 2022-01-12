@@ -1,13 +1,13 @@
 const { GraphQLClient, gql } = require('graphql-request')
 const fs = require('fs')
 const _ = require('lodash')
-
+const AWS = require('aws-sdk');
 
 const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegistry } } = require('nodegistry');
 
 const CF_NOT_EXIST = 'cf-not-exist';
 
-function createRegistryClient() {
+async function createRegistryClient() {
 
     if (process.env.DOCKER_USERNAME && process.env.DOCKER_PASSWORD
         && process.env.DOCKER_USERNAME!==CF_NOT_EXIST && process.env.DOCKER_PASSWORD!==CF_NOT_EXIST) {
@@ -29,6 +29,27 @@ function createRegistryClient() {
                 password: process.env.PASSWORD,
             },
         });
+    }
+
+    if (process.env.AWS_ROLE && process.env.AWS_ROLE!==CF_NOT_EXIST
+        && process.env.AWS_REGION && process.env.AWS_REGION!==CF_NOT_EXIST) {
+        console.log(`Retrieving credentials for ECR ${process.env.AWS_REGION} using STS token`);
+        const sts = new AWS.STS();
+        const timestamp = (new Date()).getTime();
+        const params = {
+            RoleArn: process.env.AWS_ROLE,
+            RoleSessionName: `be-descriptibe-here-${timestamp}`
+        }
+        const data = await sts.assumeRole(params).promise();
+        return new EcrRegistry({
+            promise: Promise,
+            credentials: {
+                accessKeyId: data.Credentials.AccessKeyId,
+                secretAccessKey: data.Credentials.SecretAccessKey,
+                sessionToken: data.Credentials.SessionToken,
+                region: process.env.AWS_REGION,
+            },
+        })
     }
 
     if (process.env.GCR_KEY_FILE_PATH) {
@@ -54,11 +75,11 @@ function createRegistryClient() {
 
 const init = async () => {
 
-    const client = createRegistryClient();
+    const client = await createRegistryClient();
 
     const image = process.env.IMAGE_URI;
-    const sender = process.env.GIT_SENDER_LOGIN;
-    const wf = process.env.WORKFLOW_NAME;
+    const authorUserName = process.env.GIT_SENDER_LOGIN;
+    const workflowName = process.env.WORKFLOW_NAME;
 
     const registry = client.repoTag(image);
 
@@ -86,8 +107,8 @@ const init = async () => {
         size: `${size}`,
         os: `${config.os}`,
         architecture: `${config.architecture}`,
-        sender,
-        wf
+        authorUserName,
+        workflowName
     })
 
     const binaryQuery = gql`mutation {
@@ -102,6 +123,10 @@ const init = async () => {
             size: ${size},
             os: "${config.os}",
             architecture: "${config.architecture}",
+            workflowName: "${workflowName}",
+            author: {
+                username: "${authorUserName}"
+            }
         }) {
             id,
             imageName,
@@ -109,6 +134,7 @@ const init = async () => {
             commit,
             commitMsg,
             commitURL,
+            workflowName
         }
     }`
     const binaryResult = await graphQLClient.request(binaryQuery)

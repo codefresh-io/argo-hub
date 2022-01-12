@@ -7,7 +7,7 @@ Report image info to argo platform.
 
 ### Inputs
 * IMAGE_URI (required) - your image to which you want to report
-* CF_API_KEY (required) - Codefresh API key
+* CF_API_KEY (required) - Codefresh API key created by runtime
 * GIT_BRANCH (optional) - git branch
 * GIT_REVISION (optional) - git revision
 * GIT_COMMIT_MESSAGE (optional) - git commit message
@@ -31,6 +31,8 @@ Report image info to argo platform.
 * PASSWORD_SECRET_KEY () The key in the Kubernetes secret with the standard registry password. Default is 'password'
 * DOMAIN (required) - The Kubernetes secret with the standard registry domain
 * DOMAIN_SECRET_KEY () - The key in the Kubernetes secret with the standard registry domain. Default is 'domain'
+* AWS_ROLE_SECRET (required) - The Kubernetes secret with the Amazon role
+* AWS_ROLE_SECRET_KEY () -The key in the Kubernetes secret with the standard Amazon role. Default is 'role'
 * CF_HOST (optional) - support on-premises Codefresh URL
 * INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
 

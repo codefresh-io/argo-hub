@@ -184,6 +184,8 @@ spec:
             default: 'cf-not-exist'
           - name: AWS_REGION
             default: 'cf-not-exist'
+          - name: AWS_ROLE_SECRET
+            default: 'cf-not-exist'
           - name: GCR_KEY_FILE_PATH
             default: ''
           - name: DOCKER_USERNAME
@@ -233,6 +235,8 @@ spec:
             default: 'gcr-key-file'
           - name: GCR_KEY_SECRET_KEY
             default: '.keyjson'
+          - name: AWS_ROLE_SECRET_KEY
+            default: 'role'
       container:
         name: main
         imagePullPolicy: Always
@@ -281,6 +285,12 @@ spec:
                 name: '{{ inputs.parameters.AWS_SECRET_KEY }}'
                 optional: true
                 key: '{{ inputs.parameters.AWS_SECRET_KEY_SECRET_KEY }}'
+          - name: AWS_ROLE
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.AWS_ROLE_SECRET }}'
+                optional: true
+                key: '{{ inputs.parameters.AWS_ROLE_SECRET_KEY }}'
           - name: AWS_REGION
             valueFrom:
               secretKeyRef:

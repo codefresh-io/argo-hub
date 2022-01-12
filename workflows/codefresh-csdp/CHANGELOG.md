@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.6 (12.1.2022)
+
+### report-image-info
+Added AWS_ROLE_SECRET to retrieve credentials for ECR using STS
+
 ## v0.0.6 (7.1.2022)
 
 ### image-enricher-jira-info
