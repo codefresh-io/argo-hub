@@ -1,16 +1,15 @@
-# clone-s3
+# clone
 
 ## Summary
-Clone a repository and push it as artifact to s3 for future use
+Clone a repository into a provided output artifact
 
 ## Inputs/Outputs
 
 ### Inputs
 #### Parameters
-* REPO (required) - the repository you want to clone (for example: https://github.com/codefresh-io/argo-hub)
+* REPO_URL (required) - the repository you want to clone (for example: https://github.com/codefresh-io/argo-hub)
 * REVISION (optional) - the revision to checkout. defaults to `main`
 * GIT_TOKEN_SECRET (required) - the k8s secret name that contains a key named `token` with the git secret inside it
-* KEY (optional) - the key to which the artifact will be pushed. defaults to `{{ workflow.name }}/git-repo`
 
 ### Outputs
 #### Artifacts
@@ -23,7 +22,7 @@ Clone a repository and push it as artifact to s3 for future use
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: git-clone-s3
+  generateName: git-clone
 spec:
   entrypoint: main
   templates:
@@ -33,11 +32,16 @@ spec:
       - name: clone-step
         templateRef:
           name: argo-hub.git.0.0.1
-          template: clone-s3
+          template: clone
         arguments:
           parameters:
-          - name: REPO
+          - name: REPO_URL
             value: 'https://github.com/codefresh-io/argo-hub'
           - name: GIT_TOKEN_SECRET
             value: 'git-token'
+        outputs:
+          - artifacts:
+            - name: repo
+              path: /cloned
+      # change & commit steps
 ```

@@ -19,7 +19,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a repository and push it as an artifact to s3'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/kaniko/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -53,12 +53,12 @@ spec:
     - name: clone
       metadata:
         annotations:
-          argo-hub-template/description: 'Clone a git http(s) url to into a specified output artifact (requires git token).'
+          argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). The repository would have the remote origin set with the REPO_URL and token'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
-          - name: REPOURL
+          - name: REPO_URL
           - name: REVISION
             default: main
           - name: GIT_TOKEN_SECRET
@@ -66,23 +66,23 @@ spec:
         image: quay.io/bitnami/git
         command: [ bash ]
         source: |
-          REPOURL="{{inputs.parameters.REPOURL}}"
+          REPO_URL="{{inputs.parameters.REPO_URL}}"
           REVISION="{{inputs.parameters.REVISION}}"
           TOKEN="{{inputs.parameters.GIT_TOKEN_SECRET}}"
-          DIRPATH="{{ outputs.artifacts.REPO.path }}"
-          echo "inputs  REPO:$REPO REVISION:$REVISION DIRPATH:$DIRPATH"
+          DIRPATH="{{ outputs.artifacts.repo.path }}"
+          echo "inputs REPO_URL:$REPO_URL REVISION:$REVISION DIRPATH:$DIRPATH"
           mkdir -p $DIRPATH && cd $DIRPATH
-          PATTERN="https://" && CHANGE="https://token:$TOKEN@" && TOKEN_REPO="${REPOURL/$PATTERN/"$CHANGE"}"
+          PATTERN="https://" && CHANGE="https://token:$TOKEN@" && TOKEN_REPO="${REPO_URL/$PATTERN/"$CHANGE"}"
           git clone $TOKEN_REPO $DIRPATH -b $REVISION
       outputs:
         artifacts:
-          - name: REPO
+          - name: repo
             path: /tmp/repo
 
     - name: commit
       metadata:
         annotations:
-          argo-hub-template/description: 'commit and push a git (input) artifact repository, Requirements: remote origin already in, check by "git config --get remote.origin.url" '
+          argo-hub-template/description: 'commit (and push) a git (input) artifact repository, Requirements: remote origin already set, check by "git config --get remote.origin.url" '
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
@@ -93,7 +93,7 @@ spec:
           - name: GIT_FILES
             default: '.'
         artifacts:
-          - name: REPO
+          - name: repo
             path: /tmp/repo
       script:
         image: quay.io/bitnami/git
@@ -103,7 +103,7 @@ spec:
           GIT_USER_NAME="{{inputs.parameters.GIT_USER_NAME}}"
           GIT_USER_EMAIL="{{inputs.parameters.GIT_USER_EMAIL}}"
           GIT_FILES="{{inputs.parameters.GIT_FILES}}"
-          DIRPATH="{{ inputs.artifacts.REPO.path }}"  && cd $DIRPATH
+          DIRPATH="{{ inputs.artifacts.repo.path }}"  && cd $DIRPATH
           echo "Using User details/message:{ GIT_USER_NAME:$GIT_USER_NAME, GIT_USER_EMAIL:$GIT_USER_EMAIL, MESSAGE:$MESSAGE }"
           # config user/email
           git config user.name "${GIT_USER_NAME}" && git config --global user.email "${GIT_USER_EMAIL}"
