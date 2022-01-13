@@ -1,8 +1,8 @@
 # clone
 
 ## Summary
-Clone a repository into a provided output artifact
-
+Clone a repository into a provided output artifact. For use when the repository would be modified and pushed in subsequent steps. Eequivalent to : git clone url (with token)
+Beware: The workflow leaves the remote origin url and token exposed in the repository. 
 ## Inputs/Outputs
 
 ### Inputs

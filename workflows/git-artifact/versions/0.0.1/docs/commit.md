@@ -1,8 +1,9 @@
 # commit
 
 ## Summary
-Commit a repository and push it as an artifact
+Commit a repository and push it as an artifact, equivalent to : git add && git commit && git push 
 
+Beware: The workflow depends on having remote origin url and token already defined in repository.
 ## Inputs/Outputs
 
 ### Inputs
