@@ -11,15 +11,15 @@ metadata:
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/62545337?v=4'
     argo-hub/owner_url: 'https://github.com/saffi-codefresh'
     argo-hub/categories: 'git-artifact'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-artifact/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
   templates:
     - name: clone
       metadata:
         annotations:
-          argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). The repository would have the remote origin set with the REPO_URL and token'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-artifact/assets/icon.svg"
+          argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). The repository would have the remote origin set with the REPO_URL and token name (use "token" as key)'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/it-artifact/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -29,11 +29,16 @@ spec:
           - name: GIT_TOKEN_SECRET
       script:
         image: quay.io/bitnami/git
+        env:
+          - name: TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{inputs.parameters.GIT_TOKEN_SECRET}}'
+                key: token
         command: [ bash ]
         source: |
           REPO_URL="{{inputs.parameters.REPO_URL}}"
           REVISION="{{inputs.parameters.REVISION}}"
-          TOKEN="{{inputs.parameters.GIT_TOKEN_SECRET}}"
           DIRPATH="{{ outputs.artifacts.repo.path }}"
           echo "inputs REPO_URL:$REPO_URL REVISION:$REVISION DIRPATH:$DIRPATH"
           mkdir -p $DIRPATH && cd $DIRPATH

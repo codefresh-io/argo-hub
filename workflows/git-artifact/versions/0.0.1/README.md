@@ -66,7 +66,7 @@ spec:
       - name: REVISION
         value: main
       - name: GIT_TOKEN_SECRET
-        value: the-git-token
+        value: git-token-name
       - name: MESSAGE
         value: 'the message!'
   templates:
@@ -98,7 +98,7 @@ spec:
             outputs:
               - artifacts:
                   - name: repo
-                    path: /cloned
+                    path:/{{ workflow.name }}/cloned
           - name: change-step
             depends: "clone-step"
             templateRef:
@@ -111,7 +111,7 @@ spec:
             outputs:
               artifacts:
                 - name: repo
-                  path: /changed
+                  path: /{{ workflow.name }}/changed
                   s3:
                     key: repo
           - name: commit-push-step

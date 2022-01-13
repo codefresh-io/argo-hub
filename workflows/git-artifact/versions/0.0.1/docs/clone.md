@@ -38,10 +38,10 @@ spec:
           - name: REPO_URL
             value: 'https://github.com/codefresh-io/argo-hub'
           - name: GIT_TOKEN_SECRET
-            value: 'git-token'
+            value: 'git-token-name'
         outputs:
           - artifacts:
             - name: repo
-              path: /cloned
+              path: /{{ workflow.name }}/cloned
       # change & commit steps
 ```
