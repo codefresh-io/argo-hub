@@ -18,11 +18,11 @@ Minimal required permissions
 
 ## Examples
 ### Clone change commit scenario
-* clone a repository with a argo-hub template and output it as artifact 
-* call a your-changes/change-artifact and modify and output an artifact
-* commit and push that repo (artifact) with user details and message provided
-* Test permissions:- serviceAccountName: codefresh-sa, 
-* The test use artifacts in default bucket using: [key-only-artifacts](https://argoproj.github.io/argo-workflows/key-only-artifacts) and cluster setup with [default-artifacts-repository](https://argoproj.github.io/argo-workflows/artifact-repository-ref)
+* Clone a repository with a argo-hub template and output it as artifact repository
+* Call a step your-changes/change-artifact and modify and output an artifact
+* Commit and push that repo (artifact) with user details and message provided
+* Note: "- serviceAccountName: codefresh-sa," provides permission 
+* Using default bucket see: [key-only-artifacts](https://argoproj.github.io/argo-workflows/key-only-artifacts), cluster setup: [default-artifacts-repository](https://argoproj.github.io/argo-workflows/artifact-repository-ref)
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
