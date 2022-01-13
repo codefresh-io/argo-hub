@@ -1,7 +1,7 @@
-# clone-s3
+# commit
 
 ## Summary
-Clone a repository and push it as artifact to s3 for future use
+Commit a repository and push it as an artifact
 
 ## Inputs/Outputs
 
@@ -12,8 +12,7 @@ Clone a repository and push it as artifact to s3 for future use
 * GIT_USER_EMAIL (required) - git commit email
 
 #### Artifacts
-* repo - will contain the cloned repository and pushed to s3
-* repo artifact (required) - artifact having git repository which has a configured remote origin to push to.
+* repo (required) - artifact having git repository which has a configured remote origin to push to.
 ## Examples
 
 ### task Example
@@ -30,7 +29,7 @@ spec:
       tasks:
       - name: commit-step
         templateRef:
-          name: argo-hub.git.0.0.1
+          name: argo-hub.git-artifact.0.0.1
           template: commit
         arguments:
           depends: "change-step"

@@ -19,7 +19,7 @@ Clone a repository and push it as artifact to s3 for future use
 ## Examples
 
 ### task Example
-```yaml
+```
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -30,7 +30,7 @@ spec:
   - name: main
     dag:
       tasks:
-      - name: clone-step
+      - name: clone
         templateRef:
           name: argo-hub.git.0.0.1
           template: clone-s3

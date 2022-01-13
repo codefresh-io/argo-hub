@@ -13,7 +13,7 @@ Clone a repository into a provided output artifact
 
 ### Outputs
 #### Artifacts
-* repo - will contain the cloned repository and pushed to s3
+* repo - will contain the cloned repository and pushed
 
 ## Examples
 
@@ -31,7 +31,7 @@ spec:
       tasks:
       - name: clone-step
         templateRef:
-          name: argo-hub.git.0.0.1
+          name: argo-hub.git-artifact.0.0.1
           template: clone
         arguments:
           parameters:

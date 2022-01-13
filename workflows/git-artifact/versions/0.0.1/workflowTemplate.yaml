@@ -1,0 +1,77 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.git-artifact.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Generic Git operations using artifact'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Saffi Hartal'
+    argo-hub/owner_email: 'saffi.hartal@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/62545337?v=4'
+    argo-hub/owner_url: 'https://github.com/saffi-codefresh'
+    argo-hub/categories: 'git-artifact'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-artifact/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  templates:
+    - name: clone
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). The repository would have the remote origin set with the REPO_URL and token'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-artifact/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: REPO_URL
+          - name: REVISION
+            default: main
+          - name: GIT_TOKEN_SECRET
+      script:
+        image: quay.io/bitnami/git
+        command: [ bash ]
+        source: |
+          REPO_URL="{{inputs.parameters.REPO_URL}}"
+          REVISION="{{inputs.parameters.REVISION}}"
+          TOKEN="{{inputs.parameters.GIT_TOKEN_SECRET}}"
+          DIRPATH="{{ outputs.artifacts.repo.path }}"
+          echo "inputs REPO_URL:$REPO_URL REVISION:$REVISION DIRPATH:$DIRPATH"
+          mkdir -p $DIRPATH && cd $DIRPATH
+          PATTERN="https://" && CHANGE="https://token:$TOKEN@" && TOKEN_REPO="${REPO_URL/$PATTERN/"$CHANGE"}"
+          git clone $TOKEN_REPO $DIRPATH -b $REVISION
+      outputs:
+        artifacts:
+          - name: repo
+            path: /tmp/repo
+
+    - name: commit
+      metadata:
+        annotations:
+          argo-hub-template/description: 'commit (and push) a git (input) artifact repository, Requirements: remote origin already set, check by "git config --get remote.origin.url" '
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-artifact/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: MESSAGE
+          - name: GIT_USER_NAME
+          - name: GIT_USER_EMAIL
+          - name: GIT_FILES
+            default: '.'
+        artifacts:
+          - name: repo
+            path: /tmp/repo
+      script:
+        image: quay.io/bitnami/git
+        command: [ bash ]
+        source: |
+          MESSAGE="{{inputs.parameters.MESSAGE}}"
+          GIT_USER_NAME="{{inputs.parameters.GIT_USER_NAME}}"
+          GIT_USER_EMAIL="{{inputs.parameters.GIT_USER_EMAIL}}"
+          GIT_FILES="{{inputs.parameters.GIT_FILES}}"
+          DIRPATH="{{ inputs.artifacts.repo.path }}"  && cd $DIRPATH
+          echo "Using User details/message:{ GIT_USER_NAME:$GIT_USER_NAME, GIT_USER_EMAIL:$GIT_USER_EMAIL, MESSAGE:$MESSAGE }"
+          # config user/email
+          git config user.name "${GIT_USER_NAME}" && git config --global user.email "${GIT_USER_EMAIL}"
+          # add commit & push
+          echo "Using remote.origin.url as remote target"
+          git add $GIT_FILES  && git commit -am "$MESSAGE" && git push
