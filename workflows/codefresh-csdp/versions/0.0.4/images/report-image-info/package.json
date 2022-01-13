@@ -1,0 +1,12 @@
+{
+  "name": "report-image-info",
+  "version": "1.0.1",
+  "main": "diff.js",
+  "license": "MIT",
+  "devDependencies": {
+    "lodash": "^4.17.21",
+    "nodegistry": "^1.1.0",
+    "graphql-request": "^3.7.0",
+    "graphql": "^16.1.0"
+  }
+}
