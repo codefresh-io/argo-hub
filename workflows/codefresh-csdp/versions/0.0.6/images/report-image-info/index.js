@@ -96,38 +96,27 @@ const init = async () => {
         },
     })
 
-    console.log('REPORT_IMAGE_V2: binaryQuery payload:', {
-        id: `${manifest.config.digest}`,
-        created: `${config.created}`,
-        imageName: `${image}`,
-        branch: `${process.env.GIT_BRANCH}`,
-        commit: `${process.env.GIT_REVISION}`,
-        commitMsg: `${process.env.GIT_COMMIT_MESSAGE}`,
-        commitURL: `${process.env.GIT_COMMIT_URL}`,
-        size: `${size}`,
-        os: `${config.os}`,
-        architecture: `${config.architecture}`,
-        authorUserName,
-        workflowName
-    })
+    const imageBinary = {
+        id: manifest.config.digest,
+        created: config.created,
+        imageName: image,
+        branch: process.env.GIT_BRANCH,
+        commit: process.env.GIT_REVISION,
+        commitMsg: process.env.GIT_COMMIT_MESSAGE,
+        commitURL: process.env.GIT_COMMIT_URL,
+        size: size,
+        os: config.os,
+        architecture: config.architecture,
+        workflowName: workflowName,
+        author: {
+            username: authorUserName
+        }
+    }
 
-    const binaryQuery = gql`mutation {
-        createImageBinary(imageBinary: {
-            id: "${manifest.config.digest}",
-            created: "${config.created}",
-            imageName: "${image}",
-            branch: "${process.env.GIT_BRANCH}",
-            commit: "${process.env.GIT_REVISION}",
-            commitMsg: "${process.env.GIT_COMMIT_MESSAGE}",
-            commitURL: "${process.env.GIT_COMMIT_URL}",
-            size: ${size},
-            os: "${config.os}",
-            architecture: "${config.architecture}",
-            workflowName: "${workflowName}",
-            author: {
-                username: "${authorUserName}"
-            }
-        }) {
+    console.log('REPORT_IMAGE_V2: binaryQuery payload:', imageBinary)
+
+    const binaryQuery = gql`mutation($imageBinary: ImageBinaryInput!){
+        createImageBinary(imageBinary: $imageBinary) {
             id,
             imageName,
             branch,
@@ -137,24 +126,26 @@ const init = async () => {
             workflowName
         }
     }`
-    const binaryResult = await graphQLClient.request(binaryQuery)
+    const binaryResult = await graphQLClient.request(binaryQuery, { imageBinary })
     console.log('REPORT_IMAGE_V2: binaryQuery response:', JSON.stringify(binaryResult, null, 2))
 
-    const query = gql`mutation {
-        createImageRegistry(imageRegistry: {
-            binaryId: "${binaryResult.createImageBinary.id}",
-            imageName: "${image}",
-            repoDigest: "${manifest.config.repoDigest}",
-            created: "${config.created}",
-        }) {
+    const imageRegistry = {
+        binaryId: binaryResult.createImageBinary.id,
+        imageName: image,
+        repoDigest: manifest.config.repoDigest,
+        created: config.created
+    }
+
+    const registryQuery = gql`mutation($imageRegistry: ImageRegistryInput!) {
+        createImageRegistry(imageRegistry: $imageRegistry) {
             binaryId
             imageName
             repoDigest
         }
     }`
 
-    const data = await graphQLClient.request(query)
-    console.log(JSON.stringify(data, null, 2))
+    const registryResult = await graphQLClient.request(registryQuery, { imageRegistry })
+    console.log(JSON.stringify(registryResult, null, 2))
 }
 
 const validateRequiredEnvs = () => {
