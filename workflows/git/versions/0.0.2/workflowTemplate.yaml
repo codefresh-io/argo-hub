@@ -1,9 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.git.0.0.1
+  name: argo-hub.git.0.0.2
   annotations:
-    argo-hub/version: '0.0.1'
+    argo-hub/version: '0.0.2'
     argo-hub/description: 'Generic Git operations'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Vadim Gusev'

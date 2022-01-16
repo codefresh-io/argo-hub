@@ -31,7 +31,7 @@ spec:
       tasks:
       - name: clone-step
         templateRef:
-          name: argo-hub.git-artifact.0.0.1
+          name: argo-hub.git-artifact.0.0.2
           template: clone
         arguments:
           parameters:

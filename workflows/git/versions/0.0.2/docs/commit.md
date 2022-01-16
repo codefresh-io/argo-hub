@@ -30,7 +30,7 @@ spec:
       tasks:
       - name: commit-step
         templateRef:
-          name: argo-hub.git-artifact.0.0.1
+          name: argo-hub.git-artifact.0.0.2
           template: commit
         arguments:
           depends: "change-step"
@@ -117,7 +117,7 @@ spec:
         tasks:
           - name: clone-step
             templateRef:
-              name: argo-hub.git-artifact.0.0.1
+              name: argo-hub.git-artifact.0.0.2
               template: clone
             arguments:
               parameters:
@@ -149,7 +149,7 @@ spec:
           - name: commit-push-step
             depends: "change-step"
             templateRef:
-              name: argo-hub.git-artifact.0.0.1
+              name: argo-hub.git-artifact.0.0.2
               template: commit
             arguments:
               parameters:
