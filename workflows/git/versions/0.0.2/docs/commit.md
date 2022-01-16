@@ -1,17 +1,16 @@
 # commit
 
 ## Summary
-Commit a repository and push it as an artifact, equivalent to : git add && git commit && git push 
-
-Beware: The workflow depends on having remote origin url and token already defined in repository.
+Commit a repository and push the provided (input) artifact repository, equivalent to : git add && git commit && git push 
+Requires: Input repository was obtained by git/clone template,  The push depends on the remote origin url & token stored in that repository
+Note: After commit done, the repository still has the url & token stored.
 ## Inputs/Outputs
-
 ### Inputs
 #### Parameters
 * MESSAGE (required) - the commit message
 * GIT_USER_NAME (required) - git commit username
 * GIT_USER_EMAIL (required) - git commit email
-
+* GIT_FILES (optional) - default: .
 #### Artifacts
 * repo (required) - artifact having git repository which has a configured remote origin to push to.
 ## Examples
@@ -30,7 +29,7 @@ spec:
       tasks:
       - name: commit-step
         templateRef:
-          name: argo-hub.git-artifact.0.0.2
+          name: argo-hub.git.0.0.2
           template: commit
         arguments:
           depends: "change-step"
@@ -117,7 +116,7 @@ spec:
         tasks:
           - name: clone-step
             templateRef:
-              name: argo-hub.git-artifact.0.0.2
+              name: argo-hub.git.0.0.2
               template: clone
             arguments:
               parameters:
@@ -149,7 +148,7 @@ spec:
           - name: commit-push-step
             depends: "change-step"
             templateRef:
-              name: argo-hub.git-artifact.0.0.2
+              name: argo-hub.git.0.0.2
               template: commit
             arguments:
               parameters:

@@ -6,10 +6,10 @@ metadata:
     argo-hub/version: '0.0.2'
     argo-hub/description: 'Generic Git operations'
     argo-hub/license: 'MIT'
-    argo-hub/owner_name: 'Vadim Gusev'
-    argo-hub/owner_email: 'vadim.gusev@codefresh.io'
-    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/77272973?v=4'
-    argo-hub/owner_url: 'https://github.com/vadimgusev-codefresh'
+    argo-hub/owner_name: 'Saffi Hartal'
+    argo-hub/owner_email: 'saffi.hartal@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/62545337?v=4'
+    argo-hub/owner_url: 'https://github.com/saffi-codefresh'
     argo-hub/categories: 'git'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
@@ -18,7 +18,7 @@ spec:
     - name: clone-s3
       metadata:
         annotations:
-          argo-hub-template/description: 'Clone a repository and push it as an artifact to s3'
+          argo-hub-template/description: 'Clone a repository and push it as an artifact to s3, the s3 repository would not store in .git/config the remote url'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
@@ -53,8 +53,8 @@ spec:
     - name: clone
       metadata:
         annotations:
-          argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). Note:The url & token  are stored in the .git/config as remote origin url'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/it-artifact/assets/icon.svg"
+          argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). Note: the repository would store in .git/config the remote url & token as remote origin url'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -87,8 +87,8 @@ spec:
     - name: commit
       metadata:
         annotations:
-          argo-hub-template/description: 'commit (and push) a git (input) artifact repository, Depends on: remote origin configured, see: "git config --get remote.origin.url" '
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git-artifact/assets/icon.svg"
+          argo-hub-template/description: 'Commit (& push) a git (input) artifact repository, Requires the use of : git/clone template which stores the remote origin url in .git/config, see: "git config --get remote.origin.url" '
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:

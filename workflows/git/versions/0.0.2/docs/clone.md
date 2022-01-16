@@ -1,8 +1,9 @@
 # clone
 
 ## Summary
-Clone a repository into a provided output artifact. For use when the repository would be modified and pushed in subsequent steps. Eequivalent to : git clone url (with token)
-Beware: The workflow leaves the remote origin url and token exposed in the repository. 
+Clone a repository into a provided (output) artifact. git/clone template is for use with git/commit template. Equivalent to : git clone url (with embeeded token)
+If the artifact repository is not used for git/commit, them use git/clone-s3 instead.
+Beware: When the template is done the (output) artifact has remote origin url and token stored in .git/config remote "origin". 
 ## Inputs/Outputs
 
 ### Inputs
@@ -31,7 +32,7 @@ spec:
       tasks:
       - name: clone-step
         templateRef:
-          name: argo-hub.git-artifact.0.0.2
+          name: argo-hub.git.0.0.2
           template: clone
         arguments:
           parameters:
