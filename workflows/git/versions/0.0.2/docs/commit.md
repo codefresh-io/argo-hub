@@ -10,9 +10,9 @@ Note: After commit done, the repository still has the url & token stored.
 * MESSAGE (required) - the commit message
 * GIT_USER_NAME (required) - git commit username
 * GIT_USER_EMAIL (required) - git commit email
-* GIT_FILES (optional) - default: .
+* GIT_FILES (optional) - added files, default: `.`
 #### Artifacts
-* repo (required) - artifact having git repository which has a configured remote origin to push to.
+* repo (required) - artifact having git repository and configured remote origin url.
 ## Examples
 
 ### task Example
