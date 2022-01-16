@@ -6,7 +6,7 @@ Report image info to argo platform.
 ## Inputs/Outputs
 
 ### Inputs
-* IMAGE_URI (required) - your image to which you want to report
+* IMAGE (required) - your image to which you want to report
 * CF_API_KEY (required) - Codefresh API key created by runtime
 * GIT_BRANCH (optional) - git branch
 * GIT_REVISION (optional) - git revision
