@@ -92,7 +92,7 @@ spec:
           #     domain: <REGISTRY_DOMAIN base64 here>
           # Run kubectl -n <namespace> apply -f <registry-creds name>.yaml
           - name: REGISTRY_CREDS
-            default: dockerquay-creds  # the name of the registry-creds secret you created
+            default: registry-creds  # the name of the registry-creds secret you created
       dag:
         tasks:
           # https://github.com/codefresh-io/argo-hub/blob/main/workflows/kaniko/versions/0.0.1/docs/build.md
