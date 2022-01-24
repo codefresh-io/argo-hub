@@ -7,22 +7,30 @@ This CI pipeline builds a docker image using Kaniko, uploads image metadata to C
 ## Inputs/Outputs
 
 #### Parameters
-* REPO (required) - the repository you want to clone (for example: https://github.com/codefresh-io/cli-v2)
+* GIT_REPO_URL (required) - the repository you want to clone (for example: https://github.com/codefresh-io/cli-v2)
 * IMAGE_NAME (required) - The image name to give to the built image
-* TAG (optional) - The tag that will be given to the image. defaults to `latest`
+* IMAGE_TAG (optional) - The tag that will be given to the image. defaults to `latest`
 * GIT_REVISION (optional) - the revision to checkout. defaults to `main`
 * GIT_BRANCH (optional) - the git branch for reporting the image. defaults to `main`
-* GIT_COMMIT_URL (optional) - git commit url. defaults to ``
-* GIT_COMMIT_MESSAGE (optional) - git commit message. defaults to ``
+* GIT_COMMIT_URL (optional) - git commit url. defaults to `''`
+* GIT_COMMIT_MESSAGE (optional) - git commit message. defaults to `''`
 * DOCKERFILE (optional) - The path to your dockerfile. defaults to `Dockerfile`
-* GIT_TOKEN_SECRET (required) - the k8s secret name that contains a key named `token` with the git secret inside it. defaults secret name `github-token` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-a-personal-access-token-pat
+* GIT_TOKEN_SECRET (required) - The k8s secret name that contains a key named `token` with the git secret inside it. defaults secret name `github-token` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-a-personal-access-token-pat
 * CONTEXT (optional) - the context of file system that will be passed. defaults to `.`
 * REGISTRY_CREDS (required) - The Kubernetes secret with the standard registry username, password and domain. defaults secret name `registry-creds` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-registry-creds-secret
+* DOCKER_CONFIG (required) - The k8s secret name from type docker-registry with all registries credentials you need to pull from or push to. defaults secret name `docker-config` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
 
 #### Volumes 
-* docker-config - in order for this template to work a volume named `docker-config` must exist with all registries credentials you need to pull from or push to
-  https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
-  https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
+* docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG secret name.
+```
+  volumes:
+    - name: docker-config
+      secret:
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+        secretName: '{{ inputs.parameters.DOCKER_REGISTRY }}'
+```
   
 ### Outputs
 no outputs

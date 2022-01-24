@@ -14,15 +14,13 @@ metadata:
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
     icon-background: "#171A2D"
 spec:
-  # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
-  # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
   volumes:
     - name: docker-config
       secret:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: docker-registry # this is the name of the docker-registry secret you created
+        secretName: '{{ inputs.parameters.DOCKER_REGISTRY }}'
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
@@ -59,6 +57,10 @@ spec:
           # --dry-run=client --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
           - name: REGISTRY_CREDS
             default: registry-creds  # the name of the registry-creds secret you created
+          # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
+          # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
+          - name: DOCKER_REGISTRY
+            default: docker-registry  # the name of the registry-creds secret you created
       dag:
         tasks:
           # https://codefresh.io/argohub/workflow-template/kaniko
@@ -91,7 +93,7 @@ spec:
             arguments:
               parameters:
                 - name: IMAGE
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.IMAGE_TAG }}'
                 - name: CF_API_KEY
                   value: codefresh-token # this secret is created as part of the runtime installation
                 - name: GIT_REVISION
