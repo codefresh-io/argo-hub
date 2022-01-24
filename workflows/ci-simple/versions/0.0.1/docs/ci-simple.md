@@ -15,13 +15,14 @@ This CI pipeline builds a docker image using Kaniko, uploads image metadata to C
 * GIT_COMMIT_URL (optional) - git commit url. defaults to ``
 * GIT_COMMIT_MESSAGE (optional) - git commit message. defaults to ``
 * DOCKERFILE (optional) - The path to your dockerfile. defaults to `Dockerfile`
-* GIT_TOKEN_SECRET (required) - the k8s secret name that contains a key named `token` with the git secret inside it. defaults secret name `github-token` . https://github.com/eti-codefresh/quickstart_resources/blob/add491550d4a652fc62780173ce4fc9bfba24e58/github-token.secret.example.yaml
+* GIT_TOKEN_SECRET (required) - the k8s secret name that contains a key named `token` with the git secret inside it. defaults secret name `github-token` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-a-personal-access-token-pat
 * CONTEXT (optional) - the context of file system that will be passed. defaults to `.`
-* REGISTRY_CREDS (required) - The Kubernetes secret with the standard registry username, password and domain. defaults secret name `registry-creds` https://github.com/eti-codefresh/quickstart_resources/blob/add491550d4a652fc62780173ce4fc9bfba24e58/registry-creds.secret.example.yaml
+* REGISTRY_CREDS (required) - The Kubernetes secret with the standard registry username, password and domain. defaults secret name `registry-creds` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-registry-creds-secret
 
-#### Volumes
+#### Volumes 
 * docker-config - in order for this template to work a volume named `docker-config` must exist with all registries credentials you need to pull from or push to
   https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
+  https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
   
 ### Outputs
 no outputs
@@ -43,14 +44,14 @@ spec:
       - name: ci-simple
         templateRef:
           name: argo-hub.ci-simple.0.0.1
-          template: ci-steps
+          template: ci-tasks
         arguments:
           parameters:
-          - name: REPO
+          - name: GIT_REPO_URL
             value: 'https://github.com/codefresh-io/cli-v2'
           - name: IMAGE_URI
             value: 'quay.io/codefresh/cli-v2'
-          - name: TAG
+          - name: IMAGE_TAG
             value: '1.8.0'
           - name: GIT_REVISION
             value: 'main'
