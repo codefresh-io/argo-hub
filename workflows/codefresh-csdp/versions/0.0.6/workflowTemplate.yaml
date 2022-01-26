@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/58422638?v=4'
     argo-hub/owner_url: 'https://github.com/vadim-kharin-codefresh'
     argo-hub/categories: 'messaging'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/csdp-icon.svg"
     argo-hub/icon_background: "#142E48"
 spec:
   templates:
