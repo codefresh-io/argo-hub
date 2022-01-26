@@ -1,8 +1,8 @@
-# Codefresh CSDP
+# CSDP-metadata
 
 ## Summary
 
-A set of templates to operate against Codefresh csdp platform
+A set of templates to operate against Codefresh CSDP platform
 
 ## Templates
 

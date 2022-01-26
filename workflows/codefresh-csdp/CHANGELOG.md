@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.6 (25.1.2022)
+
+Changed icon and rename to CSDP-metadata
+
 ## v0.0.6 (12.1.2022)
 
 ### report-image-info
