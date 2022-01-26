@@ -70,7 +70,7 @@ async function createRegistryClient() {
     }
 
     if (checkNotEmpty(inputs.generic.credentials.username)
-        && checkNotEmpty(inputs.generic.credential.password)
+        && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.domain)) {
 
             return new StandardRegistry(inputs.generic);
