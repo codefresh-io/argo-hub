@@ -7,37 +7,82 @@ const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegis
 
 const CF_NOT_EXIST = 'cf-not-exist';
 
+// Trim all input
+// Clean this up to use the same variable with a 'registry type'
+const inputs = {
+    docker: {
+        username: process.env.DOCKER_USERNAME?.trim(),
+        password: process.env.DOCKER_PASSWORD?.trim(),
+    },
+    generic: {
+        request: {
+            protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
+            domain: process.env.DOMAIN?.trim(),
+        },
+        credentials: {
+            username: process.env.USERNAME?.trim(),
+            password: process.env.PASSWORD?.trim(),
+        }
+    },
+    aws: {
+        role: process.env.AWS_ROLE?.trim(),
+        credentials: {
+            accessKeyId: process.env.AWS_ACCESS_KEY?.trim(),
+            secretAccessKey: process.env.AWS_SECRET_KEY?.trim(),
+            region: process.env.AWS_REGION?.trim(),
+        }
+    },
+    gcr: {
+        keyFilePath: process.env.GCR_KEY_FILE_PATH?.trim(),
+    },
+    git: {
+        branch: process.env.GIT_BRANCH?.trim(),
+        commit: process.env.GIT_REVISION?.trim(),
+        commitMsg: process.env.GIT_COMMIT_MESSAGE?.trim(),
+        commitURL: process.env.GIT_COMMIT_URL?.trim(),
+        author: process.env.GIT_SENDER_LOGIN?.trim(),
+    },
+    workflow: {
+        name: process.env.WORKFLOW_NAME?.trim(),
+    },
+    image: {
+        uri: process.env.IMAGE_URI?.trim(),
+    },
+    codefresh: {
+        host: process.env.CF_HOST?.trim(),
+        apiKey: process.env.CF_API_KEY?.trim(),
+    }
+
+};
+
+
+function checkNotEmpty(testVar) {
+    return (testVar && testVar!==CF_NOT_EXIST);
+}
+
 async function createRegistryClient() {
 
-    if (process.env.DOCKER_USERNAME && process.env.DOCKER_PASSWORD
-        && process.env.DOCKER_USERNAME!==CF_NOT_EXIST && process.env.DOCKER_PASSWORD!==CF_NOT_EXIST) {
-        return new DockerhubRegistry({
-            username: process.env.DOCKER_USERNAME,
-            password: process.env.DOCKER_PASSWORD
-        });
+    // Clean this up when have time
+    if (checkNotEmpty(inputs.docker.username)
+        && checkNotEmpty(inputs.docker.password)) {
+
+        return new DockerhubRegistry(inputs.docker);
     }
 
-    if (process.env.USERNAME && process.env.PASSWORD && process.env.DOMAIN
-        && process.env.USERNAME!==CF_NOT_EXIST && process.env.PASSWORD!==CF_NOT_EXIST && process.env.DOMAIN!==CF_NOT_EXIST) {
-        return new StandardRegistry({
-            request: {
-                protocol: process.env.INSECURE === 'true' ? 'http' : 'https',
-                host: process.env.DOMAIN
-            },
-            credentials: {
-                username: process.env.USERNAME,
-                password: process.env.PASSWORD,
-            },
-        });
+    if (checkNotEmpty(inputs.generic.credentials.username)
+        && checkNotEmpty(inputs.generic.credentials.password)
+        && checkNotEmpty(inputs.generic.request.domain)) {
+
+            return new StandardRegistry(inputs.generic);
     }
 
-    if (process.env.AWS_ROLE && process.env.AWS_ROLE!==CF_NOT_EXIST
-        && process.env.AWS_REGION && process.env.AWS_REGION!==CF_NOT_EXIST) {
-        console.log(`Retrieving credentials for ECR ${process.env.AWS_REGION} using STS token`);
+    if (checkNotEmpty(inputs.aws.role)
+        && checkNotEmpty(inputs.aws.credentials.region)) {
+        console.log(`Retrieving credentials for ECR ${inputs.aws.region} using STS token`);
         const sts = new AWS.STS();
         const timestamp = (new Date()).getTime();
         const params = {
-            RoleArn: process.env.AWS_ROLE,
+            RoleArn: inputs.aws.role,
             RoleSessionName: `be-descriptibe-here-${timestamp}`
         }
         const data = await sts.assumeRole(params).promise();
@@ -47,27 +92,23 @@ async function createRegistryClient() {
                 accessKeyId: data.Credentials.AccessKeyId,
                 secretAccessKey: data.Credentials.SecretAccessKey,
                 sessionToken: data.Credentials.SessionToken,
-                region: process.env.AWS_REGION,
+                region: inputs.aws.credentials.region,
             },
         })
     }
 
-    if (process.env.GCR_KEY_FILE_PATH) {
+    if (inputs.gcr.keyFilePath) {
         return new GcrRegistry({
-            keyfile: fs.readFileSync(process.env.GCR_KEY_FILE_PATH),
+            keyfile: fs.readFileSync(inputs.gcr.keyFilePath),
             request: { host: 'gcr.io' }
         });
     }
-    if (process.env.AWS_ACCESS_KEY && process.env.AWS_ACCESS_KEY!==CF_NOT_EXIST
-        && process.env.AWS_SECRET_KEY && process.env.AWS_SECRET_KEY!==CF_NOT_EXIST
-        && process.env.AWS_REGION && process.env.AWS_REGION!==CF_NOT_EXIST) {
+    if (checkNotEmpty(inputs.aws.credentials.accessKeyId)
+        && checkNotEmpty(inputs.aws.credentials.secretAccessKey)
+        && checkNotEmpty(inputs.aws.credentials.region)) {
         return new EcrRegistry({
             promise: Promise,
-            credentials: {
-                accessKeyId: process.env.AWS_ACCESS_KEY,
-                secretAccessKey: process.env.AWS_SECRET_KEY,
-                region: process.env.AWS_REGION,
-            },
+            credentials: inputs.aws.credentials,
         })
     }
     throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN');
@@ -77,9 +118,9 @@ const init = async () => {
 
     const client = await createRegistryClient();
 
-    const image = process.env.IMAGE_URI;
-    const authorUserName = process.env.GIT_SENDER_LOGIN;
-    const workflowName = process.env.WORKFLOW_NAME;
+    const image = inputs.image.uri;
+    const authorUserName = inputs.git.author;
+    const workflowName = inputs.workflow.name;
 
     const registry = client.repoTag(image);
 
@@ -90,9 +131,9 @@ const init = async () => {
         return sum + layer.size;
     }, 0)
 
-    const graphQLClient = new GraphQLClient(`${process.env.CF_HOST}/2.0/api/graphql`, {
+    const graphQLClient = new GraphQLClient(`${inputs.codefresh.host}/2.0/api/graphql`, {
         headers: {
-            'Authorization': process.env.CF_API_KEY,
+            'Authorization': inputs.codefresh.apiKey,
         },
     })
 
@@ -100,10 +141,10 @@ const init = async () => {
         id: manifest.config.digest,
         created: config.created,
         imageName: image,
-        branch: process.env.GIT_BRANCH,
-        commit: process.env.GIT_REVISION,
-        commitMsg: process.env.GIT_COMMIT_MESSAGE,
-        commitURL: process.env.GIT_COMMIT_URL,
+        branch: inputs.git.branch,
+        commit: inputs.git.commit,
+        commitMsg: inputs.git.commitMsg,
+        commitURL: inputs.git.commitURL,
         size: size,
         os: config.os,
         architecture: config.architecture,
@@ -149,10 +190,10 @@ const init = async () => {
 }
 
 const validateRequiredEnvs = () => {
-    if (_.isEmpty(process.env.IMAGE_URI)) {
+    if (_.isEmpty(inputs.image.uri)) {
         throw new Error('IMAGE_URI is required parameter. Add this parameter in your workflow to continue.');
     }
-    if (_.isEmpty(process.env.CF_API_KEY)) {
+    if (_.isEmpty(inputs.codefresh.apiKey)) {
         throw new Error('CF_API_KEY is required parameter. Add this parameter in your workflow to continue.');
     }
 }
