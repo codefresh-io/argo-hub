@@ -32,7 +32,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: argoproj/argocli
+        image: argoproj/argocli:v3.2.6
         command:
           - argo
           - submit
