@@ -2,7 +2,7 @@
 
 ## v0.0.2 (8.12.2021)
 
-### get-github-info
+### extract-webhook-variables
 
 Parses the GitHub Event Payload (JSON) and output the most useful payload fields as artifact files.
 
