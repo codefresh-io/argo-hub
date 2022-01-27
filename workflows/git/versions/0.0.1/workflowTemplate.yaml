@@ -19,7 +19,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a repository and push it as an artifact to s3'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/kaniko/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
