@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of operations that can be performed against ArgoCD apps
+Multiple templates that enable operations that can be used to execute against ArgoCD applications.
 
 ## Templates
 

@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.git.0.0.2
   annotations:
     argo-hub/version: '0.0.2'
-    argo-hub/description: 'Generic Git operations'
+    argo-hub/description: 'Templates that enables generic Git operations'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Saffi Hartal'
     argo-hub/owner_email: 'saffi.hartal@codefresh.io'

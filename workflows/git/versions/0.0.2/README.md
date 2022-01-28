@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of generics git operations
+A set of templates that execute Git operations, such as committing a change, cloning a repository, cloning a repository, and executing a push as an artifact to s3 for future use.
 
 ## Templates
 
