@@ -17,7 +17,7 @@ const inputs = {
     generic: {
         request: {
             protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
-            domain: process.env.DOMAIN?.trim(),
+            host: process.env.DOMAIN?.trim(),
         },
         credentials: {
             username: process.env.USERNAME?.trim(),
