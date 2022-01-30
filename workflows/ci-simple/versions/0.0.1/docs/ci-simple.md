@@ -23,7 +23,7 @@ https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeli
 * DOCKER_CONFIG_SECRET (required) - The k8s secret name from type docker-registry with all registries credentials you need to pull from or push to. defaults secret name `docker-config` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
 
 #### Volumes 
-* docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG secret name.
+* docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG_SECRET name.
 ```
   volumes:
     - name: docker-config
@@ -31,7 +31,7 @@ https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeli
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: '{{ inputs.parameters.DOCKER_CONFIG }}'
+        secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
 ```
   
 ### Outputs
@@ -82,6 +82,6 @@ spec:
             value: 'git-token'
           - name: REGISTRY_CREDS_SECRET
             value: 'registry-creds'
-          - name: DOCKER_CONFIG
+          - name: DOCKER_CONFIG_SECRET
             value: 'docker-config'
 ```
