@@ -4,15 +4,16 @@ metadata:
   name: argo-hub.codefresh-csdp.0.0.6
   annotations:
     argo-hub/version: '0.0.6'
-    argo-hub/description: 'Operate against Codefresh csdp platform'
+    argo-hub/name: 'CSDP-metadata'
+    argo-hub/description: 'Operate against Codefresh CSDP platform'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Vadim Kharin'
     argo-hub/owner_email: 'vadim.kharin@codefresh.io'
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/58422638?v=4'
     argo-hub/owner_url: 'https://github.com/vadim-kharin-codefresh'
     argo-hub/categories: 'messaging'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
-    argo-hub/icon_background: "#171A2D"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/csdp-icon.svg"
+    argo-hub/icon_background: "#142E48"
 spec:
   templates:
     - name: image-enricher-git-info
