@@ -20,7 +20,7 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: '{{ inputs.parameters.DOCKER_CONFIG }}'
+        secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
@@ -55,11 +55,11 @@ spec:
           # --from-literal=password=$PASSWORD \
           # --from-literal=domain=$DOMAIN \
           # --dry-run=client --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
-          - name: REGISTRY_CREDS
+          - name: REGISTRY_CREDS_SECRET
             default: registry-creds  # the name of the registry-creds secret you created
           # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
           # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
-          - name: DOCKER_CONFIG
+          - name: DOCKER_CONFIG_SECRET
             default: docker-config  # the name of the registry-creds secret you created
       dag:
         tasks:
@@ -105,11 +105,11 @@ spec:
                 - name: GIT_COMMIT_MESSAGE
                   value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
                 - name: USERNAME
-                  value: '{{ inputs.parameters.REGISTRY_CREDS }}'
+                  value: '{{ inputs.parameters.REGISTRY_CREDS_SECRET }}'
                 - name: PASSWORD
-                  value: '{{ inputs.parameters.REGISTRY_CREDS }}'
+                  value: '{{ inputs.parameters.REGISTRY_CREDS_SECRET }}'
                 - name: DOMAIN
-                  value: '{{ inputs.parameters.REGISTRY_CREDS }}'
+                  value: '{{ inputs.parameters.REGISTRY_CREDS_SECRET }}'
             depends: build-docker-image
 
           - name: test-image

@@ -19,8 +19,8 @@ https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeli
 * DOCKERFILE (optional) - The path to your dockerfile. defaults to `Dockerfile`
 * GIT_TOKEN_SECRET (required) - The k8s secret name that contains a key named `token` with the git secret inside it. defaults secret name `github-token` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-a-personal-access-token-pat
 * CONTEXT (optional) - The context of file system that will be passed. defaults to `.`
-* REGISTRY_CREDS (required) - The Kubernetes secret with the standard registry username, password and domain. defaults secret name `registry-creds` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-registry-creds-secret
-* DOCKER_CONFIG (required) - The k8s secret name from type docker-registry with all registries credentials you need to pull from or push to. defaults secret name `docker-config` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
+* REGISTRY_CREDS_SECRET (required) - The Kubernetes secret with the standard registry username, password and domain. defaults secret name `registry-creds` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-registry-creds-secret
+* DOCKER_CONFIG_SECRET (required) - The k8s secret name from type docker-registry with all registries credentials you need to pull from or push to. defaults secret name `docker-config` . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
 
 #### Volumes 
 * docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG secret name.
@@ -53,7 +53,7 @@ spec:
       items:
       - key: .dockerconfigjson
         path: config.json
-      secretName: '{{ inputs.parameters.DOCKER_CONFIG}}'
+      secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET}}'
   templates:
   - name: main
     dag:
@@ -80,7 +80,7 @@ spec:
             value: "Merge branch 'test'"
           - name: GIT_TOKEN_SECRET
             value: 'git-token'
-          - name: REGISTRY_CREDS
+          - name: REGISTRY_CREDS_SECRET
             value: 'registry-creds'
           - name: DOCKER_CONFIG
             value: 'docker-config'
