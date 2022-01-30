@@ -5,7 +5,7 @@ metadata:
   annotations:
     argo-hub/version: '0.0.1'
     argo-hub/description: 'This Workflow Template is used to create your first CI pipeline in CSDP'
-    argo-hub/categories: 'argo'
+    argo-hub/categories: 'starter template'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Eti Zaguri'
     argo-hub/owner_email: 'eti.zaguri@codefresh.io'
