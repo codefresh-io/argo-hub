@@ -15,7 +15,7 @@ class GithubApi {
         const { branch, repo } = configuration;
         console.log(`Looking for PRs from ${repo} repo and ${branch} branch`);
 
-        const prs = await octokit.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}+is:open`  });
+        const prs = await octokit.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}`  });
         return Promise.all(prs.data.items.map(async (pr) => {
             const info = await githubApiCommon.extractCommitsInfo(pr.number);
             const result = {
