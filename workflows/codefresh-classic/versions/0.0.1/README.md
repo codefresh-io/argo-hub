@@ -10,6 +10,7 @@ A set of templates to operate against Codefresh classic platform
 
 ## Security
 
+
 Minimal required permissions
 
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-classic/versions/0.0.1/rbac.yaml)

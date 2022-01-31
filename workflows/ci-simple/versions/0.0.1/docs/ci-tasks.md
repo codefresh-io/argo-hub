@@ -1,8 +1,8 @@
-# ci simple
+# ci tasks
 
 ## Summary
                  
-This CI pipeline builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image
+This CI pipeline template builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image
 https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/
 
 
@@ -33,7 +33,7 @@ https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeli
             path: config.json
         secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
 ```
-  
+
 ### Outputs
 no outputs
 
@@ -66,7 +66,7 @@ spec:
           parameters:
           - name: GIT_REPO_URL
             value: 'https://github.com/codefresh-io/cli-v2'
-          - name: IMAGE_URI
+          - name: IMAGE_NAME
             value: 'quay.io/codefresh/cli-v2'
           - name: IMAGE_TAG
             value: '1.8.0'
