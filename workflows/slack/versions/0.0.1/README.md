@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of operations that can be performed against slack
+A template that enables you to send messages to a Slack channel using a webhook URL.
 
 ## Templates
 

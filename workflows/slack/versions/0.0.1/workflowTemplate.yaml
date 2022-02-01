@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.slack.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Execute operations against Slack'
+    argo-hub/description: 'A template that enables Slack notifications'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Pasha Kostohrys'
     argo-hub/owner_email: 'pavel@codefresh.io'

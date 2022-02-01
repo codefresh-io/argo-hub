@@ -5,7 +5,7 @@ metadata:
   annotations:
     argo-hub/version: '0.0.6'
     argo-hub/name: 'CSDP-metadata'
-    argo-hub/description: 'Operate against Codefresh CSDP platform'
+    argo-hub/description: 'Templates that execute operations against CSDP'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Vadim Kharin'
     argo-hub/owner_email: 'vadim.kharin@codefresh.io'
