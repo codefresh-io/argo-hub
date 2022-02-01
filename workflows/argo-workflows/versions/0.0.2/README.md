@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of templates to allow you to interact with your argo workflow instance and provide usefull utils.
+Templates that allow you to interact with your Argo Workflow instance and provide useful utilities to your pipeline.
 
 ## Templates
 
