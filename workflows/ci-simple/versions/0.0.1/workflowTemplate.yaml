@@ -24,6 +24,11 @@ spec:
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
+          argo-hub-template/icon_background: "#004C76"
       inputs:
         parameters:
           - name: GIT_REPO_URL
@@ -122,6 +127,11 @@ spec:
 
     # Test template
     - name: test
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Test image pulling correctly and printing it content files'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
+          argo-hub-template/icon_background: "#004C76"
       inputs:
         parameters:
           - name: IMAGE
