@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of templates to operate against Codefresh classic platform
+A wrapper on top of the Codefresh CLI run operation. The template provides the easy ability to trigger pipelines.
 
 ## Templates
 

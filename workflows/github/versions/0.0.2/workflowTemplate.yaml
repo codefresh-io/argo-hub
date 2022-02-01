@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.github.0.0.2
   annotations:
     argo-hub/version: '0.0.2'
-    argo-hub/description: 'Execute operations against Github'
+    argo-hub/description: 'Templates that execute operations against GitHub'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Itai Gendler'
     argo-hub/owner_email: 'itai@codefresh.io'

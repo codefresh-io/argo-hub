@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of templates to perform operations against github
+A set of templates to perform operations against GitHub such as reporting a commit status check, creating a pull request, and extracting webhook variables.
 
 ## Templates
 
