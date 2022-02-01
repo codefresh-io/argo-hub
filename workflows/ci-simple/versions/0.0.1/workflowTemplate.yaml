@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/85868206'
     argo-hub/owner_url: 'https://github.com/eti-codefresh'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
-    icon-background: "#004C76"
+    argo-hub/icon-background: "#004C76"
 spec:
   volumes:
     - name: docker-config
