@@ -10,7 +10,7 @@ Create a new Change Request on the ServiceNow instance
 * SN_INSTANCE (required) - URL of the ServiceNow instance aka https://instance.service-now.com
 * SN_AUTH (required) - Secret name containing the user and password to log into the instance
 * CR_DATA (required) - a string containing a JSON body to allow the creation of the Change Request. The exact content is dependent on your implementation of Change Management
-* LOG (optional) - A flag to indicate log-level. Values are info, debug, warning, error, critical. Default value is info.
+* LOGLEVEL (optional) - A flag to indicate log-level. Values are info, debug, warning, error, critical. Default value is info.
 
 ### Outputs
 #### Parameters
@@ -41,7 +41,7 @@ spec:
             value: "https://XXXX.service-now.com"
           - name: SN_AUTH
             value: "sn-auth"
-          - name: LOG
+          - name: LOGLEVEL
             value: debug
           - name: CR_DATA
             value: >-

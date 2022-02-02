@@ -1,12 +1,12 @@
-# Starting-Template
+# ServiceNow
 
 ## Summary
 
-A set of template to perform operations against ServiceNow
+A set of templates to perform operations against a ServiceNow instance
 
 ## Requirements
 1. create a secret containing 2 pieces of informations to connect to your
-ServiceNow instance. See [example](../../assets/sn_auth.yaml
+ServiceNow instance. See [example](../../assets/sn_auth.yaml)
   - username
   - password
 
