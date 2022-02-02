@@ -104,7 +104,7 @@ def processModifyChangeRequestResponse(response, action):
 # Fields required are pasted in the data
 def closeChangeRequest(user, password, baseUrl, sysid, code, notes, data):
     logging.info("Closing a Change Request: %s", sysid)
-    logging.debug("DATA: %s", data)
+    logging.debug("Closure added data: %s", data)
     if (bool(data)):
         crBody=json.loads(data)
     else:
@@ -113,6 +113,7 @@ def closeChangeRequest(user, password, baseUrl, sysid, code, notes, data):
     crBody["close_code"] = code
     crBody["close_notes"] = notes
     url="%s/now/table/change_request/%s" % (baseUrl, sysid)
+    logging.debug("Closure complete data : %s", crBody)
     resp=requests.patch(url,
         json = crBody,
         headers = {"content-type":"application/json"},
