@@ -2,24 +2,24 @@ import os
 import sys
 import json
 import requests
+import logging
 
 API_NAMESPACE=409723
 
 def getBaseUrl(instance):
     baseUrl = "%s/api" %(instance);
-    if DEBUG:
-        print("baseUrl: " + baseUrl)
+    logging.debug("baseUrl: %s", baseUrl)
     return baseUrl
 
 def processCallbackResponse(response):
-    print("Processing answer from CR creation REST call")
-    print("Callback returned code %s" % (response.status_code))
+    logging.info("Processing answer from CR creation REST call")
+    logging.debug("Callback returned code %s",response.status_code)
     if (response.status_code != 200 and response.status_code != 201):
-        print("Callback creation failed with code %s" % (response.status_code))
-        print("Error: " + response.text)
+        logging.critical("Callback creation failed with code %s", esponse.status_code)
+        logging.critical("%s", response.text)
         sys.exit(response.status_code)
 
-    print("Callback creation successful")
+    logging.info("Callback creation successful")
 
 #
 # export vaiable in /tmp to be used as output parameter
@@ -30,16 +30,15 @@ def exportVariable(name, value):
     file.close()
 
 def processCreateChangeRequestResponse(response):
-    if DEBUG:
-        print("Processing answer from CR creation REST call")
-        print("  Change Request returned code %s" % (response.status_code))
+    logging.info("Processing answer from CR creation REST call")
+    logging.debug("Change Request returned code %s" % (response.status_code))
     if (response.status_code != 200 and response.status_code != 201):
-        print("  Change Request creation failed with code %s" % (response.status_code))
-        print("  ERROR: " + response.text)
+        logging.critical("Change Request creation failed with code %s",response.status_code)
+        logging.critical("%s", response.text)
         sys.exit(response.status_code)
 
-    print("  Change Request creation successful")
-    data=response.json() 
+    logging.info("Change Request creation successful")
+    data=response.json()
     FULL_JSON=json.dumps(data, indent=2)
     CR_NUMBER=data["result"]["number"]
     CR_SYSID=data["result"]["sys_id"]
@@ -47,7 +46,7 @@ def processCreateChangeRequestResponse(response):
     exportVariable("CR_SYSID", CR_SYSID)
     exportVariable("CR_CREATE_JSON", FULL_JSON)
 
-    # if DEBUG:
+    # if LOGLEVEL:
     #
     #     print( "  Change Request full answer:\n" + FULL_JSON)
 
@@ -56,26 +55,22 @@ def processCreateChangeRequestResponse(response):
 # Fields required are pasted in the data
 def createChangeRequest(user, password, baseUrl, data):
 
-    if DEBUG:
-        print("Entering createChangeRequest:")
+    logging.debug("Entering createChangeRequest:")
 
     if (bool(data)):
         crBody=json.loads(data)
-        if DEBUG:
-            print("Data: " + data)
+        logging.debug("Data: %s", data)
     else:
         crBody= {}
-        if DEBUG:
-            print("  Data: None")
+        logging.debug("  Data: None")
     crBody["cf_build_id"] = os.getenv('CF_BUILD_ID')
 
 
     url="%s/now/table/change_request" % (baseUrl)
 
-    if DEBUG:
-        print(f"  URL: {url}")
-        print(f"  User: {user}")
-        print(f"  Body: {crBody}")
+    logging.debug("URL %s:",url)
+    logging.debug("User: %s", user)
+    logging.debug("Body: %s", crBody)
 
     resp=requests.post(url,
         json = crBody,
@@ -85,15 +80,13 @@ def createChangeRequest(user, password, baseUrl, data):
 
 def processModifyChangeRequestResponse(response, action):
 
-    if DEBUG:
-        print("Processing answer from CR %s REST call" %(action))
-        print("  %s Change Request returned code %s" % (action,response.status_code))
+    logging.debug("Processing answer from CR %s REST call",  action)
+    logging.debug("%s Change Request returned code %s" , action, response.status_code)
     if (response.status_code != 200 and response.status_code != 201):
-        print("  %s Change Request creation failed with code %s" % (action, response.status_code))
-        print("  ERROR: " + response.text)
-        sys.exit(response.status_code)
+        logging.critical("%s Change Request creation failed with code %s",action, response.status_code)
+        logging.critical("%s" + response.text)
 
-    print("  %s Change Request successful" %(action))
+    logging.info("%s Change Request successful", action)
     data=response.json() # json.loads(response.text)
     FULL_JSON=json.dumps(data, indent=2)
 
@@ -102,14 +95,16 @@ def processModifyChangeRequestResponse(response, action):
     elif (action == "update" ):
         exportVariable("CR_UPDATE_JSON", FULL_JSON)
     else:
-        print("ERROR: action unknown. Should not be here. Error should have been caught earlier")
+        logging.error("action unknown. Should not be here. Error should have been caught earlier")
+
+    if (response.status_code != 200 and response.status_code != 201):
+        sys.exit(response.status_code)
 
 # Call SNow REST API to close a CR
 # Fields required are pasted in the data
 def closeChangeRequest(user, password, baseUrl, sysid, code, notes, data):
-    if DEBUG:
-        print("Entering closeChangeRequest:")
-        print(f"DATA: {data}")
+    logging.debug("Entering closeChangeRequest:")
+    logging.debug("DATA: %s", data)
     if (bool(data)):
         crBody=json.loads(data)
     else:
@@ -127,18 +122,16 @@ def closeChangeRequest(user, password, baseUrl, sysid, code, notes, data):
 # Call SNow REST API to update a CR
 # Fields required are pasted in the data
 def updateChangeRequest(user, password, baseUrl, sysid, data):
-    if DEBUG:
-        print("Entering updateChangeRequest:")
-        print(f"DATA: {data}")
+    logging.debug("Entering updateChangeRequest:")
+    logging.debug("DATA: %s", data)
     if (bool(data)):
         crBody=json.loads(data)
     else:
         crBody= {}
-        print("WARNING: CR_DATA is empty. What are you updating exactly?")
+        logging.warning("WARNING: CR_DATA is empty. What are you updating exactly?")
 
     url="%s/now/table/change_request/%s" % (baseUrl, sysid)
-    if DEBUG:
-        print(f"  update CR URL: {url}")
+    logging.debug("Update CR URL: %s", url)
     resp=requests.patch(url,
         json = crBody,
         headers = {"content-type":"application/json"},
@@ -147,32 +140,30 @@ def updateChangeRequest(user, password, baseUrl, sysid, data):
 
 
 def checkSysid(sysid):
-    if DEBUG:
-        print("Entering checkSysid: ")
-        print("  CR_SYSID: %s" % (sysid))
+    logging.debug("Entering checkSysid: ")
+    logging.debug("CR_SYSID: %s", sysid)
 
     if ( sysid == None ):
-        print("FATAL: CR_SYSID is not defined.")
+        logging.criticak("CR_SYSID is not defined.")
         sys.exit(1)
 
 def main():
-    global DEBUG
-
-    ACTION   = os.getenv('ACTION').lower()
+    ACTION   = os.getenv('ACTION', "createcr").lower()
     USER     = os.getenv('SN_USER')
     PASSWORD = os.getenv('SN_PASSWORD')
     INSTANCE = os.getenv('SN_INSTANCE')
     DATA     = os.getenv('CR_DATA')
-    DEBUG    = True if os.getenv('DEBUG', "false").lower() == "true" else False
+    LOGLEVEL = os.getenv('LOGLEVEL', "info").upper()
 
-    if DEBUG:
-        print("Starting ServiceNow plugin for Codefresh")
-        print(f"  ACTION: {ACTION}")
-        print(f"  DATA: {DATA}")
-        print("---")
+    log_format = "%(asctime)s:%(levelname)s:%(name)s.%(funcName)s: %(message)s"
+    logging.basicConfig(format = log_format, level = LOGLEVEL.upper())
+
+    logging.info("Starting ServiceNow plugin for Codefresh")
+    logging.debug("ACTION: %", ACTION)
+    logging.debug("DATA: %s", DATA)
+
 
     if ACTION == "createcr":
-
         createChangeRequest(user=USER,
             password=PASSWORD,
             baseUrl=getBaseUrl(instance=INSTANCE),
@@ -205,7 +196,7 @@ def main():
             data=DATA
         )
     else:
-        print(f"FATAL: Unknown action: {ACTION}. Allowed values are createCR, closeCR or updateCR.")
+        logging.critical("Unknown action: %s. Allowed values are createCR, closeCR or updateCR.", ACTION)
         sys.exit(1)
 
 if __name__ == "__main__":

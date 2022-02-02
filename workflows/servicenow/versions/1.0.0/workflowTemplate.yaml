@@ -27,8 +27,8 @@ spec:
           - name: SN_INSTANCE          # aka https://instance.service-now.com
           - name: SN_AUTH              # secret name
           - name: CR_DATA
-          - name: DEBUG
-            value: false
+          - name: LOGLEVEL
+            value: info
       outputs:
         parameters:
           - name: CR_SYSID
@@ -59,8 +59,8 @@ spec:
                 key: password
           - name: CR_DATA
             value: '{{ inputs.parameters.CR_DATA }}'
-          - name: DEBUG
-            value: '{{ inputs.parameters.DEBUG }}'
+          - name: LOGLEVEL
+            value: '{{ inputs.parameters.LOGLEVEL }}'
 
     - name: updatecr
       metadata:
@@ -79,8 +79,8 @@ spec:
           - name: SN_AUTH              # secret name
           - name: CR_DATA
           - name: CR_SYSID
-          - name: DEBUG
-            value: false
+          - name: LOGLEVEL
+            value: info
       container:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
@@ -105,8 +105,8 @@ spec:
             value: '{{ inputs.parameters.CR_DATA }}'
           - name: CR_SYSID
             value: '{{ inputs.parameters.CR_SYSID }}'
-          - name: DEBUG
-            value: '{{ inputs.parameters.DEBUG }}'
+          - name: LOGLEVEL
+            value: '{{ inputs.parameters.LOGLEVEL }}'
 
     - name: closecr
       metadata:
@@ -126,8 +126,8 @@ spec:
           - name: CR_DATA
             value: '{}'
           - name: CR_SYSID
-          - name: DEBUG
-            value: false
+          - name: LOGLEVEL
+            value: info
           - name: CR_CLOSE_CODE
             value: "successful"
           - name: CR_CLOSE_NOTES
@@ -160,5 +160,5 @@ spec:
             value: '{{ inputs.parameters.CR_CLOSE_CODE }}'
           - name: CR_CLOSE_NOTES
             value: '{{ inputs.parameters.CR_CLOSE_NOTES }}'
-          - name: DEBUG
-            value: '{{ inputs.parameters.DEBUG }}'
+          - name: LOGLEVEL
+            value: '{{ inputs.parameters.LOGLEVEL }}'

@@ -13,7 +13,7 @@ Close a Change Request on the ServiceNow instance
 * CR_CLOSE_CODE (required) - Closing code. Value can be "successful", "successful_issues" or "unsuccessful". Default is "successful"
 * CR_CLOSE_NOTES (required) - a string to add to the closure information
 * CR_SYSID (required) - the sysid of the Change Request record created previously.
-* DEBUG (optional) - A flag to show additional debug information. Default value is false.
+* LOG (optional) - A flag to indicate log-level. Values are info, debug, warning, error, critical. Default value is info.
 
 ### Outputs
 
@@ -42,8 +42,8 @@ spec:
             value: "https://XXXX.service-now.com"
           - name: SN_AUTH
             value: "sn-auth"
-          - name: DEBUG
-            value: true
+          - name: LOG
+            value: info
           - name: CR_SYSID
             value: '{{ tasks.create-sn-cr.outputs.parameters.CR_SYSID}}'
           - name: CR_CLOSE_CODE

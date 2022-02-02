@@ -11,7 +11,7 @@ Modify a  Change Request on the ServiceNow instance
 * SN_AUTH (required) - Secret name containing the user and password to log into the instance
 * CR_DATA (required) - a string containing a JSON body to allow the modification of the Change Request. The exact content is dependent on your implementation of Change Management and what fields you want to update.
 * CR_SYSID: the sysid of the Change Request record created previously.
-* DEBUG (optional) - A flag to show additional debug information. Default value is false.
+* LOG (optional) - A flag to indicate log-level. Values are info, debug, warning, error, critical. Default value is info.
 
 ### Outputs
 
@@ -40,8 +40,8 @@ spec:
             value: "https://XXXX.service-now.com"
           - name: SN_AUTH
             value: "sn-auth"
-          - name: DEBUG
-            value: true
+          - name: LOG
+            value: warning
           - name: CR_SYSID
             value: '{{ tasks.create-sn-cr.outputs.parameters.CR_SYSID}}'
           - name: CR_DATA
