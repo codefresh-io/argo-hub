@@ -17,7 +17,7 @@ const inputs = {
     generic: {
         request: {
             protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
-            domain: process.env.DOMAIN?.trim(),
+            host: process.env.DOMAIN?.trim(),
         },
         credentials: {
             username: process.env.USERNAME?.trim(),
@@ -71,7 +71,7 @@ async function createRegistryClient() {
 
     if (checkNotEmpty(inputs.generic.credentials.username)
         && checkNotEmpty(inputs.generic.credentials.password)
-        && checkNotEmpty(inputs.generic.request.domain)) {
+        && checkNotEmpty(inputs.generic.request.host)) {
 
             return new StandardRegistry(inputs.generic);
     }

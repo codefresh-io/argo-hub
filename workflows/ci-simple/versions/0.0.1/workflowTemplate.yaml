@@ -1,0 +1,142 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.ci-simple.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'This Workflow Template is used to create your first CI pipeline in CSDP'
+    argo-hub/categories: 'starter template'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Eti Zaguri'
+    argo-hub/owner_email: 'eti.zaguri@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/85868206'
+    argo-hub/owner_url: 'https://github.com/eti-codefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
+    argo-hub/icon-background: "#004C76"
+spec:
+  volumes:
+    - name: docker-config
+      secret:
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+        secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
+  entrypoint: ci-tasks
+  templates:
+    - name: ci-tasks
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
+          argo-hub-template/icon_background: "#004C76"
+      inputs:
+        parameters:
+          - name: GIT_REPO_URL
+          - name: IMAGE_NAME
+          - name: IMAGE_TAG
+            default: latest
+          - name: GIT_REVISION
+            default: main         # use default value if this parameter is not provided
+          - name: GIT_BRANCH
+            default: main
+          - name: GIT_COMMIT_URL
+            default: ''
+          - name: GIT_COMMIT_MESSAGE
+            default: ''
+          - name: DOCKERFILE
+            default: Dockerfile
+          # Create git secret token and apply it to your cluster under the runtime namespace
+          #   kubectl create secret generic github-token \
+          #   --from-literal=token=$GIT_TOKEN --dry-run=client \
+          #   --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
+          - name: GIT_TOKEN_SECRET
+            default: github-token # the name of the git secret token you applied to your cluster
+          - name: CONTEXT
+            default: .
+          # Create registry-creds secret and apply it to your cluster under the runtime namespace
+          # You can use also use other creds such gcr/aws; please look at the template inputs for more info: https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/0.0.6/docs/report-image-info.md
+          # kubectl create secret generic registry-creds \
+          # --from-literal=username=$USER \
+          # --from-literal=password=$PASSWORD \
+          # --from-literal=domain=$DOMAIN \
+          # --dry-run=client --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
+          - name: REGISTRY_CREDS_SECRET
+            default: registry-creds  # the name of the registry-creds secret you created
+          # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
+          # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
+          - name: DOCKER_CONFIG_SECRET
+            default: docker-config  # the name of the registry-creds secret you created
+      dag:
+        tasks:
+          # https://codefresh.io/argohub/workflow-template/kaniko
+          - name: build-docker-image
+            templateRef:
+              name: argo-hub.kaniko.0.0.1
+              template: build
+            arguments:
+              parameters:
+                - name: REPO
+                  value: '{{ inputs.parameters.GIT_REPO_URL }}'
+                - name: REVISION
+                  value: '{{ inputs.parameters.GIT_REVISION }}'
+                - name: IMAGE_NAME
+                  value: '{{ inputs.parameters.IMAGE_NAME }}'
+                - name: GIT_TOKEN_SECRET
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                - name: DOCKERFILE
+                  value: '{{ inputs.parameters.DOCKERFILE }}'
+                - name: CONTEXT
+                  value: '{{ inputs.parameters.CONTEXT }}'
+                - name: TAG
+                  value: '{{ inputs.parameters.IMAGE_TAG }}'
+
+          #  https://codefresh.io/argohub/workflow-template/codefresh-csdp
+          - name: report-image-info
+            templateRef:
+              name: argo-hub.codefresh-csdp.0.0.6
+              template: report-image-info
+            arguments:
+              parameters:
+                - name: IMAGE
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.IMAGE_TAG }}'
+                - name: CF_API_KEY
+                  value: codefresh-token # this secret is created as part of the runtime installation
+                - name: GIT_REVISION
+                  value: '{{ inputs.parameters.GIT_REVISION }}'
+                - name: GIT_BRANCH
+                  value: '{{ inputs.parameters.GIT_BRANCH }}'
+                - name: GIT_COMMIT_URL
+                  value: '{{ inputs.parameters.GIT_COMMIT_URL }}'
+                - name: GIT_COMMIT_MESSAGE
+                  value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
+                - name: USERNAME
+                  value: '{{ inputs.parameters.REGISTRY_CREDS_SECRET }}'
+                - name: PASSWORD
+                  value: '{{ inputs.parameters.REGISTRY_CREDS_SECRET }}'
+                - name: DOMAIN
+                  value: '{{ inputs.parameters.REGISTRY_CREDS_SECRET }}'
+            depends: build-docker-image
+
+          - name: test-image
+            template: test
+            arguments:
+              parameters:
+                - name: IMAGE
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.IMAGE_TAG }}'
+            depends: report-image-info
+
+    # Test template
+    - name: test
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Test image pulling correctly and printing it content files'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
+          argo-hub-template/icon_background: "#004C76"
+      inputs:
+        parameters:
+          - name: IMAGE
+      container:
+        image: '{{ inputs.parameters.IMAGE }}'
+        command: [sh, -c]
+        args: ["ls"]
+

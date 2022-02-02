@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.argocd.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Execute application operations against ArgoCD'
+    argo-hub/description: 'Templates that execute operations against an ArgoCD application'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Jesse Antoszyk'
     argo-hub/owner_email: 'Jesse.Antoszyk@codefresh.io'

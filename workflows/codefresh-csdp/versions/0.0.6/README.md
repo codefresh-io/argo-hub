@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of templates to operate against Codefresh CSDP platform
+A set of templates to operate against Codefresh Software Delivery Platform such as reporting image information to the Argo platform, and enriching images with metadata and annotation for GitHub (PRs, commits, etc) and Jira (title, assignee, etc).
 
 ## Templates
 

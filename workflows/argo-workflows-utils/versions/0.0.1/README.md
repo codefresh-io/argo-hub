@@ -2,7 +2,11 @@
 
 ## Summary
 
-description
+A set of workflow template examples that specifies two executions:
+- echo: a dag template that includes an entry point for the initial template that should be invoked when the workflow spec is executed.  
+- globalize-variable: once the entry point template is completed, the status of the workflow is returned in the global variable. 
+
+Other possible utilities include parameter substitution, artifacts, fixtures, loops, and recursive workflows.
 
 ## Templates
 

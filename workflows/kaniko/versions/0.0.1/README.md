@@ -2,7 +2,7 @@
 
 ## Summary
 
-A wrapper ontop of kaniko CLI to build docker images
+A wrapper on top of the kaniko CLI that allows you to build Docker images.
 
 ## Templates
 
