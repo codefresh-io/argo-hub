@@ -12,15 +12,15 @@ metadata:
     argo-hub/owner_url: 'https://github.com/vadimgusev-codefresh'
     argo-hub/categories: 'git'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
-    argo-hub/icon_background: "#ffffff"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   templates:
     - name: clone-s3
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a repository and push it as an artifact to s3'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/kaniko/assets/icon.svg"
-          argo-hub-template/icon_background: "#ffffff"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: REPO
