@@ -55,7 +55,7 @@ def processCreateChangeRequestResponse(response):
 # Fields required are pasted in the data
 def createChangeRequest(user, password, baseUrl, data):
 
-    logging.debug("Entering createChangeRequest:")
+    logging.info("Creating a new Change Request")
 
     if (bool(data)):
         crBody=json.loads(data)
@@ -103,7 +103,7 @@ def processModifyChangeRequestResponse(response, action):
 # Call SNow REST API to close a CR
 # Fields required are pasted in the data
 def closeChangeRequest(user, password, baseUrl, sysid, code, notes, data):
-    logging.debug("Entering closeChangeRequest:")
+    logging.info("Closing a Change Request: %s", sysid)
     logging.debug("DATA: %s", data)
     if (bool(data)):
         crBody=json.loads(data)
@@ -122,7 +122,7 @@ def closeChangeRequest(user, password, baseUrl, sysid, code, notes, data):
 # Call SNow REST API to update a CR
 # Fields required are pasted in the data
 def updateChangeRequest(user, password, baseUrl, sysid, data):
-    logging.debug("Entering updateChangeRequest:")
+    logging.info("Updating an existing Change Request: %", sysid)
     logging.debug("DATA: %s", data)
     if (bool(data)):
         crBody=json.loads(data)
@@ -159,7 +159,7 @@ def main():
     logging.basicConfig(format = log_format, level = LOGLEVEL.upper())
 
     logging.info("Starting ServiceNow plugin for Codefresh")
-    logging.debug("ACTION: %", ACTION)
+    logging.debug("ACTION: %s", ACTION)
     logging.debug("DATA: %s", DATA)
 
 

@@ -139,7 +139,7 @@ spec:
         command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
-            value: 'updatecr'
+            value: 'closecr'
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
