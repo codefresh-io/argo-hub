@@ -9,19 +9,19 @@ metadata:
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Laurent Rochette'
     argo-hub/owner_email: 'laurent.rochette@codefresh.io'
-    argo-hub/owner_url: "https://github.com/settings/profile"
-    icon-type: svg
-    icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-    icon-background: "#81D4FA"
+    argo-hub/owner_url: "https://github.com/lrochette"
+    argo-hub/icon-type: svg
+    argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+    argo-hub/icon-background: "#81D4FA"
 
 spec:
   templates:
     - name: createcr
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-          icon-background: "#81D4FA"
+          argo-hub/icon-type: svg
+          argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          argo-hub/icon-background: "#81D4FA"
       inputs:
         parameters:
           - name: SN_INSTANCE          # aka https://instance.service-now.com
@@ -65,9 +65,9 @@ spec:
     - name: updatecr
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-          icon-background: "#81D4FA"
+          argo-hub/icon-type: svg
+          argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          argo-hub/icon-background: "#81D4FA"
       outputs:
         parameters:
           - name: FULL_JSON
@@ -111,9 +111,9 @@ spec:
     - name: closecr
       metadata:
         annotations:
-          icon-type: svg
-          icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-          icon-background: "#81D4FA"
+          argo-hub/icon-type: svg
+          argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          argo-hub/icon-background: "#81D4FA"
       outputs:
         parameters:
           - name: FULL_JSON
