@@ -12,11 +12,12 @@ Report image info to argo platform.
 * GIT_REVISION (optional) - git revision
 * GIT_COMMIT_MESSAGE (optional) - git commit message
 * GIT_COMMIT_URL (optional) - git commit url
-* GIT_SENDER_LOGIN (optional) - git commiter username
+* GIT_SENDER_LOGIN (optional) - git committer username
 * CF_HOST (optional) - support on-premises Codefresh URL
 * INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
-* GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
+* WORKFLOW_NAME (optional) - The name of the workflow that built the image. Used to link back from the image to the workflow. Default is '{{ workflow.name }}' (this value resolves to the current workflow name)
 #### Specify one from following required registry parameters:
+* GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
 * GCR_KEY_SECRET () - The Kubernetes secret containing the GCR key information. Default is 'gcr-key-file'
 * GCR_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GCR key information. Default is '.keyjson'
 * AWS_ACCESS_KEY (required) - The Kubernetes secret with the Amazon access key

@@ -206,7 +206,7 @@ spec:
           - name: GIT_SENDER_LOGIN
             default: ''
           - name:  WORKFLOW_NAME
-            default: ''
+            default: '{{ workflow.name }}'
           - name: IMAGE
           - name: CF_API_KEY
           - name: GIT_BRANCH

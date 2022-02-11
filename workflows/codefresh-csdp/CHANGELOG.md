@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.6 (11.2.2022)
+
+## report-image-info
+Add default of `{{ workflow.name }}` to `WORKFLOW_NAME` parameter
+
+Document `WORKFLOW_NAME`
+
 ## v0.0.6 (25.1.2022)
 
 Changed icon and rename to CSDP-metadata
@@ -14,7 +21,7 @@ Added AWS_ROLE_SECRET to retrieve credentials for ECR using STS
 ### image-enricher-jira-info
 Add additional variables to allow users to select the keys in the secrets they are referencing
 
-### image-enricher-git-info 
+### image-enricher-git-info
 Add additional variables to allow users to select the keys in the secrets they are referencing
 
 ### report-image-info
