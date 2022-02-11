@@ -12,6 +12,7 @@ Report image info to argo platform.
 * GIT_REVISION (optional) - git revision
 * GIT_COMMIT_MESSAGE (optional) - git commit message
 * GIT_COMMIT_URL (optional) - git commit url
+* GIT_SENDER_LOGIN (optional) - git commiter username
 * CF_HOST (optional) - support on-premises Codefresh URL
 * INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
 * GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
@@ -72,6 +73,8 @@ spec:
             value: 'https://github.com/test/project/commit/a1bc234d56e78f9a0b12c34d5ef67fba89d01ea2'
           - name: GIT_COMMIT_MESSAGE
             value: "Merge branch 'test'"
+          - name: GIT_SENDER_LOGIN
+            value: "some-username"
           - name: DOCKER_USERNAME
             value: 'docker-username'
           - name: DOCKER_PASSWORD
