@@ -19,7 +19,10 @@ async function execute() {
     await Promise.all(pullRequests.map(async pr => {
         try {
             console.log(`Creating argo platform annotation for ${image}`);
-            await codefreshApi.createPullRequestV2(pr);
+            const result = await codefreshApi.createPullRequestV2(pr);
+            if (result) {
+                console.log(JSON.stringify(result));
+            }
         } catch (e) {
             console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
         }
