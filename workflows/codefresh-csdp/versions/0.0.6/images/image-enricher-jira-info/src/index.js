@@ -83,6 +83,10 @@ async function execute() {
             if (!result) {
                 console.log(chalk.red(`The image you are trying to enrich ${configuration.image} does not exist`));
                 process.exit(1);
+            } else if (!_.isEmpty(result.errors)){
+                console.log(JSON.stringify(result));
+                console.log(chalk.red(`The image you are trying to enrich ${configuration.image} does not exist`));
+                process.exit(1);
             } else {
                 console.log(JSON.stringify(result));
                 console.log(chalk.green(`Codefresh assign issue ${normalizedIssue} to your image ${configuration.image}`));
