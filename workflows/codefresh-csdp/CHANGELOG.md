@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.6 (14.2.2022)
+
+### report-image-info
+Add DOCKER_CONFIG_FILE_PATH, DOCKER_CONFIG_SECRET to authenticate registry using docker config json
+
 ## v0.0.6 (25.1.2022)
 
 Changed icon and rename to CSDP-metadata
