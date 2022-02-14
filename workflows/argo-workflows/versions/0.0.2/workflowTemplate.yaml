@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.argo-workflows.0.0.2
   annotations:
     argo-hub/version: '0.0.2'
-    argo-hub/description: 'Interact with your argo workflow instance'
+    argo-hub/description: 'Templates that interact with your Argo Workflow instance'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Itai Gendler'
     argo-hub/owner_email: 'itai@codefresh.io'

@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.kaniko.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Build Docker images using kaniko'
+    argo-hub/description: 'A template for building Docker images using kaniko'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Vadim Gusev'
     argo-hub/owner_email: 'vadim.gusev@codefresh.io'

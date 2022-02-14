@@ -48,6 +48,7 @@ class CodefreshAPI {
             },
             "query":"mutation saveAnnotation( $annotation: AnnotationArgs!) {\n saveAnnotation(annotation: $annotation)\n}"
         }
+        console.log(JSON.stringify(body));
         return rp({
             method: 'POST',
             uri: `${host}/2.0/api/graphql`,

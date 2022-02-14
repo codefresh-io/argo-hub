@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.argo-workflows-utils.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Useful utils to enrich your argo workflow templates'
+    argo-hub/description: 'Utility templates to help you enrich your Argo WorkflowTemplates'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Vadim Gusev'
     argo-hub/owner_email: 'vadim.gusev@codefresh.io'

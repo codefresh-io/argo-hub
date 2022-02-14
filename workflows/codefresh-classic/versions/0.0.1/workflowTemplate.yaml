@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.codefresh-classic.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Operate against Codefresh classic platform'
+    argo-hub/description: 'Templates that execute operations against the Codefresh classic platform'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Itai Gendler'
     argo-hub/owner_email: 'itai@codefresh.io'
