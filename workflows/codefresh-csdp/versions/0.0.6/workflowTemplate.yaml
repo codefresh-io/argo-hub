@@ -177,6 +177,14 @@ spec:
                 path: key.json
             secretName: '{{ inputs.parameters.GCR_KEY_SECRET }}'
             optional: true
+        - name: docker-config
+          secret:
+            items:
+              - key: '{{ inputs.parameters.DOCKER_CONFIG_SECRET_KEY }}'
+                path: config.json
+            secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
+            optional: true
+
       inputs:
         parameters:
           - name: AWS_ACCESS_KEY
@@ -189,6 +197,8 @@ spec:
             default: 'cf-not-exist'
           - name: GCR_KEY_FILE_PATH
             default: ''
+          - name: DOCKER_CONFIG_FILE_PATH
+            default: ''
           - name: DOCKER_USERNAME
             default: 'cf-not-exist'
           - name: DOCKER_PASSWORD
@@ -200,6 +210,8 @@ spec:
           - name: DOMAIN
             default: 'cf-not-exist'
           - name: INSECURE
+            default: 'false'
+          - name: RETRIEVE_CREDENTIALS_BY_DOMAIN
             default: 'false'
           - name: CF_HOST
             default: 'https://g.codefresh.io'
@@ -236,6 +248,10 @@ spec:
             default: 'gcr-key-file'
           - name: GCR_KEY_SECRET_KEY
             default: '.keyjson'
+          - name: DOCKER_CONFIG_SECRET
+            default: 'docker-registry'
+          - name: DOCKER_CONFIG_SECRET_KEY
+            default: '.dockerconfigjson'
           - name: AWS_ROLE_SECRET_KEY
             default: 'role'
       container:
@@ -251,6 +267,10 @@ spec:
         env:
           - name: GCR_KEY_FILE_PATH
             value: '{{ inputs.parameters.GCR_KEY_FILE_PATH }}'
+          - name: DOCKER_CONFIG_FILE_PATH
+            value: '{{ inputs.parameters.DOCKER_CONFIG_FILE_PATH }}'
+          - name: RETRIEVE_CREDENTIALS_BY_DOMAIN
+            value: '{{ inputs.parameters.RETRIEVE_CREDENTIALS_BY_DOMAIN }}'
           - name: CF_HOST
             value: '{{ inputs.parameters.CF_HOST }}'
           - name: IMAGE_URI
