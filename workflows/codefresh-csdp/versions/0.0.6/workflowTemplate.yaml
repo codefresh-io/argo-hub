@@ -261,6 +261,8 @@ spec:
         volumeMounts:
           - name: gcr-key-file
             mountPath: /gcr/
+          - name: docker-config
+            mountPath: /.docker/
         command:
           - node
           - index.js

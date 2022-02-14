@@ -56,8 +56,7 @@ function getCredentialsFromDockerConfig(image) {
 }
 
 async function createRegistryClientByImage(image) {
-    if (checkNotEmpty(inputs.dockerConfigPath)) {
-        return getCredentialsFromDockerConfig(image)
+    if (inputs.dockerConfigPath) {
         return getCredentialsFromDockerConfig(image)
     }
     const imageData = _parseImageName(image);
@@ -118,7 +117,7 @@ async function createRegistryClientByImage(image) {
 
 async function createRegistryClient(image) {
 
-    if (checkNotEmpty(inputs.dockerConfigPath)) {
+    if (inputs.dockerConfigPath) {
         return getCredentialsFromDockerConfig(image)
     }
 
