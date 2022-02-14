@@ -2,65 +2,125 @@ const { GraphQLClient, gql } = require('graphql-request')
 const fs = require('fs')
 const _ = require('lodash')
 const AWS = require('aws-sdk');
+const { parseQualifiedNameOptimized, parseFamiliarName } = require('@codefresh-io/docker-reference')
 
 const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegistry } } = require('nodegistry');
 
-const CF_NOT_EXIST = 'cf-not-exist';
-
 // Trim all input
 // Clean this up to use the same variable with a 'registry type'
-const inputs = {
-    docker: {
-        username: process.env.DOCKER_USERNAME?.trim(),
-        password: process.env.DOCKER_PASSWORD?.trim(),
-    },
-    generic: {
-        request: {
-            protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
-            host: process.env.DOMAIN?.trim(),
-        },
-        credentials: {
-            username: process.env.USERNAME?.trim(),
-            password: process.env.PASSWORD?.trim(),
-        }
-    },
-    aws: {
-        role: process.env.AWS_ROLE?.trim(),
-        credentials: {
-            accessKeyId: process.env.AWS_ACCESS_KEY?.trim(),
-            secretAccessKey: process.env.AWS_SECRET_KEY?.trim(),
-            region: process.env.AWS_REGION?.trim(),
-        }
-    },
-    gcr: {
-        keyFilePath: process.env.GCR_KEY_FILE_PATH?.trim(),
-    },
-    git: {
-        branch: process.env.GIT_BRANCH?.trim(),
-        commit: process.env.GIT_REVISION?.trim(),
-        commitMsg: process.env.GIT_COMMIT_MESSAGE?.trim(),
-        commitURL: process.env.GIT_COMMIT_URL?.trim(),
-        author: process.env.GIT_SENDER_LOGIN?.trim(),
-    },
-    workflow: {
-        name: process.env.WORKFLOW_NAME?.trim(),
-    },
-    image: {
-        uri: process.env.IMAGE_URI?.trim(),
-    },
-    codefresh: {
-        host: process.env.CF_HOST?.trim(),
-        apiKey: process.env.CF_API_KEY?.trim(),
-    }
+const inputs = require('./configuration');
 
-};
-
+const CF_NOT_EXIST = 'cf-not-exist';
 
 function checkNotEmpty(testVar) {
     return (testVar && testVar!==CF_NOT_EXIST);
 }
 
-async function createRegistryClient() {
+function _parseImageName(imageName) {
+    return parseFamiliarName(imageName, parseQualifiedNameOptimized)
+}
+
+const _decodeBase64 = (str) => Buffer.from(str, 'base64').toString();
+
+function getCredentialsFromDockerConfig(image) {
+    const dockerConfig = JSON.parse(fs.readFileSync(inputs.dockerConfigPath));
+    const imageData = _parseImageName(image);
+    const auths = _.get(dockerConfig, 'auths', {});
+    const domainKey = _.findKey(auths, (auth, domain) => {
+        if (domain.includes(imageData.domain)) {
+            return true
+        }
+    });
+    const authInfo = auths[domainKey];
+    const auth = _decodeBase64(authInfo.auth);
+    const [ username, password ] = auth.split(':');
+    if (domainKey.includes('docker.io')) {
+        return new DockerhubRegistry({
+            username,
+            password,
+        });
+    } else if (domainKey.includes('azurecr.io')) {
+        throw new Error('Azure Container Registry using docker config json is not supported.')
+    } else if (domainKey.includes('gcr.io')) {
+        throw new Error('Google container registry using docker config json is not supported.')
+    }
+    return new StandardRegistry({
+        request: {
+            host: domainKey
+        },
+        credentials: {
+            username,
+            password,
+        },
+    });
+}
+
+async function createRegistryClientByImage(image) {
+    if (checkNotEmpty(inputs.dockerConfigPath)) {
+        return getCredentialsFromDockerConfig(image)
+        return getCredentialsFromDockerConfig(image)
+    }
+    const imageData = _parseImageName(image);
+    if (imageData.domain.includes('docker.io')) {
+        if (checkNotEmpty(inputs.docker.username)
+            && checkNotEmpty(inputs.docker.password)) {
+
+            return new DockerhubRegistry(inputs.docker);
+        }
+        throw new Error('Registry credentials for DOCKER not set. Add following registry parameters in your workflow to continue:\n - DOCKER_USERNAME\n - DOCKER_PASSWORD\n');
+    } else if (imageData.domain.includes('gcr.io')) {
+        if (inputs.gcr.keyFilePath) {
+            return new GcrRegistry({
+                keyfile: fs.readFileSync(inputs.gcr.keyFilePath),
+                request: { host: 'gcr.io' }
+            });
+        }
+        throw new Error('Registry credentials for GCR not set. Add following registry parameters in your workflow to continue:\n - GCR_KEY_FILE_PATH\n');
+    } else if (imageData.domain.includes('azurecr.io')) {
+        throw new Error('Azure Container Registry using docker config json is not supported.')
+    } else if (imageData.domain.includes('ecr')) {
+        if (checkNotEmpty(inputs.aws.role)
+            && checkNotEmpty(inputs.aws.credentials.region)) {
+            console.log(`Retrieving credentials for ECR ${inputs.aws.region} using STS token`);
+            const sts = new AWS.STS();
+            const timestamp = (new Date()).getTime();
+            const params = {
+                RoleArn: inputs.aws.role,
+                RoleSessionName: `be-descriptibe-here-${timestamp}`
+            }
+            const data = await sts.assumeRole(params).promise();
+            return new EcrRegistry({
+                promise: Promise,
+                credentials: {
+                    accessKeyId: data.Credentials.AccessKeyId,
+                    secretAccessKey: data.Credentials.SecretAccessKey,
+                    sessionToken: data.Credentials.SessionToken,
+                    region: inputs.aws.credentials.region,
+                },
+            })
+        } else if (checkNotEmpty(inputs.aws.credentials.accessKeyId)
+            && checkNotEmpty(inputs.aws.credentials.secretAccessKey)
+            && checkNotEmpty(inputs.aws.credentials.region)) {
+            return new EcrRegistry({
+                promise: Promise,
+                credentials: inputs.aws.credentials,
+            })
+        }
+        throw new Error('Registry credentials for ECR not set. Add following registry parameters in your workflow to continue:\n - AWS_ACCESS_KEY\n - AWS_SECRET_KEY\n - AWS_REGION\n');
+    }
+    if (checkNotEmpty(inputs.generic.credentials.username)
+        && checkNotEmpty(inputs.generic.credentials.password)
+        && checkNotEmpty(inputs.generic.request.host)) {
+        return new StandardRegistry(inputs.generic);
+    }
+    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN\n')
+}
+
+async function createRegistryClient(image) {
+
+    if (checkNotEmpty(inputs.dockerConfigPath)) {
+        return getCredentialsFromDockerConfig(image)
+    }
 
     // Clean this up when have time
     if (checkNotEmpty(inputs.docker.username)
@@ -114,11 +174,18 @@ async function createRegistryClient() {
     throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN');
 }
 
+async function getRegistryClient(image) {
+    if (inputs.retrieveCredentialsByDomain) {
+        return createRegistryClientByImage(image);
+    }
+    return createRegistryClient(image);
+}
+
 const init = async () => {
 
-    const client = await createRegistryClient();
-
     const image = inputs.image.uri;
+    const client = await getRegistryClient(image);
+
     const authorUserName = inputs.git.author;
     const workflowName = inputs.workflow.name;
 
