@@ -55,10 +55,27 @@ function getCredentialsFromDockerConfig(image) {
     });
 }
 
-async function createRegistryClientByImage(image) {
-    if (inputs.dockerConfigPath) {
-        return getCredentialsFromDockerConfig(image)
+async function createECRUsingSTS(role, region) {
+    console.log(`Retrieving credentials for ECR ${region} using STS token`);
+    const sts = new AWS.STS();
+    const timestamp = (new Date()).getTime();
+    const params = {
+        RoleArn: role,
+        RoleSessionName: `be-descriptibe-here-${timestamp}`
     }
+    const data = await sts.assumeRole(params).promise();
+    return new EcrRegistry({
+        promise: Promise,
+        credentials: {
+            accessKeyId: data.Credentials.AccessKeyId,
+            secretAccessKey: data.Credentials.SecretAccessKey,
+            sessionToken: data.Credentials.SessionToken,
+            region: region,
+        },
+    })
+}
+
+async function createRegistryClientByImage(image) {
     const imageData = _parseImageName(image);
     if (imageData.domain.includes('docker.io')) {
         if (checkNotEmpty(inputs.docker.username)
@@ -80,23 +97,7 @@ async function createRegistryClientByImage(image) {
     } else if (imageData.domain.includes('ecr')) {
         if (checkNotEmpty(inputs.aws.role)
             && checkNotEmpty(inputs.aws.credentials.region)) {
-            console.log(`Retrieving credentials for ECR ${inputs.aws.region} using STS token`);
-            const sts = new AWS.STS();
-            const timestamp = (new Date()).getTime();
-            const params = {
-                RoleArn: inputs.aws.role,
-                RoleSessionName: `be-descriptibe-here-${timestamp}`
-            }
-            const data = await sts.assumeRole(params).promise();
-            return new EcrRegistry({
-                promise: Promise,
-                credentials: {
-                    accessKeyId: data.Credentials.AccessKeyId,
-                    secretAccessKey: data.Credentials.SecretAccessKey,
-                    sessionToken: data.Credentials.SessionToken,
-                    region: inputs.aws.credentials.region,
-                },
-            })
+            return createECRUsingSTS(inputs.aws.role, inputs.aws.credentials.region);
         } else if (checkNotEmpty(inputs.aws.credentials.accessKeyId)
             && checkNotEmpty(inputs.aws.credentials.secretAccessKey)
             && checkNotEmpty(inputs.aws.credentials.region)) {
@@ -111,6 +112,9 @@ async function createRegistryClientByImage(image) {
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
         return new StandardRegistry(inputs.generic);
+    }
+    if (inputs.dockerConfigPath) {
+        return getCredentialsFromDockerConfig(image);
     }
     throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN\n')
 }
@@ -132,28 +136,12 @@ async function createRegistryClient(image) {
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
 
-            return new StandardRegistry(inputs.generic);
+        return new StandardRegistry(inputs.generic);
     }
 
     if (checkNotEmpty(inputs.aws.role)
         && checkNotEmpty(inputs.aws.credentials.region)) {
-        console.log(`Retrieving credentials for ECR ${inputs.aws.region} using STS token`);
-        const sts = new AWS.STS();
-        const timestamp = (new Date()).getTime();
-        const params = {
-            RoleArn: inputs.aws.role,
-            RoleSessionName: `be-descriptibe-here-${timestamp}`
-        }
-        const data = await sts.assumeRole(params).promise();
-        return new EcrRegistry({
-            promise: Promise,
-            credentials: {
-                accessKeyId: data.Credentials.AccessKeyId,
-                secretAccessKey: data.Credentials.SecretAccessKey,
-                sessionToken: data.Credentials.SessionToken,
-                region: inputs.aws.credentials.region,
-            },
-        })
+        return createECRUsingSTS(inputs.aws.role, inputs.aws.credentials.region);
     }
 
     if (inputs.gcr.keyFilePath) {
