@@ -58,6 +58,7 @@ function getCredentialsFromDockerConfig(image) {
 async function createRegistryClientByImage(image) {
     if (checkNotEmpty(inputs.dockerConfigPath)) {
         return getCredentialsFromDockerConfig(image)
+        return getCredentialsFromDockerConfig(image)
     }
     const imageData = _parseImageName(image);
     if (imageData.domain.includes('docker.io')) {
@@ -66,7 +67,7 @@ async function createRegistryClientByImage(image) {
 
             return new DockerhubRegistry(inputs.docker);
         }
-        throw new Error('Registry credentials for DOCKER not set. Add following registry parameters in your workflow to continue:\\n - DOCKER_USERNAME\\n - DOCKER_PASSWORD\\n');
+        throw new Error('Registry credentials for DOCKER not set. Add following registry parameters in your workflow to continue:\n - DOCKER_USERNAME\n - DOCKER_PASSWORD\n');
     } else if (imageData.domain.includes('gcr.io')) {
         if (inputs.gcr.keyFilePath) {
             return new GcrRegistry({
@@ -74,7 +75,7 @@ async function createRegistryClientByImage(image) {
                 request: { host: 'gcr.io' }
             });
         }
-        throw new Error('Registry credentials for GCR not set. Add following registry parameters in your workflow to continue:\\n - GCR_KEY_FILE_PATH\\n');
+        throw new Error('Registry credentials for GCR not set. Add following registry parameters in your workflow to continue:\n - GCR_KEY_FILE_PATH\n');
     } else if (imageData.domain.includes('azurecr.io')) {
         throw new Error('Azure Container Registry using docker config json is not supported.')
     } else if (imageData.domain.includes('ecr')) {
@@ -105,14 +106,14 @@ async function createRegistryClientByImage(image) {
                 credentials: inputs.aws.credentials,
             })
         }
-        throw new Error('Registry credentials for ECR not set. Add following registry parameters in your workflow to continue:\\n - AWS_ACCESS_KEY\\n - AWS_SECRET_KEY\\n - AWS_REGION\\n');
+        throw new Error('Registry credentials for ECR not set. Add following registry parameters in your workflow to continue:\n - AWS_ACCESS_KEY\n - AWS_SECRET_KEY\n - AWS_REGION\n');
     }
     if (checkNotEmpty(inputs.generic.credentials.username)
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
         return new StandardRegistry(inputs.generic);
     }
-    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\\n - GCR credentials: GCR_KEY_FILE_PATH\\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN\'')
+    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN\n')
 }
 
 async function createRegistryClient(image) {
