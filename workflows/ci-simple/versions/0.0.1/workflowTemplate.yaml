@@ -90,7 +90,7 @@ spec:
                 - name: TAG
                   value: '{{ inputs.parameters.IMAGE_TAG }}'
 
-          #  https://codefresh.io/argohub/workflow-template/codefresh-csdp
+          #  https://codefresh.io/argohub/workflow-template/CSDP-metadata
           - name: report-image-info
             templateRef:
               name: argo-hub.codefresh-csdp.0.0.6
@@ -127,6 +127,7 @@ spec:
 
     # Test template
     - name: test
+      serviceAccountName: argo-hub.ci-simple.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Test image pulling correctly and printing it content files'
