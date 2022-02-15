@@ -12,11 +12,12 @@ Report image info to argo platform.
 * GIT_REVISION (optional) - git revision
 * GIT_COMMIT_MESSAGE (optional) - git commit message
 * GIT_COMMIT_URL (optional) - git commit url
+* GIT_SENDER_LOGIN (optional) - git commiter username
 * CF_HOST (optional) - support on-premises Codefresh URL
 * INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
-* GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
 #### Specify one from following required registry parameters:
-* GCR_KEY_SECRET () - The Kubernetes secret containing the GCR key information. Default is 'gcr-key-file'
+* GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
+* GCR_KEY_SECRET (required) - The Kubernetes secret containing the GCR key information. Default is 'gcr-key-file'
 * GCR_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GCR key information. Default is '.keyjson'
 * AWS_ACCESS_KEY (required) - The Kubernetes secret with the Amazon access key
 * AWS_ACCESS_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'aws-access-key'
@@ -24,6 +25,9 @@ Report image info to argo platform.
 * AWS_SECRET_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon secret key. Default is 'aws-secret-key'
 * AWS_REGION (required) - The Kubernetes secret with the Amazon region
 * AWS_REGION_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon region. Default is 'aws-region'
+* DOCKER_CONFIG_FILE_PATH (required) - docker config json for authenticating to a registry (GCR, ECR, ACR not supported)
+* DOCKER_CONFIG_SECRET (required) - The Kubernetes secret containing the docker config json information. Default is 'docker-registry'
+* DOCKER_CONFIG_SECRET_KEY  (optional) - The key in the Kubernetes secret containing the docker config json information. Default is '.dockerconfigjson'
 * DOCKER_USERNAME (required) - The Kubernetes secret with the docker username
 * DOCKER_USERNAME_SECRET_KEY (optional) The key in the Kubernetes secret with the docker username. Default is 'username'
 * DOCKER_PASSWORD (required) - The Kubernetes secret with the docker password
@@ -72,6 +76,8 @@ spec:
             value: 'https://github.com/test/project/commit/a1bc234d56e78f9a0b12c34d5ef67fba89d01ea2'
           - name: GIT_COMMIT_MESSAGE
             value: "Merge branch 'test'"
+          - name: GIT_SENDER_LOGIN
+            value: "some-username"
           - name: DOCKER_USERNAME
             value: 'docker-username'
           - name: DOCKER_PASSWORD
