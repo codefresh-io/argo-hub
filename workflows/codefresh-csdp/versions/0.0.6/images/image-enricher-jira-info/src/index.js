@@ -72,9 +72,6 @@ async function execute() {
                     assignee: _.get(issueInfo, 'fields.assignee.displayName'),
                     status: _.get(issueInfo, 'fields.status.name'),
                     avatarURL: Object.values(avatarUrls)[0]
-                })
-                .catch(err => {
-                    throw Error(`Can't create issue. ${err}`);
                 });
 
             if (!result) {
