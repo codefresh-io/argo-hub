@@ -19,7 +19,7 @@ Summary
 * repo - the file system that will be used for building the docker image.
 
 #### Volumes
-* docker-config - in order for this tempalte to work a volume named `docker-config` must exists with all registries credentials you need to pull from or push to
+* docker-config - in order for this template to work a volume named `docker-config` must exists with all registries credentials you need to pull from or push to
 
 ### Outputs
 no outputs
