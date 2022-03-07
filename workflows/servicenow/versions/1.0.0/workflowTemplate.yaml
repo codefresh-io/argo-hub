@@ -40,7 +40,7 @@ spec:
       container:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
-        image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
@@ -84,7 +84,7 @@ spec:
       container:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
-        image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
@@ -135,7 +135,7 @@ spec:
       container:
         imagePullPolicy: Always
         #image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
-        image: quay.io/codefreshplugins/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
+        image: lrochette/argo-hub-workflows-servicenow-versions-1.0.0-integration:main
         command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
