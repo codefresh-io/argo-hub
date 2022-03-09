@@ -127,7 +127,6 @@ spec:
 
     # Test template
     - name: test
-      serviceAccountName: argo-hub.ci-simple.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Test image pulling correctly and printing it content files'
