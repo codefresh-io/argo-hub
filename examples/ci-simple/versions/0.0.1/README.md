@@ -12,5 +12,4 @@
 
 Minimal required permissions
 
-
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/examples/ci-simple/versions/0.0.1/rbac.yaml)
