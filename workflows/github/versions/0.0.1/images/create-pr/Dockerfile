@@ -2,6 +2,6 @@ FROM golang:alpine
 
 RUN apk update
 RUN apk add git curl
-RUN go get github.com/github/hub
+RUN go install github.com/github/hub@latest
 
 ENTRYPOINT hub
