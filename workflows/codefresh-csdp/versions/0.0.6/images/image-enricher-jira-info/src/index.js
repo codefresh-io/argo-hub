@@ -95,7 +95,7 @@ async function execute() {
                     console.log(chalk.red('Wrong username or password'));
                     return process.exit(1);
                 }
-                console.log('body:' + chalk.red(error.body));
+                console.log('body:' + chalk.red(e.body));
                 console.log(chalk.red(e.message));
                 process.exit(1);
             }
