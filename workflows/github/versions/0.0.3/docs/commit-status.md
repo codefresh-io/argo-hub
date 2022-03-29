@@ -21,7 +21,7 @@ no outputs
 ## Examples
 
 ### Report commit status at the beginning and end of a workflow
-```
+```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -35,7 +35,7 @@ spec:
         tasks:
         - name: report-commit-status-start
           templateRef:
-            name: argo-hub.github.0.0.2
+            name: argo-hub.github.0.0.3
             template: commit-status
           arguments:
             parameters:
@@ -61,7 +61,7 @@ spec:
           - - name: report-commits-status-failure
               when: '{{workflow.status}} =~ "Failed|Error"'
               templateRef:
-                name: argo-hub.github.0.0.2
+                name: argo-hub.github.0.0.3
                 template: commit-status
               arguments:
                 parameters:
@@ -81,11 +81,11 @@ spec:
                     value: 'Workflow failed'
                   - name: GITHUB_TOKEN_SECRET
                     value: 'github-token'
-    
+
           - - name: report-commits-status-success
               when: '{{workflow.status}} == Succeeded'
               templateRef:
-                name: argo-hub.github.0.0.2
+                name: argo-hub.github.0.0.3
                 template: commit-status
               arguments:
                 parameters:

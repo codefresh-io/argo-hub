@@ -37,7 +37,7 @@ Parse the GitHub Event Payload (JSON). Output the most useful payload fields as 
 ## Examples
 
 ### Store key fields from a GitHub event payload as global workflow outputs, and consume them from a subsequent template.
-```
+```yaml
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
@@ -68,7 +68,7 @@ spec:
               spec:
                 workflowTemplateRef:
                   name: example-steps
-                serviceAccountName: argo-hub.github.0.0.2
+                serviceAccountName: argo-hub.github.0.0.3
                 arguments:
                   parameters:
                     - name: GITHUB_JSON
@@ -93,7 +93,7 @@ spec:
       # 1. Store GitHub info as global workflow outputs
       - - name: extract-webhook-variables
           templateRef:
-            name: argo-hub.github.0.0.2
+            name: argo-hub.github.0.0.3
             template: extract-webhook-variables
           arguments:
             parameters:
