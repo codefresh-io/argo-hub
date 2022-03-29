@@ -54,7 +54,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.6-images-image-enricher-git-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-image-enricher-git-info:main
         command:
           - node
           - /app/src/index.js
