@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.3 (28.03.2022)
+
+- Add PR comment workflow
+- Add `serviceAccount` to all github workflows
+- Add example for `create-pr` workflow
+
 ## v0.0.2 (8.12.2021)
 
 ### extract-webhook-variables
