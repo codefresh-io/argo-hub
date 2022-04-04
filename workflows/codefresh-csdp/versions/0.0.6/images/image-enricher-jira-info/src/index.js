@@ -91,11 +91,18 @@ async function execute() {
             if (!e.statusCode && e.statusCode === 404) {
                 console.log(chalk.yellow(`Skip issue ${normalizedIssue}, didnt find in jira system or you dont have permissions for find it`));
             } else {
-                if (e.statusCode === 401) {
+                if (_.isString(e)) { // Jira returns errors in string format
+                    const error = JSON.parse(e);
+                    console.log('body:' + chalk.red(JSON.stringify(error.body)));
+                    if (configuration.failOnNotFound === "true") {
+                        return process.exit(1);
+                    }
+                    process.exit(0);
+                } else if (e.statusCode === 401) {
                     console.log(chalk.red('Wrong username or password'));
                     return process.exit(1);
                 }
-                console.log('body:' + chalk.red(error.body));
+                console.log('body:' + chalk.red(e.body));
                 console.log(chalk.red(e.message));
                 process.exit(1);
             }

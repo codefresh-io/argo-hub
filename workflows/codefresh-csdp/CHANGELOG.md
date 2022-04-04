@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.6 (29.03.2022)
+
+### image-enricher-git-info
+Added information about commits to the image
+
 ## v0.0.6 (14.2.2022)
 
 ### report-image-info
