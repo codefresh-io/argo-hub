@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.checkmarx
+  annotations:
+    argo-hub/description: 'Execute operations with Checkmarx/kics'
+    argo-hub/categories: 'security'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/coming-soon/checkmarx/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  templates: []
