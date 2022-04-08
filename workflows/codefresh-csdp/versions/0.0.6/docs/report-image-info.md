@@ -13,6 +13,8 @@ Report image info to argo platform.
 * GIT_COMMIT_MESSAGE (optional) - git commit message
 * GIT_COMMIT_URL (optional) - git commit url
 * GIT_SENDER_LOGIN (optional) - git commiter username
+* WORKFLOW_URL (optional) - external url for the workflow
+* LOGS_URL (optional) - external url for the logs
 * CF_HOST (optional) - support on-premises Codefresh URL
 * INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
 #### Specify one from following required registry parameters:

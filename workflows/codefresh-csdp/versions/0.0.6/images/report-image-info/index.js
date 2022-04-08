@@ -175,6 +175,8 @@ const init = async () => {
 
     const authorUserName = inputs.git.author;
     const workflowName = inputs.workflow.name;
+    const workflowUrl = inputs.workflow.workflowUrl;
+    const logsUrl = inputs.workflow.logsUrl;
 
     const registry = client.repoTag(image);
 
@@ -203,6 +205,8 @@ const init = async () => {
         os: config.os,
         architecture: config.architecture,
         workflowName: workflowName,
+        workflowUrl,
+        logsUrl,
         author: {
             username: authorUserName
         }

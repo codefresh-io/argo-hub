@@ -34,6 +34,8 @@ module.exports = {
     },
     workflow: {
         name: process.env.WORKFLOW_NAME?.trim(),
+        workflowUrl: process.env.WORKFLOW_URL?.trim(),
+        logsUrl: process.env.LOGS_URL?.trim(),
     },
     image: {
         uri: process.env.IMAGE_URI?.trim(),

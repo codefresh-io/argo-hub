@@ -216,6 +216,10 @@ spec:
             default: ''
           - name:  WORKFLOW_NAME
             default: ''
+          - name:  WORKFLOW_URL
+            default: ''
+          - name:  LOGS_URL
+            default: ''
           - name: IMAGE
           - name: CF_API_KEY
           - name: GIT_BRANCH
@@ -288,6 +292,10 @@ spec:
             value: '{{ inputs.parameters.GIT_SENDER_LOGIN }}'
           - name: WORKFLOW_NAME
             value: '{{ inputs.parameters.WORKFLOW_NAME }}'
+          - name: WORKFLOW_URL
+            value: '{{ inputs.parameters.WORKFLOW_URL }}'
+          - name: LOGS_URL
+            value: '{{ inputs.parameters.LOGS_URL }}'
           - name: CF_API_KEY
             valueFrom:
               secretKeyRef:

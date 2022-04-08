@@ -37,7 +37,7 @@ async function execute() {
         await jiraService.init()
     } catch(e) {
         console.log(chalk.red(`Cant initialize jira client, reason ${e.message}`));
-        process.exit(0); //TODO: change status to 1
+        process.exit(1);
     }
 
 
@@ -57,10 +57,7 @@ async function execute() {
             normalizedIssue = issue.toUpperCase();
             // just for validation atm
             const issueInfo = await jiraService
-                .getInfoAboutIssue(normalizedIssue)
-                .catch(() => {
-                    throw Error(`Can't find jira ticket with number "${normalizedIssue}"`);
-                });
+                .getInfoAboutIssue(normalizedIssue);
 
             const baseUrl = issueInfo.baseUrl || `https://${configuration.jira.host}`;
             const url = `${baseUrl}/browse/${normalizedIssue}`;
@@ -75,9 +72,6 @@ async function execute() {
                     assignee: _.get(issueInfo, 'fields.assignee.displayName'),
                     status: _.get(issueInfo, 'fields.status.name'),
                     avatarURL: Object.values(avatarUrls)[0]
-                })
-                .catch(err => {
-                    throw Error(`Can't create issue. ${err}`);
                 });
 
             if (!result) {
@@ -94,19 +88,23 @@ async function execute() {
 
 
         } catch (e) {
-            if(!e.statusCode && e.statusCode === 404) {
+            if (!e.statusCode && e.statusCode === 404) {
                 console.log(chalk.yellow(`Skip issue ${normalizedIssue}, didnt find in jira system or you dont have permissions for find it`));
             } else {
-                try {
-                    if(e.statusCode === 401) {
-                        console.log(chalk.red('Wrong username or password'));
-                        return process.exit(0); //TODO: change status to 1
+                if (_.isString(e)) { // Jira returns errors in string format
+                    const error = JSON.parse(e);
+                    console.log('body:' + chalk.red(JSON.stringify(error.body)));
+                    if (configuration.failOnNotFound === "true") {
+                        return process.exit(1);
                     }
-                    console.log(chalk.red(error.body));
-                } catch(err) {
-                    console.log(chalk.red(e.message));
+                    process.exit(0);
+                } else if (e.statusCode === 401) {
+                    console.log(chalk.red('Wrong username or password'));
+                    return process.exit(1);
                 }
-                process.exit(0); //TODO: change status to 1
+                console.log('body:' + chalk.red(e.body));
+                console.log(chalk.red(e.message));
+                process.exit(1);
             }
 
         }

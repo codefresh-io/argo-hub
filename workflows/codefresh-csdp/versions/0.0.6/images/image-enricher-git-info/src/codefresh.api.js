@@ -44,7 +44,8 @@ class CodefreshAPI {
                         "pullRequestValue": {
                             url: pullRequest.url,
                             title: pullRequest.title,
-                            committers: pullRequest.committers
+                            committers: pullRequest.committers,
+                            commits: pullRequest.commits
                         }
                     }
                 },
