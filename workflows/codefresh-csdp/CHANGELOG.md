@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.0.6 (8.5.2022)
+## v0.0.6 (8.4.2022)
 
 ### report-image-info
 Add WORKFLOW_URL and LOGS_URL to report-image-info
