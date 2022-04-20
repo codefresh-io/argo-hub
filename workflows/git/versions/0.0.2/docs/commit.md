@@ -72,7 +72,7 @@ spec:
           - name: repo
             path: /tmp/repo
       script:
-        image: quay.io/bitnami/git
+        image: bitnami/git
         command: [ bash ]
         source: |
           DIRPATH='{{inputs.artifacts.repo.path}}'
