@@ -177,6 +177,14 @@ spec:
                 path: key.json
             secretName: '{{ inputs.parameters.GCR_KEY_SECRET }}'
             optional: true
+        - name: docker-config
+          secret:
+            items:
+              - key: '{{ inputs.parameters.DOCKER_CONFIG_SECRET_KEY }}'
+                path: config.json
+            secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
+            optional: true
+
       inputs:
         parameters:
           - name: AWS_ACCESS_KEY
@@ -188,6 +196,8 @@ spec:
           - name: AWS_ROLE_SECRET
             default: 'cf-not-exist'
           - name: GCR_KEY_FILE_PATH
+            default: ''
+          - name: DOCKER_CONFIG_FILE_PATH
             default: ''
           - name: DOCKER_USERNAME
             default: 'cf-not-exist'
@@ -201,11 +211,17 @@ spec:
             default: 'cf-not-exist'
           - name: INSECURE
             default: 'false'
+          - name: RETRIEVE_CREDENTIALS_BY_DOMAIN
+            default: 'false'
           - name: CF_HOST
             default: 'https://g.codefresh.io'
           - name: GIT_SENDER_LOGIN
             default: ''
           - name:  WORKFLOW_NAME
+            default: ''
+          - name:  WORKFLOW_URL
+            default: ''
+          - name:  LOGS_URL
             default: ''
           - name: IMAGE
           - name: CF_API_KEY
@@ -236,6 +252,10 @@ spec:
             default: 'gcr-key-file'
           - name: GCR_KEY_SECRET_KEY
             default: '.keyjson'
+          - name: DOCKER_CONFIG_SECRET
+            default: 'docker-registry'
+          - name: DOCKER_CONFIG_SECRET_KEY
+            default: '.dockerconfigjson'
           - name: AWS_ROLE_SECRET_KEY
             default: 'role'
       container:
@@ -245,12 +265,18 @@ spec:
         volumeMounts:
           - name: gcr-key-file
             mountPath: /gcr/
+          - name: docker-config
+            mountPath: /.docker/
         command:
           - node
           - index.js
         env:
           - name: GCR_KEY_FILE_PATH
             value: '{{ inputs.parameters.GCR_KEY_FILE_PATH }}'
+          - name: DOCKER_CONFIG_FILE_PATH
+            value: '{{ inputs.parameters.DOCKER_CONFIG_FILE_PATH }}'
+          - name: RETRIEVE_CREDENTIALS_BY_DOMAIN
+            value: '{{ inputs.parameters.RETRIEVE_CREDENTIALS_BY_DOMAIN }}'
           - name: CF_HOST
             value: '{{ inputs.parameters.CF_HOST }}'
           - name: IMAGE_URI
@@ -269,6 +295,10 @@ spec:
             value: '{{ inputs.parameters.GIT_SENDER_LOGIN }}'
           - name: WORKFLOW_NAME
             value: '{{ inputs.parameters.WORKFLOW_NAME }}'
+          - name: WORKFLOW_URL
+            value: '{{ inputs.parameters.WORKFLOW_URL }}'
+          - name: LOGS_URL
+            value: '{{ inputs.parameters.LOGS_URL }}'
           - name: CF_API_KEY
             valueFrom:
               secretKeyRef:

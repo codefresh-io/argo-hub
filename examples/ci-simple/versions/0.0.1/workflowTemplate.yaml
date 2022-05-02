@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'eti.zaguri@codefresh.io'
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/85868206'
     argo-hub/owner_url: 'https://github.com/eti-codefresh'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/ci-simple/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/ci-simple/assets/icon.svg"
     argo-hub/icon-background: "#004C76"
 spec:
   volumes:
@@ -90,7 +90,7 @@ spec:
                 - name: TAG
                   value: '{{ inputs.parameters.IMAGE_TAG }}'
 
-          #  https://codefresh.io/argohub/workflow-template/codefresh-csdp
+          #  https://codefresh.io/argohub/workflow-template/CSDP-metadata
           - name: report-image-info
             templateRef:
               name: argo-hub.codefresh-csdp.0.0.6
