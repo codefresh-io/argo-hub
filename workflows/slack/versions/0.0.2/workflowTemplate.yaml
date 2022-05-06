@@ -85,5 +85,5 @@ spec:
           - name: SLACK_TOKEN
             valueFrom:
               secretKeyRef:
-                name: {{ inputs.parameters.SLACK_TOKEN }}
+                name: '{{ inputs.parameters.SLACK_TOKEN }}'
                 key: token
