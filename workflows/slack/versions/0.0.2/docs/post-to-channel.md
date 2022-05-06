@@ -34,7 +34,7 @@ spec:
         arguments:
           parameters:
           - name: SLACK_CHANNEL
-            value: 'team-channel
+            value: 'team-channel'
           - name: SLACK_MESSAGE
             value: 'my cool message'
           - name: SLACK_TOKEN
