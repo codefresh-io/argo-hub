@@ -1,9 +1,19 @@
-module.exports = {
-    docker: {
-        username: process.env.DOCKER_USERNAME?.trim(),
-        password: process.env.DOCKER_PASSWORD?.trim(),
+const Joi = require('joi')
+const _ = require('lodash')
+
+const inputs = {
+    codefresh: {
+        host: process.env.CF_HOST?.trim() || 'https://g.codefresh.io',
+        apiKey: process.env.CF_API_KEY?.trim(),
     },
-    dockerConfigPath: process.env.DOCKER_CONFIG_FILE_PATH?.trim(),
+    image: {
+        uri: process.env.IMAGE_URI?.trim(),
+    },
+    workflow: {
+        name: process.env.WORKFLOW_NAME?.trim(),
+        workflowUrl: process.env.WORKFLOW_URL?.trim(),
+        logsUrl: process.env.LOGS_URL?.trim(),
+    },
     generic: {
         request: {
             protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
@@ -14,6 +24,11 @@ module.exports = {
             password: process.env.PASSWORD?.trim(),
         }
     },
+    docker: {
+        username: process.env.DOCKER_USERNAME?.trim(),
+        password: process.env.DOCKER_PASSWORD?.trim(),
+    },
+    dockerConfigPath: process.env.DOCKER_CONFIG_FILE_PATH?.trim(),
     aws: {
         role: process.env.AWS_ROLE?.trim(),
         credentials: {
@@ -25,24 +40,29 @@ module.exports = {
     gcr: {
         keyFilePath: process.env.GCR_KEY_FILE_PATH?.trim(),
     },
-    git: {
-        branch: process.env.GIT_BRANCH?.trim(),
-        commit: process.env.GIT_REVISION?.trim(),
-        commitMsg: process.env.GIT_COMMIT_MESSAGE?.trim(),
-        commitURL: process.env.GIT_COMMIT_URL?.trim(),
-        author: process.env.GIT_SENDER_LOGIN?.trim(),
-    },
-    workflow: {
-        name: process.env.WORKFLOW_NAME?.trim(),
-        workflowUrl: process.env.WORKFLOW_URL?.trim(),
-        logsUrl: process.env.LOGS_URL?.trim(),
-    },
-    image: {
-        uri: process.env.IMAGE_URI?.trim(),
-    },
-    codefresh: {
-        host: process.env.CF_HOST?.trim(),
-        apiKey: process.env.CF_API_KEY?.trim(),
-    },
     retrieveCredentialsByDomain: process.env.RETRIEVE_CREDENTIALS_BY_DOMAIN?.trim() === 'true'
 };
+
+const schema = Joi.object({
+    CF_HOST: Joi.string().uri(),
+    CF_API_KEY: Joi.string().required(),
+    IMAGE_URI: Joi.string().required(),
+    WORKFLOW_NAME: Joi.string(),
+    WORKFLOW_URL: Joi.string().uri(),
+    LOGS_URL: Joi.string().uri(),
+    RETRIEVE_CREDENTIALS_BY_DOMAIN: Joi.boolean(),
+
+    /** the registry specific vars validated during "createRegistryClient" */
+})
+
+module.exports = {
+    inputs,
+
+    validateInputs() {
+        const { error } = schema.validate(process.env, { allowUnknown: true });
+        if (!_.isEmpty(error)) {
+            throw error;
+        }
+        return this.inputs;
+    }
+}

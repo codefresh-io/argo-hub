@@ -1,32 +1,44 @@
 const Promise = require('bluebird');
+const _ = require('lodash');
 const chalk = require('chalk');
-const { image, v2 } = require('./configuration');
+const configuration = require('./configuration');
 const codefreshApi = require('./codefresh.api');
-const pullRequest = require('./pull-request');
-const initializer = require('./initializer');
+const providers = require('./providers');
 
 async function execute() {
     try {
-        // init data from context and put it as config
-        await initializer.init();
+        const inputs = configuration.validateInputs();
 
-        const pullRequests = await pullRequest.get();
+        const provider = await providers.get(inputs.provider);
 
-        console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequests)}`));
+        // maybe we should use SHA:
+        // * works even when after branch was deleted
+        // * more consistent because branch is reference that can be updated
+        const branch = await provider.getBranch(inputs.repo, inputs.branch);
+        if (branch) {
+            // await codefreshApi.patchImageWithGitBranchData(inputs.imageName, inputs.imageDigest, branch)
+            // await codefreshApi.createRevisionAnnotation(inputs.imageDigest, branch);   
+        }
 
-        await Promise.all(pullRequests.map(async pr => {
-            try {
-                console.log(`Creating argo platform annotation for ${image}`);
-                const result = await codefreshApi.createPullRequestV2(pr);
-                if (result) {
-                    console.log(JSON.stringify(result));
+        const pullRequests = await provider.getPullRequestsWithCommits(inputs.repo, inputs.branch);
+        if (!_.isEmpty(pullRequests)) {
+            console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequests)}`));
+
+            await Promise.all(pullRequests.map(async pr => {
+                try {
+                    console.log(`Creating argo platform annotation for ${inputs.imageName}`);
+                    const result = await codefreshApi.createPullRequestAnnotation(inputs.imageName, pr);
+                    if (result) {
+                        console.log(JSON.stringify(result));
+                    }
+                } catch (e) {
+                    console.log(`Failed to assign pull request ${pr.number} to your image ${inputs.imageDigest}, reason ${chalk.red(e.message)}`);
                 }
-            } catch (e) {
-                console.log(`Failed to assign pull request ${pr.number} to your image ${image}, reason ${chalk.red(e.message)}`);
-            }
-        }));
+            }));
+        }
+
     } catch (e) {
-        console.log(chalk.red(e.message));
+        console.error(e.stack);
         process.exit(1);
     }
 }

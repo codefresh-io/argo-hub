@@ -1,5 +1,5 @@
 const initializer = require('../initializer');
-const config = require('../configuration');
+const config = require('../configuration').inputs;
 
 jest.mock('request-promise', () => {
     return () => {

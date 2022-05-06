@@ -1,4 +1,4 @@
-const configuration = require('./configuration');
+const configuration = require('./configuration').inputs;
 const codefreshApi = require('./codefresh.api');
 
 const JiraClient = require('jira-connector');

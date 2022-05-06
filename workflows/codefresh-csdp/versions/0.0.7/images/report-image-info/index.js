@@ -8,7 +8,8 @@ const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegis
 
 // Trim all input
 // Clean this up to use the same variable with a 'registry type'
-const inputs = require('./configuration');
+const configuration = require('./configuration');
+const inputs = require('./configuration').inputs;
 
 const CF_NOT_EXIST = 'cf-not-exist';
 
@@ -169,11 +170,11 @@ async function getRegistryClient(image) {
 }
 
 const init = async () => {
+    configuration.validateInputs();
 
     const image = inputs.image.uri;
     const client = await getRegistryClient(image);
 
-    const authorUserName = inputs.git.author;
     const workflowName = inputs.workflow.name;
     const workflowUrl = inputs.workflow.workflowUrl;
     const logsUrl = inputs.workflow.logsUrl;
@@ -183,68 +184,63 @@ const init = async () => {
     const manifest = await registry.getManifest();
     const config = await registry.getConfig(manifest);
 
+    // store in FS to use as an output param later (in argo workflow)
+    storeOutput({
+        imageName: image,
+        imageDigest: manifest.config.digest
+    });
+
     const size = manifest.config.size + _.reduce(manifest.layers, (sum, layer) => {
         return sum + layer.size;
-    }, 0)
+    }, 0);
 
     const graphQLClient = new GraphQLClient(`${inputs.codefresh.host}/2.0/api/graphql`, {
         headers: {
             'Authorization': inputs.codefresh.apiKey,
         },
-    })
+    });
 
     const imageBinary = {
         id: manifest.config.digest,
         created: config.created,
         imageName: image,
-        branch: inputs.git.branch,
-        commit: inputs.git.commit,
-        commitMsg: inputs.git.commitMsg,
-        commitURL: inputs.git.commitURL,
         size: size,
         os: config.os,
         architecture: config.architecture,
         workflowName: workflowName,
         workflowUrl,
         logsUrl,
-        author: {
-            username: authorUserName
-        }
-    }
+    };
 
-    console.log('REPORT_IMAGE_V2: binaryQuery payload:', imageBinary)
+    console.log('REPORT_IMAGE_V2: binaryMutation payload:', imageBinary);
 
-    const binaryQuery = gql`mutation($imageBinary: ImageBinaryInput!){
+    const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!){
         createImageBinary(imageBinary: $imageBinary) {
             id,
             imageName,
-            branch,
-            commit,
-            commitMsg,
-            commitURL,
             workflowName
         }
-    }`
-    const binaryResult = await graphQLClient.request(binaryQuery, { imageBinary })
-    console.log('REPORT_IMAGE_V2: binaryQuery response:', JSON.stringify(binaryResult, null, 2))
+    }`;
+    const binaryResult = await graphQLClient.request(binaryMutation, { imageBinary });
+    console.log('REPORT_IMAGE_V2: binaryMutation response:', JSON.stringify(binaryResult, null, 2));
 
     const imageRegistry = {
         binaryId: binaryResult.createImageBinary.id,
         imageName: image,
         repoDigest: manifest.config.repoDigest,
         created: config.created
-    }
+    };
 
-    const registryQuery = gql`mutation($imageRegistry: ImageRegistryInput!) {
+    const registryMutation = gql`mutation($imageRegistry: ImageRegistryInput!) {
         createImageRegistry(imageRegistry: $imageRegistry) {
             binaryId
             imageName
             repoDigest
         }
-    }`
+    }`;
 
-    const registryResult = await graphQLClient.request(registryQuery, { imageRegistry })
-    console.log(JSON.stringify(registryResult, null, 2))
+    const registryResult = await graphQLClient.request(registryMutation, { imageRegistry });
+    console.log(JSON.stringify(registryResult, null, 2));
 }
 
 const validateRequiredEnvs = () => {
@@ -254,6 +250,16 @@ const validateRequiredEnvs = () => {
     if (_.isEmpty(inputs.codefresh.apiKey)) {
         throw new Error('CF_API_KEY is required parameter. Add this parameter in your workflow to continue.');
     }
+}
+
+const storeOutput = ({ imageName, imageDigest }) => {
+    const OUTPUT_DIR = '/tmp';
+
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+    fs.writeFileSync(`${OUTPUT_DIR}/reported_image_name`, imageName);
+    fs.writeFileSync(`${OUTPUT_DIR}/reported_image_sha`, imageDigest);
 }
 
 const main = async () => {

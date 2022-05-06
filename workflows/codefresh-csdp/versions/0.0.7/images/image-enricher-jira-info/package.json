@@ -11,11 +11,12 @@
   },
   "dependencies": {
     "bluebird": "3.7.2",
-    "lodash": "4.17.15",
-    "request-promise": "4.2.5",
-    "request": "2.88.2",
+    "chalk": "^4.1.0",
     "jira-connector": "^3.1.0",
-    "chalk": "^4.1.0"
+    "joi": "^17.6.0",
+    "lodash": "4.17.15",
+    "request": "2.88.2",
+    "request-promise": "4.2.5"
   },
   "devDependencies": {
     "eslint": "^7.2.0",

@@ -30,8 +30,9 @@ async function _saveLink(url) {
 }
 
 async function execute() {
+    const inputs = inputs.validateInputs()
 
-    console.log(`Looking for Issues from message ${configuration.message}`);
+    console.log(`Looking for Issues from message ${inputs.message}`);
 
     try {
         await jiraService.init()
@@ -45,7 +46,7 @@ async function execute() {
 
     if(!_.isArray(issues)) {
         console.log(chalk.yellow(`Issues werent found`));
-        if (configuration.failOnNotFound === "true") {
+        if (inputs.failOnNotFound === "true") {
             return process.exit(1);
         }
         return;
@@ -59,7 +60,7 @@ async function execute() {
             const issueInfo = await jiraService
                 .getInfoAboutIssue(normalizedIssue);
 
-            const baseUrl = issueInfo.baseUrl || `https://${configuration.jira.host}`;
+            const baseUrl = issueInfo.baseUrl || `https://${inputs.jira.host}`;
             const url = `${baseUrl}/browse/${normalizedIssue}`;
             await _saveLink(url);
             const avatarUrls = _.get(issueInfo, 'fields.assignee.avatarUrls', {});
@@ -75,15 +76,15 @@ async function execute() {
                 });
 
             if (!result) {
-                console.log(chalk.red(`The image you are trying to enrich ${configuration.image} does not exist`));
+                console.log(chalk.red(`The image you are trying to enrich ${inputs.imageName} does not exist`));
                 process.exit(1);
             } else if (!_.isEmpty(result.errors)){
                 console.log(JSON.stringify(result));
-                console.log(chalk.red(`The image you are trying to enrich ${configuration.image} does not exist`));
+                console.log(chalk.red(`The image you are trying to enrich ${inputs.imageName} does not exist`));
                 process.exit(1);
             } else {
                 console.log(JSON.stringify(result));
-                console.log(chalk.green(`Codefresh assign issue ${normalizedIssue} to your image ${configuration.image}`));
+                console.log(chalk.green(`Codefresh assign issue ${normalizedIssue} to your image ${inputs.imageName}`));
             }
 
 
@@ -94,7 +95,7 @@ async function execute() {
                 if (_.isString(e)) { // Jira returns errors in string format
                     const error = JSON.parse(e);
                     console.log('body:' + chalk.red(JSON.stringify(error.body)));
-                    if (configuration.failOnNotFound === "true") {
+                    if (inputs.failOnNotFound === "true") {
                         return process.exit(1);
                     }
                     process.exit(0);

@@ -1,39 +1,16 @@
-const { host, apiToken, image } = require('./configuration');
+const { cfHost, cfApiKey, imageName } = require('./configuration').inputs;
 const rp = require('request-promise');
 
 class CodefreshAPI {
 
-    async createIssue(issue) {
-
-        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${image}`);
-
-        return rp({
-            method: 'POST',
-            uri: `${host}/api/annotations`,
-            body: {
-                entityId: image,
-                entityType: 'image-issues',
-                key: `${issue.number}`,
-                value: {
-                    url : issue.url,
-                    title : issue.title
-                }
-            },
-            headers: {
-                'Authorization': `Bearer ${apiToken}`
-            },
-            json: true
-        });
-    }
-
     async createIssueV2(issue) {
 
-        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${image}`);
+        console.log(`Create issue request ${issue.number}=${issue.url}, image: ${imageName}`);
         const body = {
             "operationName":"saveAnnotation",
             "variables": {
                 "annotation": {
-                    "logicEntityId": {"id": image},
+                    "logicEntityId": {"id": imageName},
                     "entityType": "image",
                     "key": `${issue.number}`,
                     "type": "issue",
@@ -51,22 +28,21 @@ class CodefreshAPI {
         console.log(JSON.stringify(body));
         return rp({
             method: 'POST',
-            uri: `${host}/2.0/api/graphql`,
+            uri: `${cfHost}/2.0/api/graphql`,
             body,
             headers: {
-                'Authorization': `Bearer ${apiToken}`
+                'Authorization': `Bearer ${cfApiKey}`
             },
             json: true
         });
     }
 
-
     async getJiraContext(name) {
         return rp({
             method: 'GET',
-            uri: `${host}/api/contexts/${name}?regex=true&type=atlassian&decrypt=true`,
+            uri: `${cfHost}/api/contexts/${name}?regex=true&type=atlassian&decrypt=true`,
             headers: {
-                'Authorization': `Bearer ${apiToken}`
+                'Authorization': `Bearer ${cfApiKey}`
             },
             json: true
         });
@@ -75,9 +51,9 @@ class CodefreshAPI {
     async getJiraIssue(context, issueKey) {
         return rp({
             method: 'GET',
-            uri: `${host}/api/atlassian/issues/${issueKey}?jira-context=${context}`,
+            uri: `${cfHost}/api/atlassian/issues/${issueKey}?jira-context=${context}`,
             headers: {
-                'Authorization': `Bearer ${apiToken}`
+                'Authorization': `Bearer ${cfApiKey}`
             },
             json: true
         });

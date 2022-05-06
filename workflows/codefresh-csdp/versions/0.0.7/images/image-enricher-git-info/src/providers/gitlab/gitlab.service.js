@@ -1,10 +1,10 @@
 const chalk = require('chalk');
 
-class Gitlab {
+class GitlabService {
 
-    async pullRequests() {
+    async getPullRequestsWithCommits() {
         console.log(chalk.yellow(`Gitlab currently not support for non pr merge event triggers. `));
         return [];
     }
 }
-module.exports = new Gitlab();
+module.exports = new GitlabService();
