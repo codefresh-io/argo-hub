@@ -63,6 +63,7 @@ spec:
         parameters:
           - name: SLACK_CHANNEL
           - name: SLACK_TOKEN
+            value: slack-token
           - name: SLACK_MESSAGE
             value: ""
           - name: LOG_LEVEL
@@ -70,7 +71,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/lrochette/argo-hub-workflows-slack-versions-0.0.2-images-post-to-channel:0.0.2
+        image: quay.io/lrochette/argo-hub-workflows-slack-versions-0.0.2-images-post-to-channel:main
         command:
           - python
           - /slack/slack.py
@@ -85,4 +86,4 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ inputs.parameters.SLACK_TOKEN }}
-                key: token            
+                key: token
