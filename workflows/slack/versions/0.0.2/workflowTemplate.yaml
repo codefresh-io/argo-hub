@@ -78,7 +78,7 @@ spec:
         env:
           - name: SLACK_CHANNEL
             value: '{{ inputs.parameters.SLACK_CHANNEL }}'
-          - name: SSLACK_MESSAGE
+          - name: SLACK_MESSAGE
             value: '{{ inputs.parameters.SLACK_MESSAGE }}'
           - name: LOG_LEVEL
             value: '{{ inputs.parameters.LOG_LEVEL }}'
