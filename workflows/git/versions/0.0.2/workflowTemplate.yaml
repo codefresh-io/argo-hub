@@ -65,7 +65,7 @@ spec:
             default: main
           - name: GIT_TOKEN_SECRET
       script:
-        image: quay.io/bitnami/git
+        image: bitnami/git
         env:
           - name: TOKEN
             valueFrom:
@@ -104,7 +104,7 @@ spec:
           - name: repo
             path: /tmp/repo
       script:
-        image: quay.io/bitnami/git
+        image: bitnami/git
         command: [ bash ]
         source: |
           MESSAGE="{{inputs.parameters.MESSAGE}}"
