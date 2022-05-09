@@ -71,7 +71,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-slack-versions-0.0.2-images-post-to-channel:main
+        image: quay.io/lrochette/argo-hub-workflows-slack-versions-0.0.2-images-post-to-channel:main
         command:
           - python
           - /slack/slack.py
