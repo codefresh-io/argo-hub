@@ -30,7 +30,12 @@ async function _saveLink(url) {
 }
 
 async function execute() {
-    const inputs = inputs.validateInputs()
+    const [ validationError, inputs ] = configuration.validateInputs()
+
+    if (validationError) {
+        console.log(chalk.red(validationError.message));
+        process.exit(1);
+    }
 
     console.log(`Looking for Issues from message ${inputs.message}`);
 
@@ -60,7 +65,7 @@ async function execute() {
             const issueInfo = await jiraService
                 .getInfoAboutIssue(normalizedIssue);
 
-            const baseUrl = issueInfo.baseUrl || `https://${inputs.jira.host}`;
+            const baseUrl = issueInfo.baseUrl || inputs.jira.host;
             const url = `${baseUrl}/browse/${normalizedIssue}`;
             await _saveLink(url);
             const avatarUrls = _.get(issueInfo, 'fields.assignee.avatarUrls', {});

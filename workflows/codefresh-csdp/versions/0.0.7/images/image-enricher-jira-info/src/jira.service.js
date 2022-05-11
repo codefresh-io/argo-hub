@@ -17,8 +17,7 @@ class JiraService {
                 return;
             }
 
-            const url = jiraContext.spec.data.auth.apiURL;
-            const { hostname } = new URL(url);
+            const { hostname } = new URL(jiraContext.spec.data.auth.apiURL);
             configuration.jira = {
                 host: hostname,
                 basic_auth: {
@@ -27,10 +26,13 @@ class JiraService {
                 },
                 context: configuration.jira.context,
             }
+        } else {
+            const { hostname } = new URL(configuration.jira.host);
+            configuration.jira.host = hostname
         }
 
         this.jira = new JiraClient({
-            ... configuration.jira
+            ...configuration.jira
         })
 
     }

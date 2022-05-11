@@ -7,7 +7,12 @@ const providers = require('./providers');
 
 async function execute() {
     try {
-        const inputs = configuration.validateInputs();
+        const [ validationError, inputs ] = configuration.validateInputs()
+
+        if (validationError) {
+            console.log(chalk.red(validationError.message));
+            process.exit(1);
+        }
 
         const provider = await providers.get(inputs.provider);
 
@@ -16,8 +21,7 @@ async function execute() {
         // * more consistent because branch is reference that can be updated
         const branch = await provider.getBranch(inputs.repo, inputs.branch);
         if (branch) {
-            // await codefreshApi.patchImageWithGitBranchData(inputs.imageName, inputs.imageDigest, branch)
-            // await codefreshApi.createRevisionAnnotation(inputs.imageDigest, branch);   
+            await codefreshApi.patchImageWithGitBranchData(inputs.imageDigest, branch)
         }
 
         const pullRequests = await provider.getPullRequestsWithCommits(inputs.repo, inputs.branch);
@@ -38,7 +42,7 @@ async function execute() {
         }
 
     } catch (e) {
-        console.error(e.stack);
+        console.log(chalk.red(e.message));
         process.exit(1);
     }
 }

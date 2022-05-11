@@ -170,7 +170,13 @@ async function getRegistryClient(image) {
 }
 
 const init = async () => {
-    configuration.validateInputs();
+    const [ validationError ] = configuration.validateInputs()
+
+    if (validationError) {
+        console.log(chalk.red(validationError.message));
+        process.exit(1);
+    }
+
 
     const image = inputs.image.uri;
     const client = await getRegistryClient(image);
@@ -185,7 +191,7 @@ const init = async () => {
     const config = await registry.getConfig(manifest);
 
     // store in FS to use as an output param later (in argo workflow)
-    storeOutput({
+    storeOutputParams({
         imageName: image,
         imageDigest: manifest.config.digest
     });
@@ -200,28 +206,32 @@ const init = async () => {
         },
     });
 
-    const imageBinary = {
-        id: manifest.config.digest,
-        created: config.created,
-        imageName: image,
-        size: size,
-        os: config.os,
-        architecture: config.architecture,
-        workflowName: workflowName,
-        workflowUrl,
-        logsUrl,
+    const imageBinaryVars = {
+        imageBinary: {
+            id: manifest.config.digest,
+            created: config.created,
+            imageName: image,
+            size: size,
+            os: config.os,
+            architecture: config.architecture,
+            workflowName: workflowName,
+            workflowUrl,
+            logsUrl,
+        },
+        runtime: inputs.cfRuntime
     };
 
-    console.log('REPORT_IMAGE_V2: binaryMutation payload:', imageBinary);
-
-    const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!){
-        createImageBinary(imageBinary: $imageBinary) {
+    console.log('REPORT_IMAGE_V2: binaryMutation payload:', imageBinaryVars.imageBinary);
+    
+    const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!, $runtime: String){
+        createImageBinary(imageBinary: $imageBinary, runtime: $runtime) {
             id,
             imageName,
             workflowName
         }
     }`;
-    const binaryResult = await graphQLClient.request(binaryMutation, { imageBinary });
+    const binaryResult = await graphQLClient.request(binaryMutation, imageBinaryVars);
+
     console.log('REPORT_IMAGE_V2: binaryMutation response:', JSON.stringify(binaryResult, null, 2));
 
     const imageRegistry = {
@@ -243,16 +253,7 @@ const init = async () => {
     console.log(JSON.stringify(registryResult, null, 2));
 }
 
-const validateRequiredEnvs = () => {
-    if (_.isEmpty(inputs.image.uri)) {
-        throw new Error('IMAGE_URI is required parameter. Add this parameter in your workflow to continue.');
-    }
-    if (_.isEmpty(inputs.codefresh.apiKey)) {
-        throw new Error('CF_API_KEY is required parameter. Add this parameter in your workflow to continue.');
-    }
-}
-
-const storeOutput = ({ imageName, imageDigest }) => {
+const storeOutputParams = ({ imageName, imageDigest }) => {
     const OUTPUT_DIR = '/tmp';
 
     if (!fs.existsSync(OUTPUT_DIR)) {
@@ -264,7 +265,6 @@ const storeOutput = ({ imageName, imageDigest }) => {
 
 const main = async () => {
     try {
-        validateRequiredEnvs();
         await init();
     } catch (err) {
         console.error(err.stack);
