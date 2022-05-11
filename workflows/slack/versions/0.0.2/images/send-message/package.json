@@ -1,0 +1,19 @@
+{
+  "name": "slack-notifier",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "slack-webhook": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-google": "^0.11.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
