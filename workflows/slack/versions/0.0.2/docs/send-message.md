@@ -28,7 +28,7 @@ spec:
       tasks:
       - name: send-message
         templateRef:
-          name: argo-hub.slack.0.0.1
+          name: argo-hub.slack.0.0.2
           template: send-message
         arguments:
           parameters:

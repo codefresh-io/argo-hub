@@ -6,7 +6,8 @@ A template that enables you to send messages to a Slack channel using a webhook 
 
 ## Templates
 
-1. [send-message](https://github.com/codefresh-io/argo-hub/blob/main/workflows/slack/versions/0.0.2/docs/send-message.md) 
+1. [send-message](https://github.com/codefresh-io/argo-hub/blob/main/workflows/slack/versions/0.0.2/docs/send-message.md)
+2. [post-to-channel](docs/post-to-channel.md)
 
 ## Security
 
