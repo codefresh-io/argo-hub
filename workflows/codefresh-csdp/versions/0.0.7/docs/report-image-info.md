@@ -6,17 +6,13 @@ Report image info to argo platform.
 ## Inputs/Outputs
 
 ### Inputs
-* IMAGE (required) - your image to which you want to report
+* IMAGE_NAME (required) - your image to which you want to report
 * CF_API_KEY (required) - Codefresh API key created by runtime
-* GIT_BRANCH (optional) - git branch
-* GIT_REVISION (optional) - git revision
-* GIT_COMMIT_MESSAGE (optional) - git commit message
-* GIT_COMMIT_URL (optional) - git commit url
-* GIT_SENDER_LOGIN (optional) - git commiter username
+* CF_HOST_URL (optional) - support on-premises Codefresh URL
 * WORKFLOW_URL (optional) - external url for the workflow
 * LOGS_URL (optional) - external url for the logs
-* CF_HOST (optional) - support on-premises Codefresh URL
 * INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
+* RETRIEVE_CREDENTIALS_BY_DOMAIN (optional) - decide about the authentication method based on the image domain
 #### Specify one from following required registry parameters:
 * GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
 * GCR_KEY_SECRET (required) - The Kubernetes secret containing the GCR key information. Default is 'gcr-key-file'
@@ -44,7 +40,8 @@ Report image info to argo platform.
 * AWS_ROLE_SECRET_KEY (optional) -The key in the Kubernetes secret with the standard Amazon role. Default is 'role'
 
 ### Outputs
-no outputs
+* `image-name` – name of the reported image
+* `image-sha` – SHA of the reported image
 
 ## Examples
 
@@ -62,24 +59,14 @@ spec:
       tasks:
       - name: report-image-info
         templateRef:
-          name: argo-hub.codefresh-csdp.0.0.6
+          name: argo-hub.codefresh-csdp.0.0.7
           template: report-image-info
         arguments:
           parameters:
-          - name: IMAGE_URI
+          - name: IMAGE_NAME
             value: 'docker.io/codefresh/cfstep-helm:lastest'
           - name: CF_API_KEY
             value: 'CODEFRESH_API_KEY'
-          - name: GIT_REVISION
-            value: 'a1bc234d56e78f9a0b12c34d5ef67fba89d01ea2
-          - name: GIT_BRANCH
-            value: 'main'
-          - name: GIT_COMMIT_URL
-            value: 'https://github.com/test/project/commit/a1bc234d56e78f9a0b12c34d5ef67fba89d01ea2'
-          - name: GIT_COMMIT_MESSAGE
-            value: "Merge branch 'test'"
-          - name: GIT_SENDER_LOGIN
-            value: "some-username"
           - name: DOCKER_USERNAME
             value: 'docker-username'
           - name: DOCKER_PASSWORD

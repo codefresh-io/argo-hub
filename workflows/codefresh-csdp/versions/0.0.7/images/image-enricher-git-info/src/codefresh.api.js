@@ -18,13 +18,9 @@ class CodefreshAPI {
     
     async getContext(name) {
         try {
-            let host = cfHost
-            if (!/^http(s?):\/\//.test(host)) {
-                host = `https://${host}`
-            }
             return await rp({
                 method: 'GET',
-                uri: `${host}/api/contexts/${name}?decrypt=true`,
+                uri: `${cfHost}/api/contexts/${name}?decrypt=true`,
                 headers: {
                     'Authorization': `Bearer ${cfApiKey}`
                 },
@@ -36,11 +32,7 @@ class CodefreshAPI {
     }
 
     async _doGraphqlRequest(query, variables) {
-        let host = cfHost
-        if (!/^http(s?):\/\//.test(host)) {
-            host = `https://${host}`
-        }
-        const graphQLClient = new GraphQLClient(`${host}/2.0/api/graphql`, {
+        const graphQLClient = new GraphQLClient(`${cfHost}/2.0/api/graphql`, {
             headers: {
                 'Authorization': `Bearer ${cfApiKey}`
             },

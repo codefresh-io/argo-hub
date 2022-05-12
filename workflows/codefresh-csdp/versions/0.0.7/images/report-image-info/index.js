@@ -178,7 +178,7 @@ const init = async () => {
     }
 
 
-    const image = inputs.image.uri;
+    const image = inputs.imageName;
     const client = await getRegistryClient(image);
 
     const workflowName = inputs.workflow.name;

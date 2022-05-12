@@ -7,9 +7,7 @@ const inputs = {
         host: process.env.CF_HOST_URL?.trim() || 'https://g.codefresh.io',
         apiKey: process.env.CF_API_KEY?.trim(),
     },
-    image: {
-        uri: process.env.IMAGE_URI?.trim(),
-    },
+    imageName: process.env.IMAGE_NAME?.trim(),
     workflow: {
         name: process.env.WORKFLOW_NAME?.trim(),
         workflowUrl: process.env.WORKFLOW_URL?.trim(),
@@ -50,7 +48,7 @@ const schema = Joi.object({
 
     CF_HOST_URL: Joi.string().uri(),
     CF_API_KEY: Joi.string().required(),
-    IMAGE_URI: Joi.string().required(),
+    IMAGE_NAME: Joi.string().required(),
     WORKFLOW_NAME: Joi.string(),
     WORKFLOW_URL: Joi.string().uri(),
     LOGS_URL: Joi.string().uri(),
