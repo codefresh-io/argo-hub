@@ -6,12 +6,12 @@ const CF_EMPTY = 'cf-not-exist'
 
 class Initializer {
 
-    _checkEmptyEnvVar(envVar) {
+    _checkNotEmptyEnvVar(envVar) {
         return !_.isEmpty(envVar) && envVar!==CF_EMPTY
     }
 
     async getToken() {
-        if (this._checkEmptyEnvVar(config.githubToken)) {
+        if (this._checkNotEmptyEnvVar(config.githubToken)) {
             return {
                 type: 'git.github',
                 token: config.githubToken,
@@ -19,7 +19,7 @@ class Initializer {
                 apiPathPrefix: config.apiPathPrefix || '/'
             };
         }
-        if (this._checkEmptyEnvVar(config.gitlabToken)) {
+        if (this._checkNotEmptyEnvVar(config.gitlabToken)) {
             return {
                 type: 'git.gitlab',
                 token: config.gitlabToken,
