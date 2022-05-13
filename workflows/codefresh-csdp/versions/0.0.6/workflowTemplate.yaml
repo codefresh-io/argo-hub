@@ -91,11 +91,13 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN }}'
+                optional: true
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
           - name: GITLAB_TOKEN
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                optional: true
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
     - name: image-enricher-jira-info
       metadata:
