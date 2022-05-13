@@ -2,10 +2,16 @@ const _ = require('lodash');
 const codefreshApi = require('./codefresh.api');
 const config = require('./configuration');
 
+const CF_EMPTY = 'cf-not-exist'
+
 class Initializer {
 
+    _checkEmptyEnvVar(envVar) {
+        return !_.isEmpty(envVar) && envVar!==CF_EMPTY
+    }
+
     async getToken() {
-        if (config.githubToken) {
+        if (this._checkEmptyEnvVar(config.githubToken)) {
             return {
                 type: 'git.github',
                 token: config.githubToken,
@@ -13,7 +19,7 @@ class Initializer {
                 apiPathPrefix: config.apiPathPrefix || '/'
             };
         }
-        if (config.gitlabToken) {
+        if (this._checkEmptyEnvVar(config.gitlabToken)) {
             return {
                 type: 'git.gitlab',
                 token: config.gitlabToken,

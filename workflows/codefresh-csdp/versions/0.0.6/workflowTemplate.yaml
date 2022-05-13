@@ -39,13 +39,13 @@ spec:
           - name: GITHUB_HOST
             default: 'github.com'
           - name: GITHUB_TOKEN
-            default: ''
+            default: 'cf-not-exist'
           - name: GITHUB_TOKEN_SECRET_KEY
             default: 'token'
           - name: GITLAB_HOST
             default: 'gitlab.com'
           - name: GITLAB_TOKEN_SECRET_NAME
-            default: ''
+            default: 'cf-not-exist'
           - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
           - name: GIT_PROVIDER_NAME
