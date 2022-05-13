@@ -15,9 +15,11 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 * GITHUB_HOST (optional) - The URL to reach GitHub (support on-premises GitHub host). Default is 'github.com'
 * GITHUB_API (optional) - The URL to reach the GitHub API (support on-premises GitHub api).
 * API_PATH_PREFIX (optional) - The API prefix path for GitHub (support on-premises GitHub path prefix).
-* GITHUB_TOKEN (optional) - The Kubernetes secret containing the GitHub token
+* GITHUB_TOKEN (required) - The Kubernetes secret containing the GitHub token
 * GITHUB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
-
+* GITLAB_HOST (optional) - The URL to reach GitLab (support on-premises GitLab host). Default is 'gitlab.com'
+* GITLAB_TOKEN (required) - The Kubernetes secret containing the GitLab token
+* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
 
 ### Outputs
 no outputs
