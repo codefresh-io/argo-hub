@@ -17,7 +17,7 @@ class Initializer {
             return {
                 type: 'git.gitlab',
                 token: config.gitlabToken,
-                apiHost: config.gitlabAPI || 'gitlab.com',
+                apiHost: config.gitlabHost || 'gitlab.com',
                 apiPathPrefix: config.apiPathPrefix || '/'
             };
         }
