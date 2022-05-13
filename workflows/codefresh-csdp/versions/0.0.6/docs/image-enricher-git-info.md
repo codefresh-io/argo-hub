@@ -12,12 +12,15 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 * CF_API_KEY (required) - The Kubernetes secret containing the Codefresh API key
 * CF_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret that has the Codefresh API Key. Default is 'token'
 * CF_URL (optional) - The URL to reach Codefresh (support on-premises Codefresh). Default is 'codefresh.io'
+#### Specify one from following required git parameters:
 * GITHUB_HOST (optional) - The URL to reach GitHub (support on-premises GitHub host). Default is 'github.com'
 * GITHUB_API (optional) - The URL to reach the GitHub API (support on-premises GitHub api).
 * API_PATH_PREFIX (optional) - The API prefix path for GitHub (support on-premises GitHub path prefix).
-* GITHUB_TOKEN (optional) - The Kubernetes secret containing the GitHub token
+* GITHUB_TOKEN (required) - The Kubernetes secret containing the GitHub token
 * GITHUB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
-
+* GITLAB_HOST (optional) - The URL to reach GitLab (support on-premises GitLab host). Default is 'gitlab.com'
+* GITLAB_TOKEN_SECRET_NAME (required) - The Kubernetes secret containing the GitLab token
+* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitLab token. Default is 'token'
 
 ### Outputs
 no outputs

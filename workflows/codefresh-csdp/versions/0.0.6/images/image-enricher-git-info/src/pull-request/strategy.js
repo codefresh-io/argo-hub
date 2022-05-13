@@ -28,6 +28,10 @@ class Strategy {
             return github;
         }
 
+        if (configuration.contextType === 'git.gitlab') {
+            return gitlab;
+        }
+
         return bitbucket;
     }
 
