@@ -44,7 +44,7 @@ spec:
             default: 'token'
           - name: GITLAB_HOST
             default: 'gitlab.com'
-          - name: GITLAB_TOKEN
+          - name: GITLAB_TOKEN_SECRET_NAME
             default: ''
           - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
@@ -96,7 +96,7 @@ spec:
           - name: GITLAB_TOKEN
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.GITLAB_TOKEN }}'
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
     - name: image-enricher-jira-info
       serviceAccountName: argo-hub.codefresh-csdp.0.0.6
