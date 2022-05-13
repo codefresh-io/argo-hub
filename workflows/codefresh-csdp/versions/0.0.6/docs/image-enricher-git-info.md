@@ -19,7 +19,7 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 * GITHUB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
 * GITLAB_HOST (optional) - The URL to reach GitLab (support on-premises GitLab host). Default is 'gitlab.com'
 * GITLAB_TOKEN (required) - The Kubernetes secret containing the GitLab token
-* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
+* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitLab token. Default is 'token'
 
 ### Outputs
 no outputs
