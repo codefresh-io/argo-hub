@@ -11,8 +11,8 @@ module.exports = {
     contextName: process.env.GIT_PROVIDER_NAME?.trim(),
     githubAPI: process.env.GITHUB_API?.trim(),
     apiPathPrefix: process.env.API_PATH_PREFIX?.trim(),
-
-
+    gitlabHost: process.env.GITLAB_HOST?.trim(),
+    gitlabToken: process.env.GITLAB_TOKEN?.trim(),
     // setup these variables during init phase
     contextType: '',
     contextCreds: '',

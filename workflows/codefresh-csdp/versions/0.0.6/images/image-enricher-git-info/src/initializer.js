@@ -13,6 +13,14 @@ class Initializer {
                 apiPathPrefix: config.apiPathPrefix || '/'
             };
         }
+        if (config.gitlabToken) {
+            return {
+                type: 'git.gitlab',
+                token: config.gitlabToken,
+                apiHost: config.gitlabAPI || 'gitlab.com',
+                apiPathPrefix: config.apiPathPrefix || '/'
+            };
+        }
         const context = await codefreshApi.getContext(config.contextName);
         const type = context.spec.type;
         const token = context.spec.data.auth.password;
