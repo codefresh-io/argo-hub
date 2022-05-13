@@ -41,6 +41,12 @@ spec:
             default: ''
           - name: GITHUB_TOKEN_SECRET_KEY
             default: 'token'
+          - name: GITLAB_HOST
+            default: 'gitlab.com'
+          - name: GITLAB_TOKEN_SECRET_NAME
+            default: ''
+          - name: GITLAB_TOKEN_SECRET_KEY
+            default: 'token'
           - name: GIT_PROVIDER_NAME
             default: ''
           - name: IMAGE
@@ -66,6 +72,8 @@ spec:
             value: '{{ inputs.parameters.CF_URL }}'
           - name: GITHUB_HOST
             value: '{{ inputs.parameters.GITHUB_HOST }}'
+          - name: GITLAB_HOST
+            value: '{{ inputs.parameters.GITLAB_HOST }}'
           - name: IMAGE_SHA
             value: '{{ inputs.parameters.IMAGE }}'
           - name: BRANCH
@@ -84,6 +92,11 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN }}'
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
     - name: image-enricher-jira-info
       metadata:
         annotations:
