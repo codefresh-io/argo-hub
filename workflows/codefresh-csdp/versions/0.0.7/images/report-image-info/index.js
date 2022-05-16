@@ -171,7 +171,7 @@ const init = async () => {
     const [ validationError ] = configuration.validateInputs()
 
     if (validationError) {
-        console.log(chalk.red(validationError.message));
+        console.error(validationError.message);
         process.exit(1);
     }
 
@@ -264,7 +264,7 @@ const main = async () => {
     try {
         await init();
     } catch (err) {
-        console.error(err.stack);
+        console.error(err.message);
         process.exit(1);
     }
 };
