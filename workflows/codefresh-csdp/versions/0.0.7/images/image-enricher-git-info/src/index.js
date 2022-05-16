@@ -27,19 +27,18 @@ async function execute() {
         const pullRequests = await provider.getPullRequestsWithCommits(inputs.repo, inputs.branch);
         if (!_.isEmpty(pullRequests)) {
             console.log(chalk.green(`Retrieve prs ${JSON.stringify(pullRequests)}`));
-
-            await Promise.all(pullRequests.map(async pr => {
-                try {
-                    console.log(`Creating argo platform annotation for ${inputs.imageName}`);
-                    const result = await codefreshApi.createPullRequestAnnotation(inputs.imageName, pr);
-                    if (result) {
-                        console.log(JSON.stringify(result));
-                    }
-                } catch (e) {
-                    console.log(`Failed to assign pull request ${pr.number} to your image ${inputs.imageDigest}, reason ${chalk.red(e.message)}`);
-                }
-            }));
         }
+        await Promise.all(pullRequests.map(async pr => {
+            try {
+                console.log(`Creating argo platform annotation for ${inputs.imageName}`);
+                const result = await codefreshApi.createPullRequestAnnotation(inputs.imageName, pr);
+                if (result) {
+                    console.log(JSON.stringify(result));
+                }
+            } catch (e) {
+                console.log(`Failed to assign pull request ${pr.number} to your image ${inputs.imageDigest}, reason ${chalk.red(e.message)}`);
+            }
+        }));
 
     } catch (e) {
         console.log(chalk.red(e.message));

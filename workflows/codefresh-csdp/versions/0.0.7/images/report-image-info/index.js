@@ -6,10 +6,8 @@ const { parseQualifiedNameOptimized, parseFamiliarName } = require('@codefresh-i
 
 const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegistry } } = require('nodegistry');
 
-// Trim all input
-// Clean this up to use the same variable with a 'registry type'
 const configuration = require('./configuration');
-const inputs = require('./configuration').inputs;
+const inputs = configuration.inputs
 
 const CF_NOT_EXIST = 'cf-not-exist';
 
