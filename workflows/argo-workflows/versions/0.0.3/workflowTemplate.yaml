@@ -15,7 +15,7 @@ metadata:
     argo-hub/icon_background: "#f4f4f4"
 spec:
   templates:
-    - name: submit-workflow
+    - name: submit-workflow-with-enrichment
       serviceAccountName: argo-hub.argo-workflows.0.0.2
       metadata:
         annotations:
@@ -34,21 +34,34 @@ spec:
             value: ''
           - name: GIT_BRANCH
             value: ''
-      container:
-        name: main
-        imagePullPolicy: Always
-        image: argoproj/argocli:v3.2.6
-        command:
-          - argo
-          - submit
-          - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
-          - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
-          - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
-          - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
-          - -p=GIT_REVISION_SHORT={{ inputs.parameters.GIT_REVISION_SHORT }}
-          - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
-          - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }},workflow-parent={{ workflow.name }}
-
+        steps:
+          - - name: submit
+              imagePullPolicy: Always
+              image: argoproj/argocli:v3.2.6
+              command:
+                - argo
+                - submit
+                - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
+                - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
+                - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
+                - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
+                - -p=GIT_REVISION_SHORT={{ inputs.parameters.GIT_REVISION_SHORT }}
+                - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
+                - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }},workflow-parent={{ workflow.name }}
+                - --output=name
+          - - name: logs
+              imagePullPolicy: Always
+              image: argoproj/argocli:v3.2.6
+              command:
+                - argo
+                - submit
+                - --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
+                - --entrypoint={{ inputs.parameters.ENTRYPOINT }}
+                - -p=GIT_REPO={{ inputs.parameters.GIT_REPO }}
+                - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
+                - -p=GIT_REVISION_SHORT={{ inputs.parameters.GIT_REVISION_SHORT }}
+                - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
+                - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }},workflow-parent={{ workflow.name }}
 
     - name: terminate-workflow
       metadata:
