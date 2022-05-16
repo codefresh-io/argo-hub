@@ -215,14 +215,13 @@ const init = async () => {
             workflowName: workflowName,
             workflowUrl,
             logsUrl,
-        },
-        runtime: inputs.cfRuntime
+        }
     };
 
     console.log('REPORT_IMAGE_V2: binaryMutation payload:', imageBinaryVars.imageBinary);
     
-    const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!, $runtime: String){
-        createImageBinary(imageBinary: $imageBinary, runtime: $runtime) {
+    const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!){
+        createImageBinary(imageBinary: $imageBinary) {
             id,
             imageName,
             workflowName

@@ -9,7 +9,6 @@ const providers = {
 
 const inputs = {
     provider: process.env.GIT_PROVIDER?.trim(),
-    cfRuntime: process.env.CF_RUNTIME?.trim(),
     cfHost: process.env.CF_HOST_URL?.trim() || 'https://g.codefresh.io',
     cfApiKey: process.env.CF_API_KEY?.trim(),
     imageName: process.env.IMAGE_NAME?.trim(),
@@ -28,7 +27,6 @@ const inputs = {
 
 const schema = Joi.object({
     GIT_PROVIDER: Joi.string().valid(...Object.values(providers)).required(),
-    CF_RUNTIME: Joi.string(),
     CF_HOST_URL: Joi.string().uri(),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),

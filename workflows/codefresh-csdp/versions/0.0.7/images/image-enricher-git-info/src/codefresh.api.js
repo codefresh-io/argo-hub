@@ -3,7 +3,7 @@ const rp = require('request-promise')
 const _ = require('lodash');
 const chalk = require('chalk');
 
-const { cfHost, cfApiKey, cfRuntime } = require('./configuration').inputs;
+const { cfHost, cfApiKey } = require('./configuration').inputs;
 
 class CodefreshAPI {
     _handleError(e, prefix) {
@@ -45,8 +45,8 @@ class CodefreshAPI {
         console.log(chalk.green(`Patching image with data from branch: ${branch.name}`));
         try {
 
-            const patchImageBinaryMutation = gql`mutation patchImageBinary($imageId: String!, $imagePatch: ImageBinaryPatchInput!, $runtime: String) {
-                patchImageBinary(imageId: $imageId, imagePatch: $imagePatch, runtime: $runtime) {
+            const patchImageBinaryMutation = gql`mutation patchImageBinary($imageId: String!, $imagePatch: ImageBinaryPatchInput!) {
+                patchImageBinary(imageId: $imageId, imagePatch: $imagePatch) {
                     imageName
                 }
             }`;
@@ -60,9 +60,7 @@ class CodefreshAPI {
                     author: {
                         username: branch.commit.author.login
                     }
-                },
-                // required if API key subject is not argo-runtime
-                runtime: cfRuntime
+                }
             }
 
             return await this._doGraphqlRequest(patchImageBinaryMutation, vars);

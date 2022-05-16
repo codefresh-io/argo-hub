@@ -2,7 +2,6 @@ const Joi = require('joi')
 const _ = require('lodash')
 
 const inputs = {
-    cfRuntime: process.env.CF_RUNTIME,
     codefresh: {
         host: process.env.CF_HOST_URL?.trim() || 'https://g.codefresh.io',
         apiKey: process.env.CF_API_KEY?.trim(),
@@ -43,9 +42,6 @@ const inputs = {
 };
 
 const schema = Joi.object({
-    // required if API key subject is not argo-runtime
-    CF_RUNTIME: Joi.string(),
-
     CF_HOST_URL: Joi.string().uri(),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),
