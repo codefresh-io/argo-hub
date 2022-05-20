@@ -2,14 +2,28 @@ const _ = require('lodash');
 const codefreshApi = require('./codefresh.api');
 const config = require('./configuration');
 
+const CF_EMPTY = 'cf-not-exist'
+
 class Initializer {
 
+    _checkNotEmptyEnvVar(envVar) {
+        return !_.isEmpty(envVar) && envVar!==CF_EMPTY
+    }
+
     async getToken() {
-        if (config.githubToken) {
+        if (this._checkNotEmptyEnvVar(config.githubToken)) {
             return {
                 type: 'git.github',
                 token: config.githubToken,
                 apiHost: config.githubAPI || 'api.github.com',
+                apiPathPrefix: config.apiPathPrefix || '/'
+            };
+        }
+        if (this._checkNotEmptyEnvVar(config.gitlabToken)) {
+            return {
+                type: 'git.gitlab',
+                token: config.gitlabToken,
+                apiHost: config.gitlabHost || 'gitlab.com',
                 apiPathPrefix: config.apiPathPrefix || '/'
             };
         }

@@ -39,8 +39,14 @@ spec:
           - name: GITHUB_HOST
             default: 'github.com'
           - name: GITHUB_TOKEN
-            default: ''
+            default: 'cf-not-exist'
           - name: GITHUB_TOKEN_SECRET_KEY
+            default: 'token'
+          - name: GITLAB_HOST
+            default: 'gitlab.com'
+          - name: GITLAB_TOKEN_SECRET_NAME
+            default: 'cf-not-exist'
+          - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
           - name: GIT_PROVIDER_NAME
             default: ''
@@ -67,6 +73,8 @@ spec:
             value: '{{ inputs.parameters.CF_URL }}'
           - name: GITHUB_HOST
             value: '{{ inputs.parameters.GITHUB_HOST }}'
+          - name: GITLAB_HOST
+            value: '{{ inputs.parameters.GITLAB_HOST }}'
           - name: IMAGE_SHA
             value: '{{ inputs.parameters.IMAGE }}'
           - name: BRANCH
@@ -84,7 +92,14 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN }}'
+                optional: true
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                optional: true
+                key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
     - name: image-enricher-jira-info
       serviceAccountName: argo-hub.codefresh-csdp.0.0.6
       metadata:
