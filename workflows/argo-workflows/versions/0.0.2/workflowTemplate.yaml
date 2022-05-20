@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.argo-workflows.0.0.3
+  name: argo-hub.argo-workflows.0.0.2
   annotations:
     argo-hub/version: '0.0.2'
     argo-hub/description: 'Templates that interact with your Argo Workflow instance'
@@ -47,7 +47,7 @@ spec:
           - -p=GIT_REVISION={{ inputs.parameters.GIT_REVISION }}
           - -p=GIT_REVISION_SHORT={{ inputs.parameters.GIT_REVISION_SHORT }}
           - -p=GIT_BRANCH={{ inputs.parameters.GIT_BRANCH }}
-          - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }},workflow-parent={{ workflow.name }}
+          - -l=git-revision={{ inputs.parameters.GIT_REVISION }},git-branch={{ inputs.parameters.GIT_BRANCH }},workflow-template-name={{ inputs.parameters.TEMPLATE_NAME }}
 
 
     - name: terminate-workflow
