@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.6 (13.5.2022)
+
+### image-enricher-git-info
+Add gitlab support to image-enricher-git-info plugin
+
 ## v0.0.6 (8.4.2022)
 
 ### report-image-info
