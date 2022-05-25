@@ -381,11 +381,6 @@ spec:
           argo-hub-template/description: 'Create git pull request and add a reference to the workflow'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
           argo-hub-template/icon_background: "#171A2D"
-      retryStrategy:
-        limit: "10"
-        retryPolicy: "Always"
-        backoff:
-          duration: "5s"
       outputs:
         parameters:
           - name: codefresh-io-pr-url
