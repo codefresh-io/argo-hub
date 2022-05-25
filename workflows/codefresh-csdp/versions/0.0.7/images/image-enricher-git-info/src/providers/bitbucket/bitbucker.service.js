@@ -9,7 +9,7 @@ class BitbucketService {
 
     async getBranch() {
         console.log(chalk.yellow(`Bitbucket provider hasn't implemented yet`));
-        return [];
+        return null;
     }
 }
 module.exports = new BitbucketService();

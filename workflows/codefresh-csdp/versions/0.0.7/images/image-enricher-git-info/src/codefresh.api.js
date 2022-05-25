@@ -54,11 +54,11 @@ class CodefreshAPI {
                 imageId: imageDigest,
                 imagePatch: {
                     branch: branch.name,
-                    commit: branch.commit.sha,
-                    commitMsg: branch.commit.commit.message,
-                    commitURL: branch.commit.html_url,
+                    commit: branch.commit,
+                    commitMsg: branch.commitMsg,
+                    commitURL: branch.commitURL,
                     author: {
-                        username: branch.commit.author.login
+                        username: branch.committerUsername
                     }
                 }
             }

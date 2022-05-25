@@ -22,6 +22,10 @@ const inputs = {
     githubApiPathPrefix: process.env.GITHUB_API_PATH_PREFIX?.trim() || '/',
     githubContextName: process.env.GITHUB_CONTEXT?.trim(),
 
+    // gitlab
+    gitlabHost: process.env.GITLAB_HOST_URL?.trim() || 'https://gitlab.com',
+    gitlabToken: process.env.GITLAB_TOKEN?.trim(),
+
     commitsByUserLimit: Number(process.env.CF_COMMITS_BY_USER_LIMIT?.trim()) || 5,
 };
 
@@ -44,6 +48,12 @@ const schema = Joi.object({
         GITHUB_API_PATH_PREFIX: Joi.string().uri({ relativeOnly: true }),
         GITHUB_CONTEXT: Joi.string(),
     }).xor('GITHUB_CONTEXT', 'GITHUB_TOKEN')
+})
+.when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.GITLAB) }).unknown(), {
+    then: Joi.object({
+        GITLAB_HOST: Joi.string().uri(),
+        GITLAB_TOKEN: Joi.string().required()
+    })
 });
 
 module.exports = {

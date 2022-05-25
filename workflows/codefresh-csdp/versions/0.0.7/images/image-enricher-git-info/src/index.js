@@ -17,7 +17,7 @@ async function execute() {
         const provider = await providers.get(inputs.provider);
 
         // maybe we should use SHA:
-        // * works even when after branch was deleted
+        // * works even when branch was deleted
         // * more consistent because branch is reference that can be updated
         const branch = await provider.getBranch(inputs.repo, inputs.branch);
         if (branch) {

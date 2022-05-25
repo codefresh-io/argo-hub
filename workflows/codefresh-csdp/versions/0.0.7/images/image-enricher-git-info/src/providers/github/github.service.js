@@ -20,7 +20,19 @@ class GithubService {
     }
 
     async getBranch(repo, branch) {
-        return githubApi.getBranch(repo, branch)
+        try {
+            const githubBranch = await githubApi.getBranch(repo, branch)
+            return {
+                branch: githubBranch.name,
+                commit: githubBranch.commit.sha,
+                commitMsg: githubBranch.commit.commit.message,
+                commitURL: githubBranch.commit.html_url,
+                committerUsername: githubBranch.commit.author.login
+            }
+        } catch (error) {
+            console.error(`failed to get branch: ${error.message}`)
+            return null
+        }
     }
 }
 
