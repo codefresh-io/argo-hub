@@ -21,30 +21,31 @@ export const config = {
     },
     owner: process.env.OWNER?.trim(),
     repo: process.env.REPO?.trim(),
-    title: process.env.PR_TITLE,
-    head:  process.env.PR_HEAD?.trim(),
-    base: process.env.PR_BASE?.trim(),
-    prWorkflow: process.env.PR_WORKFLOW
+    title: process.env.TITLE,
+    head:  process.env.HEAD?.trim(),
+    base: process.env.BASE?.trim(),
+    prWorkflow: process.env.PR_WORKFLOW,
+    outputFilePath: process.env.OUTPUT_FILE_PATH
 };
 
 const schema = Joi.object({
     github: Joi.object({
         host: Joi.string(),
         token:  Joi.string(),
-        api: Joi.any(),
-        pathPrefix: Joi.string()
+        api: Joi.string().allow(''),
+        pathPrefix: Joi.string().allow('')
     }),
     gitlab: Joi.object({
         host: Joi.string(),
         token: Joi.string(),
-        api: Joi.string(),
-        pathPrefix: Joi.string()
+        api: Joi.string().allow(''),
+        pathPrefix: Joi.string().allow('')
     }),
     bitbucket: Joi.object({
         host: Joi.string(),
         token: Joi.string(),
-        api: Joi.string(),
-        pathPrefix: Joi.string()
+        api: Joi.string().allow(''),
+        pathPrefix: Joi.string().allow('')
     }),
     owner: Joi.string().required(),
     repo: Joi.string().required(),
@@ -52,6 +53,7 @@ const schema = Joi.object({
     head: Joi.string().required(),
     base: Joi.string().required(),
     prWorkflow: Joi.string(),
+    outputFilePath: Joi.string().allow('')
 })
     .oxor('github.token', 'bitbucket.token', 'gitlab.token')
     .or('github.token', 'bitbucket.token', 'gitlab.token')

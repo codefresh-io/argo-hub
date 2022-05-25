@@ -1,4 +1,5 @@
 import { config } from '../../configuration'
+import { PR_WORKFLOW_LABEL} from '../../constants'
 import { Provider } from '../interface'
 import { Octokit } from '@octokit/rest'
 
@@ -26,7 +27,7 @@ export class GithubService implements Provider {
                 owner,
                 repo,
                 issue_number: pr.data.number,
-                labels: [`pr-workflow=${config.prWorkflow}`]
+                labels: [`${PR_WORKFLOW_LABEL}=${config.prWorkflow}`]
             });
             return pr.data.html_url
         } catch (err) {

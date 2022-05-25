@@ -14,7 +14,7 @@ This is useful in case you want to trigger a new workflowTemplate without having
 * ENTRYPOINT (required) - The specific template to use as an entrypoint
 
 ### Outputs
-no outputs
+The child workflow definition in a json format
 
 ## Examples
 
@@ -32,7 +32,7 @@ spec:
         tasks:
           - name: submit
             templateRef:
-              name: argo-hub.argo-workflows.0.0.2
+              name: argo-hub.argo-workflows.0.0.3
               template: submit-workflow
             arguments:
               parameters:

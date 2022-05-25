@@ -5,7 +5,7 @@ export class BitbucketService implements Provider {
     constructor() {
     }
 
-    createPullRequest(): any {
+    createPullRequest(): Promise<string> {
         throw new Error(`Bitbucket is not supported`)
     }
 

@@ -417,7 +417,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: zivcodefresh/git-pr #quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-git-pr-enricher:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-git-pr-enricher:main
         command:
           - yarn
           - start

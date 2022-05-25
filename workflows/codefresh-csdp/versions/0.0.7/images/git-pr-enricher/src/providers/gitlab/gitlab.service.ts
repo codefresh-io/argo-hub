@@ -5,7 +5,7 @@ export class GitlabService implements Provider {
 
     }
 
-    createPullRequest(): any {
+    createPullRequest(): Promise<string> {
         throw new Error(`Gitlab is not supported`)
     }
 
