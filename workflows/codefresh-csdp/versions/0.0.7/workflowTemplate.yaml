@@ -388,9 +388,9 @@ spec:
           duration: "5s"
       outputs:
         parameters:
-          - name: child-workflow
+          - name: codefresh-io-pr-url
             valueFrom:
-              path: /output
+              path: /tmp/output.txt
       inputs:
         parameters:
           - name: GITHUB_HOST
@@ -446,3 +446,5 @@ spec:
                 name: '{{ inputs.parameters.GITHUB_TOKEN }}'
                 optional: true
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
+          - name: OUTPUT_FILE_PATH
+            value: /tmp/output.txt
