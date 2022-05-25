@@ -9,7 +9,7 @@ export class GithubService implements Provider {
     constructor() {
         this.client = new Octokit({
             auth: config.github.token,
-            baseUrl: config.github.api ? `https://${config.github.host}/${config.github.api}` : `https://${config.github.host}`
+            baseUrl: this._buildBaseUrl()
         });
     }
 
@@ -33,5 +33,16 @@ export class GithubService implements Provider {
         } catch (err) {
             throw new Error(`Failed to create pr ${err}`)
         }
+    }
+
+    _buildBaseUrl(): string  {
+        const protocol = 'https'
+        if (config.github.api) {
+            if (config.github.pathPrefix) {
+                return `${protocol}://${config.github.api}/${config.github.pathPrefix}`
+            }
+            return `${protocol}://${config.github.api}`
+        }
+        return `${protocol}://api.${config.github.host}`
     }
 }

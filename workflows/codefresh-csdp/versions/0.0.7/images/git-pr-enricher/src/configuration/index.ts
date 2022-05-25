@@ -2,7 +2,7 @@ import * as Joi from 'joi'
 
 export const config = {
     github: {
-        host: process.env.GITHUB_HOST?.trim() || 'api.github.com',
+        host: process.env.GITHUB_HOST?.trim() || 'github.com',
         token: process.env.GITHUB_TOKEN?.trim(),
         api: process.env.GITHUB_API?.trim() || '',
         pathPrefix: process.env.GITHUB_API_PATH_PREFIX?.trim(),
