@@ -14,10 +14,10 @@ Create git pull request and add a reference to the workflow.
 
 #### Specify one from following required git parameters:
 * GITHUB_HOST (optional) - The URL to reach GitHub (support on-premises GitHub host). Default is 'github.com'
-* GITHUB_API (optional) - The URL to reach the GitHub API (support on-premises GitHub api).
+* GITHUB_API (optional) - The URL to reach the GitHub API (support on-premises GitHub api), if provided GITHUB_HOST is ignored.
 * GITHUB_API_PATH_PREFIX (optional) - The API prefix path for GitHub (support on-premises GitHub path prefix).
-* GITHUB_TOKEN (required) - The Kubernetes secret containing the GitHub token
-* GITHUB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
+* GITHUB_TOKEN (required) - The Kubernetes secret containing the GitHub token. Default is 'autopilot-secret'
+* GITHUB_TOKEN_SECRET_KEY (required) - The key in the Kubernetes secret containing the GitHub token. Default is 'git_token'
 
 
 ### Outputs

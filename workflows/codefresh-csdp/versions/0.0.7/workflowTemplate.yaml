@@ -392,17 +392,17 @@ spec:
             valueFrom:
               path: /output
       inputs:
-        parameters: ## we need to discuss how it's going to work with integration. add descriptions.
+        parameters:
           - name: GITHUB_HOST
-            default: 'api.github.com'
+            default: 'github.com'
           - name: GITHUB_API
             default: ''
           - name: GITHUB_API_PATH_PREFIX
             default: ''
           - name: GITHUB_TOKEN
-            default: ''
+            default: 'autopilot-secret'
           - name: GITHUB_TOKEN_SECRET_KEY
-            default: 'token'
+            default: 'git_token'
           - name: OWNER
             default: ''
           - name: REPO
