@@ -1,5 +1,5 @@
 {
-    "name": "csdp-git",
+    "name": "git-pr-enricher",
     "version": "1.0.0",
     "private": true,
     "license": "MIT",
