@@ -21,7 +21,7 @@ Create git pull request and add a reference to the workflow.
 
 
 ### Outputs
-Newly create PR url
+Pull request url 
 
 ## Examples
 
