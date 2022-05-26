@@ -42,12 +42,12 @@ const inputs = {
 };
 
 const schema = Joi.object({
-    CF_HOST_URL: Joi.string().uri(),
+    CF_HOST_URL: Joi.string().uri().allow(''),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),
-    WORKFLOW_NAME: Joi.string(),
-    WORKFLOW_URL: Joi.string().uri(),
-    LOGS_URL: Joi.string().uri(),
+    WORKFLOW_NAME: Joi.string().allow(''),
+    WORKFLOW_URL: Joi.string().uri().allow(''),
+    LOGS_URL: Joi.string().uri().allow(''),
     RETRIEVE_CREDENTIALS_BY_DOMAIN: Joi.boolean(),
 
     /** the registry specific vars validated during "createRegistryClient" */

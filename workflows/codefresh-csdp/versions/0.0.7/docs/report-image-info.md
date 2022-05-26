@@ -63,12 +63,18 @@ spec:
           template: report-image-info
         arguments:
           parameters:
-          - name: IMAGE_NAME
-            value: 'docker.io/codefresh/cfstep-helm:lastest'
           - name: CF_API_KEY
-            value: 'CODEFRESH_API_KEY'
+            value: 'codefresh-token'
+          - name: CF_API_KEY_SECRET_KEY
+            value: 'token'
+          - name: IMAGE_NAME
+            value: 'deniscodefresh/ppid-inspector:latest'
           - name: DOCKER_USERNAME
-            value: 'docker-username'
+            value: 'dockerhub-creds'
+          - name: USERNAME_SECRET_KEY
+            value: 'username'
           - name: DOCKER_PASSWORD
-            value: 'docker-password'
+            value: 'dockerhub-creds'
+          - name: PASSWORD_SECRET_KEY
+            value: 'password'
 ```

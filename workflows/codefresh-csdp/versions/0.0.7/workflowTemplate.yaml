@@ -47,7 +47,7 @@ spec:
           - name: GITHUB_API_HOST_URL 
             default: 'https://api.github.com'
           - name: GITHUB_TOKEN_SECRET_NAME
-            default: ''
+            default: 'github'
           - name: GITHUB_TOKEN_SECRET_KEY
             default: 'token'
           - name: GITHUB_CONTEXT
@@ -55,7 +55,7 @@ spec:
           - name: GITLAB_HOST_URL
             default: 'https://gitlab.com'
           - name: GITLAB_TOKEN_SECRET_NAME
-            default: ''
+            default: 'gitlab'
           - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
 

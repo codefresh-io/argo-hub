@@ -31,7 +31,7 @@ const inputs = {
 
 const schema = Joi.object({
     GIT_PROVIDER: Joi.string().valid(...Object.values(providers)).required(),
-    CF_HOST_URL: Joi.string().uri(),
+    CF_HOST_URL: Joi.string().uri().allow(''),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),
     IMAGE_SHA: Joi.string().required(),
@@ -43,15 +43,15 @@ const schema = Joi.object({
 })
 .when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.GITHUB) }).unknown(), {
     then: Joi.object({
-        GITHUB_API_HOST_URL: Joi.string().uri(),
+        GITHUB_API_HOST_URL: Joi.string().uri().allow(''),
         GITHUB_TOKEN: Joi.string(),
-        GITHUB_API_PATH_PREFIX: Joi.string().uri({ relativeOnly: true }),
+        GITHUB_API_PATH_PREFIX: Joi.string().uri({ relativeOnly: true }).allow(''),
         GITHUB_CONTEXT: Joi.string(),
     }).xor('GITHUB_CONTEXT', 'GITHUB_TOKEN')
 })
 .when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.GITLAB) }).unknown(), {
     then: Joi.object({
-        GITLAB_HOST_URL: Joi.string().uri(),
+        GITLAB_HOST_URL: Joi.string().uri().allow(''),
         GITLAB_TOKEN: Joi.string().required()
     })
 });

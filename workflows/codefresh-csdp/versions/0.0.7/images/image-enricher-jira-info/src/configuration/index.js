@@ -19,7 +19,7 @@ const inputs = {
 };
 
 const schema = Joi.object({
-    CF_HOST_URL: Joi.string().uri(),
+    CF_HOST_URL: Joi.string().uri().allow(''),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),
     FAIL_ON_NOT_FOUND: Joi.boolean(),
