@@ -10,18 +10,17 @@ metadata:
     argo-hub/owner_name: 'Laurent Rochette'
     argo-hub/owner_email: 'laurent.rochette@codefresh.io'
     argo-hub/owner_url: "https://github.com/lrochette"
-    argo-hub/icon-type: svg
     argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-    argo-hub/icon-background: "#81D4FA"
+    argo-hub/icon-background: "#f4f4f4"
 
 spec:
   templates:
     - name: createcr
       metadata:
         annotations:
-          argo-hub/icon-type: svg
+          argo-hub/description: 'createcr'
           argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-          argo-hub/icon-background: "#81D4FA"
+          argo-hub/icon-background: "#f4f4f4"
       inputs:
         parameters:
           - name: SN_INSTANCE          # aka https://instance.service-now.com
@@ -64,9 +63,9 @@ spec:
     - name: updatecr
       metadata:
         annotations:
-          argo-hub/icon-type: svg
+          argo-hub/description: 'updatecr'
           argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-          argo-hub/icon-background: "#81D4FA"
+          argo-hub/icon-background: "#f4f4f4"
       outputs:
         parameters:
           - name: FULL_JSON
@@ -109,9 +108,9 @@ spec:
     - name: closecr
       metadata:
         annotations:
-          argo-hub/icon-type: svg
+          argo-hub/description: 'closecr'
           argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
-          argo-hub/icon-background: "#81D4FA"
+          argo-hub/icon-background: "#f4f4f4"
       outputs:
         parameters:
           - name: FULL_JSON

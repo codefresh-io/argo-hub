@@ -11,13 +11,13 @@ ServiceNow instance. See [example](../../assets/sn_auth.yaml)
   - password
 
 ## Templates
-1. [createcr](./docs/createcr.md)
-1. [updatecr](./docs/updatecr.md)
-1. [closecr](./docs/closecr.md)
+1. [createcr](https://github.com/codefresh-io/argo-hub/blob/main/workflows/servicenow/versions/1.0.0/docs/createcr.md)
+1. [updatecr](https://github.com/codefresh-io/argo-hub/blob/main/workflows/servicenow/versions/1.0.0/docs/updatecr.md)
+1. [closecr](https://github.com/codefresh-io/argo-hub/blob/main/workflows/servicenow/versions/1.0.0/docs/closecr.md)
 
 
 ## Security
 
 Minimal required permissions
 
-[Full rbac permissions list](./rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/servicenow/versions/1.0.0/rbac.yaml)
