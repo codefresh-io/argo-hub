@@ -14,7 +14,7 @@ This is useful in case you want to trigger a new workflowTemplate without having
 * ENTRYPOINT (required) - The specific template to use as an entrypoint
 
 ### Outputs
-The child workflow definition in a json format
+Child workflow definition (json format) in `outputs.parameters.codefresh-io-child-workflow-def`
 
 ## Examples
 

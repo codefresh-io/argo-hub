@@ -21,7 +21,7 @@ Create git pull request and add a reference to the workflow.
 
 
 ### Outputs
-Pull request url 
+Pull request url in `outputs.parameters.codefresh-io-pr-url`
 
 ## Examples
 
