@@ -378,7 +378,7 @@ spec:
       serviceAccountName: argo-hub.codefresh-csdp.0.0.7
       metadata:
         annotations:
-          argo-hub-template/description: 'Create git pull request and add a reference to the workflow'
+          argo-hub-template/description: 'Create git pull request and add a reference to the parent workflow as a label'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
           argo-hub-template/icon_background: "#171A2D"
       outputs:
