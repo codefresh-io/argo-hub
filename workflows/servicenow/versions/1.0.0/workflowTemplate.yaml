@@ -18,7 +18,7 @@ spec:
     - name: createcr
       metadata:
         annotations:
-          argo-hub/description: 'Execute operations against a Service Now instance'
+          argo-hub/description: 'createcr'
           argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
           argo-hub/icon-background: "#f4f4f4"
       inputs:
@@ -63,7 +63,7 @@ spec:
     - name: updatecr
       metadata:
         annotations:
-          argo-hub/description: 'Execute operations against a Service Now instance'
+          argo-hub/description: 'updatecr'
           argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
           argo-hub/icon-background: "#f4f4f4"
       outputs:
@@ -108,7 +108,7 @@ spec:
     - name: closecr
       metadata:
         annotations:
-          argo-hub/description: 'Execute operations against a Service Now instance'
+          argo-hub/description: 'closecr'
           argo-hub/icon-url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
           argo-hub/icon-background: "#f4f4f4"
       outputs:
