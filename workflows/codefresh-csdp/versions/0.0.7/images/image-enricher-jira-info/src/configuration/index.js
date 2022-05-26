@@ -19,15 +19,15 @@ const inputs = {
 };
 
 const schema = Joi.object({
-    CF_HOST_URL: Joi.string().uri().allow(''),
+    CF_HOST_URL: Joi.string().uri().empty(''),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),
     FAIL_ON_NOT_FOUND: Joi.boolean(),
 
-    JIRA_CONTEXT: Joi.string(),
-    JIRA_EMAIL: Joi.string(),
-    JIRA_API_TOKEN: Joi.string(),
-    JIRA_HOST_URL: Joi.string().uri(),
+    JIRA_CONTEXT: Joi.string().empty(''),
+    JIRA_EMAIL: Joi.string().empty(''),
+    JIRA_API_TOKEN: Joi.string().empty(''),
+    JIRA_HOST_URL: Joi.string().uri().empty(''),
     JIRA_MESSAGE: Joi.string().required(),
     JIRA_PROJECT_PREFIX: Joi.string().required(),
 })
