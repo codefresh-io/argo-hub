@@ -54,5 +54,7 @@ spec:
           - name: TITLE
             value: 'add new feature'
           - name: GITHUB_TOKEN
-            value: 'GITHUB_TOKEN'
+            value: 'git_secret'
+          - name: GITHUB_TOKEN_SECRET_KEY
+            value: 'git_token'
 ```
