@@ -47,20 +47,22 @@ spec:
           template: image-enricher-git-info
         arguments:
           parameters:
-          - name: GIT_PROVIDER
-            value: 'github'
+          - name: CF_API_KEY
+            value: 'codefresh-token'
+          - name: CF_API_KEY_SECRET_KEY
+            value: 'token'
           - name: IMAGE_NAME
             value: 'gcr.io/codefresh/cfstep-helm:lastest'
           - name: IMAGE_SHA
             value: 'sha256:cbe433136120cea1f146cf1b7f72e77fa763ff0c18b10ef605c1fc5c3d5fbec'
-          - name: BRANCH
-            value: 'main'
+          - name: GIT_PROVIDER
+            value: 'github'
           - name: REPO
             value: 'codefresh/cfstep-helm'
-          - name: CF_API_KEY
-            value: 'CODEFRESH_API_KEY'
+          - name: BRANCH
+            value: 'main'
           - name: GITHUB_TOKEN_SECRET_NAME
-            value: 'github'
+            value: 'github-creds'
           - name: GITHUB_TOKEN_SECRET_KEY
             value: 'token'
 ```

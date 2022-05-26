@@ -42,16 +42,24 @@ spec:
           template: image-enricher-jira-info
         arguments:
           parameters:
+          - name: CF_API_KEY
+            value: 'codefresh-token'
+          - name: CF_API_KEY_SECRET_KEY
+            value: 'token'
           - name: IMAGE_NAME
             value: 'gcr.io/codefresh/cfstep-helm:lastest'
+          - name: IMAGE_SHA
+            value: 'sha256:b5fd0f2fe40fa240975abc4b1b7bf101d4cadcf296f51af799917bcaa76aeb4f'
           - name: JIRA_PROJECT_PREFIX
-            value: 'JR'
+            value: 'CR'
           - name: JIRA_MESSAGE
-            value: 'JR-1234'
+            value: 'working on CR-11027'
           - name: JIRA_HOST_URL
-            value: 'jira.atlassian.net'
+            value: 'https://jira.atlassian.net'
           - name: JIRA_API_TOKEN_SECRET
-            value: 'jira-credentials'
-          - name: CF_API_KEY
-            value: 'CODEFRESH_API_KEY'
+            value: 'jira-creds'
+          - name: JIRA_API_TOKEN_SECRET_KEY
+            value: 'token'
+          - name: JIRA_EMAIL_SECRET_KEY
+            value: 'email'
 ```

@@ -159,8 +159,8 @@ spec:
             value: '{{ inputs.parameters.JIRA_HOST_URL }}'
           - name: JIRA_PROJECT_PREFIX
             value: '{{ inputs.parameters.JIRA_PROJECT_PREFIX }}'
-          - name: IMAGE
-            value: '{{ inputs.parameters.IMAGE }}'
+          - name: IMAGE_NAME
+            value: '{{ inputs.parameters.IMAGE_NAME }}'
           - name: JIRA_MESSAGE
             value: '{{ inputs.parameters.JIRA_MESSAGE }}'
           - name: CF_API_KEY
