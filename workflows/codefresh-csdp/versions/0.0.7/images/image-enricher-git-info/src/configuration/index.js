@@ -51,7 +51,7 @@ const schema = Joi.object({
 })
 .when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.GITLAB) }).unknown(), {
     then: Joi.object({
-        GITLAB_HOST: Joi.string().uri(),
+        GITLAB_HOST_URL: Joi.string().uri(),
         GITLAB_TOKEN: Joi.string().required()
     })
 });

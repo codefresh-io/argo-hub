@@ -46,17 +46,23 @@ spec:
             default: ''
           - name: GITHUB_API_HOST_URL 
             default: 'https://api.github.com'
-          - name: GITHUB_TOKEN
+          - name: GITHUB_TOKEN_SECRET_NAME
             default: ''
           - name: GITHUB_TOKEN_SECRET_KEY
             default: 'token'
           - name: GITHUB_CONTEXT
             default: ''
+          - name: GITLAB_HOST_URL
+            default: 'https://gitlab.com'
+          - name: GITLAB_TOKEN_SECRET_NAME
+            default: ''
+          - name: GITLAB_TOKEN_SECRET_KEY
+            default: 'token'
 
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-image-enricher-git-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-image-enricher-git-info:CR-11027-ci-enrich
         command:
           - node
           - /app/src/index.js
@@ -87,8 +93,17 @@ spec:
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.GITHUB_TOKEN }}'
+                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_NAME }}'
+                optional: true
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
+          - name: GITLAB_HOST
+            value: '{{ inputs.parameters.GITLAB_HOST }}'
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                optional: true
+                key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
     - name: image-enricher-jira-info
       serviceAccountName: argo-hub.codefresh-csdp.0.0.7
       metadata:
@@ -129,7 +144,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-image-enricher-jira-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-image-enricher-jira-info:CR-11027-ci-enrich
         command:
           - node
           - /app/src/index.js
@@ -270,7 +285,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-report-image-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-0.0.7-images-report-image-info:CR-11027-ci-enrich
         volumeMounts:
           - name: gcr-key-file
             mountPath: /gcr/

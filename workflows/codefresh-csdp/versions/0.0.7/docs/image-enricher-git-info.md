@@ -16,9 +16,12 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 * CF_HOST_URL (optional) - The URL to reach Codefresh (support on-premises Codefresh). Default is 'https://g.codefresh.io'
 * GITHUB_API_HOST_URL (optional) - The URL to reach the GitHub API (support on-premises GitHub api). Default is 'https://api.github.com'
 * GITHUB_API_PATH_PREFIX (optional) - The API prefix path for GitHub (support on-premises GitHub path prefix).
-* GITHUB_TOKEN (optional) - The Kubernetes secret containing the GitHub token
+* GITHUB_TOKEN_SECRET_NAME (optional) - The Kubernetes secret containing the GitHub token
 * GITHUB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
 * GITHUB_CONTEXT (optional) - The name of the github context from classic codefresh platform
+* GITLAB_HOST_URL (optional) - The Kubernetes secret containing the GitHub token
+* GITLAB_TOKEN_SECRET_NAME (optional) - The Kubernetes secret containing the GitHub token
+* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
 
 
 ### Outputs
@@ -56,6 +59,8 @@ spec:
             value: 'codefresh/cfstep-helm'
           - name: CF_API_KEY
             value: 'CODEFRESH_API_KEY'
-          - name: GITHUB_TOKEN
-            value: 'GITHUB_TOKEN'
+          - name: GITHUB_TOKEN_SECRET_NAME
+            value: 'github'
+          - name: GITHUB_TOKEN_SECRET_KEY
+            value: 'token'
 ```
