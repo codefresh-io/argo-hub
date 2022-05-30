@@ -62,7 +62,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.0.0-images-image-enricher-git-info:CR-11027-ci-enrich
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.0.0-images-image-enricher-git-info:main
         command:
           - node
           - /app/src/index.js
@@ -144,7 +144,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.0.0-images-image-enricher-jira-info:CR-11027-ci-enrich
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.0.0-images-image-enricher-jira-info:main
         command:
           - node
           - /app/src/index.js
@@ -285,7 +285,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.0.0-images-report-image-info:CR-11027-ci-enrich
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.0.0-images-report-image-info:main
         volumeMounts:
           - name: gcr-key-file
             mountPath: /gcr/
