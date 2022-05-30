@@ -59,7 +59,7 @@ spec:
       tasks:
       - name: report-image-info
         templateRef:
-          name: argo-hub.codefresh-csdp.0.0.7
+          name: argo-hub.codefresh-csdp.1.0.0
           template: report-image-info
         arguments:
           parameters:
