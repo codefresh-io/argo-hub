@@ -271,9 +271,9 @@ spec:
           - name: GITHUB_API_PATH_PREFIX
             default: ''
           - name: GITHUB_TOKEN_SECRET
-            default: 'autopilot-secret'
+            default: ''
           - name: GITHUB_TOKEN_SECRET_KEY
-            default: 'git_token'
+            default: ''
           - name: OWNER
             default: ''
           - name: REPO
