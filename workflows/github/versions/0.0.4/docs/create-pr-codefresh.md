@@ -1,4 +1,4 @@
-# git-pr-enricher
+# create-pr-codefresh
 
 ## Summary
 Create git pull request and add a reference to the workflow.
@@ -30,7 +30,7 @@ Pull request url in `outputs.parameters.codefresh-io-pr-url`
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: git-pr-enricher-
+  generateName: create-pr-codefresh-
 spec:
   entrypoint: main
   templates:
