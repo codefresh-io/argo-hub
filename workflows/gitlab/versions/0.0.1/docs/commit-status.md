@@ -7,13 +7,15 @@ Reports a commit status check.
 
 ### Inputs
 * GITLAB_TOKEN_SECRET_NAME (required) - K8s secret name that contains a key named `token` with gitlab access token
+* GITLAB_TOKEN_SECRET_KEY - The key in the K8s secret that contains the gitlab access token (default is `token`)
 * BUILD_BASE_URL (required) - Your argo workflow exposed instance url
 * REPO_OWNER (required) - Repository Owner
 * REPO_NAME (required) - Repository Name
 * REVISION (required) - commit sha
-* STATE (required) - one of the possible states
-* CONTEXT (required) - context to report
-* DESCRIPTION (required) - general description
+* STATE (required) - the state of the status. Can be one of the following: pending, running, success, failed, canceled
+* CONTEXT (optional) - the label to differentiate this status from the status of other systems. (default is `default`)
+* DESCRIPTION (optional) - the short description of the status
+* PIPELINE_ID (optional) - the ID of the pipeline to set status. Use in case of several pipeline on same SHA.
 
 ### Outputs
 no outputs

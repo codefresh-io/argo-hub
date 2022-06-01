@@ -11,6 +11,7 @@ Creates a pull request.
 
 #### Parameters
 * GITLAB_TOKEN_SECRET_NAME (required) - K8s secret name that contains a key named `token` with gitlab access token
+* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the K8s secret that contains the gitlab access token (default is `token`)
 * BRANCH (required) - branch name
 * MESSAGE (required) - pr message
 * PR_TEMPLATE (required) - pull request template
