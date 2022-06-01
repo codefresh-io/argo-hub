@@ -35,8 +35,11 @@ spec:
           - name: REVISION
           - name: STATE
           - name: CONTEXT
+            default: 'default'
           - name: DESCRIPTION
+            default: ''
           - name: PIPELINE_ID
+            default: ''
           - name: GITLAB_HOST
             default: 'gitlab.com'
           - name: GITLAB_TOKEN_SECRET_NAME

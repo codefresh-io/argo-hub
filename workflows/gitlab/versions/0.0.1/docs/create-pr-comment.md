@@ -13,7 +13,7 @@ Creates a commnet on a pull request.
 * REPO_NAME (required) - The repo with the pull request
 * PR_COMMENT (required) - The comment to post to the pull request.
 * PULL_REQUEST_NUMBER (required) - The pull request number at on the repo to comment on
-* GITLAB_HOST - hostname to reach gitlab on (default is `https://gitlab.com`).
+* GITLAB_HOST (optional) - hostname to reach gitlab on (default is `https://gitlab.com`).
 
 ### Outputs
 no outputs
