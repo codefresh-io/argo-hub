@@ -106,8 +106,8 @@ spec:
         command: [sh]
         source: |
           git checkout {{inputs.parameters.BRANCH}}
-          export EXISTING_PR=$(glab mr list  --target-branch {{ inputs.parameters.TARGET_BRANCH }} --source-branch {{ inputs.parameters.BRANCH }} | grep 'No open merge requests')
-          if [ -n "$EXISTING_PR" ] ; then glab mr create --target-branch {{ inputs.parameters.TARGET_BRANCH }} --source-branch {{ inputs.parameters.BRANCH }} --title {{ inputs.parameters.MESSAGE }} --no-editor --description "$(curl {{ inputs.parameters.PR_TEMPLATE }} )" ; else echo "Pull request already exists"; fi;
+          export EXISTING_PR=$(glab mr list  --target-branch "{{ inputs.parameters.TARGET_BRANCH }}" --source-branch "{{ inputs.parameters.BRANCH }}" | grep 'No open merge requests')
+          if [ -n "$EXISTING_PR" ] ; then glab mr create --target-branch "{{ inputs.parameters.TARGET_BRANCH }}" --source-branch "{{ inputs.parameters.BRANCH }}" --title "{{ inputs.parameters.MESSAGE }}" --no-editor --description "$(curl {{ inputs.parameters.PR_TEMPLATE }} )" ; else echo "Pull request already exists"; fi;
         env:
           - name: GITLAB_HOST
             value: '{{ inputs.parameters.GITLAB_HOST }}'
