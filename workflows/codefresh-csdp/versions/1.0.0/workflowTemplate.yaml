@@ -213,7 +213,7 @@ spec:
           - name: CF_API_KEY
 
           # optional
-          - name: INSECURE
+          - name: REGISTRY_INSECURE
             default: 'false'
           - name: RETRIEVE_CREDENTIALS_BY_DOMAIN
             default: 'false'
@@ -239,23 +239,22 @@ spec:
             default: ''
           - name: DOCKER_CONFIG_FILE_PATH
             default: ''
-          - name: DOCKER_USERNAME
+          - name: DOCKERHUB_USERNAME
             default: 'cf-not-exist'
-          - name: DOCKER_PASSWORD
+          - name: DOCKERHUB_PASSWORD
             default: 'cf-not-exist'
-          - name: USERNAME
+          - name: REGISTRY_USERNAME
             default: 'cf-not-exist'
-          - name: PASSWORD
+          - name: REGISTRY_PASSWORD
             default: 'cf-not-exist'
-          - name: DOMAIN
+          - name: REGISTRY_DOMAIN
             default: 'cf-not-exist'
-
+          - name: REGISTRY_DOMAIN_SECRET_KEY
+            default: 'domain'
           - name: USERNAME_SECRET_KEY
             default: 'username'
           - name: PASSWORD_SECRET_KEY
             default: 'password'
-          - name: DOMAIN_SECRET_KEY
-            default: 'domain'
           - name: AWS_ACCESS_KEY_SECRET_KEY
             default: 'aws-access-key'
           - name: AWS_SECRET_KEY_SECRET_KEY
@@ -310,8 +309,8 @@ spec:
             value: '{{ inputs.parameters.RETRIEVE_CREDENTIALS_BY_DOMAIN }}'
           - name: IMAGE_NAME
             value: '{{ inputs.parameters.IMAGE_NAME }}'
-          - name: INSECURE
-            value: '{{ inputs.parameters.INSECURE }}'
+          - name: REGISTRY_INSECURE
+            value: '{{ inputs.parameters.REGISTRY_INSECURE }}'
           - name: WORKFLOW_NAME
             value: '{{ inputs.parameters.WORKFLOW_NAME }}'
           - name: WORKFLOW_URL
@@ -342,33 +341,33 @@ spec:
                 name: '{{ inputs.parameters.AWS_REGION }}'
                 optional: true
                 key: '{{ inputs.parameters.AWS_REGION_SECRET_KEY }}'
-          - name: DOCKER_USERNAME
+          - name: DOCKERHUB_USERNAME
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.DOCKER_USERNAME }}'
+                name: '{{ inputs.parameters.DOCKERHUB_USERNAME }}'
                 optional: true
                 key: '{{ inputs.parameters.USERNAME_SECRET_KEY }}'
-          - name: DOCKER_PASSWORD
+          - name: DOCKERHUB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.DOCKER_PASSWORD }}'
+                name: '{{ inputs.parameters.DOCKERHUB_PASSWORD }}'
                 optional: true
                 key: '{{ inputs.parameters.PASSWORD_SECRET_KEY }}'
-          - name: USERNAME
+          - name: REGISTRY_USERNAME
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.USERNAME }}'
+                name: '{{ inputs.parameters.REGISTRY_USERNAME }}'
                 optional: true
                 key: '{{ inputs.parameters.USERNAME_SECRET_KEY }}'
-          - name: PASSWORD
+          - name: REGISTRY_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.PASSWORD }}'
+                name: '{{ inputs.parameters.REGISTRY_PASSWORD }}'
                 optional: true
                 key: '{{ inputs.parameters.PASSWORD_SECRET_KEY }}'
-          - name: DOMAIN
+          - name: REGISTRY_DOMAIN
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.DOMAIN }}'
+                name: '{{ inputs.parameters.REGISTRY_DOMAIN }}'
                 optional: true
-                key: '{{ inputs.parameters.DOMAIN_SECRET_KEY }}'
+                key: '{{ inputs.parameters.REGISTRY_DOMAIN_SECRET_KEY }}'
