@@ -26,16 +26,16 @@ Report image info to argo platform.
 * DOCKER_CONFIG_FILE_PATH (required) - docker config json for authenticating to a registry (GCR, ECR, ACR not supported)
 * DOCKER_CONFIG_SECRET (required) - The Kubernetes secret containing the docker config json information. Default is 'docker-registry'
 * DOCKER_CONFIG_SECRET_KEY  (optional) - The key in the Kubernetes secret containing the docker config json information. Default is '.dockerconfigjson'
-* DOCKER_USERNAME (required) - The Kubernetes secret with the docker username
-* DOCKER_USERNAME_SECRET_KEY (optional) The key in the Kubernetes secret with the docker username. Default is 'username'
-* DOCKER_PASSWORD (required) - The Kubernetes secret with the docker password
-* DOCKER_PASSWORD_SECRET_KEY (optional) The key in the Kubernetes secret with the docker password. Default is 'password'
-* USERNAME (required) - The Kubernetes secret with the standard registry username
+* DOCKERHUB_USERNAME (required) - The Kubernetes secret with the docker username
+* DOCKERHUB_USERNAME_SECRET_KEY (optional) The key in the Kubernetes secret with the docker username. Default is 'username'
+* DOCKERHUB_PASSWORD (required) - The Kubernetes secret with the docker password
+* DOCKERHUB_PASSWORD_SECRET_KEY (optional) The key in the Kubernetes secret with the docker password. Default is 'password'
+* REGISTRY_USERNAME (required) - The Kubernetes secret with the standard registry username
 * USERNAME_SECRET_KEY (optional) The key in the Kubernetes secret with the standard registry username. Default is 'username'
-* PASSWORD (required) - The Kubernetes secret with the standard registry password
+* REGISTRY_PASSWORD (required) - The Kubernetes secret with the standard registry password
 * PASSWORD_SECRET_KEY (optional) The key in the Kubernetes secret with the standard registry password. Default is 'password'
-* DOMAIN (required) - The Kubernetes secret with the standard registry domain
-* DOMAIN_SECRET_KEY (optional) - The key in the Kubernetes secret with the standard registry domain. Default is 'domain'
+* REGISTRY_DOMAIN (required) - The Kubernetes secret with the standard registry domain
+* REGISTRY_DOMAIN_SECRET_KEY (optional) - The key in the Kubernetes secret with the standard registry domain. Default is 'domain'
 * AWS_ROLE_SECRET (required) - The Kubernetes secret with the Amazon role
 * AWS_ROLE_SECRET_KEY (optional) -The key in the Kubernetes secret with the standard Amazon role. Default is 'role'
 
@@ -69,11 +69,11 @@ spec:
             value: 'token'
           - name: IMAGE_NAME
             value: 'deniscodefresh/ppid-inspector:latest'
-          - name: DOCKER_USERNAME
+          - name: DOCKERHUB_USERNAME
             value: 'dockerhub-creds'
           - name: USERNAME_SECRET_KEY
             value: 'username'
-          - name: DOCKER_PASSWORD
+          - name: DOCKERHUB_PASSWORD
             value: 'dockerhub-creds'
           - name: PASSWORD_SECRET_KEY
             value: 'password'

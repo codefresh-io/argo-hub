@@ -15,16 +15,16 @@ const inputs = {
     generic: {
         request: {
             protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
-            host: process.env.DOMAIN?.trim(),
+            host: process.env.REGISTRY_DOMAIN?.trim(),
         },
         credentials: {
-            username: process.env.USERNAME?.trim(),
-            password: process.env.PASSWORD?.trim(),
+            username: process.env.REGISTRY_USERNAME?.trim(),
+            password: process.env.REGISTRY_PASSWORD?.trim(),
         }
     },
-    docker: {
-        username: process.env.DOCKER_USERNAME?.trim(),
-        password: process.env.DOCKER_PASSWORD?.trim(),
+    dockerhub: {
+        username: process.env.DOCKERHUB_USERNAME?.trim(),
+        password: process.env.DOCKERHUB_PASSWORD?.trim(),
     },
     dockerConfigPath: process.env.DOCKER_CONFIG_FILE_PATH?.trim(),
     aws: {

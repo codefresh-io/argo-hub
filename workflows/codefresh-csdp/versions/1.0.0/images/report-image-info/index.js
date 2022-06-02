@@ -77,12 +77,12 @@ async function createECRUsingSTS(role, region) {
 async function createRegistryClientByImage(image) {
     const imageData = _parseImageName(image);
     if (imageData.domain.includes('docker.io')) {
-        if (checkNotEmpty(inputs.docker.username)
-            && checkNotEmpty(inputs.docker.password)) {
+        if (checkNotEmpty(inputs.dockerhub.username)
+            && checkNotEmpty(inputs.dockerhub.password)) {
 
-            return new DockerhubRegistry(inputs.docker);
+            return new DockerhubRegistry(inputs.dockerhub);
         }
-        throw new Error('Registry credentials for DOCKER not set. Add following registry parameters in your workflow to continue:\n - DOCKER_USERNAME\n - DOCKER_PASSWORD\n');
+        throw new Error('Registry credentials for DOCKER not set. Add following registry parameters in your workflow to continue:\n - DOCKERHUB_USERNAME\n - DOCKERHUB_PASSWORD\n');
     } else if (imageData.domain.includes('gcr.io')) {
         if (inputs.gcr.keyFilePath) {
             return new GcrRegistry({
@@ -115,20 +115,19 @@ async function createRegistryClientByImage(image) {
     if (inputs.dockerConfigPath) {
         return getCredentialsFromDockerConfig(image);
     }
-    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN\n')
+    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: REGISTRY_USERNAME, REGISTRY_PASSWORD, REGISTRY_DOMAIN\n')
 }
 
 async function createRegistryClient(image) {
-
     if (inputs.dockerConfigPath) {
         return getCredentialsFromDockerConfig(image)
     }
 
     // Clean this up when have time
-    if (checkNotEmpty(inputs.docker.username)
-        && checkNotEmpty(inputs.docker.password)) {
+    if (checkNotEmpty(inputs.dockerhub.username)
+        && checkNotEmpty(inputs.dockerhub.password)) {
 
-        return new DockerhubRegistry(inputs.docker);
+        return new DockerhubRegistry(inputs.dockerhub);
     }
 
     if (checkNotEmpty(inputs.generic.credentials.username)
@@ -157,7 +156,7 @@ async function createRegistryClient(image) {
             credentials: inputs.aws.credentials,
         })
     }
-    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKER_USERNAME, DOCKER_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: USERNAME, PASSWORD, DOMAIN');
+    throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: REGISTRY_USERNAME, REGISTRY_PASSWORD, REGISTRY_DOMAIN');
 }
 
 async function getRegistryClient(image) {
