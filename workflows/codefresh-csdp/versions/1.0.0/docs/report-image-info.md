@@ -11,7 +11,7 @@ Report image info to argo platform.
 * CF_HOST_URL (optional) - support on-premises Codefresh URL
 * WORKFLOW_URL (optional) - external url for the workflow
 * LOGS_URL (optional) - external url for the logs
-* INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
+* REGISTRY_INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
 * RETRIEVE_CREDENTIALS_BY_DOMAIN (optional) - decide about the authentication method based on the image domain
 #### Specify one from following required registry parameters:
 * GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR

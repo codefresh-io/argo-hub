@@ -14,7 +14,7 @@ const inputs = {
     },
     generic: {
         request: {
-            protocol: process.env.INSECURE?.trim() === 'true' ? 'http' : 'https',
+            protocol: process.env.REGISTRY_INSECURE?.trim() === 'true' ? 'http' : 'https',
             host: process.env.REGISTRY_DOMAIN?.trim(),
         },
         credentials: {

@@ -213,7 +213,7 @@ spec:
           - name: CF_API_KEY
 
           # optional
-          - name: INSECURE
+          - name: REGISTRY_INSECURE
             default: 'false'
           - name: RETRIEVE_CREDENTIALS_BY_DOMAIN
             default: 'false'
@@ -309,8 +309,8 @@ spec:
             value: '{{ inputs.parameters.RETRIEVE_CREDENTIALS_BY_DOMAIN }}'
           - name: IMAGE_NAME
             value: '{{ inputs.parameters.IMAGE_NAME }}'
-          - name: INSECURE
-            value: '{{ inputs.parameters.INSECURE }}'
+          - name: REGISTRY_INSECURE
+            value: '{{ inputs.parameters.REGISTRY_INSECURE }}'
           - name: WORKFLOW_NAME
             value: '{{ inputs.parameters.WORKFLOW_NAME }}'
           - name: WORKFLOW_URL
