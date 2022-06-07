@@ -13,7 +13,7 @@ Templates that allow you to interact with your Argo Workflow instance and provid
 
 The workflowTemplate requires permissions on all the argo workflow related CRDs including:
 
-1. workflows 
+1. workflows
 2. workflowtemplates
 
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/argo-workflows/versions/0.0.3/rbac.yaml)
