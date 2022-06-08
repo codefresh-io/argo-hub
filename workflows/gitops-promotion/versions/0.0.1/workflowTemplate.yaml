@@ -1,0 +1,461 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.gitops-promotion.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Templates to promote microservices between K8s environments within your GitOps monorepo'
+    argo-hub/categories: 'gitops,git,utilities,deployment'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Ted Spinks'
+    argo-hub/owner_email: 'ted.spinks@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/TedSpinks'
+    argo-hub/owner_url: 'https://github.com/TedSpinks'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitops-promotion/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+spec:
+  templates:
+
+    - name: promote-from-src-to-dest-env
+      serviceAccountName: argo-hub.gitops-promotion.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Clone a GitOps repo and copy an image or chart value from a YAML file in one environment/directory to a corresponding file in another'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitops-promotion/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          # ------------------------------------------------------------------------------
+          # GitOps repo containing the source and destination values.yaml files
+          # ------------------------------------------------------------------------------
+          - name: git-repo-url        # HTTP URL of your GitOps repo
+          - name: git-auth-secret     # Name of a secret with the following keys: token, username, email
+          - name: git-checkout-branch # Optional, branch for changes. Use if you'll be creating a PR.
+            value: main
+          - name: git-clone-branch    # Optional, branch to clone. Match with git-checkout-branch to add to an existing branch/PR.
+            value: main
+          - name: git-commit-msg      # Optional, custom commit message. If not provided, one will be generated.
+            value: ""
+          - name: create-github-pr    # Optional, set to true (and git-checkout-branch to non-main) to create a PR
+            value: false
+          - name: pr-title            # Optional, will use the commit message for PR title if one is not provided
+            value: ""
+          # ------------------------------------------------------------------------------
+          # Strings to replace within the source/dest patterns
+          # ------------------------------------------------------------------------------
+          - name: env-src             # Replaces [[ENV]] in source paths
+          - name: env-dest            # Replaces [[ENV]] in destination paths
+          - name: svc-name-list       # Space-separated list of microservices to promote. Each one
+                                      # replaces [[SVC_NAME]] in paths.
+          - name: other               # Optional, replaces [[OTHER]] in all paths
+            value: ""
+          # ------------------------------------------------------------------------------
+          # Source/dest patterns, where [[ENV]] differentiates btw source and dest
+          # ------------------------------------------------------------------------------
+          - name: file-path-pattern   # Path to the source/destination YAML file
+                                      # kustomization.yaml example: "k8s-resources/[[SVC_NAME]]/overlays/[[ENV]]/kustomization.yaml"
+                                      # Helm values.yaml example: "k8s-resources/[[ENV]]/[[SVC_NAME]]/values.yaml"
+          - name: promotion-type      # Must be one of: kustomize-image, helm-value, helm-dependency, yaml-key
+          - name: kust-image-pattern  # For kustomize-image - name of the image transformer to copy from source to dest
+            value: "[[SVC_NAME]]"
+          - name: yaml-key-pattern    # For helm-value and yam-key - YAML key pattern within values.yaml to copy from source to dest
+            value: ".[[SVC_NAME]].image.tag"
+          - name: helm-dep-pattern    # For helm-dependency - name of the subchart/dependency to copy from source to dest
+            value: "[[SVC_NAME]]"
+      outputs:
+        parameters:
+          - name: codefresh-io-pr-url
+            valueFrom:
+              default: ""
+              path: /tmp/pr-url.txt
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitops-promotion-versions-0.0.1-images-gitops-promotion:main
+        command: ["/bin/sh"]
+        args: ["/promote.sh"]
+        env:
+        - name: GIT_REPO_URL
+          value: "{{inputs.parameters.git-repo-url}}"
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: token
+        - name: GIT_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: username
+        - name: GIT_USER_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: email 
+        - name: GIT_CHECKOUT_BRANCH
+          value: "{{inputs.parameters.git-checkout-branch}}"
+        - name: GIT_CLONE_BRANCH
+          value: "{{inputs.parameters.git-clone-branch}}"
+        - name: GIT_COMMIT_MSG
+          value: "{{inputs.parameters.git-commit-msg}}"
+        - name: CREATE_GITHUB_PR
+          value: "{{inputs.parameters.create-github-pr}}"
+        - name: PR_TITLE
+          value: "{{inputs.parameters.pr-title}}"
+        - name: PR_WORKFLOW_UID
+          value: "{{workflow.uid}}"
+        - name: ENV_SRC
+          value: "{{inputs.parameters.env-src}}"
+        - name: ENV_DEST
+          value: "{{inputs.parameters.env-dest}}"
+        - name: SVC_NAME_LIST
+          value: "{{inputs.parameters.svc-name-list}}"
+        - name: OTHER
+          value: "{{inputs.parameters.other}}"
+        - name: FILE_PATH_PATTERN
+          value: "{{inputs.parameters.file-path-pattern}}"
+        - name: PROMOTION_TYPE
+          value: "{{inputs.parameters.promotion-type}}"
+        - name: KUST_IMAGE_PATTERN
+          value: "{{inputs.parameters.kust-image-pattern}}"
+        - name: YAML_KEY_PATTERN
+          value: "{{inputs.parameters.yaml-key-pattern}}"
+        - name: HELM_DEP_PATTERN
+          value: "{{inputs.parameters.helm-dep-pattern}}"
+    - name: promote-from-src-to-dest-env-s3
+      serviceAccountName: argo-hub.gitops-promotion.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Take a cloned GitOps repo from an S3 artifact and copy an image/chart value from a YAML file in one environment/directory to a corresponding file in another'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitops-promotion/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        artifacts:
+          # ------------------------------------------------------------------------------
+          # Artifact repo that already contains the cloned GitOps repo directory
+          # ------------------------------------------------------------------------------
+          - name: repo
+            path: /tmp/s3-artifact/clone
+        parameters:
+          # ------------------------------------------------------------------------------
+          # Details about the GitOps repo that contains the source and destination values.yaml files
+          # ------------------------------------------------------------------------------
+          - name: git-repo-url        # HTTP URL of your GitOps repo
+          - name: git-auth-secret     # Name of a secret with the following keys: token, username, email
+          - name: git-checkout-branch # Optional, branch for changes. Use if you'll be creating a PR.
+            value: main
+          - name: git-clone-branch    # Optional, branch to clone. Match with git-checkout-branch to add to an existing branch/PR.
+            value: main
+          - name: git-commit-msg      # Optional, custom commit message. If not provided, one will be generated.
+            value: ""
+          - name: create-github-pr    # Optional, set to true (and git-checkout-branch to non-main) to create a PR
+            value: false
+          - name: pr-title            # Optional, will use the commit message for PR title if one is not provided
+            value: ""
+          - name: output-artifact-key # Optional, key to which the updated Git repo artifact will be pushed 
+            value: "{{ workflow.name }}/git-repo"
+          # ------------------------------------------------------------------------------
+          # Strings to replace within the source/dest patterns
+          # ------------------------------------------------------------------------------
+          - name: env-src             # Replaces [[ENV]] in source paths
+          - name: env-dest            # Replaces [[ENV]] in destination paths
+          - name: svc-name-list       # Space-separated list of microservices to promote. Each one
+                                      # replaces [[SVC_NAME]] in paths.
+          - name: other               # Optional, replaces [[OTHER]] in all paths
+            value: ""
+          # ------------------------------------------------------------------------------
+          # Source/dest patterns, where [[ENV]] differentiates btw source and dest
+          # ------------------------------------------------------------------------------
+          - name: file-path-pattern   # Path to the source/destination YAML file
+                                      # kustomization.yaml example: "k8s-resources/[[SVC_NAME]]/overlays/[[ENV]]/kustomization.yaml"
+                                      # Helm values.yaml example: "k8s-resources/[[ENV]]/[[SVC_NAME]]/values.yaml"
+          - name: promotion-type      # Must be one of: kustomize-image, helm-value, helm-dependency, yaml-key
+          - name: kust-image-pattern  # For kustomize-image - name of the image transformer to copy from source to dest
+            value: "[[SVC_NAME]]"
+          - name: yaml-key-pattern    # For helm-value and yam-key - YAML key pattern within values.yaml to copy from source to dest
+            value: ".[[SVC_NAME]].image.tag"
+          - name: helm-dep-pattern    # For helm-dependency - name of the subchart/dependency to copy from source to dest
+            value: "[[SVC_NAME]]"
+      outputs:
+        artifacts:
+          - name: repo
+            path: /tmp/s3-artifact/clone
+            s3:
+              key: "{{ inputs.parameters.output-artifact-key }}"
+        parameters:
+          - name: codefresh-io-pr-url
+            valueFrom:
+              default: ""
+              path: /tmp/pr-url.txt
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitops-promotion-versions-0.0.1-images-gitops-promotion:main
+        command: ["/bin/sh"]
+        args: ["/promote.sh"]
+        env:
+        - name: GIT_REPO_URL
+          value: "{{inputs.parameters.git-repo-url}}"
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: token
+        - name: GIT_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: username
+        - name: GIT_USER_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: email 
+        - name: GIT_CHECKOUT_BRANCH
+          value: "{{inputs.parameters.git-checkout-branch}}"
+        - name: GIT_CLONE_BRANCH
+          value: "{{inputs.parameters.git-clone-branch}}"
+        - name: GIT_COMMIT_MSG
+          value: "{{inputs.parameters.git-commit-msg}}"
+        - name: CREATE_GITHUB_PR
+          value: "{{inputs.parameters.create-github-pr}}"
+        - name: PR_TITLE
+          value: "{{inputs.parameters.pr-title}}"
+        - name: PR_WORKFLOW_UID
+          value: "{{workflow.uid}}"
+        - name: ENV_SRC
+          value: "{{inputs.parameters.env-src}}"
+        - name: ENV_DEST
+          value: "{{inputs.parameters.env-dest}}"
+        - name: SVC_NAME_LIST
+          value: "{{inputs.parameters.svc-name-list}}"
+        - name: OTHER
+          value: "{{inputs.parameters.other}}"
+        - name: FILE_PATH_PATTERN
+          value: "{{inputs.parameters.file-path-pattern}}"
+        - name: PROMOTION_TYPE
+          value: "{{inputs.parameters.promotion-type}}"
+        - name: KUST_IMAGE_PATTERN
+          value: "{{inputs.parameters.kust-image-pattern}}"
+        - name: YAML_KEY_PATTERN
+          value: "{{inputs.parameters.yaml-key-pattern}}"
+        - name: HELM_DEP_PATTERN
+          value: "{{inputs.parameters.helm-dep-pattern}}"
+
+    - name: promote-to-env
+      serviceAccountName: argo-hub.gitops-promotion.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Clone a GitOps repo and apply a new image/chart value to a YAML file in one of its environment directories'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitops-promotion/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          # ------------------------------------------------------------------------------
+          # GitOps repo containing the source and destination values.yaml files
+          # ------------------------------------------------------------------------------
+          - name: git-repo-url        # HTTP URL of your GitOps repo
+          - name: git-auth-secret     # Name of a secret with the following keys: token, username, email
+          - name: git-checkout-branch # Optional, branch for changes. Use if you'll be creating a PR.
+            value: main
+          - name: git-clone-branch    # Optional, branch to clone. Match with git-checkout-branch to add to an existing branch/PR.
+            value: main
+          - name: git-commit-msg      # Optional, custom commit message. If not provided, one will be generated.
+            value: ""
+          - name: create-github-pr    # Optional, set to true (and git-checkout-branch to non-main) to create a PR
+            value: false
+          - name: pr-title            # Optional, will use the commit message for PR title if one is not provided
+            value: ""
+          # ------------------------------------------------------------------------------
+          # Strings to replace within the target patterns
+          # ------------------------------------------------------------------------------
+          - name: value-to-promote    # Value to promote to the target environment 
+          - name: env                 # Replaces [[ENV]] in destination paths
+          - name: svc-name-list       # Space-separated list of microservices to promote. Each one
+                                      # replaces [[SVC_NAME]] in paths.
+          - name: other               # Optional, replaces [[OTHER]] in all paths
+            value: ""
+          # ------------------------------------------------------------------------------
+          # Target patterns
+          # ------------------------------------------------------------------------------
+          - name: file-path-pattern   # Path to the source/destination YAML file
+                                      # kustomization.yaml example: "k8s-resources/[[SVC_NAME]]/overlays/[[ENV]]/kustomization.yaml"
+                                      # Helm values.yaml example: "k8s-resources/[[ENV]]/[[SVC_NAME]]/values.yaml"
+          - name: promotion-type      # Must be one of: kustomize-image, helm-value, helm-dependency, yaml-key
+          - name: kust-image-pattern  # For kustomize-image - name of the image transformer to copy from source to dest
+            value: "[[SVC_NAME]]"
+          - name: yaml-key-pattern    # For helm-value and yaml-key - YAML key to copy from source to dest
+            value: ".[[SVC_NAME]].image.tag"  # deployment.yaml example: ".spec.template.spec.containers.0.image"
+          - name: helm-dep-pattern    # For helm-dependency - name of the subchart/dependency to copy from source to dest
+            value: "[[SVC_NAME]]"
+      outputs:
+        parameters:
+          - name: codefresh-io-pr-url
+            valueFrom:
+              default: ""
+              path: /tmp/pr-url.txt
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitops-promotion-versions-0.0.1-images-gitops-promotion:main
+        command: ["/bin/sh"]
+        args: ["/promote.sh"]
+        env:
+        - name: GIT_REPO_URL
+          value: "{{inputs.parameters.git-repo-url}}"
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: token
+        - name: GIT_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: username
+        - name: GIT_USER_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: email 
+        - name: GIT_CHECKOUT_BRANCH
+          value: "{{inputs.parameters.git-checkout-branch}}"
+        - name: GIT_CLONE_BRANCH
+          value: "{{inputs.parameters.git-clone-branch}}"
+        - name: GIT_COMMIT_MSG
+          value: "{{inputs.parameters.git-commit-msg}}"
+        - name: CREATE_GITHUB_PR
+          value: "{{inputs.parameters.create-github-pr}}"
+        - name: PR_TITLE
+          value: "{{inputs.parameters.pr-title}}"
+        - name: PR_WORKFLOW_UID
+          value: "{{workflow.uid}}"
+        - name: VALUE_FROM_INPUT
+          value: "{{inputs.parameters.value-to-promote}}"
+        - name: ENV_DEST
+          value: "{{inputs.parameters.env}}"
+        - name: SVC_NAME_LIST
+          value: "{{inputs.parameters.svc-name-list}}"
+        - name: OTHER
+          value: "{{inputs.parameters.other}}"
+        - name: FILE_PATH_PATTERN
+          value: "{{inputs.parameters.file-path-pattern}}"
+        - name: PROMOTION_TYPE
+          value: "{{inputs.parameters.promotion-type}}"
+        - name: KUST_IMAGE_PATTERN
+          value: "{{inputs.parameters.kust-image-pattern}}"
+        - name: YAML_KEY_PATTERN
+          value: "{{inputs.parameters.yaml-key-pattern}}"
+        - name: HELM_DEP_PATTERN
+          value: "{{inputs.parameters.helm-dep-pattern}}"
+    - name: promote-to-env-s3
+      serviceAccountName: argo-hub.gitops-promotion.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Take a cloned GitOps repo from an S3 artifact and apply a new image/chart value to a YAML file in one of its environment directories'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitops-promotion/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        artifacts:
+          # ------------------------------------------------------------------------------
+          # Artifact repo that already contains the cloned GitOps repo directory
+          # ------------------------------------------------------------------------------
+          - name: repo
+            path: /tmp/s3-artifact/clone
+        parameters:
+          # ------------------------------------------------------------------------------
+          # GitOps repo containing the source and destination values.yaml files
+          # ------------------------------------------------------------------------------
+          - name: git-repo-url        # HTTP URL of your GitOps repo
+          - name: git-auth-secret     # Name of a secret with the following keys: token, username, email
+          - name: git-checkout-branch # Optional, branch for changes. Use if you'll be creating a PR.
+            value: main
+          - name: git-clone-branch    # Optional, branch to clone. Match with git-checkout-branch to add to an existing branch/PR.
+            value: main
+          - name: git-commit-msg      # Optional, custom commit message. If not provided, one will be generated.
+            value: ""
+          - name: create-github-pr    # Optional, set to true (and git-checkout-branch to non-main) to create a PR
+            value: false
+          - name: pr-title            # Optional, will use the commit message for PR title if one is not provided
+            value: ""
+          - name: output-artifact-key # Optional, key to which the updated Git repo artifact will be pushed 
+            value: "{{ workflow.name }}/git-repo"
+          # ------------------------------------------------------------------------------
+          # Strings to replace within the target patterns
+          # ------------------------------------------------------------------------------
+          - name: value-to-promote    # Value to promote to the target environment 
+          - name: env                 # Replaces [[ENV]] in destination paths
+          - name: svc-name-list       # Space-separated list of microservices to promote. Each one
+                                      # replaces [[SVC_NAME]] in paths.
+          - name: other               # Optional, replaces [[OTHER]] in all paths
+            value: ""
+          # ------------------------------------------------------------------------------
+          # Target patterns
+          # ------------------------------------------------------------------------------
+          - name: file-path-pattern   # Path to the source/destination YAML file
+                                      # kustomization.yaml example: "k8s-resources/[[SVC_NAME]]/overlays/[[ENV]]/kustomization.yaml"
+                                      # Helm values.yaml example: "k8s-resources/[[ENV]]/[[SVC_NAME]]/values.yaml"
+          - name: promotion-type      # Must be one of: kustomize-image, helm-value, helm-dependency, yaml-key
+          - name: kust-image-pattern  # For kustomize-image - name of the image transformer to copy from source to dest
+            value: "[[SVC_NAME]]"
+          - name: yaml-key-pattern    # For helm-value and yaml-key - YAML key to copy from source to dest
+            value: ".[[SVC_NAME]].image.tag"  # deployment.yaml example: ".spec.template.spec.containers.0.image"
+          - name: helm-dep-pattern    # For helm-dependency - name of the subchart/dependency to copy from source to dest
+            value: "[[SVC_NAME]]"
+      outputs:
+        artifacts:
+          - name: repo
+            path: /tmp/s3-artifact/clone
+            s3:
+              key: "{{ inputs.parameters.output-artifact-key }}"
+        parameters:
+          - name: codefresh-io-pr-url
+            valueFrom:
+              default: ""
+              path: /tmp/pr-url.txt
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitops-promotion-versions-0.0.1-images-gitops-promotion:main
+        command: ["/bin/sh"]
+        args: ["/promote.sh"]
+        env:
+        - name: GIT_REPO_URL
+          value: "{{inputs.parameters.git-repo-url}}"
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: token
+        - name: GIT_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: username
+        - name: GIT_USER_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: "{{inputs.parameters.git-auth-secret}}"
+              key: email 
+        - name: GIT_CHECKOUT_BRANCH
+          value: "{{inputs.parameters.git-checkout-branch}}"
+        - name: GIT_CLONE_BRANCH
+          value: "{{inputs.parameters.git-clone-branch}}"
+        - name: GIT_COMMIT_MSG
+          value: "{{inputs.parameters.git-commit-msg}}"
+        - name: CREATE_GITHUB_PR
+          value: "{{inputs.parameters.create-github-pr}}"
+        - name: PR_TITLE
+          value: "{{inputs.parameters.pr-title}}"
+        - name: PR_WORKFLOW_UID
+          value: "{{workflow.uid}}"
+        - name: VALUE_FROM_INPUT
+          value: "{{inputs.parameters.value-to-promote}}"
+        - name: ENV_DEST
+          value: "{{inputs.parameters.env}}"
+        - name: SVC_NAME_LIST
+          value: "{{inputs.parameters.svc-name-list}}"
+        - name: OTHER
+          value: "{{inputs.parameters.other}}"
+        - name: FILE_PATH_PATTERN
+          value: "{{inputs.parameters.file-path-pattern}}"
+        - name: PROMOTION_TYPE
+          value: "{{inputs.parameters.promotion-type}}"
+        - name: KUST_IMAGE_PATTERN
+          value: "{{inputs.parameters.kust-image-pattern}}"
+        - name: YAML_KEY_PATTERN
+          value: "{{inputs.parameters.yaml-key-pattern}}"
+        - name: HELM_DEP_PATTERN
+          value: "{{inputs.parameters.helm-dep-pattern}}"
