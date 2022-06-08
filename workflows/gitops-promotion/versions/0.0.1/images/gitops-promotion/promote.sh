@@ -1,6 +1,11 @@
 #!/bin/sh
-# Document 2 use cases - user-provided VALUE_FROM_INPUT, vs reading from source and copying to dest
-# See Workflow Template for full documentaion, including input environment variables
+# Clones a GitOps repo and copies an image or chart value from a YAML file in one environment/directory to a
+# corresponding file in another. Can also apply a new image or chart value directly, without copying it from a
+# source environment. Optionally creates a PR to gate the change.
+#
+# See the argo-hub.gitops-promotion Workflow Template for a complete list of input environment variables and full
+# README documentaiton.
+#
 # ted.spinks@codefresh.io
 
 # exit when any command fails

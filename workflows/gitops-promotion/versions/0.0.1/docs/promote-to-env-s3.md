@@ -1,7 +1,7 @@
 # promote-to-env-s3
 
 ## Summary
-Take a cloned GitOps repo from an S3 artifact and apply a new image/chart value to a YAML file in one of its environment directories. Optionally create a PR to gate the change.
+Take a cloned GitOps repo from an S3 artifact and apply a new image/chart value to a YAML file in one of its environment directories. This is useful to do at the end of a CI pipeline - after an image has been fully tested and pushed to an image registry, it can then be promoted to the first environment in your promotion process. Optionally create a PR to gate the change.
 
 ## Requirements
 #### Kubernetes secret with Git authentication details
