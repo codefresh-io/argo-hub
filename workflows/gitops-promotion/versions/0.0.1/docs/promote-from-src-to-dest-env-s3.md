@@ -144,8 +144,6 @@ spec:
                   value: "https://github.com/example-org/example-gitops-repo.git"
                 - name: git-auth-secret
                   value: git-auth
-                - name: create-github-pr
-                  value: true
                 # Replacement Substrings
                 - name: env-src
                   value: dev
