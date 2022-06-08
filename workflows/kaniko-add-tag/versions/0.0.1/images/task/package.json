@@ -1,0 +1,9 @@
+{
+  "name": "github-commit-status",
+  "version": "1.0.0",
+  "main": "diff.js",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
