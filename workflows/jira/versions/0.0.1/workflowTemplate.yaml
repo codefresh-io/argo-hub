@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.starting-template.0.0.1
+  name: argo-hub.jira.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Starting template'
+    argo-hub/description: 'Jira template'
     argo-hub/categories: 'argo'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Itai Gendler'
