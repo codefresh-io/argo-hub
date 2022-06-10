@@ -47,8 +47,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -104,8 +104,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -170,8 +170,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -202,7 +202,7 @@ spec:
           - name: ISSUE_TYPE
             value: '{{ inputs.parameters.ISSUE_TYPE }}'
 
-      - name: update-issue
+    - name: update-issue
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
@@ -240,8 +240,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -308,8 +308,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -370,8 +370,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -426,8 +426,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -484,8 +484,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
@@ -546,8 +546,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
-        command: 
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
           - python
           - /jira/jira-issue-manager.py
         env:
