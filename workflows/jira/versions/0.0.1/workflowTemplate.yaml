@@ -47,27 +47,28 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
-          - name: comment_body
+          - name: COMMENT_BODY
             value: '{{ inputs.parameters.COMMENT_BODY }}'
-          - name: jira_issue_source_field
+          - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
 
     - name: update-comment
@@ -103,29 +104,30 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
-          - name: comment_body
+          - name: COMMENT_BODY
             value: '{{ inputs.parameters.COMMENT_BODY }}'
-          - name: jira_issue_source_field
+          - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
-          - name: jira_comment_id
+          - name: JIRA_COMMENT_ID
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
 
     - name: create-issue
@@ -168,23 +170,24 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
           - name: ISSUE_PROJECT
             value: '{{ inputs.parameters.ISSUE_PROJECT }}'
@@ -237,25 +240,26 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
-          - name: jira_issue_source_field
+          - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: ISSUE_SUMMARY
             value: '{{ inputs.parameters.ISSUE_SUMMARY }}'
@@ -304,23 +308,24 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
           - name: ISSUE_DESCRIPTION
             value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
@@ -365,25 +370,26 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
-          - name: jira_issue_source_field
+          - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: DESIRED_ISSUE_STATUS
             value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
@@ -420,23 +426,24 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
           - name: DESIRED_ISSUE_STATUS
             value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
@@ -477,25 +484,26 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
-          - name: jira_issue_source_field
+          - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: DESIRED_ISSUE_STATUS
             value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
@@ -538,25 +546,26 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: alpine #edit
-        command: #edit
-          - echo {{ inputs.parameters.TEXT }}
+        image: quay.io/matthewchungcodefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main 
+        command: 
+          - python
+          - /jira/jira-issue-manager.py
         env:
-          - name: jira_base_url
+          - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: jira_username
+          - name: JIRA_USERNAME
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_USERNAME }}'
                 key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: jira_api_key
+          - name: JIRA_API_KEY
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: action
+          - name: ACTION
             value: '{{ inputs.parameters.ACTION }}'
-          - name: jira_issue_source_field
+          - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: DESIRED_ISSUE_STATUS
             value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
