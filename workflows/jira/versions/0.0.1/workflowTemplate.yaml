@@ -1,0 +1,566 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.starting-template.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Starting template'
+    argo-hub/categories: 'argo'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Itai Gendler'
+    argo-hub/owner_email: 'itai@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    argo-hub/owner_url: 'https://github.com/itai-codefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+    argo-hub/icon-background: "#81D4FA"
+spec:
+  templates:
+    - name: create-comment
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'comment_create'
+          - name: COMMENT_BODY
+            default: ''
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: comment_body
+            value: '{{ inputs.parameters.COMMENT_BODY }}'
+          - name: jira_issue_source_field
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+
+    - name: update-comment
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          - name: JIRA_COMMENT_ID
+          # optional
+          - name: ACTION
+            default: 'comment_update'
+          - name: COMMENT_BODY
+            default: ''
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: comment_body
+            value: '{{ inputs.parameters.COMMENT_BODY }}'
+          - name: jira_issue_source_field
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: jira_comment_id
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+
+    - name: create-issue
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'issue_create'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: ISSUE_PROJECT
+            default: ''
+          - name: ISSUE_SUMMARY
+            default: ''
+          - name: ISSUE_DESCRIPTION
+            default: ''
+          - name: ISSUE_COMPONENTS
+            default: ''
+          - name: ISSUE_CUSTOMFIELDS
+            default: ''
+          - name: ISSUE_TYPE
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: ISSUE_PROJECT
+            value: '{{ inputs.parameters.ISSUE_PROJECT }}'
+          - name: ISSUE_SUMMARY
+            value: '{{ inputs.parameters.ISSUE_SUMMARY }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+          - name: ISSUE_COMPONENTS
+            value: '{{ inputs.parameters.ISSUE_COMPONENTS }}'
+          - name: ISSUE_CUSTOMFIELDS
+            value: '{{ inputs.parameters.ISSUE_CUSTOMFIELDS }}'
+          - name: ISSUE_TYPE
+            value: '{{ inputs.parameters.ISSUE_TYPE }}'
+
+      - name: update-issue
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'issue_update'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: ISSUE_SUMMARY
+            default: ''
+          - name: ISSUE_DESCRIPTION
+            default: ''
+          - name: ISSUE_COMPONENTS
+            default: ''
+          - name: ISSUE_TYPE
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: jira_issue_source_field
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: ISSUE_SUMMARY
+            value: '{{ inputs.parameters.ISSUE_SUMMARY }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+          - name: ISSUE_COMPONENTS
+            value: '{{ inputs.parameters.ISSUE_COMPONENTS }}'
+          - name: ISSUE_TYPE
+            value: '{{ inputs.parameters.ISSUE_TYPE }}'
+
+    - name: update-all-from-jql
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'update_all_from_jql_query'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: ISSUE_DESCRIPTION
+            default: ''
+          - name: ISSUE_COMPONENTS
+            default: ''
+          - name: ISSUE_TYPE
+            default: ''
+          - name: JQL_QUERY
+            default: ''
+          - name: JQL_QUERY_MAX_RESULTS
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+          - name: ISSUE_COMPONENTS
+            value: '{{ inputs.parameters.ISSUE_COMPONENTS }}'
+          - name: ISSUE_TYPE
+            value: '{{ inputs.parameters.ISSUE_TYPE }}'
+          - name: JQL_QUERY
+            value: '{{ inputs.parameters.JQL_QUERY }}'
+          - name: JQL_QUERY_MAX_RESULTS
+            value: '{{ inputs.parameters.JQL_QUERY_MAX_RESULTS }}'
+
+    - name: issue-verify-status
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'verify_status'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: jira_issue_source_field
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+
+    - name: issue-verify-status-from-jql
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'verify_status'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+          - name: JQL_QUERY
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+          - name: JQL_QUERY
+            value: '{{ inputs.parameters.JQL_QUERY }}'
+
+    - name: issue-transition-status
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'issue_transition'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+          - name: VERBOSE
+            default: 'false'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: jira_issue_source_field
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+          - name: VERBOSE
+            value: '{{ inputs.parameters.VERBOSE }}'
+
+    - name: issue-transition-status-and-update
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'task'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: ACTION
+            default: 'issue_transition_and_update'
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+          - name: VERBOSE
+            default: 'false'
+          - name: ISSUE_DESCRIPTION
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: alpine #edit
+        command: #edit
+          - echo {{ inputs.parameters.TEXT }}
+        env:
+          - name: jira_base_url
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: jira_username
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: jira_api_key
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: action
+            value: '{{ inputs.parameters.ACTION }}'
+          - name: jira_issue_source_field
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+          - name: VERBOSE
+            value: '{{ inputs.parameters.VERBOSE }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
