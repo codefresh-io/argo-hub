@@ -15,6 +15,10 @@ metadata:
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/csdp-icon.svg"
     argo-hub/icon_background: "#142E48"
 spec:
+  dnsConfig:
+    options:
+     - name: ndots
+       value: "1"
   templates:
     - name: image-enricher-git-info
       serviceAccountName: argo-hub.codefresh-csdp.0.0.6
