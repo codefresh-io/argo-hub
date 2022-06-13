@@ -6,10 +6,10 @@ Templates for doing GitOps-style promotions of microservices from one K8s enviro
 
 ## Templates
 
-1. [promote-from-src-to-dest-env](./docs/promote-from-src-to-dest-env.md)
-1. [promote-from-src-to-dest-env-s3](./docs/promote-from-src-to-dest-env-s3.md)
-1. [promote-to-env](./docs/promote-to-env.md)
-1. [promote-to-env-s3](./docs/promote-to-env-s3.md)
+1. [promote-from-src-to-dest-env](https://github.com/codefresh-io/argo-hub/blob/main/workflows/gitops-promotion/versions/0.0.1/docs/promote-from-src-to-dest-env.md)
+1. [promote-from-src-to-dest-env-s3](https://github.com/codefresh-io/argo-hub/blob/main/workflows/gitops-promotion/versions/0.0.1/docs/promote-from-src-to-dest-env-s3.md)
+1. [promote-to-env](https://github.com/codefresh-io/argo-hub/blob/main/workflows/gitops-promotion/versions/0.0.1/docs/promote-to-env.md)
+1. [promote-to-env-s3](https://github.com/codefresh-io/argo-hub/blob/main/workflows/gitops-promotion/versions/0.0.1/docs/promote-to-env-s3.md)
 
 ## Security
 
