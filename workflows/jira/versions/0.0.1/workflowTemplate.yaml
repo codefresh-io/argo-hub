@@ -50,7 +50,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -107,7 +107,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -173,7 +173,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -243,7 +243,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -311,7 +311,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -373,7 +373,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -429,7 +429,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -487,7 +487,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
@@ -549,7 +549,7 @@ spec:
         image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
-          - /jira/jira-issue-manager.py
+          - /jira/jira_issue_manager.py
         env:
           - name: JIRA_BASE_URL
             value: '{{ inputs.parameters.JIRA_BASE_URL }}'
