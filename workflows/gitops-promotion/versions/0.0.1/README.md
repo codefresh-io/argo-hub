@@ -2,7 +2,9 @@
 
 ## Summary
 
-Templates for doing GitOps-style promotions of microservices from one K8s environment to another. Assumes that you have a GitOps monorepo containing subdirectories that represent environments, each of which contains the manifests for deploying that environment to a K8s cluster. Supported manifest types include Kustomize, Helm Charts, and raw YAML files.
+Templates for doing GitOps-style promotions of microservices from one K8s environment to another. Assumes that you have a GitOps monorepo containing subdirectories that represent environments, each of which contains the manifests for deploying that environment to a K8s cluster.
+
+Supported manifest types include **Kustomize**, **Helm Charts**, and **raw YAML** files.
 
 ## Templates
 
@@ -15,4 +17,4 @@ Templates for doing GitOps-style promotions of microservices from one K8s enviro
 
 Minimal required permissions
 
-[Full rbac permissions list](./rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/gitops-promotion/versions/0.0.1/rbac.yaml)

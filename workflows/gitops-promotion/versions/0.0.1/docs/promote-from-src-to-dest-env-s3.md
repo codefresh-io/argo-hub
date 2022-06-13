@@ -15,12 +15,10 @@ kubectl create secret generic git-auth --namespace my-runtime \
 
 ## Inputs/Outputs
 
-### Inputs
-
-#### Artifacts
+### Inputs - Artifacts
 * repo - S3 artfact with a clone of the GitOps repo. See [clone-s3](https://codefresh.io/argohub/workflow-template/git).
-#### Parameters
-###### GitOps repo
+### Inputs - Parameters
+##### GitOps repo
 * **git-repo-url** (required) - HTTP URL of your GitOps repo, for example: `https://github.com/example-account/example-gitops-repo.git`.
 * **git-auth-secret** (required) - Name of a secret with the following keys: `token`, `username`, `email`.
 * **git-checkout-branch** (optional) - Branch for changes. Default is main. Specify a different branch if you'll be creating a PR.
@@ -29,12 +27,14 @@ kubectl create secret generic git-auth --namespace my-runtime \
 * **create-github-pr** (optional) - Set to `true` (and **git-checkout-branch** to non-main) to create a PR. Default is `false`
 * **pr-title** (optional) - Title for the PR. Default is to use the commit message.
 * **output-artifact-key** (optional) - Key to which the updated Git repo S3 artifact will be pushed. Default is `{{ workflow.name }}/git-repo`
-###### Strings to replace within the source/dest patterns
+
+##### Strings to replace within the source/dest patterns
 * **env-src** (required) - Replaces `[[ENV]]` in source paths.
 * **env-dest** (required) -  Replaces `[[ENV]]` in destination paths.
 * **svc-name-list** (required) - Space-separated list of microservices to promote. Each one replaces `[[SVC_NAME]]` in paths.
 * **other** (optional) - Replaces `[[OTHER]]` in all paths.
-###### Source/dest patterns, where `[[ENV]]` differentiates btw source and dest
+
+##### Source/dest patterns, where `[[ENV]]` differentiates btw source and dest
 * **file-path-pattern** (required) - Path to the source/destination YAML file.
   * kustomization.yaml example: `k8s-resources/[[SVC_NAME]]/overlays/[[ENV]]/kustomization.yaml`
   * Helm values.yaml example: `k8s-resources/[[ENV]]/[[SVC_NAME]]/values.yaml`
@@ -43,16 +43,17 @@ kubectl create secret generic git-auth --namespace my-runtime \
 * **yaml-key-pattern** (optional) - For `helm-value` and `yaml-key` - YAML key pattern within values.yaml to copy from source to dest. Default is `.[[SVC_NAME]].image.tag`
 * **helm-dep-pattern** (required) - For `helm-dependency` - name of the subchart/dependency to copy from source to dest. Default is `[[SVC_NAME]]`
 
-### Outputs
-#### Artifacts
+### Outputs - Artifacts
 * **repo** - S3 artifact containing the updated git clone repository, with the new commit and optional branch.
-#### Parameters
+### Outputs - Parameters
 * **codefresh-io-pr-url** - URL of the PR, if one was created.
 
 
 ## Examples
 
-### Kustomize Example - promote 2 images from dev to stage
+<details>
+  <summary>Kustomize Example - promote 2 images from dev to stage</summary>
+
 ```
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -105,8 +106,11 @@ spec:
                 - name: kust-image-pattern
                   value: "[[SVC_NAME]]"
 ```
+</details>
 
-### Helm Dependency Example - promote 2 subcharts from dev to stage
+<details>
+  <summary>Helm Dependency Example - promote 2 subcharts from dev to stage</summary>
+
 ```
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -159,8 +163,11 @@ spec:
                 - name: helm-dep-pattern
                   value: "[[SVC_NAME]]"
 ```
+</details>
 
-### Helm values.yaml Example - full promotion pipeline (dev, staging, prod) with PR to gate prod
+<details>
+  <summary>Helm values.yaml Example - full promotion pipeline (dev, staging, prod) with PR to gate prod</summary>
+
 ```
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -286,8 +293,11 @@ spec:
             valueFrom:
               path: /tmp/create-pr.txt
 ```
+</details>
 
-### Simple deployment.yaml Example - promote an image from dev to stage
+<details>
+  <summary>Simple deployment.yaml Example - promote an image from dev to stage</summary>
+
 ```
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -340,3 +350,7 @@ spec:
                 - name: yaml-key-pattern
                   value: ".spec.template.spec.containers.0.image"
 ```
+</details>
+
+<br/>
+<br/>
