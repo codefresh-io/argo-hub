@@ -4,7 +4,7 @@ metadata:
   name: argo-hub.gitops-promotion.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
-    argo-hub/description: 'Templates to promote microservices between K8s environments within your GitOps monorepo'
+    argo-hub/description: 'Templates for GitOps-style K8s microservice promotions'
     argo-hub/categories: 'gitops,git,utilities,deployment'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Ted Spinks'
