@@ -11,10 +11,10 @@ A set of templates to manage Jira issues
 3. [create issue](./docs/jira-create-issue.md) 
 4. [update issue](./docs/jira-update-issue.md) 
 5. [update issues from JQL](./docs/jira-update-all-from-jql.md) 
-4. [verify issue status](./docs/jira-verify-status.md) 
-4. [verify issue status from JQL](./docs/jira-verify-status-from-jql.md) 
-4. [issue transition status](./docs/jira-issue-transition-status.md) 
-4. [issue transition status and update](./docs/jira-issue-transition-status-and-update.md) 
+6. [verify issue status](./docs/jira-verify-status.md) 
+7. [verify issue status from JQL](./docs/jira-verify-status-from-jql.md) 
+8. [issue transition status](./docs/jira-issue-transition-status.md) 
+9. [issue transition status and update](./docs/jira-issue-transition-status-and-update.md) 
 
 
 ## Security
