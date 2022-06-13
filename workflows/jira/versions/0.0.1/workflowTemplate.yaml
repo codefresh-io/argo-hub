@@ -44,6 +44,11 @@ spec:
             default: ''
           - name: JIRA_USERNAME_SECRET_KEY
             default: 'username'
+      outputs:
+        parameters:
+          - name: JIRA_COMMENT_ID
+            valueFrom:
+              path: /tmp/JIRA_COMMENT_ID
       container:
         name: main
         imagePullPolicy: Always
@@ -167,6 +172,14 @@ spec:
             default: ''
           - name: ISSUE_TYPE
             default: ''
+      outputs:
+        parameters:
+          - name: JIRA_ISSUE_ID
+            valueFrom:
+              path: /tmp/JIRA_ISSUE_ID
+          - name: main_CF_OUTPUT_URL
+            valueFrom:
+              path: main_CF_OUTPUT_URL
       container:
         name: main
         imagePullPolicy: Always
