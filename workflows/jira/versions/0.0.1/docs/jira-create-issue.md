@@ -38,7 +38,7 @@ spec:
             -   name: create-issue
                 templateref:
                     name: argo-hub.jira.0.0.1
-                    template: create-comment
+                    template: create-issue
                 arguments:
                     parameters:
                     -   name: JIRA_BASE_URL
