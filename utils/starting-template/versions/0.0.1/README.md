@@ -12,4 +12,4 @@ description
 
 Minimal required permissions
 
-[Full rbac permissions list](./rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/starting-template/versions/0.0.1/rbac.yaml)
