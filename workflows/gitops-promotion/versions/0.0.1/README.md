@@ -2,7 +2,7 @@
 
 ## Summary
 
-Templates for doing GitOps-style promotions of microservices from one K8s environment to another. Assumes that you have a GitOps monorepo containing subdirectories that represent environments, each of which contains the manifests for deploying that environment to a K8s cluster.
+Templates for doing GitOps-style promotions of microservices from one K8s environment to another. Assumes that you have a GitOps monorepo containing subdirectories that represent environments, where each subdirectory contains the manifests for deploying that environment to a K8s cluster.
 
 Supported manifest types include **Kustomize**, **Helm Charts**, and **raw YAML** files.
 

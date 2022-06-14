@@ -1,7 +1,9 @@
 # promote-from-src-to-dest-env
 
 ## Summary
-Clone a GitOps repo and copy an image or chart value from a YAML file in one environment/directory to a corresponding file in another. Optionally create a PR to gate the change.
+Clone a GitOps repo and copy an image or chart value from a YAML file in one environment/directory to a corresponding YAML file in another.
+
+Optionally create a PR to gate the change.
 
 ## Requirements
 #### Kubernetes secret with Git authentication details
