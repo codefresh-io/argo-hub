@@ -31,7 +31,7 @@ spec:
         parameters:
           # required
           - name: JIRA_API_KEY
-          - name: JIRA_BASE_URL 
+          - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
           - name: COMMENT_BODY
@@ -174,7 +174,9 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+#        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/lrochette/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+
         command:
           - python
           - /jira/jira_issue_manager.py
