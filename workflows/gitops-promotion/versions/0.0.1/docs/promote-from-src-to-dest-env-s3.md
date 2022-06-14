@@ -1,7 +1,9 @@
 # promote-from-src-to-dest-env-s3
 
 ## Summary
-Take a cloned GitOps repo from an S3 artifact and copy an image/chart value from a YAML file in one environment/directory to a corresponding file in another. Optionally create a PR to gate the change.
+Take a cloned GitOps repo from an S3 artifact and copy an image or chart value from a YAML file in one environment/directory to a corresponding YAML file in another.
+
+Optionally create a PR to gate the change.
 
 ## Requirements
 #### Kubernetes secret with Git authentication details
@@ -17,6 +19,7 @@ kubectl create secret generic git-auth --namespace my-runtime \
 
 ### Inputs - Artifacts
 * repo - S3 artfact with a clone of the GitOps repo. See [clone-s3](https://codefresh.io/argohub/workflow-template/git).
+
 ### Inputs - Parameters
 ##### GitOps repo
 * **git-repo-url** (required) - HTTP URL of your GitOps repo, for example: `https://github.com/example-account/example-gitops-repo.git`.
