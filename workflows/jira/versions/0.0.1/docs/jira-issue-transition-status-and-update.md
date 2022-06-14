@@ -6,7 +6,6 @@ Transition the Issue status and update a single item
 ## Inputs/Outputs
 
 ### Inputs
-* ACTION (optional) - Specifies the type of action to perform against your Jira instance - please see the examples and readme
 * JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
 * JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
 * JIRA_BASE_URL (required) - Jira base url
@@ -52,8 +51,6 @@ spec:
                         value: 'api-key'
                     -   name: JIRA_ISSUE_SOURCE_FIELD
                         value: Jira issue ID or key source field
-                    -   name: ACTION
-                        value: issue_transition_and_update
                     -   name: DESIRED_ISSUE_STATUS
                         value: Blocked
                     -   name: VERBOSE

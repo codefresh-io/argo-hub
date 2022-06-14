@@ -6,7 +6,6 @@ Create comment on Jira
 ## Inputs/Outputs
 
 ### Inputs
-* ACTION (optional) - Specifies the type of action to perform against your Jira instance - please see the examples and readme
 * COMMENT_BODY (optional) - Text to add to the comment
 * JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
 * JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
@@ -16,7 +15,7 @@ Create comment on Jira
 * JIRA_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira username. Default is 'username'
 
 ### Outputs
-no outputs
+* JIRA_COMMENT_ID - Jira comment ID to update a comment
 
 ## Examples
 
@@ -50,8 +49,6 @@ spec:
                         value: 'api-key'
                     -   name: JIRA_ISSUE_SOURCE_FIELD
                         value: Jira issue ID or key source field
-                    -   name: ACTION
-                        value: comment_create
                     -   name: COMMENT_BODY
                         value: Test from codefresh pipeline
 ```

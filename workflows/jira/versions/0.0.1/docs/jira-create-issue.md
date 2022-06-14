@@ -6,7 +6,6 @@ Create issue on Jira
 ## Inputs/Outputs
 
 ### Inputs
-* ACTION (optional) - Specifies the type of action to perform against your Jira instance - please see the examples and readme
 * JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
 * JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
 * JIRA_BASE_URL (required) - Jira base url
@@ -20,7 +19,7 @@ Create issue on Jira
 * ISSUE_TYPE (optional) - Jira issue type: Task, Bug, etc
 
 ### Outputs
-no outputs
+* JIRA_ISSUE_SOURCE_FIELD - Jira issue ID or key source field
 
 ## Examples
 
@@ -52,8 +51,6 @@ spec:
                         value: 'jira-creds'
                     -   name: JIRA_API_KEY_SECRET_KEY
                         value: 'api-key'
-                    -   name: ACTION
-                        value: issue_create
                     -   name: ISSUE_PROJECT
                         value: SA
                     -   name: ISSUE_SUMMARY

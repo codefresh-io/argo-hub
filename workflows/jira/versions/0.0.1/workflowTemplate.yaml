@@ -31,11 +31,9 @@ spec:
         parameters:
           # required
           - name: JIRA_API_KEY
-          - name: JIRA_BASE_URL
+          - name: JIRA_BASE_URL 
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'comment_create'
           - name: COMMENT_BODY
             default: ''
           - name: JIRA_API_KEY_SECRET_KEY
@@ -70,7 +68,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'comment_create'
           - name: COMMENT_BODY
             value: '{{ inputs.parameters.COMMENT_BODY }}'
           - name: JIRA_ISSUE_SOURCE_FIELD
@@ -96,8 +94,6 @@ spec:
           - name: JIRA_USERNAME
           - name: JIRA_COMMENT_ID
           # optional
-          - name: ACTION
-            default: 'comment_update'
           - name: COMMENT_BODY
             default: ''
           - name: JIRA_API_KEY_SECRET_KEY
@@ -127,7 +123,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'comment_update'
           - name: COMMENT_BODY
             value: '{{ inputs.parameters.COMMENT_BODY }}'
           - name: JIRA_ISSUE_SOURCE_FIELD
@@ -154,8 +150,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'issue_create'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_USERNAME_SECRET_KEY
@@ -198,7 +192,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'issue_create'
           - name: ISSUE_PROJECT
             value: '{{ inputs.parameters.ISSUE_PROJECT }}'
           - name: ISSUE_SUMMARY
@@ -231,8 +225,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'issue_update'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_ISSUE_SOURCE_FIELD
@@ -268,7 +260,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'issue_update'
           - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: ISSUE_SUMMARY
@@ -299,8 +291,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'update_all_from_jql_query'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_USERNAME_SECRET_KEY
@@ -336,7 +326,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'update_all_from_jql_query'
           - name: ISSUE_DESCRIPTION
             value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
           - name: ISSUE_COMPONENTS
@@ -367,8 +357,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'verify_status'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_USERNAME_SECRET_KEY
@@ -398,7 +386,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'verify_status'
           - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: DESIRED_ISSUE_STATUS
@@ -423,8 +411,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'verify_status'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_USERNAME_SECRET_KEY
@@ -454,7 +440,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'verify_status'
           - name: DESIRED_ISSUE_STATUS
             value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
           - name: JQL_QUERY
@@ -479,8 +465,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'issue_transition'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_USERNAME_SECRET_KEY
@@ -512,7 +496,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'issue_transition'
           - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: DESIRED_ISSUE_STATUS
@@ -539,8 +523,6 @@ spec:
           - name: JIRA_BASE_URL
           - name: JIRA_USERNAME
           # optional
-          - name: ACTION
-            default: 'issue_transition_and_update'
           - name: JIRA_API_KEY_SECRET_KEY
             default: 'api-key'
           - name: JIRA_USERNAME_SECRET_KEY
@@ -574,7 +556,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_KEY }}'
                 key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
           - name: ACTION
-            value: '{{ inputs.parameters.ACTION }}'
+            value: 'issue_transition_and_update'
           - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: DESIRED_ISSUE_STATUS
