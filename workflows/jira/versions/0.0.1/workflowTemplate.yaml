@@ -175,7 +175,7 @@ spec:
         name: main
         imagePullPolicy: Always
 #        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
-        image: quay.io/lrochette/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/lrochette/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:alpine316
 
         command:
           - python
