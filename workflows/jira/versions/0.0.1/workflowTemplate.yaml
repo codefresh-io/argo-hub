@@ -129,7 +129,7 @@ spec:
           - name: JIRA_ISSUE_SOURCE_FIELD
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
           - name: JIRA_COMMENT_ID
-            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+            value: '{{ inputs.parameters.JIRA_COMMENT_ID }}'
 
     - name: create-issue
       serviceAccountName: argo-hub.jira.0.0.1
