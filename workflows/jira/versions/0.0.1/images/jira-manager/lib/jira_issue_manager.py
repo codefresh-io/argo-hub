@@ -209,7 +209,7 @@ def create_issue(jira, current_environment):
         created_issue = jira.create_issue(new_issue_dict)
         print("Jira issue " + str(created_issue) + " created")
         StepUtility.export_variable("JIRA_ISSUE_SOURCE_FIELD", created_issue)
-        StepUtility.export_variable("main_CF_OUTPUT_URL", str(current_environment.jira_base_url) + "/browse/" + str(created_issue))
+        StepUtility.export_variable("JIRA_ISSUE_URL", str(current_environment.jira_base_url) + "/browse/" + str(created_issue))
     except Exception as exc:
         StepUtility.printCleanException(exc)
         StepUtility.printFail("Exiting Step - Failed to create issue")
