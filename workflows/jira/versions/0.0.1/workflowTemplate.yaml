@@ -19,7 +19,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Create comment on Jira'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -78,7 +78,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Update comment on Jira'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -135,7 +135,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Create issue on Jira'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -211,7 +211,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Update issue on Jira'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -277,7 +277,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Update all issues on Jira from JQL'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -343,7 +343,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Verify Issue Status on Single Issue'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -397,7 +397,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Verify Issue Status on Issues from JQL Query'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -451,7 +451,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Transition the Issue status on a single item'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
@@ -509,7 +509,7 @@ spec:
       serviceAccountName: argo-hub.jira.0.0.1
       metadata:
         annotations:
-          argo-hub-template/description: 'task'
+          argo-hub-template/description: 'Transition the Issue status and update a single item'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/starting-template/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
