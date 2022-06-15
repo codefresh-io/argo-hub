@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.png"
+    argo-hub/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
     argo-hub/icon-background: "#81D4FA"
 spec:
   templates:
