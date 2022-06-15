@@ -34,10 +34,10 @@ spec:
     -   name: main
         dag:
             tasks:
-            -   name: create-issue
+            -   name: update-issue
                 templateref:
                     name: argo-hub.jira.0.0.1
-                    template: create-comment
+                    template: update-issue
                 arguments:
                     parameters:
                     -   name: JIRA_BASE_URL
