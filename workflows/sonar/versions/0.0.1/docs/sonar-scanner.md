@@ -9,8 +9,8 @@ Clones project and invokes scan using Sonarqube, step is not compatible with C/C
 * SONAR_HOST_URL - the server URL
 * SONAR_LOGIN (required) - The Kubernetes secret with the Sonar login token
 * SONAR_LOGIN_SECRET_KEY (optional) - The key in the Kubernetes secret with the Sonar login token. Default is 'token'
-* REPO_URL (required) - Git repo to be run containing sonar-project.properties
-* GIT_TOKEN (required) - the k8s secret name that contains a key named token with the git secret inside it
+* REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
+* GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
 
 ### Outputs
 no outputs
@@ -42,7 +42,7 @@ spec:
                 outputs:
                     artifacts:
                     -   name: repo
-                        path: /CSDP/sonar
+                        path: /tmp/sonar
             -   name: sonar-scanner
                 templateref:
                     name: argo-hub.sonar.0.0.1
@@ -56,5 +56,5 @@ spec:
                     -   name: SONAR_LOGIN_SECRET_KEY
                         value: 'token'
                     -   name: YOUR_REPO
-                        value: '/CSDP/sonar/'
+                        value: '/tmp/sonar/'
 ```
