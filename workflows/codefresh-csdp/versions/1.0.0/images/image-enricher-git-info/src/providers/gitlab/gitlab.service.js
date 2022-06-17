@@ -22,7 +22,7 @@ class GitlabService {
         try {
             const gitlabBranch = await gitlabApi.getBranch(repo, branch)
             return {
-                branch: gitlabBranch.name,
+                name: gitlabBranch.name,
                 commit: gitlabBranch.commit.id,
                 commitMsg: gitlabBranch.commit.message,
                 commitURL: gitlabBranch.commit.web_url || gitlabBranch.web_url,
