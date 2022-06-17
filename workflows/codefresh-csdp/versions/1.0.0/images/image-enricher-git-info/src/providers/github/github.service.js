@@ -23,7 +23,7 @@ class GithubService {
         try {
             const githubBranch = await githubApi.getBranch(repo, branch)
             return {
-                branch: githubBranch.name,
+                name: githubBranch.name,
                 commit: githubBranch.commit.sha,
                 commitMsg: githubBranch.commit.commit.message,
                 commitURL: githubBranch.commit.html_url,
