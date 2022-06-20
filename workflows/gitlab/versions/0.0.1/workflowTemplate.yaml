@@ -152,3 +152,100 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
+
+    - name: extract-webhook-variables
+      serviceAccountName: argo-hub.gitlab.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Parses the GitLab Event Payload (JSON) and output the most useful payload fields as artifact files.'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitlab/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: GITLAB_JSON
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitlab-versions-0.0.1-images-extract-webhook-variables:main
+        command:
+          - node
+          - index.js
+        env:
+          - name: GITLAB_JSON
+            value: '{{ inputs.parameters.GITLAB_JSON }}'
+      outputs:
+        parameters:
+          - name: CF_REPO_OWNER
+            valueFrom:
+              path: /tmp/gitvars/CF_REPO_OWNER
+            globalName: CF_REPO_OWNER
+          - name: CF_REPO_NAME
+            valueFrom:
+              path: /tmp/gitvars/CF_REPO_NAME
+            globalName: CF_REPO_NAME
+          - name: CF_BRANCH
+            valueFrom:
+              path: /tmp/gitvars/CF_BRANCH
+            globalName: CF_BRANCH
+          - name: CF_BASE_BRANCH
+            valueFrom:
+              path: /tmp/gitvars/CF_BASE_BRANCH
+            globalName: CF_BASE_BRANCH
+          - name: CF_COMMIT_AUTHOR
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_AUTHOR
+            globalName: CF_COMMIT_AUTHOR
+          - name: CF_COMMIT_USERNAME
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_USERNAME
+            globalName: CF_COMMIT_USERNAME
+          - name: CF_COMMIT_EMAIL
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_EMAIL
+            globalName: CF_COMMIT_EMAIL
+          - name: CF_COMMIT_URL
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_URL
+            globalName: CF_COMMIT_URL
+          - name: CF_COMMIT_MESSAGE
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_MESSAGE
+            globalName: CF_COMMIT_MESSAGE
+          - name: CF_REVISION
+            valueFrom:
+              path: /tmp/gitvars/CF_REVISION
+            globalName: CF_REVISION
+          - name: CF_SHORT_REVISION
+            valueFrom:
+              path: /tmp/gitvars/CF_SHORT_REVISION
+            globalName: CF_SHORT_REVISION
+          - name: CF_PULL_REQUEST_ACTION
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_ACTION
+            globalName: CF_PULL_REQUEST_ACTION
+          - name: CF_PULL_REQUEST_TARGET
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_TARGET
+            globalName: CF_PULL_REQUEST_TARGET
+          - name: CF_PULL_REQUEST_ID
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_ID
+            globalName: CF_PULL_REQUEST_ID
+          - name: CF_PULL_REQUEST_LABELS
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_LABELS
+            globalName: CF_PULL_REQUEST_LABELS
+          - name: CF_PULL_REQUEST_MERGED
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_MERGED
+            globalName: CF_PULL_REQUEST_MERGED
+          - name: CF_PULL_REQUEST_HEAD_BRANCH
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_BRANCH
+            globalName: CF_PULL_REQUEST_HEAD_BRANCH
+          - name: CF_PULL_REQUEST_MERGED_COMMIT_SHA
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_MERGED_COMMIT_SHA
+            globalName: CF_PULL_REQUEST_MERGED_COMMIT_SHA
+          - name: CF_PULL_REQUEST_HEAD_COMMIT_SHA
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_COMMIT_SHA
+            globalName: CF_PULL_REQUEST_HEAD_COMMIT_SHA
