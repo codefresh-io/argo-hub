@@ -5,14 +5,15 @@ metadata:
   annotations:
     argo-hub/version: '0.0.1'
     argo-hub/description: 'Jira template'
-    argo-hub/categories: 'argo'
+    argo-hub/categories: 'utilities'
     argo-hub/license: 'MIT'
     argo-hub/owner_name: 'Matthew Chung'
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
-    argo-hub/icon-background: "#81D4FA"
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+
 spec:
   templates:
     - name: create-comment
@@ -20,7 +21,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Create comment on Jira'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -50,7 +51,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -79,7 +80,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Update comment on Jira'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -105,7 +106,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -136,7 +137,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Create issue on Jira'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -174,8 +175,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
-#        image: quay.io/lrochette/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:alpine316
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -212,7 +212,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Update issue on Jira'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -243,7 +243,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -278,7 +278,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Update all issues on Jira from JQL'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -309,7 +309,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -344,7 +344,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Verify Issue Status on Single Issue'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -369,7 +369,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -398,7 +398,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Verify Issue Status on Issues from JQL Query'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -423,7 +423,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -452,7 +452,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Transition the Issue status on a single item'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -479,7 +479,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -510,7 +510,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Transition the Issue status and update a single item'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -539,7 +539,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
         command:
           - python
           - /jira/jira_issue_manager.py

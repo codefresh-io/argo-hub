@@ -1,7 +1,17 @@
 # Changelog
 
-## v0.0.1 (?)
+## v0.0.1 6/16/2022
 
-### task
+Intial commit for Jira template in CSDP. 
 
-short description
+Templates include: 
+
+* create comment, 
+* create issue, 
+* issue transition status and update, 
+* issue transition status, 
+* issue verify status from JQL, 
+* issue verify status, 
+* update all from JQL, 
+* update comment, 
+* update issue. 
