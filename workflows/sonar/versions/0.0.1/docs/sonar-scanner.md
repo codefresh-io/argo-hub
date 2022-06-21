@@ -35,15 +35,16 @@ spec:
                     template: clone
                 arguments:
                     parameters:
-                    - name: REPO_URL
+                    -   name: REPO_URL
                         value: 'https://github.com/codefresh-io/argo-hub'
-                    - name: GIT_TOKEN_SECRET
+                    -   name: GIT_TOKEN_SECRET
                         value: 'git-token-name'
                 outputs:
                     artifacts:
                     -   name: repo
                         path: /tmp/sonar
             -   name: sonar-scanner
+                dependencies: [clone-step]
                 templateref:
                     name: argo-hub.sonar.0.0.1
                     template: sonar-scanner
