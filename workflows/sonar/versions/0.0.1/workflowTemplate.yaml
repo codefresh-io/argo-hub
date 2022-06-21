@@ -15,7 +15,7 @@ metadata:
     argo-hub/icon-background: "#81D4FA"
 spec:
   templates:
-    - name: scan
+    - name: sonar-scanner
       serviceAccountName: argo-hub.sonar.0.0.1
       metadata:
         annotations:
