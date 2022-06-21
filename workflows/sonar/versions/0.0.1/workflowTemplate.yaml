@@ -45,7 +45,6 @@ spec:
         image: sonarsource/sonar-scanner-cli
         command:
           - sonar-scanner
-        options:
           - --rm
           - -e SONAR_HOST_URL="http://'{{ inputs.parameters.SONAR_HOST_URL }}'"
           - -e SONAR_LOGIN="'{{ inputs.parameters.SONAR_LOGIN_TOKEN }}'"
