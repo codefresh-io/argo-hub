@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cdp-csdp-matthew-hub
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /webhooks/csdp/sonar
+            backend:
+              service:
+                name: sonar-eventsource-svc
+                port:
+                  number: 80
+            pathType: Prefix
+      host: lrcsdp.support.cf-cd.com

@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: sonar
+spec:
+  eventBusName: codefresh-eventbus
+  service:
+    ports:
+      - port: 80
+  template:
+    serviceAccountName: argo-server
+  github:
+    github-e2955379-1970-4ba9-8b74-8b477a41e7cb:
+      events:
+        - push
+      repositories:
+        - owner: matthewchungcodefresh
+          names:
+            - argo-hub
+      webhook:
+        port: '80'
+        method: POST
+        endpoint: /webhooks/csdp/sonar/github-e2955379-1970-4ba9-8b74-8b477a41e7cb
+        url: https://lrcsdp.support.cf-cd.com
+      active: true
+      insecure: false
+      contentType: json
+      deleteHookOnFinish: true
+      apiToken:
+        name: autopilot-secret
+        key: git_token
