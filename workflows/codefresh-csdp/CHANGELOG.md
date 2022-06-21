@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.2 (21.6.2022)
+
+image-enricher-git-info plugin sends commitDate for each commit
+
 ## v1.0.1 (20.6.2022)
 
 Updated all images to be based on debian distro to avoid DNS issues found on alpine

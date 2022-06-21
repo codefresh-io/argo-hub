@@ -12,7 +12,7 @@ class GithubApi {
         try {
             const apiClient = await this._prepareApiClient()
             const [repoOwner, repoName] = this._getRepoOwnerAndName(repo);
-    
+
             const response = await apiClient.repos.getBranch({
                 owner: repoOwner,
                 repo: repoName,
@@ -87,6 +87,7 @@ class GithubApi {
                     userName,
                     sha: commit.sha,
                     message: commit.commit.message,
+                    commitDate: commit.author.date,
                 })
             }
 
@@ -108,7 +109,7 @@ class GithubApi {
 
     async _prepareApiClient() {
         const { githubApiHost, githubApiPathPrefix, githubToken } = await this._resolveCreds();
-        
+
         const octokit = new Octokit({
             auth: githubToken,
             baseUrl: this._buildRequestUrl(githubApiHost, githubApiPathPrefix)
