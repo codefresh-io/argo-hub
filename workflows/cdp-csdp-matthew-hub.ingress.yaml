@@ -7,10 +7,10 @@ spec:
   rules:
     - http:
         paths:
-          - path: /webhooks/csdp/testing
+          - path: /webhooks/csdp/testing-2
             backend:
               service:
-                name: testing-eventsource-svc
+                name: testing-2-eventsource-svc
                 port:
                   number: 80
             pathType: Prefix
