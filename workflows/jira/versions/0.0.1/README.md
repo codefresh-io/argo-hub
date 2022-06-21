@@ -6,6 +6,7 @@ A set of templates to manage Jira issues
 
 ## Templates
 
+
 1. [create comment](https://github.com/codefresh-io/argo-hub@main/workflows/jira/versions/0.0.1/docs/jira-create-comment.md) 
 2. [update comment](https://github.com/codefresh-io/argo-hub@main/workflows/jira/versions/0.0.1/docs/jira-update-comment.md) 
 3. [create issue](https://github.com/codefresh-io/argo-hub@main/workflows/jira/versions/0.0.1/docs/jira-create-issue.md) 
@@ -17,8 +18,11 @@ A set of templates to manage Jira issues
 9. [issue transition status and update](https://github.com/codefresh-io/argo-hub@main/workflows/jira/versions/0.0.1/docs/jira-issue-transition-status-and-update.md) 
 
 
+
 ## Security
 
 Minimal required permissions
 
+
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub@main/workflows/jira/versions/0.0.1/rbac.yaml)
+
