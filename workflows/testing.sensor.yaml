@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: testing
+spec:
+  template:
+    serviceAccountName: argo-server
+  eventBusName: codefresh-eventbus
+  dependencies:
+    - name: github-f2d7f064-4c84-4606-8dc8-97bbb9c9ec72
+      eventName: github-f2d7f064-4c84-4606-8dc8-97bbb9c9ec72
+      eventSourceName: testing
+      filters:
+        data:
+          - path: body.X-GitHub-Event
+            value:
+              - push
+            type: string
+          - path: body.ref
+            template: '{{ (split "/" .Input)._1 }}'
+            value:
+              - heads
+            type: string
+  triggers:
+    - template:
+        name: test
+        conditions: github-f2d7f064-4c84-4606-8dc8-97bbb9c9ec72
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: WorkflowTemplate
+              metadata:
+                generateName: testing-test-
+              spec:
+                workflowTemplateRef:
+                  name: argo-hub.ci-simple.0.0.1
+          parameters: []
