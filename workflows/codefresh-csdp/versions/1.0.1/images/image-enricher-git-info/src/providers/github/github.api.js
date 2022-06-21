@@ -87,7 +87,7 @@ class GithubApi {
                     userName,
                     sha: commit.sha,
                     message: commit.commit.message,
-                    commitDate: commit.author.date,
+                    commitDate: commit.commit.author.date,
                 })
             }
 
