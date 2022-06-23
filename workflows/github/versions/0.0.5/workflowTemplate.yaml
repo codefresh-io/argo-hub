@@ -1,0 +1,321 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.github.0.0.5
+  annotations:
+    argo-hub/version: '0.0.5'
+    argo-hub/description: 'Templates that execute operations against GitHub'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Itai Gendler'
+    argo-hub/owner_email: 'itai@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    argo-hub/owner_url: 'https://github.com/itai-codefresh'
+    argo-hub/categories: 'git'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  templates:
+    - name: commit-status
+      serviceAccountName: argo-hub.github.0.0.5
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Report a commit status check'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: BUILD_BASE_URL
+          - name: REPO_OWNER
+          - name: REPO_NAME
+          - name: REVISION
+          - name: STATE
+          - name: CONTEXT
+          - name: DESCRIPTION
+          - name: GITHUB_TOKEN_SECRET
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-commit-status:main
+        command:
+          - node
+          - index.js
+        env:
+          - name: CF_BUILD_ID
+            value: '{{ workflow.name }}'
+          - name: CF_BUILD_BASE_URL
+            value: '{{ inputs.parameters.BUILD_BASE_URL }}'
+          - name: CF_REPO_OWNER
+            value: '{{ inputs.parameters.REPO_OWNER }}'
+          - name: CF_REPO_NAME
+            value: '{{ inputs.parameters.REPO_NAME }}'
+          - name: CF_REVISION
+            value: '{{ inputs.parameters.REVISION }}'
+          - name: STATE
+            value: '{{ inputs.parameters.STATE }}'
+          - name: CONTEXT
+            value: '{{ inputs.parameters.CONTEXT }}'
+          - name: DESCRIPTION
+            value: '{{ inputs.parameters.DESCRIPTION }}'
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
+                key: token
+
+    - name: create-pr
+      serviceAccountName: argo-hub.github.0.0.5
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create a pull request'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        artifacts:
+          - name: repo
+            path: /code
+        parameters:
+          - name: BRANCH
+          - name: MESSAGE
+          - name: PR_TEMPLATE
+          - name: GITHUB_TOKEN_SECRET
+      script:
+        workingDir: '{{ inputs.artifacts.repo.path }}'
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr:main
+        command: [sh]
+        source: |
+          git checkout {{inputs.parameters.BRANCH}}
+          export EXISTING_PR=$(hub pr list -b main -h {{ inputs.parameters.BRANCH }} -s open -f %I)
+          if [ -z $EXISTING_PR ] ; then hub pull-request --base main --head {{ inputs.parameters.BRANCH }} -m {{ inputs.parameters.MESSAGE }} --no-edit -m "$(curl {{ inputs.parameters.PR_TEMPLATE }} )" ; else echo "Pull request already exists"; fi;
+        env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
+                key: token
+
+    - name: create-pr-comment
+      serviceAccountName: argo-hub.github.0.0.5
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create a pull request comment'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: REPO_OWNER
+          - name: REPO_NAME
+          - name: PR_COMMENT
+          - name: PULL_REQUEST_NUMBER
+          - name: GITHUB_TOKEN_SECRET
+            default: 'github-token'
+          - name: GITHUB_TOKEN_SECRET_KEY
+            default: 'token'
+          # https://cli.github.com/manual/gh_help_environment
+          - name: GH_HOST
+            default: 'github.com'
+      script:
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr-comment:main
+        command: [sh]
+        source: |
+          gh pr --repo {{ inputs.parameters.REPO_OWNER }}/{{ inputs.parameters.REPO_NAME }} \
+            comment {{ inputs.parameters.PULL_REQUEST_NUMBER }} \
+            --body "{{ inputs.parameters.PR_COMMENT }}"
+        env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
+                key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
+
+    - name: extract-webhook-variables
+      serviceAccountName: argo-hub.github.0.0.5
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Parses the GitHub Event Payload (JSON) and output the most useful payload fields as artifact files.'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+        - name: GITHUB_JSON
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-extract-webhook-variables:main
+        command: ["python3"]
+        args: ["/parse_github_payload.py"]
+        env:
+        - name: GITHUB_JSON
+          value: '{{ inputs.parameters.GITHUB_JSON }}'
+      outputs:
+        parameters:
+        - name: CF_REPO_OWNER
+          valueFrom:
+            path: /tmp/gitvars/CF_REPO_OWNER
+          globalName: CF_REPO_OWNER
+        - name: CF_REPO_NAME
+          valueFrom:
+            path: /tmp/gitvars/CF_REPO_NAME
+          globalName: CF_REPO_NAME
+        - name: CF_BRANCH
+          valueFrom:
+            path: /tmp/gitvars/CF_BRANCH
+          globalName: CF_BRANCH
+        - name: CF_BASE_BRANCH
+          valueFrom:
+            path: /tmp/gitvars/CF_BASE_BRANCH
+          globalName: CF_BASE_BRANCH
+        - name: CF_COMMIT_AUTHOR
+          valueFrom:
+            path: /tmp/gitvars/CF_COMMIT_AUTHOR
+          globalName: CF_COMMIT_AUTHOR
+        - name: CF_COMMIT_USERNAME
+          valueFrom:
+            path: /tmp/gitvars/CF_COMMIT_USERNAME
+          globalName: CF_COMMIT_USERNAME
+        - name: CF_COMMIT_EMAIL
+          valueFrom:
+            path: /tmp/gitvars/CF_COMMIT_EMAIL
+          globalName: CF_COMMIT_EMAIL
+        - name: CF_COMMIT_URL
+          valueFrom:
+            path: /tmp/gitvars/CF_COMMIT_URL
+          globalName: CF_COMMIT_URL
+        - name: CF_COMMIT_MESSAGE
+          valueFrom:
+            path: /tmp/gitvars/CF_COMMIT_MESSAGE
+          globalName: CF_COMMIT_MESSAGE
+        - name: CF_REVISION
+          valueFrom:
+            path: /tmp/gitvars/CF_REVISION
+          globalName: CF_REVISION
+        - name: CF_SHORT_REVISION
+          valueFrom:
+            path: /tmp/gitvars/CF_SHORT_REVISION
+          globalName: CF_SHORT_REVISION
+        - name: CF_PULL_REQUEST_ACTION
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_ACTION
+          globalName: CF_PULL_REQUEST_ACTION
+        - name: CF_PULL_REQUEST_TARGET
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_TARGET
+          globalName: CF_PULL_REQUEST_TARGET
+        - name: CF_PULL_REQUEST_NUMBER
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_NUMBER
+          globalName: CF_PULL_REQUEST_NUMBER
+        - name: CF_PULL_REQUEST_ID
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_ID
+          globalName: CF_PULL_REQUEST_ID
+        - name: CF_PULL_REQUEST_LABELS
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_LABELS
+          globalName: CF_PULL_REQUEST_LABELS
+        - name: CF_RELEASE_NAME
+          valueFrom:
+            path: /tmp/gitvars/CF_RELEASE_NAME
+          globalName: CF_RELEASE_NAME
+        - name: CF_RELEASE_TAG
+          valueFrom:
+            path: /tmp/gitvars/CF_RELEASE_TAG
+          globalName: CF_RELEASE_TAG
+        - name: CF_RELEASE_ID
+          valueFrom:
+            path: /tmp/gitvars/CF_RELEASE_ID
+          globalName: CF_RELEASE_ID
+        - name: CF_PRERELEASE_FLAG
+          valueFrom:
+            path: /tmp/gitvars/CF_PRERELEASE_FLAG
+          globalName: CF_PRERELEASE_FLAG
+        - name: CF_PULL_REQUEST_MERGED
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_MERGED
+          globalName: CF_PULL_REQUEST_MERGED
+        - name: CF_PULL_REQUEST_HEAD_BRANCH
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_BRANCH
+          globalName: CF_PULL_REQUEST_HEAD_BRANCH
+        - name: CF_PULL_REQUEST_MERGED_COMMIT_SHA
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_MERGED_COMMIT_SHA
+          globalName: CF_PULL_REQUEST_MERGED_COMMIT_SHA
+        - name: CF_PULL_REQUEST_HEAD_COMMIT_SHA
+          valueFrom:
+            path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_COMMIT_SHA
+          globalName: CF_PULL_REQUEST_HEAD_COMMIT_SHA
+
+    - name: create-pr-codefresh
+      serviceAccountName: argo-hub.github.0.0.5
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create git pull request and add a reference to the parent workflow as a label'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      outputs:
+        parameters:
+          - name: codefresh-io-pr-url
+            valueFrom:
+              path: /tmp/output.txt
+      inputs:
+        parameters:
+          - name: GITHUB_HOST
+            default: 'github.com'
+          - name: GITHUB_API
+            default: ''
+          - name: GITHUB_API_PATH_PREFIX
+            default: ''
+          - name: GITHUB_TOKEN_SECRET
+            default: ''
+          - name: GITHUB_TOKEN_SECRET_KEY
+            default: ''
+          - name: OWNER
+            default: ''
+          - name: REPO
+            default: ''
+          - name: TITLE
+            default: ''
+          - name: HEAD
+            default: ''
+          - name: BASE
+            default: ''
+
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr-codefresh:main
+        command:
+          - yarn
+          - start
+        env:
+          - name: GITHUB_HOST
+            value: '{{ inputs.parameters.GITHUB_HOST }}'
+          - name: GITHUB_API
+            value: '{{ inputs.parameters.GITHUB_API }}'
+          - name: GITHUB_API_PATH_PREFIX
+            value: '{{ inputs.parameters.GITHUB_API_PATH_PREFIX }}'
+          - name: OWNER
+            value: '{{ inputs.parameters.OWNER }}'
+          - name: REPO
+            value: '{{ inputs.parameters.REPO }}'
+          - name: TITLE
+            value: '{{ inputs.parameters.TITLE }}'
+          - name: HEAD
+            value: '{{ inputs.parameters.HEAD }}'
+          - name: BASE
+            value: '{{ inputs.parameters.BASE }}'
+          - name: PR_WORKFLOW
+            value: '{{ workflow.uid }}'
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
+                optional: true
+                key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
+          - name: OUTPUT_FILE_PATH
+            value: /tmp/output.txt

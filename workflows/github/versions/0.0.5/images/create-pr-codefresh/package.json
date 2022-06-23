@@ -1,0 +1,60 @@
+{
+    "name": "git-pr-enricher",
+    "version": "1.0.0",
+    "private": true,
+    "license": "MIT",
+    "main": "dist/index.js",
+    "files": [
+        "dist/**/*",
+        "*.md"
+    ],
+    "scripts": {
+        "start:dev": "tsc -w",
+        "prebuild": "rm -rf dist",
+        "build": "tsc",
+        "start": "node dist/main.js",
+        "lint": "eslint \"**/*.ts\" --fix",
+        "test": "jest --passWithNoTests",
+        "test:watch": "jest --watch",
+        "test:cov": "jest --coverage --passWithNoTests",
+        "generate": "ts-node src/types/generate.ts"
+    },
+    "dependencies": {
+        "@octokit/rest": "^18.12.0",
+        "@octokit/types": "^6.34.0",
+        "@types/bluebird": "^3.5.36",
+        "@types/jest": "^26.0.15",
+        "@types/node": "^14.14.6",
+        "@types/uuid": "^8.3.4",
+        "chalk": "^4.1.2",
+        "joi": "^17.6.0",
+        "typescript": "^4.6.4"
+    },
+    "devDependencies": {
+        "@nestjs/testing": "^7.6.15",
+        "jest": "27.4.1",
+        "json-schema-to-typescript": "^10.1.5",
+        "mock-amqplib": "^1.3.0",
+        "openapi-typescript-codegen": "^0.13.0",
+        "ts-jest": "27.1.4",
+        "ts-loader": "^8.0.8"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "ts",
+            "node"
+        ],
+        "rootDir": "src",
+        "testRegex": ".*\\.spec\\.ts$",
+        "transform": {
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "collectCoverageFrom": [
+            "**/*.(t|j)s"
+        ],
+        "coverageDirectory": "../coverage",
+        "testEnvironment": "node"
+    }
+}
