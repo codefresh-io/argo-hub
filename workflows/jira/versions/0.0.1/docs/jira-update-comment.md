@@ -8,7 +8,7 @@ Update comment on Jira
 ### Inputs
 * COMMENT_BODY (optional) - Text to add to the comment
 * JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
-* JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
+* JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira api access key. Default is 'api-key'
 * JIRA_BASE_URL (required) - Jira base url
 * JIRA_ISSUE_SOURCE_FIELD (optional) - Jira issue ID or key source field
 * JIRA_USERNAME (required) - The Kubernetes secret with the jira username
