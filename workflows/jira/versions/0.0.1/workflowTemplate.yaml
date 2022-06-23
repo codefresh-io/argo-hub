@@ -1,0 +1,568 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.jira.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Jira template'
+    argo-hub/categories: 'utilities'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Matthew Chung'
+    argo-hub/owner_email: 'matthew.chung@codefresh.io'
+    argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
+    argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+
+spec:
+  templates:
+    - name: create-comment
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create comment on Jira'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: COMMENT_BODY
+            default: ''
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+      outputs:
+        parameters:
+          - name: JIRA_COMMENT_ID
+            valueFrom:
+              path: /tmp/JIRA_COMMENT_ID
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'comment_create'
+          - name: COMMENT_BODY
+            value: '{{ inputs.parameters.COMMENT_BODY }}'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+
+    - name: update-comment
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Update comment on Jira'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          - name: JIRA_COMMENT_ID
+          # optional
+          - name: COMMENT_BODY
+            default: ''
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'comment_update'
+          - name: COMMENT_BODY
+            value: '{{ inputs.parameters.COMMENT_BODY }}'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: JIRA_COMMENT_ID
+            value: '{{ inputs.parameters.JIRA_COMMENT_ID }}'
+
+    - name: create-issue
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create issue on Jira'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: ISSUE_PROJECT
+            default: ''
+          - name: ISSUE_SUMMARY
+            default: ''
+          - name: ISSUE_DESCRIPTION
+            default: ''
+          - name: ISSUE_COMPONENTS
+            default: ''
+          - name: ISSUE_CUSTOMFIELDS
+            default: ''
+          - name: ISSUE_TYPE
+            default: ''
+      outputs:
+        parameters:
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            valueFrom:
+              path: /tmp/JIRA_ISSUE_SOURCE_FIELD
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'issue_create'
+          - name: ISSUE_PROJECT
+            value: '{{ inputs.parameters.ISSUE_PROJECT }}'
+          - name: ISSUE_SUMMARY
+            value: '{{ inputs.parameters.ISSUE_SUMMARY }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+          - name: ISSUE_COMPONENTS
+            value: '{{ inputs.parameters.ISSUE_COMPONENTS }}'
+          - name: ISSUE_CUSTOMFIELDS
+            value: '{{ inputs.parameters.ISSUE_CUSTOMFIELDS }}'
+          - name: ISSUE_TYPE
+            value: '{{ inputs.parameters.ISSUE_TYPE }}'
+
+    - name: update-issue
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Update issue on Jira'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: ISSUE_SUMMARY
+            default: ''
+          - name: ISSUE_DESCRIPTION
+            default: ''
+          - name: ISSUE_COMPONENTS
+            default: ''
+          - name: ISSUE_TYPE
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'issue_update'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: ISSUE_SUMMARY
+            value: '{{ inputs.parameters.ISSUE_SUMMARY }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+          - name: ISSUE_COMPONENTS
+            value: '{{ inputs.parameters.ISSUE_COMPONENTS }}'
+          - name: ISSUE_TYPE
+            value: '{{ inputs.parameters.ISSUE_TYPE }}'
+
+    - name: update-all-from-jql
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Update all issues on Jira from JQL'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: ISSUE_DESCRIPTION
+            default: ''
+          - name: ISSUE_COMPONENTS
+            default: ''
+          - name: ISSUE_TYPE
+            default: ''
+          - name: JQL_QUERY
+            default: ''
+          - name: JQL_QUERY_MAX_RESULTS
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'update_all_from_jql_query'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+          - name: ISSUE_COMPONENTS
+            value: '{{ inputs.parameters.ISSUE_COMPONENTS }}'
+          - name: ISSUE_TYPE
+            value: '{{ inputs.parameters.ISSUE_TYPE }}'
+          - name: JQL_QUERY
+            value: '{{ inputs.parameters.JQL_QUERY }}'
+          - name: JQL_QUERY_MAX_RESULTS
+            value: '{{ inputs.parameters.JQL_QUERY_MAX_RESULTS }}'
+
+    - name: issue-verify-status
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Verify Issue Status on Single Issue'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'verify_status'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+
+    - name: issue-verify-status-from-jql
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Verify Issue Status on Issues from JQL Query'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+          - name: JQL_QUERY
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'verify_status'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+          - name: JQL_QUERY
+            value: '{{ inputs.parameters.JQL_QUERY }}'
+
+    - name: issue-transition-status
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Transition the Issue status on a single item'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+          - name: VERBOSE
+            default: 'false'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'issue_transition'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+          - name: VERBOSE
+            value: '{{ inputs.parameters.VERBOSE }}'
+
+    - name: issue-transition-status-and-update
+      serviceAccountName: argo-hub.jira.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Transition the Issue status and update a single item'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: JIRA_API_KEY
+          - name: JIRA_BASE_URL
+          - name: JIRA_USERNAME
+          # optional
+          - name: JIRA_API_KEY_SECRET_KEY
+            default: 'api-key'
+          - name: JIRA_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            default: ''
+          - name: DESIRED_ISSUE_STATUS
+            default: ''
+          - name: VERBOSE
+            default: 'false'
+          - name: ISSUE_DESCRIPTION
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.1-images-jira-manager:main
+        command:
+          - python
+          - /jira/jira_issue_manager.py
+        env:
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'issue_transition_and_update'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+          - name: DESIRED_ISSUE_STATUS
+            value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
+          - name: VERBOSE
+            value: '{{ inputs.parameters.VERBOSE }}'
+          - name: ISSUE_DESCRIPTION
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
