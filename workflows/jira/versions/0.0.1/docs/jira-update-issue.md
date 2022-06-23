@@ -7,7 +7,7 @@ Update issue on Jira
 
 ### Inputs
 * JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
-* JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
+* JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira api access key. Default is 'api-key'
 * JIRA_BASE_URL (required) - Jira base url
 * JIRA_USERNAME (required) - The Kubernetes secret with the jira username
 * JIRA_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira username. Default is 'username'
