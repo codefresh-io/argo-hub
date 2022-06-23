@@ -1,0 +1,86 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.aqua.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Aqua template'
+    argo-hub/categories: 'utilities'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Matthew Chung'
+    argo-hub/owner_email: 'matthew.chung@codefresh.io'
+    argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
+    argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/aqua/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+
+spec:
+  templates:
+    - name: aqua-security-scan
+      serviceAccountName: argo-hub.aqua.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Execute an Aqua container security scan.'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/aqua/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          # required
+          - name: AQUA_HOST
+          - name: AQUA_PASSWORD
+          - name: AQUA_PASSWORD_SECRET_KEY
+          - name: AQUA_USERNAME
+          - name: AQUA_USERNAME_SECRET_KEY
+          - name: IMAGE
+          - name: CF_ACCOUNT
+          - name: REGISTRY
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
+        command:
+          - python
+          - /aqua/aqua.py
+        env:
+          - name: AQUA_HOST
+            value: '{{ inputs.parameters.AQUA_HOST }}'
+          - name: AQUA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.AQUA_PASSWORD }}'
+                key: '{{ inputs.parameters.AQUA_PASSWORD_SECRET_KEY }}'
+          - name: AQUA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.AQUA_USERNAME }}'
+                key: '{{ inputs.parameters.AQUA_USERNAME_SECRET_KEY }}'
+          - name: IMAGE
+            value: '{{ inputs.parameters.IMAGE }}'
+          - name: CF_ACCOUNT
+            value: '{{ inputs.parameters.CF_ACCOUNT }}'
+          - name: REGISTRY
+            value: '{{ inputs.parameters.REGISTRY }}'
+
+          - name: JIRA_BASE_URL
+            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_USERNAME }}'
+                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
+          - name: JIRA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.JIRA_API_KEY }}'
+                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
+          - name: ACTION
+            value: 'comment_create'
+          - name: COMMENT_BODY
+            value: '{{ inputs.parameters.COMMENT_BODY }}'
+          - name: JIRA_ISSUE_SOURCE_FIELD
+            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'

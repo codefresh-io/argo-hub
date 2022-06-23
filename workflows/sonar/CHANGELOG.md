@@ -2,8 +2,8 @@
 
 ## v0.0.1 6/17/2022
 
-### task
+Intial commit for Jira template in CSDP. 
 
-short description
-new line on Tue Jun 21 17:16:08 MDT 2022
-new line on Tue Jun 21 17:17:55 MDT 2022
+Templates include: 
+
+* Sonar scanner
