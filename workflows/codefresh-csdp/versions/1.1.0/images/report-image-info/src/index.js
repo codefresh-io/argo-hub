@@ -118,7 +118,8 @@ const main = async () => {
         console.log('starting program')
         await run();
     } catch (err) {
-        storeOutputParam(OUTPUTS.EXIT_ERROR, err.toString())
+        const outputErrMessage = `${err.name}: ${err.message}`
+        storeOutputParam(OUTPUTS.EXIT_ERROR, outputErrMessage)
 
         console.error(err);
         process.exit(1);
