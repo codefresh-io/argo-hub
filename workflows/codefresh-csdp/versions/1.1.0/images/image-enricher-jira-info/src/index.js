@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const jiraService = require('./jira.service');
 const codefreshApi = require('./codefresh.api');
 const configuration = require('./configuration');
-const { storeOutputParam, OUTPUTS } = require('./outputs');
+const { storeOutputParam, OUTPUTS, ensureOutputFilesExists } = require('./outputs');
 
 async function run() {
     const [ validationError, inputs ] = configuration.validateInputs()
@@ -65,6 +65,9 @@ async function run() {
 
 const main = async () => {
     try {
+        ensureOutputFilesExists()
+
+        console.log('starting program')
         await run();
     } catch (err) {
         storeOutputParam(OUTPUTS.EXIT_ERROR, err.toString())

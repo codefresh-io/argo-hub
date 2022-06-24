@@ -20,7 +20,7 @@ Enrich images with metadata and annotation such as ticket number, title, assigne
 * FAIL_ON_NOT_FOUND (optional) - fail in case of ticket not found. Default is 'false'
 
 ### Outputs
-no outputs
+* `exit-error` – message of the error that caused template failure
 
 ## Examples
 

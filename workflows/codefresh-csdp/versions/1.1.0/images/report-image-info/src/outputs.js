@@ -16,6 +16,21 @@ const storeOutputParam = (name, value) => {
     }
 }
 
+// Emissary executor requires all of the output files to exist.
+// It exports outputs sequentially and if the output parameter at index 0 doesn't exists in fs, executor stops the output export
+// and following output parameters will not be exported.
+const ensureOutputFilesExists = () => {
+    try {
+        console.log('ensuring output destinations exist')
+        for (const output of Object.values(OUTPUTS)) {
+            storeOutputParam(output, '')
+        }
+        console.log('\n')
+    } catch (error) {
+        console.error(`failed to ensure outputs destination: ${error.message}`)
+    }
+}
+
 const OUTPUTS = {
     IMAGE_NAME: 'image_name',
     IMAGE_SHA: 'image_sha',
@@ -24,5 +39,6 @@ const OUTPUTS = {
 
 module.exports = {
     storeOutputParam,
+    ensureOutputFilesExists,
     OUTPUTS
 }

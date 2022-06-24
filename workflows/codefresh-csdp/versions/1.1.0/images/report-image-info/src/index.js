@@ -1,7 +1,7 @@
 const { GraphQLClient, gql, ClientError } = require('graphql-request')
 const _ = require('lodash')
 
-const { OUTPUTS, storeOutputParam } = require('./outputs')
+const { OUTPUTS, storeOutputParam, ensureOutputFilesExists } = require('./outputs')
 const createRegistryClient = require('./registry-client')
 const configuration = require('./configuration');
 
@@ -113,6 +113,9 @@ const _handleQlError = (prefix) => (e) => {
 
 const main = async () => {
     try {
+        ensureOutputFilesExists()
+
+        console.log('starting program')
         await run();
     } catch (err) {
         storeOutputParam(OUTPUTS.EXIT_ERROR, err.toString())

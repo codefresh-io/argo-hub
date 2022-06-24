@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const configuration = require('./configuration');
 const codefreshApi = require('./codefresh.api');
 const providers = require('./providers');
-const { OUTPUTS, storeOutputParam } = require('./outputs');
+const { OUTPUTS, storeOutputParam, ensureOutputFilesExists } = require('./outputs');
 
 async function run() {
     const [ validationError, inputs ] = configuration.validateInputs()
@@ -45,6 +45,9 @@ async function run() {
 
 const main = async () => {
     try {
+        ensureOutputFilesExists()
+
+        console.log('starting program')
         await run();
     } catch (err) {
         storeOutputParam(OUTPUTS.EXIT_ERROR, err.toString())

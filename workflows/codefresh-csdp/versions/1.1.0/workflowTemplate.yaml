@@ -280,6 +280,9 @@ spec:
           - name: image-sha
             valueFrom:
               path: /cf-outputs/image_sha
+          - name: exit-error
+            valueFrom:
+              path: /cf-outputs/exit_error
 
       container:
         name: main

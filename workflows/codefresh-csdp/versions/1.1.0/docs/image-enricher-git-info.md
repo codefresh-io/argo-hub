@@ -25,7 +25,7 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 
 
 ### Outputs
-no outputs
+* `exit-error` – message of the error that caused template failure
 
 ## Examples
 

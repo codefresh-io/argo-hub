@@ -43,6 +43,7 @@ Report image info to argo platform.
 ### Outputs
 * `image-name` – name of the reported image
 * `image-sha` – SHA of the reported image
+* `exit-error` – message of the error that caused template failure
 
 ## Examples
 
