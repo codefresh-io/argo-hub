@@ -18,10 +18,8 @@ A set of templates to manage Jira issues
 9. [issue transition status and update](https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/versions/0.0.1/docs/issue-transition-status-and-update.md)
 
 
-
 ## Security
 
 Minimal required permissions
-
 
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/versions/0.0.1/rbac.yaml)
