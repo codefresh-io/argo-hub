@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 
 spec:
@@ -21,7 +21,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Create comment on Jira'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -80,7 +80,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Update comment on Jira'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -137,7 +137,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Create issue on Jira'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -212,7 +212,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Update issue on Jira'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -278,7 +278,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Update all issues on Jira from JQL'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -344,7 +344,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Verify Issue Status on Single Issue'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -398,7 +398,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Verify Issue Status on Issues from JQL Query'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -452,7 +452,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Transition the Issue status on a single item'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -510,7 +510,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Transition the Issue status and update a single item'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
