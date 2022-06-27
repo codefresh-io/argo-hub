@@ -1,4 +1,4 @@
-# jira-create-issue
+# create-issue
 
 ## Summary
 Create issue on Jira

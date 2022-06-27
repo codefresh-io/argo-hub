@@ -1,4 +1,4 @@
-# jira-update-issue
+# update-issue
 
 ## Summary
 Update issue on Jira

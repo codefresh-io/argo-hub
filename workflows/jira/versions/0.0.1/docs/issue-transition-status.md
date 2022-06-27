@@ -1,4 +1,4 @@
-# jira-issue-transition-status
+# issue-transition-status
 
 ## Summary
 Transition the Issue status on a single item

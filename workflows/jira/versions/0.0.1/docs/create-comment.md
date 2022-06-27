@@ -1,4 +1,4 @@
-# jira-create-comment
+# create-comment
 
 ## Summary
 Create comment on Jira
