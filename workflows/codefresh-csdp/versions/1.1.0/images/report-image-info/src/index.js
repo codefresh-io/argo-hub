@@ -115,7 +115,7 @@ const main = async () => {
     try {
         ensureOutputFilesExists()
 
-        console.log('starting program')
+        console.log('starting image reporter')
         await run();
     } catch (err) {
         const outputErrMessage = `${err.name}: ${err.message}`

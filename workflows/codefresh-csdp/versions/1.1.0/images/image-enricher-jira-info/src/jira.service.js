@@ -8,32 +8,34 @@ const CodefreshJiraClient = require('./CodefreshJiraClient');
 class JiraService {
 
     async init() {
-        if (inputs.jira.context) {
-            const jiraContext = await codefreshApi.getJiraContext(inputs.jira.context);
+        let jiraConfig = _.cloneDeep(inputs.jira)
+
+        if (jiraConfig.context) {
+            const jiraContext = await codefreshApi.getJiraContext(jiraConfig.context);
             if (!jiraContext) {
                 throw new Error(`Codefresh jira integration \"configuration.jira.context\" not found`)
             }
             if (jiraContext.spec.data.auth.type === 'addon') {
-                this.jira = new CodefreshJiraClient(inputs.jira.context);
+                this.jira = new CodefreshJiraClient(jiraConfig.context);
                 return;
             }
 
             const { hostname } = new URL(jiraContext.spec.data.auth.apiURL);
-            inputs.jira = {
+            jiraConfig = {
                 host: hostname,
                 basic_auth: {
                     email: jiraContext.spec.data.auth.username,
                     api_token: jiraContext.spec.data.auth.password
                 },
-                context: inputs.jira.context,
+                context: jiraConfig.context,
             }
         } else {
-            const { hostname } = new URL(inputs.jira.host);
-            inputs.jira.host = hostname
+            const { hostname } = new URL(jiraConfig.host);
+            jiraConfig.host = hostname
         }
 
         this.jira = new JiraClient({
-            ...inputs.jira
+            ...jiraConfig
         })
 
     }

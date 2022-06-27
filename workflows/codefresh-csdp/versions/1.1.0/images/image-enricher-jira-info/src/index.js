@@ -67,7 +67,7 @@ const main = async () => {
     try {
         ensureOutputFilesExists()
 
-        console.log('starting program')
+        console.log('starting jira enricher')
         await run();
     } catch (err) {
         const outputErrMessage = `${err.name}: ${err.message}`
