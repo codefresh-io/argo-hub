@@ -180,10 +180,10 @@ spec:
                 - name: create-github-pr
                   value:  "{{tasks.set-commit-details.outputs.parameters.create-pr}}"
                 # Substrings to replace in patterns, below
-                - name: env-src             # Replaces [[ENV]] in source paths
-                  value: dev
-                - name: env-dest            # Replaces [[ENV]] in destination paths
-                  value: stage
+                - name: env-src
+                  value: "{{workflow.parameters.source-environment}}"
+                - name: env-dest
+                  value: "{{workflow.parameters.destination-environment}}"
                 - name: svc-name-list       # Space-separated list of images to promote. Each will replace [[SVC_NAME]] in all paths
                   value: "{{workflow.parameters.services-to-promote}}"
                 # Pattern Strings
