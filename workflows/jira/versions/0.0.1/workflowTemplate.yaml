@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
     argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
-    argo-hub/icon-background: "#f4f4f4"
+    argo-hub/icon_background: "#f4f4f4"
 
 spec:
   templates:
