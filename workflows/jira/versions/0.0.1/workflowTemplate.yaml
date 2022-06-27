@@ -565,4 +565,4 @@ spec:
           - name: VERBOSE
             value: '{{ inputs.parameters.VERBOSE }}'
           - name: ISSUE_DESCRIPTION
-            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }}'
+            value: '{{ inputs.parameters.ISSUE_DESCRIPTION }} '
