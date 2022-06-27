@@ -21,10 +21,9 @@ async function run() {
         throw new Error(`Cant initialize jira client, reason: ${e.message}`)
     }
 
-
     const issues = jiraService.extract();
 
-    if(!_.isArray(issues)) {
+    if (!_.isArray(issues)) {
         if (inputs.failOnNotFound === 'true') {
             throw new Error(`issues weren't found, FAIL_ON_NOT_FOUND=true`)
         }

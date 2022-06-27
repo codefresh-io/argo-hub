@@ -66,7 +66,10 @@ class JiraService {
             throw new Error('failed to authenticate to Jira, please verify you are using valid credentials')
         }
         if (errorObject.statusCode === 404) {
-            if (inputs.failOnNotFound === "true") {
+            if (errorObject.body.errorMessage === 'Site temporarily unavailable') {
+                throw new Error(`provided jira host is unavailable – ${errorObject.request.uri.host}`)
+            }
+            if (inputs.failOnNotFound === 'true') {
                 throw new Error(`issue ${issueId} not found`)
             } else {
                 console.warn(`skip issue ${issueId}, didn't find in jira system or you don't have permissions for find it`);
@@ -74,7 +77,6 @@ class JiraService {
             }
         }
     }
-
 }
 
 module.exports = new JiraService();
