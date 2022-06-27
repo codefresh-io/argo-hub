@@ -1,4 +1,4 @@
-# jira-issue-verify-status
+# issue-verify-status
 
 ## Summary
 Verify Issue Status on Single Issue

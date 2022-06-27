@@ -1,4 +1,4 @@
-# jira-update-comment
+# update-comment
 
 ## Summary
 Update comment on Jira

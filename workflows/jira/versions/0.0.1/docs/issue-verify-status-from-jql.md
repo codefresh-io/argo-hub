@@ -1,4 +1,4 @@
-# jira-issue-verify-status-from-jql
+# issue-verify-status-from-jql
 
 ## Summary
 Verify Issue Status on Issues from JQL Query
