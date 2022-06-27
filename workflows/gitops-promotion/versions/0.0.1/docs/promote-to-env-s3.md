@@ -48,6 +48,7 @@ kubectl create secret generic git-auth --namespace my-runtime \
 
 ### Outputs - Artifacts
 * **repo** - S3 artifact containing the updated git clone repository, with the new commit and optional branch.
+
 ### Outputs - Parameters
 * **codefresh-io-pr-url** - URL of the PR, if one was created.
 
