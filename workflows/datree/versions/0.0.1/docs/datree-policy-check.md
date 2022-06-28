@@ -11,10 +11,10 @@ This action runs the Datree CLI against given k8s configuration file/s in your r
 * DATREE_TOKEN_SECRET_KEY (required) - The key in the Kubernetes secret with the Datree account token. Default is 'token'
 * HELM_ARGUMENTS (optional) - The Helm arguments to be used, if the path is a Helm chart
 * INPUT_PATH (required) - File/s to be tested
-* IS_HELM_CHART (optional) - Is the desired path a Helm chart?
-* IS_KUSTOMIZATION (optional) - Is the desired path a Kustomization?
+* IS_HELM_CHART (optional) - Is the desired path a Helm chart? Default is False
+* IS_KUSTOMIZATION (optional) - Is the desired path a Kustomization? Default is False
 * KUSTOMIZE_ARGUMENTS (optional) - The Kustomize arguments to be used, if the path is a Kustomization
-* WORKING_DIRECTORY (optional) - The directory to which the repository is cloned. It can be an explicit path in the container’s file system, or a variable that references another step. The default value is '/codefresh/volume/${{CF_REPO_NAME}}'
+* WORKING_DIRECTORY (optional) - The directory to which the repository is cloned. It can be an explicit path in the container’s file system, or a variable that references another step. The default value is '/codefresh/volume'
 
 ### Outputs
 no outputs

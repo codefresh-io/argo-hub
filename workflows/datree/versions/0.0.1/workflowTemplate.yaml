@@ -35,40 +35,40 @@ spec:
           - name: INPUT_PATH
           # optional
           - name: CLI_ARGUMENTS
-            default: 
+            default: ''
           - name: HELM_ARGUMENTS
-            default: 
+            default: ''
           - name: IS_HELM_CHART
-            default: 
+            default: False
           - name: IS_KUSTOMIZATION
-            default: 
+            default: False
           - name: KUSTOMIZE_ARGUMENTS
-            default: 
+            default: ''
           - name: WORKING_DIRECTORY
-            default: 
+            default: '/codefresh/volume'
       container:
         name: main
         imagePullPolicy: Always
         image: quay.io/codefreshplugins/argo-hub-workflows-datree-versions-0.0.1-images-datree-manager:main
         command:
-          - python
-          - /jira/jira_issue_manager.py
+          - 
         env:
-          - name: JIRA_BASE_URL
-            value: '{{ inputs.parameters.JIRA_BASE_URL }}'
-          - name: JIRA_USERNAME
+          - name: DATREE_TOKEN
             valueFrom:
               secretKeyRef:
-                name: '{{ inputs.parameters.JIRA_USERNAME }}'
-                key: '{{ inputs.parameters.JIRA_USERNAME_SECRET_KEY }}'
-          - name: JIRA_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.JIRA_API_KEY }}'
-                key: '{{ inputs.parameters.JIRA_API_KEY_SECRET_KEY }}'
-          - name: ACTION
-            value: 'comment_create'
-          - name: COMMENT_BODY
-            value: '{{ inputs.parameters.COMMENT_BODY }}'
-          - name: JIRA_ISSUE_SOURCE_FIELD
-            value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
+                name: '{{ inputs.parameters.DATREE_TOKEN }}'
+                key: '{{ inputs.parameters.DATREE_TOKEN_SECRET_KEY }}'
+          - name: INPUT_PATH
+            value: '{{ inputs.parameters.INPUT_PATH }}'
+          - name: CLI_ARGUMENTS
+            value: '{{ inputs.parameters.CLI_ARGUMENTS }}'
+          - name: HELM_ARGUMENTS
+            value: '{{ inputs.parameters.HELM_ARGUMENTS }}'
+          - name: IS_HELM_CHART
+            value: '{{ inputs.parameters.IS_HELM_CHART }}'
+          - name: IS_KUSTOMIZATION
+            value: '{{ inputs.parameters.IS_KUSTOMIZATION }}'
+          - name: KUSTOMIZE_ARGUMENTS
+            value: '{{ inputs.parameters.KUSTOMIZE_ARGUMENTS }}'
+          - name: WORKING_DIRECTORY
+            value: '{{ inputs.parameters.WORKING_DIRECTORY }}'
