@@ -1,22 +1,21 @@
-# jira-issue-transition-status
+# create-comment
 
 ## Summary
-Transition the Issue status on a single item
+Create comment on Jira
 
 ## Inputs/Outputs
 
 ### Inputs
+* COMMENT_BODY (optional) - Text to add to the comment
 * JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
 * JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
 * JIRA_BASE_URL (required) - Jira base url
+* JIRA_ISSUE_SOURCE_FIELD (optional) - Jira issue ID or key source field
 * JIRA_USERNAME (required) - The Kubernetes secret with the jira username
 * JIRA_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira username. Default is 'username'
-* JIRA_ISSUE_SOURCE_FIELD (optional) - Jira issue ID or key source field
-* DESIRED_ISSUE_STATUS - Desired state of jira issue: Approved, Backlog
-* VERBOSE - Enable verbose logging by setting to true
 
 ### Outputs
-no outputs
+* JIRA_COMMENT_ID - Jira comment ID to update a comment
 
 ## Examples
 
@@ -25,17 +24,17 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: jira-issue-transition-status-
+  generateName: jira-create-comment-
 spec:
     entrypoint: main
     templates:
     -   name: main
         dag:
             tasks:
-            -   name: issue-transition-status
+            -   name: create-comment
                 templateref:
                     name: argo-hub.jira.0.0.1
-                    template: issue-transition-status
+                    template: create-comment
                 arguments:
                     parameters:
                     -   name: JIRA_BASE_URL
@@ -50,8 +49,6 @@ spec:
                         value: 'api-key'
                     -   name: JIRA_ISSUE_SOURCE_FIELD
                         value: Jira issue ID or key source field
-                    -   name: DESIRED_ISSUE_STATUS
-                        value: Blocked
-                    -   name: VERBOSE
-                        value: true
+                    -   name: COMMENT_BODY
+                        value: Test from codefresh pipeline
 ```

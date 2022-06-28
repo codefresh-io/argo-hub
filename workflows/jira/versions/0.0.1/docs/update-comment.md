@@ -1,7 +1,7 @@
-# jira-create-comment
+# update-comment
 
 ## Summary
-Create comment on Jira
+Update comment on Jira
 
 ## Inputs/Outputs
 
@@ -13,9 +13,11 @@ Create comment on Jira
 * JIRA_ISSUE_SOURCE_FIELD (optional) - Jira issue ID or key source field
 * JIRA_USERNAME (required) - The Kubernetes secret with the jira username
 * JIRA_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira username. Default is 'username'
+* JIRA_COMMENT_ID (required) - Jira comment ID to update a comment
+
 
 ### Outputs
-* JIRA_COMMENT_ID - Jira comment ID to update a comment
+no outputs
 
 ## Examples
 
@@ -24,17 +26,17 @@ Create comment on Jira
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: jira-create-comment-
+  generateName: jira-update-comment-
 spec:
     entrypoint: main
     templates:
     -   name: main
         dag:
             tasks:
-            -   name: create-comment
+            -   name: update-comment
                 templateref:
                     name: argo-hub.jira.0.0.1
-                    template: create-comment
+                    template: update-comment
                 arguments:
                     parameters:
                     -   name: JIRA_BASE_URL
@@ -50,5 +52,7 @@ spec:
                     -   name: JIRA_ISSUE_SOURCE_FIELD
                         value: Jira issue ID or key source field
                     -   name: COMMENT_BODY
-                        value: Test from codefresh pipeline
+                        value: New Updating from codefresh pipeline
+                    -   name: JIRA_COMMENT_ID
+                        value: '33455'
 ```

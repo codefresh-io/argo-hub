@@ -48,6 +48,7 @@ kubectl create secret generic git-auth --namespace my-runtime \
 
 ### Outputs - Artifacts
 * **repo** - S3 artifact containing the updated git clone repository, with the new commit and optional branch.
+
 ### Outputs - Parameters
 * **codefresh-io-pr-url** - URL of the PR, if one was created.
 
@@ -228,9 +229,9 @@ spec:
                   value: "{{tasks.set-commit-details.outputs.parameters.commit-msg}}"
                 # Substrings to replace in patterns, below
                 - name: env-src
-                  value: dev
+                  value: "{{workflow.parameters.source-environment}}"
                 - name: env-dest
-                  value: stage
+                  value: "{{workflow.parameters.destination-environment}}"
                 - name: svc-name-list
                   value: "{{workflow.parameters.services-to-promote}}"
                 # Pattern Strings

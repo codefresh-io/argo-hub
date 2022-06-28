@@ -1,7 +1,7 @@
-# jira-issue-transition-status-and-update
+# issue-verify-status
 
 ## Summary
-Transition the Issue status and update a single item
+Verify Issue Status on Single Issue
 
 ## Inputs/Outputs
 
@@ -13,8 +13,6 @@ Transition the Issue status and update a single item
 * JIRA_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira username. Default is 'username'
 * JIRA_ISSUE_SOURCE_FIELD (optional) - Jira issue ID or key source field
 * DESIRED_ISSUE_STATUS - Desired state of jira issue: Approved, Backlog
-* VERBOSE - Enable verbose logging by setting to true
-* ISSUE_DESCRIPTION - Jira issue description
 
 ### Outputs
 no outputs
@@ -26,17 +24,17 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: jira-issue-transition-status-and-update-
+  generateName: jira-issue-verify-status-
 spec:
     entrypoint: main
     templates:
     -   name: main
         dag:
             tasks:
-            -   name: issue-transition-status-and-update
+            -   name: issue-verify-status
                 templateref:
                     name: argo-hub.jira.0.0.1
-                    template: issue-transition-status-and-update
+                    template: issue-verify-status
                 arguments:
                     parameters:
                     -   name: JIRA_BASE_URL
@@ -53,8 +51,4 @@ spec:
                         value: Jira issue ID or key source field
                     -   name: DESIRED_ISSUE_STATUS
                         value: Blocked
-                    -   name: VERBOSE
-                        value: true
-                    -   name: ISSUE_DESCRIPTION
-                        value: Updated while transitioning status
 ```
