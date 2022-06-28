@@ -59,6 +59,12 @@ spec:
           - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
 
+      outputs:
+        parameters:
+          - name: exit-error
+            valueFrom:
+              path: /cf-outputs/exit_error
+
       container:
         name: main
         imagePullPolicy: Always
@@ -116,6 +122,7 @@ spec:
         retryPolicy: "Always"
         backoff:
           duration: "5s"
+
       inputs:
         parameters:
           # required
@@ -140,6 +147,12 @@ spec:
             default: 'email'
           - name: CF_API_KEY_SECRET_KEY
             default: 'token'
+
+      outputs:
+        parameters:
+          - name: exit-error
+            valueFrom:
+              path: /cf-outputs/exit_error
 
       container:
         name: main
