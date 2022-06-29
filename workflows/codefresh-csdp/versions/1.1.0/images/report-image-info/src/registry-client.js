@@ -2,7 +2,7 @@ const fs = require('fs')
 const _ = require('lodash')
 const AWS = require('aws-sdk');
 const { parseQualifiedNameOptimized, parseFamiliarName } = require('@codefresh-io/docker-reference')
-const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegistry } } = require('./nodegitry');
+const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegistry } } = require('nodegistry');
 
 const { inputs } = require('./configuration');
 
