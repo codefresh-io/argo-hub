@@ -76,7 +76,7 @@ exports.RegistryModem = class {
         };
 
         console.log('nodegistry request options', JSON.stringify(requestOptions))
-        
+
         return this._promise.resolve()
             .then(() => this.registry.getUrl())
             .then((url) => {
@@ -94,6 +94,7 @@ exports.RegistryModem = class {
                         options.auth.actions,
                     )
                         .then((auth) => {
+                            console.log('authenticate response', JSON.stringify(auth))
                             if (auth) {
                                 requestOptions.auth = auth;
                             }
@@ -106,6 +107,7 @@ exports.RegistryModem = class {
                     requestOptions.followAllRedirects = false;
                     requestOptions.followRedirect = false;
                 }
+                console.log('doing request', JSON.stringify(requestOptions))
                 this._request(requestOptions, (err, response, body) => {
                     if (err) {
                         reject(err);
@@ -115,6 +117,9 @@ exports.RegistryModem = class {
                 });
             }))
             .then(([response, body]) => {
+                console.log('response', JSON.stringify(response))
+                console.log('response body', JSON.stringify(body))
+
                 if (response.statusCode === 307) {
                     console.log('handling redirect')
                     return this.handleRedirect(response.headers.location);
@@ -122,8 +127,6 @@ exports.RegistryModem = class {
                 return this._promise.resolve([response, body]);
             })
             .then(([response, body]) => {
-                console.log('response', JSON.stringify(response))
-                console.log('response body', JSON.stringify(body))
 
                 const currentStatus = statusCodes[response.statusCode];
                 if (currentStatus === true) {
