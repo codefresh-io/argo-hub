@@ -1,7 +1,7 @@
 const JiraClient = require('jira-connector');
 const _ = require('lodash');
 
-const configuration = require('./configuration').inputs;
+const inputs = require('./configuration').inputs;
 const codefreshApi = require('./codefresh.api');
 
 const CodefreshJiraClient = require('./CodefreshJiraClient');
@@ -42,7 +42,7 @@ class JiraService {
     }
 
     extract() {
-        return new RegExp(`${configuration.projectName}-\\d*`, 'i').exec(configuration.message);
+        return new RegExp(`${inputs.projectName}-\\d*`, 'i').exec(inputs.message);
     }
 
     getInfoAboutIssue(issue) {

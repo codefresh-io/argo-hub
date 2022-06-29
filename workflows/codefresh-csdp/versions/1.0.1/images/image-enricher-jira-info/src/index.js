@@ -77,6 +77,11 @@ async function execute() {
                 if (_.isString(e)) { // Jira returns errors in string format
                     const error = JSON.parse(e);
                     console.log('body:' + chalk.red(JSON.stringify(error.body)));
+
+                    if (error.body.errorMessage === 'Site temporarily unavailable') {
+                        console.log(chalk.red(`provided jira host is unavailable – ${error.request.uri.host}`));
+                        process.exit(1);
+                    }
                     if (inputs.failOnNotFound === "true") {
                         return process.exit(1);
                     }
