@@ -12,17 +12,8 @@ const run = async () => {
         throw validationError
     }
 
-    console.log('inputs', JSON.stringify(inputs, null, 2))
-
     const image = inputs.imageName;
     const client = await createRegistryClient(image);
-
-    console.log('registry client', JSON.stringify({
-        name: client.constructor.name,
-        domain: client.domain,
-        requestOptions: client.requestOptions,
-        creds: client.credentials,
-    }, null, 2))
 
     const workflowName = inputs.workflow.name;
     const workflowUrl = inputs.workflow.workflowUrl;
