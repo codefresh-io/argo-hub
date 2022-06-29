@@ -76,7 +76,7 @@ exports.RegistryModem = class {
         };
 
         console.log('nodegistry request options', JSON.stringify(requestOptions))
-
+        
         return this._promise.resolve()
             .then(() => this.registry.getUrl())
             .then((url) => {
@@ -88,7 +88,7 @@ exports.RegistryModem = class {
             })
             .then(() => {
                 if (options.auth) {
-                    console.log('_authenticateRequest', JSON.stringify(requestOptions))
+                    console.log('authenticate auth options', JSON.stringify(options.auth))
                     return this._authenticateRequest(
                         options.auth.repository,
                         options.auth.actions,
@@ -152,7 +152,7 @@ exports.RegistryModem = class {
                     return credentials;
                 }
                 return new this._promise((resolve, reject) => {
-                    request({
+                    const requestOptions = {
                         url: authInfo.realm,
                         qs: {
                             scope: repository ? `repository:${repository}:${actions.join(',')}` : undefined,
@@ -161,7 +161,9 @@ exports.RegistryModem = class {
                         },
                         auth: credentials,
                         json: true,
-                    }, (err, response, body) => {
+                    }
+                    console.log('authenticate request options', JSON.stringify(requestOptions))
+                    request(requestOptions, (err, response, body) => {
                         if (err) {
                             reject(err);
                         } else {
