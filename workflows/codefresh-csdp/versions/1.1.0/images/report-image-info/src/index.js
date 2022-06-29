@@ -12,7 +12,6 @@ const run = async () => {
         throw validationError
     }
 
-
     const image = inputs.imageName;
     const client = await createRegistryClient(image);
 
