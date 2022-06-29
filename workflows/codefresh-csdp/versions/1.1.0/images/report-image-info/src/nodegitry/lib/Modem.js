@@ -83,6 +83,8 @@ exports.RegistryModem = class {
                 this._request = this._request.defaults({
                     baseUrl: url,
                 });
+
+                console.log('nodegistry request baseUrl', url)
             })
             .then(() => {
                 if (options.auth) {
