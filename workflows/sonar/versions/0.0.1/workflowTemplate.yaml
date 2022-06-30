@@ -59,7 +59,7 @@ spec:
           - -Dsonar.projectBaseDir=/tmp/repo
           # - -Dsonar.projectKey=swift-coverage-example 
           # - -Dsonar.sources=swift-coverage-example
-          # - -Dsonar.organization=laurent-rochette
+          - -Dsonar.organization=laurent-rochette
           # - -Dsonar.login="$SONAR_LOGIN_TOKEN"
           # - -e SONAR_HOST_URL="https://sonarcloud.io"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
