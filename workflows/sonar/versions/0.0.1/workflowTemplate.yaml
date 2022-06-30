@@ -28,13 +28,15 @@ spec:
       #   backoff:
       #     duration: "5s"
       inputs:
+        artifacts:
+          - name: REPO
+            path: /tmp/repo
         parameters:
           # required
           - name: SONAR_HOST_URL
           - name: SONAR_LOGIN
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
-          - name: YOUR_REPO
           - name: SONAR_SCANNER_CLI_VERSION
             default: 'latest'
       container:
@@ -49,14 +51,12 @@ spec:
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
-          - name: SONAR_PROJECT_BASE_DIR
-            value: '{{ inputs.parameters.YOUR_REPO }}'
           - name: SONAR_SCANNER_CLI_VERSION
             value: '{{ inputs.parameters.SONAR_SCANNER_CLI_VERSION }}'
 
         command:
           - sonar-scanner
-          - -Dsonar.projectBaseDir={{ inputs.parameters.YOUR_REPO }}
+          - -Dsonar.projectBaseDir={{ inputs.artifacts.REPO }}
           # - -Dsonar.projectKey=swift-coverage-example 
           # - -Dsonar.sources=swift-coverage-example
           # - -Dsonar.organization=laurent-rochette
