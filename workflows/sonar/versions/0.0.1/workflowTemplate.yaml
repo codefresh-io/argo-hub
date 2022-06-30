@@ -47,7 +47,7 @@ spec:
 
         command:
           - sonar-scanner
-          - -h
+          - --help
           # - --rm
           # - -e SONAR_HOST_URL="http://'{{ inputs.parameters.SONAR_HOST_URL }}'"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
