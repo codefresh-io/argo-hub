@@ -56,7 +56,7 @@ spec:
 
         command:
           - sonar-scanner
-          - -Dsonar.projectBaseDir="{{ inputs.parameters.YOUR_REPO }}:/usr/src"
+          - -Dsonar.projectBaseDir={{ inputs.parameters.YOUR_REPO }}:/usr/src
           # - -Dsonar.projectKey=swift-coverage-example 
           # - -Dsonar.sources=swift-coverage-example
           # - -Dsonar.organization=laurent-rochette
