@@ -41,20 +41,20 @@ spec:
         name: main
         imagePullPolicy: Always
         image: sonarsource/sonar-scanner-cli
-        # env:
-        #   - name: SONAR_LOGIN
-        #     valueFrom:
-        #       secretKeyRef:
-        #         name: '{{ inputs.parameters.SONAR_LOGIN }}'
-        #         key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
-        #   - name: SONAR_HOST_URL
-        #     value: '{{ inputs.parameters.SONAR_HOST_URL }}'
+        env:
+          - name: SONAR_LOGIN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SONAR_LOGIN }}'
+                key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
+          - name: SONAR_HOST_URL
+            value: '{{ inputs.parameters.SONAR_HOST_URL }}'
         command:
           - sonar-scanner
           - -Dsonar.projectBaseDir=/tmp/repo
           # - -Dsonar.projectKey=lrochette_helloworld-java
           # - -Dsonar.organization=laurent-rochette
-          - -Dsonar.login=3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
+          #- -Dsonar.login=3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
           # - -Dsonar.login="$SONAR_LOGIN_TOKEN"
           # - -e SONAR_HOST_URL="https://sonarcloud.io"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
