@@ -54,8 +54,13 @@ spec:
           - -Dsonar.projectBaseDir=/tmp/repo
           # - -Dsonar.projectKey=lrochette_helloworld-java
           # - -Dsonar.organization=laurent-rochette
-          - -Dsonar.login={{ env.SONAR_LOGIN }}
+          - 
+          #- -Dsonar.login=
           # - -Dsonar.login="$SONAR_LOGIN_TOKEN"
           # - -e SONAR_HOST_URL="https://sonarcloud.io"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
           # - -v "/tmp/sonar/:/usr/src"
+        args: ['
+        echo "secret from env: $SONAR_LOGIN";
+        ']
+          
