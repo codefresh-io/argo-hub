@@ -38,16 +38,15 @@ spec:
         name: main
         imagePullPolicy: Always
         image: sonarsource/sonar-scanner-cli
-        # env:
-        #   - name: SONAR_LOGIN
-        #     valueFrom:
-        #       secretKeyRef:
-        #         name: '{{ inputs.parameters.SONAR_LOGIN }}'
-        #         key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
+        env:
+          - name: SONAR_LOGIN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SONAR_LOGIN }}'
+                key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
 
         command:
           - sonar-scanner
-          # - --rm
-          # - -e SONAR_HOST_URL="http://'{{ inputs.parameters.SONAR_HOST_URL }}'"
-          # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
-          # - -v "/tmp/sonar/:/usr/src"
+          - -e SONAR_HOST_URL="http://'{{ inputs.parameters.SONAR_HOST_URL }}'"
+          - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
+          - -v "/tmp/sonar/:/usr/src"
