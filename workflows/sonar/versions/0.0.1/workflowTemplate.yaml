@@ -47,6 +47,7 @@ spec:
 
         command:
           - sonar-scanner
-          - -e SONAR_HOST_URL="http://'{{ inputs.parameters.SONAR_HOST_URL }}'"
-          - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
-          - -v "/tmp/sonar/:/usr/src"
+          - -Dsonar.login="$SONAR_LOGIN_TOKEN"
+          # - -e SONAR_HOST_URL="http://'{{ inputs.parameters.SONAR_HOST_URL }}'"
+          # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
+          # - -v "/tmp/sonar/:/usr/src"
