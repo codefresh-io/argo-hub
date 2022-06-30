@@ -34,6 +34,9 @@ spec:
           - name: SONAR_LOGIN
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
+          - name: YOUR_REPO
+          - name: SONAR_SCANNER_CLI_VERSION
+            default: 'latest'
       container:
         name: main
         imagePullPolicy: Always
@@ -44,10 +47,16 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.SONAR_LOGIN }}'
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
+          - name: SONAR_HOST_URL
+            value: '{{ inputs.parameters.SONAR_HOST_URL }}'
+          - name: SONAR_PROJECT_BASE_DIR
+            value: '{{ inputs.parameters.YOUR_REPO }}'
+          - name: SONAR_SCANNER_CLI_VERSION
+            value: '{{ inputs.parameters.SONAR_SCANNER_CLI_VERSION }}'
 
         command:
           - sonar-scanner
-          - -Dsonar.login="$SONAR_LOGIN_TOKEN"
-          - -e SONAR_HOST_URL="https://sonarcloud.io"
+          # - -Dsonar.login="$SONAR_LOGIN_TOKEN"
+          # - -e SONAR_HOST_URL="https://sonarcloud.io"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
           # - -v "/tmp/sonar/:/usr/src"
