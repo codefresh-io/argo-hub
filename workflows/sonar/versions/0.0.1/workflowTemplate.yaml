@@ -22,11 +22,11 @@ spec:
           argo-hub-template/description: 'Invokes scan using Sonarqube'
           argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
-      retryStrategy:
-        limit: "3"
-        retryPolicy: "Always"
-        backoff:
-          duration: "5s"
+      # retryStrategy:
+      #   limit: "3"
+      #   retryPolicy: "Always"
+      #   backoff:
+      #     duration: "5s"
       inputs:
         parameters:
           # required
@@ -56,7 +56,7 @@ spec:
 
         command:
           - sonar-scanner
-          - -Dsonar.projectBaseDir='{{ inputs.parameters.YOUR_REPO }}'
+          - -Dsonar.projectBaseDir="{{ inputs.parameters.YOUR_REPO }}:/usr/src"
           # - -Dsonar.projectKey=swift-coverage-example 
           # - -Dsonar.sources=swift-coverage-example
           # - -Dsonar.organization=laurent-rochette
