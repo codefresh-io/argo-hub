@@ -51,14 +51,15 @@ spec:
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
-          - name: SONAR_SCANNER_CLI_VERSION
-            value: '{{ inputs.parameters.SONAR_SCANNER_CLI_VERSION }}'
+          # - name: SONAR_SCANNER_CLI_VERSION
+          #   value: '{{ inputs.parameters.SONAR_SCANNER_CLI_VERSION }}'
 
         command:
           - sonar-scanner
           #- -Dsonar.projectBaseDir=/tmp/repo
           - -Dsonar.projectKey=lrochette_helloworld-java
           - -Dsonar.organization=laurent-rochette
+          - -Dsonar.login={{ container.env.SONAR_LOGIN}}
           # - -Dsonar.login="$SONAR_LOGIN_TOKEN"
           # - -e SONAR_HOST_URL="https://sonarcloud.io"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
