@@ -56,10 +56,10 @@ spec:
 
         command:
           - sonar-scanner
-          #- -Dsonar.projectBaseDir=/tmp/repo
+          - -Dsonar.projectBaseDir=/tmp/repo
           - -Dsonar.projectKey=lrochette_helloworld-java
           - -Dsonar.organization=laurent-rochette
-          - -Dsonar.login={{ container.env.SONAR_LOGIN}}
+          - -Dsonar.login=3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
           # - -Dsonar.login="$SONAR_LOGIN_TOKEN"
           # - -e SONAR_HOST_URL="https://sonarcloud.io"
           # - -e SONAR_LOGIN="$SONAR_LOGIN_TOKEN"
