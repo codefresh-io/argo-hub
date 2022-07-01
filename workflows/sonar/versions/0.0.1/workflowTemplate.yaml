@@ -54,6 +54,6 @@ spec:
           - sonar-scanner
         args:
           - -Dsonar.projectBaseDir=/tmp/repo
-          - -Dsonar.login='$SONAR_TOKEN'
+          - -Dsonar.login=$SONAR_TOKEN
           #- -Dsonar.login=3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
           # - -Dsonar.login=$SONAR_TOKEN
