@@ -42,7 +42,7 @@ spec:
         imagePullPolicy: Always
         image: sonarsource/sonar-scanner-cli
         env:
-          - name: SONAR_LOGIN
+          - name: SONAR_TOKEN
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.SONAR_LOGIN }}'
