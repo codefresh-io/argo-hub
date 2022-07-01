@@ -43,14 +43,15 @@ spec:
         image: sonarsource/sonar-scanner-cli
         env:
           - name: SONAR_TOKEN
-            value: 3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: '{{ inputs.parameters.SONAR_LOGIN }}'
-            #     key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
+            # value: 3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SONAR_LOGIN }}'
+                key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
-        command:
-          - sonar-scanner
+        command: [sh, -c]
         args:
-          - -Dsonar.projectBaseDir=/tmp/repo
+          - ls -ail 
+          - echo $SONAR_TOKEN
+          - sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true
