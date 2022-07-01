@@ -22,11 +22,6 @@ spec:
           argo-hub-template/description: 'Report a commit status check'
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/github/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
-      retryStrategy:
-        limit: "10"
-        retryPolicy: "Always"
-        backoff:
-          duration: "5s"
       inputs:
         parameters:
           - name: BUILD_BASE_URL
