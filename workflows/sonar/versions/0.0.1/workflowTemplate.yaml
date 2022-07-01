@@ -50,7 +50,8 @@ spec:
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
         command:
-          - echo $SONAR_TOKEN
-          - sonar-scanner
+          - sh
+          #- sonar-scanner
         args:
-          - -Dsonar.projectBaseDir=/tmp/repo
+          - echo $SONAR_TOKEN
+          #- -Dsonar.projectBaseDir=/tmp/repo
