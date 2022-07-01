@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "ES2020",
+    "sourceMap": true,
+    "incremental": false,
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
