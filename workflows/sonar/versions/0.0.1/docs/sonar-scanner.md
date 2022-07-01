@@ -1,7 +1,7 @@
 # sonar-scanner
 
 ## Summary
-Clones project and invokes scan using Sonarqube, step is not compatible with C/C++/Objective-C projects. Requires sonar-project.properties file with Project Name and Key defined. Documentation - https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
+Clones project and invokes scan using Sonarqube, step is not compatible with C/C++/Objective-C projects. Requires sonar-project.properties file with Project Name, Key and Organization defined. Documentation - https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
 
 ## Inputs/Outputs
 
@@ -42,20 +42,20 @@ spec:
                 outputs:
                     artifacts:
                     -   name: repo
-                        path: /tmp/sonar
+                        path: '/tmp/repo'
             -   name: sonar-scanner
                 dependencies: [clone-step]
                 templateref:
                     name: argo-hub.sonar.0.0.1
                     template: sonar-scanner
                 arguments:
+                    artifacts:
+                    -   name: REPO
+                        from: "{{tasks.clone-step.outputs.artifacts.repo}}"
                     parameters:
                     -   name: SONAR_HOST_URL
-                        value: 'https://company-name.atlassian.net/'
+                        value: 'https://sonarcloud.io'
                     -   name: SONAR_LOGIN
                         value: 'sonar-creds'
-                    -   name: SONAR_LOGIN_SECRET_KEY
-                        value: 'token'
-                    -   name: YOUR_REPO
-                        value: '/tmp/sonar/'
+
 ```
