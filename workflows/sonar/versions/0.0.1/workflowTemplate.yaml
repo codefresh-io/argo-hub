@@ -37,10 +37,10 @@ spec:
           - name: SONAR_LOGIN
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
-      container:
-        name: main
+      script:
         imagePullPolicy: Always
         image: sonarsource/sonar-scanner-cli
+        workingDir: /tmp/repo
         env:
           - name: SONAR_TOKEN
             # value: 3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
@@ -50,6 +50,8 @@ spec:
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
-        command: [sh, -c]
-        args:
-          - ls -ail /tmp/repo && echo $SONAR_TOKEN && sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true
+        command: [sh]
+        source: |
+          ls -ail /tmp/repo  
+          echo $SONAR_TOKEN  
+          sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true
