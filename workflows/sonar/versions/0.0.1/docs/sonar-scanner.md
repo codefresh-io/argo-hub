@@ -11,6 +11,7 @@ Clones project and invokes scan using Sonarqube, step is not compatible with C/C
 * SONAR_LOGIN_SECRET_KEY (optional) - The key in the Kubernetes secret with the Sonar login token. Default is 'token'
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
 * GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
+* repo - keep as '/tmp/repo'
 
 ### Outputs
 no outputs

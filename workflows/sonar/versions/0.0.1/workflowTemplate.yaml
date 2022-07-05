@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
     argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/sonar/assets/icon.svg"
-    argo-hub/icon-background: "#81D4FA"
+    argo-hub/icon-background: "#f4f4f4"
 spec:
   templates:
     - name: sonar-scanner
@@ -22,11 +22,11 @@ spec:
           argo-hub-template/description: 'Invokes scan using Sonarqube'
           argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
-      # retryStrategy:
-      #   limit: "3"
-      #   retryPolicy: "Always"
-      #   backoff:
-      #     duration: "5s"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
       inputs:
         artifacts:
           - name: REPO
@@ -43,15 +43,11 @@ spec:
         workingDir: /tmp/repo
         env:
           - name: SONAR_TOKEN
-            # value: 3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.SONAR_LOGIN }}'
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
-        command: [sh]
         source: |
-          ls -ail /tmp/repo  
-          echo -$SONAR_TOKEN-
           sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true
