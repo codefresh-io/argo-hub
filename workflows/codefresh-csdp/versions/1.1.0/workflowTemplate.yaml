@@ -44,7 +44,7 @@ spec:
             default: 'token'
           - name: GITHUB_API_PATH_PREFIX
             default: ''
-          - name: GITHUB_API_HOST_URL 
+          - name: GITHUB_API_HOST_URL
             default: 'https://api.github.com'
           - name: GITHUB_TOKEN_SECRET_NAME
             default: 'github'
@@ -102,8 +102,8 @@ spec:
                 name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_NAME }}'
                 optional: true
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
-          - name: GITLAB_HOST
-            value: '{{ inputs.parameters.GITLAB_HOST }}'
+          - name: GITLAB_HOST_URL
+            value: '{{ inputs.parameters.GITLAB_HOST_URL }}'
           - name: GITLAB_TOKEN
             valueFrom:
               secretKeyRef:
