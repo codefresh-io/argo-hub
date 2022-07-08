@@ -30,18 +30,17 @@ spec:
       inputs:
         artifacts:
           - name: REPO
-            path: '{{ inputs.parameters.REPO }}'
+            path: /tmp/repo
         parameters:
           # required
           - name: SONAR_HOST_URL
           - name: SONAR_LOGIN
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
-          - name: REPO
       script:
         imagePullPolicy: Always
         image: sonarsource/sonar-scanner-cli
-        workingDir: '{{ inputs.parameters.REPO }}'
+        workingDir: /tmp/repo
         env:
           - name: SONAR_TOKEN
             valueFrom:
