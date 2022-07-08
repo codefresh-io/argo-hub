@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
     argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/assets/icon.svg"
-    argo-hub/icon-background: "#81D4FA"
+    argo-hub/icon-background: "#f4f4f4"
 spec:
   templates:
     - name: sonar-scanner

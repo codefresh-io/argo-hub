@@ -34,8 +34,7 @@ class GitlabApi {
                     url: commit.web_url,
                     userName,
                     sha: commit.id,
-                    message: commit.message,
-                    commitDate: commit.created_at,
+                    message: commit.message
                 });
             }
             return {

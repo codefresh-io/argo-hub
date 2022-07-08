@@ -9,28 +9,21 @@ class GithubApi {
     githubCreds
 
     async getBranch(repo, branch) {
-        try {
-            const apiClient = await this._prepareApiClient()
-            const [repoOwner, repoName] = this._getRepoOwnerAndName(repo);
+        const apiClient = await this._prepareApiClient()
+        const [repoOwner, repoName] = this._getRepoOwnerAndName(repo);
 
-            const response = await apiClient.repos.getBranch({
-                owner: repoOwner,
-                repo: repoName,
-                branch,
-            });
-            return response.data;
-        } catch (err) {
-            if (err.status === 404) {
-                return null
-            }
-            throw err
-        }
+        const response = await apiClient.repos.getBranch({
+            owner: repoOwner,
+            repo: repoName,
+            branch,
+        });
+        return response.data;
     }
 
     async searchForPullRequests(repo, branch) {
         const apiClient = await this._prepareApiClient()
 
-        console.log(`Looking for PRs from ${repo} repo and ${branch} branch`);
+        console.log(`Looking for PRs from "${repo}" repo and "${branch}" branch`);
 
         const response = await apiClient.search.issuesAndPullRequests({ q: `head:${branch}+type:pr+repo:${repo}` });
         return response.data
@@ -87,7 +80,6 @@ class GithubApi {
                     userName,
                     sha: commit.sha,
                     message: commit.commit.message,
-                    commitDate: commit.commit.author.date,
                 })
             }
 
@@ -109,7 +101,7 @@ class GithubApi {
 
     async _prepareApiClient() {
         const { githubApiHost, githubApiPathPrefix, githubToken } = await this._resolveCreds();
-
+        
         const octokit = new Octokit({
             auth: githubToken,
             baseUrl: this._buildRequestUrl(githubApiHost, githubApiPathPrefix)
