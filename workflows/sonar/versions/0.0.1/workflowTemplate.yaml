@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub@main/workflows/sonar/assets/icon.svg"
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/assets/icon.svg"
     argo-hub/icon-background: "#f4f4f4"
 spec:
   templates:
@@ -20,7 +20,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Invokes scan using Sonarqube'
-          argo-hub-template/icon_url: "https://github.com/matthewchungcodefresh/argo-hub@main/workflows/sonar/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -49,5 +49,6 @@ spec:
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
+        command: [sh]
         source: |
           sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true
