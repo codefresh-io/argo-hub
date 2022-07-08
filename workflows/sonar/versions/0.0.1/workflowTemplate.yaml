@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
     argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/assets/icon.svg"
-    argo-hub/icon-background: "#f4f4f4"
+    argo-hub/icon-background: "#81D4FA"
 spec:
   templates:
     - name: sonar-scanner
@@ -30,18 +30,17 @@ spec:
       inputs:
         artifacts:
           - name: REPO
-            path: '{{ inputs.parameters.REPO }}'
+            path: /tmp/repo
         parameters:
           # required
           - name: SONAR_HOST_URL
           - name: SONAR_LOGIN
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
-          - name: REPO
       script:
         imagePullPolicy: Always
         image: sonarsource/sonar-scanner-cli
-        workingDir: '{{ inputs.parameters.REPO }}'
+        workingDir: /tmp/repo
         env:
           - name: SONAR_TOKEN
             valueFrom:
@@ -50,5 +49,6 @@ spec:
                 key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
           - name: SONAR_HOST_URL
             value: '{{ inputs.parameters.SONAR_HOST_URL }}'
+        command: [sh]
         source: |
           sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true
