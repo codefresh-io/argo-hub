@@ -11,7 +11,7 @@ Clones project and invokes scan using Sonarqube, step is not compatible with C/C
 * SONAR_LOGIN_SECRET_KEY (optional) - The key in the Kubernetes secret with the Sonar login token. Default is 'token'
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
 * GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
-* REPO - Use this property when you need analysis to take place in a directory other than the one from which it was launched. E.G. analysis begins from jenkins/jobs/myjob/workspace but the files to be analyzed are in ftpdrop/cobol/project1. The path may be relative or absolute. Specify not the the source directory, but some parent of the source directory. The value specified here becomes the new 'analysis directory', and other paths are then specified as though the analysis were starting from the specified value of sonar.projectBaseDir. Note that the analysis process will need write permissions in this directory; it is where the sonar.working.directory will be created.
+* REPO (required) - Use this property when you need analysis to take place in a directory other than the one from which it was launched. E.G. analysis begins from jenkins/jobs/myjob/workspace but the files to be analyzed are in ftpdrop/cobol/project1. The path may be relative or absolute. Specify not the the source directory, but some parent of the source directory. The value specified here becomes the new 'analysis directory', and other paths are then specified as though the analysis were starting from the specified value of sonar.projectBaseDir. Note that the analysis process will need write permissions in this directory; it is where the sonar.working.directory will be created.
 
 ### Outputs
 no outputs
@@ -58,7 +58,7 @@ spec:
                         value: 'https://sonarcloud.io'
                     -   name: SONAR_LOGIN
                         value: 'sonar-creds'
-                    -   name: REPO
-                        value: "{{tasks.clone-step.outputs.artifacts.repo}}"
+                    -   name: SONAR_LOGIN_SECRET_KEY
+                        value: 'sonarkey'
 
 ```
