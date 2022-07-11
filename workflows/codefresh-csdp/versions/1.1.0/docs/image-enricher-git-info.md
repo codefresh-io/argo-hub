@@ -20,8 +20,8 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 * GITHUB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
 * GITHUB_CONTEXT (optional) - The name of the github context from classic codefresh platform
 * GITLAB_HOST_URL (optional) - The URL to reach the GitLab API (support on-premises GitLab api). Default is 'https://gitlab.com'
-* GITLAB_TOKEN_SECRET_NAME (optional) - The Kubernetes secret containing the GitHub token
-* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitHub token. Default is 'token'
+* GITLAB_TOKEN_SECRET_NAME (optional) - The Kubernetes secret containing the GitLab token
+* GITLAB_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GitLab token. Default is 'token'
 * BITBUCKET_HOST_URL (optional) - The URL to reach the BitBucket API (support on-premises BitBucket api). Default is 'https://api.bitbucket.org/2.0'
 * BITBUCKET_SECRET_NAME (optional) - The Kubernetes secret containing the BitBucket credentials
 * BITBUCKET_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret containing the BitBucket username. Default is 'username'
