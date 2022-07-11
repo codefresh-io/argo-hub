@@ -58,7 +58,8 @@ class BitbucketApi {
                     url: commit.links.html.href,
                     userName,
                     sha: commit.hash,
-                    message: commit.message
+                    message: commit.message,
+                    commitDate: commit.date
                 });
             }
             return {

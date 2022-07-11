@@ -51,10 +51,10 @@ class BitbucketServerApi {
 
     async getCommitsInfo(repo, pr) {
         const [ workspace, repoSlug ] = this._getRepoSlugAndWorkspaceFromRepo(repo);
-        let result = await this._sendGetRequest(`projects/${workspace}/repos/${repoSlug}/pull-requests/${pr.id}/commits?start=0&avatarSize=48&limit=50&contents`);
+        let result = await this._sendGetRequest(`projects/${workspace}/repos/${repoSlug}/pull-requests/${pr.id}/commits?start=0&avatarSize=64&limit=50&contents`);
         const reversedCommits = _.get(result, 'values', []);
         while (!result.isLastPage) {
-            result = await this._sendGetRequest(`projects/${workspace}/repos/${repoSlug}/pull-requests/${pr.id}/commits?start=${result.nextPageStart}&limit=50&avatarSize=48&contents`);
+            result = await this._sendGetRequest(`projects/${workspace}/repos/${repoSlug}/pull-requests/${pr.id}/commits?start=${result.nextPageStart}&limit=50&avatarSize=64&contents`);
             reversedCommits.push(...result.values);
         }
         const commits = _.reverse(reversedCommits);
@@ -77,7 +77,8 @@ class BitbucketServerApi {
                     url: this._buildCommitUrl(workspace, repoSlug, commit.id),
                     userName,
                     sha: commit.id,
-                    message: commit.message
+                    message: commit.message,
+                    commitDate: commit.committerTimestamp
                 });
             }
             return {
