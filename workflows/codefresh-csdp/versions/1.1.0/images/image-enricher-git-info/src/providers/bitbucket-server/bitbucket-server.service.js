@@ -25,7 +25,7 @@ class BitbucketServerService {
 
     async getBranch(repo, branch) {
         try {
-            const bitBucketBranch = await bitBucketServerApi.getBranch(repo, 'branch')
+            const bitBucketBranch = await bitBucketServerApi.getBranch(repo, branch)
             if (!bitBucketBranch) {
                 return null
             }
