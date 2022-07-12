@@ -17,7 +17,6 @@ metadata:
 spec:
   templates:
     - name: image-enricher-git-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.0
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich images with metadata and annotation such as PR, commits, committers'
@@ -133,7 +132,6 @@ spec:
                 optional: true
                 key: '{{ inputs.parameters.BITBUCKET_PASSWORD_SECRET_KEY }}'
     - name: image-enricher-jira-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.0
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich images with metadata and annotation such as ticket number, title, assignee, status'
@@ -214,7 +212,6 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_TOKEN_SECRET }}'
                 key: '{{ inputs.parameters.JIRA_EMAIL_SECRET_KEY }}'
     - name: report-image-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.0
       metadata:
         annotations:
           argo-hub-template/description: 'Report image info to argo platform'

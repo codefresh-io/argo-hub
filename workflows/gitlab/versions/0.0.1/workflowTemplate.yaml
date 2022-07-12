@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: commit-status
-      serviceAccountName: argo-hub.gitlab.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Report a commit status check'
@@ -78,7 +77,6 @@ spec:
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
 
     - name: create-pr
-      serviceAccountName: argo-hub.gitlab.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Create a pull request'
@@ -118,7 +116,6 @@ spec:
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
 
     - name: create-pr-comment
-      serviceAccountName: argo-hub.gitlab.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Create a pull request comment'
@@ -154,7 +151,6 @@ spec:
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
 
     - name: extract-webhook-variables
-      serviceAccountName: argo-hub.gitlab.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Parses the GitLab Event Payload (JSON) and output the most useful payload fields as artifact files.'
