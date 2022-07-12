@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.0 (12.7.2022)
+
+Add bitbucket support to image-enricher-git-info plugin
+
+## v1.1.0 (28.6.2022)
+
+Refactor. Added new output param `exit_error` to all templates that stores the error message in case template execution failed.
+
 ## v1.0.1 (20.6.2022)
 
 Updated all images to be based on debian distro to avoid DNS issues found on alpine

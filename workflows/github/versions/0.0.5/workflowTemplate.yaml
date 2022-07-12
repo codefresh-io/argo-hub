@@ -35,7 +35,11 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
+<<<<<<< HEAD
         image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-commit-status:codefresh
+=======
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-commit-status:main
+>>>>>>> origin/main
         command:
           - node
           - index.js
@@ -83,7 +87,7 @@ spec:
       script:
         workingDir: '{{ inputs.artifacts.repo.path }}'
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr:codefresh
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr:main
         command: [sh]
         source: |
           git checkout {{inputs.parameters.BRANCH}}
@@ -121,7 +125,11 @@ spec:
             default: 'github.com'
       script:
         imagePullPolicy: Always
+<<<<<<< HEAD
         image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr-comment:codefresh
+=======
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr-comment:main
+>>>>>>> origin/main
         command: [sh]
         source: |
           gh pr --repo {{ inputs.parameters.REPO_OWNER }}/{{ inputs.parameters.REPO_NAME }} \
@@ -145,7 +153,11 @@ spec:
         parameters:
         - name: GITHUB_JSON
       container:
+<<<<<<< HEAD
         image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-extract-webhook-variables:codefresh
+=======
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-extract-webhook-variables:main
+>>>>>>> origin/main
         command: ["python3"]
         args: ["/parse_github_payload.py"]
         env:
@@ -288,7 +300,11 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
+<<<<<<< HEAD
         image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr-codefresh:codefresh
+=======
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr-codefresh:main
+>>>>>>> origin/main
         command:
           - yarn
           - start
