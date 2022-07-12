@@ -78,6 +78,8 @@ spec:
           - name: MESSAGE
           - name: PR_TEMPLATE
           - name: GITHUB_TOKEN_SECRET
+          - name: GITHUB_USER
+            default: 'x-access-token'
       script:
         workingDir: '{{ inputs.artifacts.repo.path }}'
         imagePullPolicy: Always
