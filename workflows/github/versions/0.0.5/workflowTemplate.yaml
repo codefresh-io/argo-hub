@@ -83,7 +83,7 @@ spec:
       script:
         workingDir: '{{ inputs.artifacts.repo.path }}'
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.5-images-create-pr:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-github-versions-0.0.4-images-create-pr:main
         command: [sh]
         source: |
           git checkout {{inputs.parameters.BRANCH}}
