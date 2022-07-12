@@ -34,7 +34,7 @@ class BitbucketService {
                 committerUsername: bitBucketBranch.target.author.user.nickname
             }
         } catch (error) {
-            if (_.get(error, 'response.statusCode') === 404) {
+            if (_.get(error, 'status') === 404) {
                 // branch could be delete, but PR still can be found
                 return
             }
