@@ -4,6 +4,7 @@ const _ = require('lodash')
 const providers = {
     GITHUB: 'github',
     BITBUCKET: 'bitbucket',
+    BITBUCKET_SERVER: 'bitbucket-server',
     GITLAB: 'gitlab'
 }
 
@@ -25,6 +26,11 @@ const inputs = {
     // gitlab
     gitlabHost: process.env.GITLAB_HOST_URL?.trim() || 'https://gitlab.com',
     gitlabToken: process.env.GITLAB_TOKEN?.trim(),
+
+    // bitbucket
+    bitbucketHost: process.env.BITBUCKET_HOST_URL?.trim() || 'https://api.bitbucket.org/2.0',
+    bitbucketUsername: process.env.BITBUCKET_USERNAME?.trim(),
+    bitbucketPassword: process.env.BITBUCKET_PASSWORD?.trim(),
 
     commitsByUserLimit: Number(process.env.CF_COMMITS_BY_USER_LIMIT?.trim()) || 5,
 };
@@ -53,6 +59,13 @@ const schema = Joi.object({
     then: Joi.object({
         GITLAB_HOST_URL: Joi.string().uri().empty(''),
         GITLAB_TOKEN: Joi.string().required()
+    })
+})
+.when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.BITBUCKET_SERVER, providers.BITBUCKET) }).unknown(), {
+    then: Joi.object({
+        BITBUCKET_HOST_URL: Joi.string().uri().empty(''),
+        BITBUCKET_USERNAME: Joi.string().required(),
+        BITBUCKET_PASSWORD: Joi.string().required()
     })
 });
 

@@ -2,6 +2,7 @@ const inputs = require('../configuration').inputs;
 const providers = require('../configuration').providers;
 const GithubService = require('./github');
 const BitbucketService = require('./bitbucket');
+const BitbucketServerService = require('./bitbucket-server');
 const GitlabService = require('./gitlab');
 
 class GitProviders {
@@ -12,6 +13,8 @@ class GitProviders {
                 return GithubService;
             case providers.BITBUCKET:
                 return BitbucketService;
+            case providers.BITBUCKET_SERVER:
+                return BitbucketServerService;
             case providers.GITLAB:
                 return GitlabService;
             default:
