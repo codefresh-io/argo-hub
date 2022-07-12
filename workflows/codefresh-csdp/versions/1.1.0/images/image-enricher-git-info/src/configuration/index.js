@@ -61,14 +61,7 @@ const schema = Joi.object({
         GITLAB_TOKEN: Joi.string().required()
     })
 })
-.when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.BITBUCKET_SERVER) }).unknown(), {
-    then: Joi.object({
-        BITBUCKET_HOST_URL: Joi.string().uri().empty(''),
-        BITBUCKET_USERNAME: Joi.string().required(),
-        BITBUCKET_PASSWORD: Joi.string().required()
-    })
-})
-.when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.BITBUCKET) }).unknown(), {
+.when(Joi.object({ GIT_PROVIDER: Joi.valid(providers.BITBUCKET_SERVER, providers.BITBUCKET) }).unknown(), {
     then: Joi.object({
         BITBUCKET_HOST_URL: Joi.string().uri().empty(''),
         BITBUCKET_USERNAME: Joi.string().required(),

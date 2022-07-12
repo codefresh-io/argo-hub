@@ -37,7 +37,7 @@ class BitbucketServerService {
                 committerUsername: _.get(bitBucketBranch, 'author.emailAddress')
             }
         } catch (error) {
-            if (_.get(error, 'response.statusCode') === 404) {
+            if (_.get(error, 'statusCode') === 404) {
                 // branch could be delete, but PR still can be found
                 return
             }
