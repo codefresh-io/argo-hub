@@ -1,7 +1,3 @@
-FROM golang:alpine
-
-RUN apk update
-RUN apk add git curl
-RUN go install github.com/github/hub@latest
-
+FROM debian:stable-slim
+RUN apt update -y && apt install git curl hub=2.14.2~ds1-1+b4 -y
 ENTRYPOINT hub
