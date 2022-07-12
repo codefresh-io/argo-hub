@@ -34,6 +34,7 @@ class BitbucketServerApi {
 
     async getBranch(repo, branch) {
         const [ workspace, repoSlug ] = this._getRepoSlugAndWorkspaceFromRepo(repo);
+        // API does not have request to retrieve branch info, so we used request to retrieve commits for branch
         const result = await this._sendGetRequest(`rest/api/latest/projects/${workspace}/repos/${repoSlug}/commits?until=${branch}&limit=0&start=0`);
         const branchInfo = _.get(result, 'values[0]');
         if (!branchInfo) {
@@ -57,7 +58,7 @@ class BitbucketServerApi {
             result = await this._sendGetRequest(`projects/${workspace}/repos/${repoSlug}/pull-requests/${pr.id}/commits?start=${result.nextPageStart}&limit=50&avatarSize=64&contents`);
             reversedCommits.push(...result.values);
         }
-        const commits = _.reverse(reversedCommits);
+        const commits = _.reverse(reversedCommits); // request does not have sorting params and returns commits with DESC order
         if (commits && commits.length > 0) {
             const firstCommitDate = commits[0].committerTimestamp;
             const lastCommitDate = _.last(commits).committerTimestamp;

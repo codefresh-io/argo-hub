@@ -26,7 +26,7 @@ class BitbucketApi {
 
     async getPullRequests(repo, branch) {
         const [ workspace, repoSlug ] = repo.split('/');
-        const result = await this.api.pullrequests.list({ pagelen: 50, repo_slug: repoSlug, workspace, fields: '+values.participants', q: `source.branch.name~"${branch}"` });
+        const result = await this.api.pullrequests.list({ pagelen: 50, repo_slug: repoSlug, workspace, fields: '+values.participants', q: `source.branch.name="${branch}"` });
         return _.get(result, 'data.values', []);
     }
 
