@@ -95,6 +95,9 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
                 key: token
+          - name: GITHUB_USER
+            value: '{{ inputs.parameters.GITHUB_USER }}'
+              
 
     - name: create-pr-comment
       serviceAccountName: argo-hub.github.0.0.5
