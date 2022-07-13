@@ -17,7 +17,6 @@ spec:
   templates:
 
     - name: promote-from-src-to-dest-env
-      serviceAccountName: argo-hub.gitops-promotion.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a GitOps repo and copy an image or chart value from a YAML file in one environment/directory to a corresponding file in another'
@@ -121,7 +120,6 @@ spec:
         - name: HELM_DEP_PATTERN
           value: "{{inputs.parameters.helm-dep-pattern}}"
     - name: promote-from-src-to-dest-env-s3
-      serviceAccountName: argo-hub.gitops-promotion.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Take a cloned GitOps repo from an S3 artifact and copy an image/chart value from a YAML file in one environment/directory to a corresponding file in another'
@@ -239,7 +237,6 @@ spec:
           value: "{{inputs.parameters.helm-dep-pattern}}"
 
     - name: promote-to-env
-      serviceAccountName: argo-hub.gitops-promotion.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a GitOps repo and apply a new image/chart value to a YAML file in one of its environment directories'
@@ -343,7 +340,6 @@ spec:
         - name: HELM_DEP_PATTERN
           value: "{{inputs.parameters.helm-dep-pattern}}"
     - name: promote-to-env-s3
-      serviceAccountName: argo-hub.gitops-promotion.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Take a cloned GitOps repo from an S3 artifact and apply a new image/chart value to a YAML file in one of its environment directories'

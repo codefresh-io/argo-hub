@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: clone-s3
-      serviceAccountName: argo-hub.git.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a repository and push it as an artifact to s3, the s3 repository would not store in .git/config the remote url'
@@ -52,7 +51,6 @@ spec:
         args: ["ls"]
 
     - name: clone
-      serviceAccountName: argo-hub.git.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Clone a git http(s) url into a specified output artifact (requires git token). Note: the repository would store in .git/config the remote url & token as remote origin url'
@@ -87,7 +85,6 @@ spec:
             path: /tmp/repo
 
     - name: commit
-      serviceAccountName: argo-hub.git.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Commit (& push) a git (input) artifact repository, Requires the use of : git/clone template which stores the remote origin url in .git/config, see: "git config --get remote.origin.url" '

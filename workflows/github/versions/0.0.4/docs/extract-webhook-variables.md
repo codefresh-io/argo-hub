@@ -68,7 +68,6 @@ spec:
               spec:
                 workflowTemplateRef:
                   name: example-steps
-                serviceAccountName: argo-hub.github.0.0.4
                 arguments:
                   parameters:
                     - name: GITHUB_JSON
