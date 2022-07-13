@@ -38,8 +38,20 @@ const OUTPUTS = {
     EXIT_ERROR: 'exit_error'
 }
 
+ensureOutputFilesExists()
+
+function handleProcessException(err) {
+    const outputErrMessage = `${err.name}: ${err.message}`
+    storeOutputParam(OUTPUTS.EXIT_ERROR, outputErrMessage)
+
+    console.error(err);
+    process.exit(1);
+}
+
+process.addListener('uncaughtException', handleProcessException)
+process.addListener('unhandledRejection', handleProcessException)
+
 module.exports = {
     storeOutputParam,
-    ensureOutputFilesExists,
     OUTPUTS
 }

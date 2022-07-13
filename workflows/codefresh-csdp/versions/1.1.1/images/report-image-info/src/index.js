@@ -1,11 +1,16 @@
+// registering error handler
+require('./outputs')
+
 const { GraphQLClient, gql, ClientError } = require('graphql-request')
 const _ = require('lodash')
 
-const { OUTPUTS, storeOutputParam, ensureOutputFilesExists } = require('./outputs')
+const { OUTPUTS, storeOutputParam } = require('./outputs')
 const createRegistryClient = require('./registry-client')
 const configuration = require('./configuration');
 
-const run = async () => {
+async function main() {
+    console.log('starting image reporter')
+
     const [ validationError, inputs ] = configuration.validateInputs()
 
     if (validationError) {
@@ -109,20 +114,5 @@ const _handleQlError = (prefix) => (e) => {
         ? `${prefix} (${formattedMessage || e.message})`
         : formattedMessage || e.message);
 }
-
-const main = async () => {
-    try {
-        ensureOutputFilesExists()
-
-        console.log('starting image reporter')
-        await run();
-    } catch (err) {
-        const outputErrMessage = `${err.name}: ${err.message}`
-        storeOutputParam(OUTPUTS.EXIT_ERROR, outputErrMessage)
-
-        console.error(err);
-        process.exit(1);
-    }
-};
 
 main();
