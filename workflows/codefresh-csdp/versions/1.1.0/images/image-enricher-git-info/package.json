@@ -11,6 +11,7 @@
   "dependencies": {
     "@gitbeaker/node": "^35.6.0",
     "@octokit/rest": "18.0.0",
+    "bitbucket": "2.7.0",
     "bluebird": "3.7.2",
     "chalk": "^4.1.0",
     "graphql": "^16.4.0",
