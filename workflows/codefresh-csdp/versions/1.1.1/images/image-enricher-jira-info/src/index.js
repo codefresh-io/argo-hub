@@ -1,12 +1,16 @@
+// registering error handler
+require('./outputs');
+
 const _ = require('lodash');
 const chalk = require('chalk');
 
 const jiraService = require('./jira.service');
 const codefreshApi = require('./codefresh.api');
 const configuration = require('./configuration');
-const { storeOutputParam, OUTPUTS, ensureOutputFilesExists } = require('./outputs');
 
-async function run() {
+async function main() {
+    console.log('starting jira enricher')
+
     const [ validationError, inputs ] = configuration.validateInputs()
 
     if (validationError) {
@@ -61,20 +65,5 @@ async function run() {
         console.log(chalk.green(`codefresh assigned issue ${normalizedIssue} to your image ${inputs.imageName}`));
     }
 }
-
-const main = async () => {
-    try {
-        ensureOutputFilesExists()
-
-        console.log('starting jira enricher')
-        await run();
-    } catch (err) {
-        const outputErrMessage = `${err.name}: ${err.message}`
-        storeOutputParam(OUTPUTS.EXIT_ERROR, outputErrMessage)
-
-        console.error(err);
-        process.exit(1);
-    }
-};
 
 main();

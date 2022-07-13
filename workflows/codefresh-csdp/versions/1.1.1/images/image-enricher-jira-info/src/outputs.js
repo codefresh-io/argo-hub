@@ -1,5 +1,8 @@
 const fs = require('fs')
 
+// Outputs are used to provide some data about the template execution.
+// They are used by 3rd-party CI image-reporting feature.
+
 const storeOutputParam = (name, value) => {
     const OUTPUT_DIR = '/cf-outputs';
     const OUTPUT_FILE = `${OUTPUT_DIR}/${name}`
@@ -35,8 +38,20 @@ const OUTPUTS = {
     EXIT_ERROR: 'exit_error'
 }
 
+ensureOutputFilesExists()
+
+function handleProcessException(err) {
+    const outputErrMessage = `${err.name}: ${err.message}`
+    storeOutputParam(OUTPUTS.EXIT_ERROR, outputErrMessage)
+
+    console.error(err);
+    process.exit(1);
+}
+
+process.addListener('uncaughtException', handleProcessException)
+process.addListener('unhandledRejection', handleProcessException)
+
 module.exports = {
     storeOutputParam,
-    ensureOutputFilesExists,
     OUTPUTS
 }
