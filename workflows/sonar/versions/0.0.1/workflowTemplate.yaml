@@ -43,7 +43,6 @@ spec:
         workingDir: /tmp/repo
         env:
           - name: SONAR_TOKEN
-            # value: 3d579e60c07d98eb0a39aa26c0e61e25661e7c3f
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.SONAR_LOGIN }}'
