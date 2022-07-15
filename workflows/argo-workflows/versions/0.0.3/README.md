@@ -6,8 +6,9 @@ Templates that allow you to interact with your Argo Workflow instance and provid
 
 ## Templates
 
-1. [submit-workflow](https://github.com/codefresh-io/argo-hub/blob/main/workflows/argo-workflows/versions/0.0.3/docs/submit-workflow.md) 
+1. [submit-workflow](https://github.com/codefresh-io/argo-hub/blob/main/workflows/argo-workflows/versions/0.0.3/docs/submit-workflow.md)
 2. [terminate-workflow](https://github.com/codefresh-io/argo-hub/blob/main/workflows/argo-workflows/versions/0.0.3/docs/terminate-workflow.md)
+3. [stop-workflow](https://github.com/codefresh-io/argo-hub/blob/main/workflows/argo-workflows/versions/0.0.3/docs/stop-workflow.md)
 
 ## Security
 
