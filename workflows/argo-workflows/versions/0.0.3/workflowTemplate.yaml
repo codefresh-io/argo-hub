@@ -84,3 +84,30 @@ spec:
           - "{{ inputs.parameters.LABEL_SELECTOR }},workflows.argoproj.io/phase=Running"
           - --field-selector
           - "{{ inputs.parameters.FIELD_SELECTOR }}"
+
+    - name: stop-workflow
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of argo cli stop operation'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+          - name: LABEL_SELECTOR
+            default: ''
+          - name: FIELD_SELECTOR
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: argoproj/argocli:v3.2.6
+        command:
+          - argo
+          - stop
+          - '{{ inputs.parameters.NAME }}'
+          - --selector
+          - "{{ inputs.parameters.LABEL_SELECTOR }},workflows.argoproj.io/phase=Running"
+          - --field-selector
+          - "{{ inputs.parameters.FIELD_SELECTOR }}"
