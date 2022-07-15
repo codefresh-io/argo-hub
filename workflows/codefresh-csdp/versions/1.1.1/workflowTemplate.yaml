@@ -1,9 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.codefresh-csdp.1.1.0
+  name: argo-hub.codefresh-csdp.1.1.1
   annotations:
-    argo-hub/version: '1.1.0'
+    argo-hub/version: '1.1.1'
     argo-hub/name: 'CSDP-metadata'
     argo-hub/description: 'Templates that execute operations against CSDP'
     argo-hub/license: 'MIT'
@@ -17,7 +17,7 @@ metadata:
 spec:
   templates:
     - name: image-enricher-git-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.0
+      serviceAccountName: argo-hub.codefresh-csdp.1.1.1
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich images with metadata and annotation such as PR, commits, committers'
@@ -58,6 +58,14 @@ spec:
             default: 'gitlab'
           - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
+          - name: BITBUCKET_HOST_URL
+            default: 'https://api.bitbucket.org/2.0'
+          - name: BITBUCKET_SECRET_NAME
+            default: 'bitbucket'
+          - name: BITBUCKET_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: BITBUCKET_PASSWORD_SECRET_KEY
+            default: 'password'
 
       outputs:
         parameters:
@@ -68,7 +76,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.1.0-images-image-enricher-git-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.1.1-images-image-enricher-git-info:main
         command:
           - node
           - /app/src/index.js
@@ -110,8 +118,22 @@ spec:
                 name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
                 optional: true
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
+          - name: BITBUCKET_HOST_URL
+            value: '{{ inputs.parameters.BITBUCKET_HOST_URL }}'
+          - name: BITBUCKET_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.BITBUCKET_SECRET_NAME }}'
+                optional: true
+                key: '{{ inputs.parameters.BITBUCKET_USERNAME_SECRET_KEY }}'
+          - name: BITBUCKET_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.BITBUCKET_SECRET_NAME }}'
+                optional: true
+                key: '{{ inputs.parameters.BITBUCKET_PASSWORD_SECRET_KEY }}'
     - name: image-enricher-jira-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.0
+      serviceAccountName: argo-hub.codefresh-csdp.1.1.1
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich images with metadata and annotation such as ticket number, title, assignee, status'
@@ -157,7 +179,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.1.0-images-image-enricher-jira-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.1.1-images-image-enricher-jira-info:main
         command:
           - node
           - /app/src/index.js
@@ -192,7 +214,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_TOKEN_SECRET }}'
                 key: '{{ inputs.parameters.JIRA_EMAIL_SECRET_KEY }}'
     - name: report-image-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.0
+      serviceAccountName: argo-hub.codefresh-csdp.1.1.1
       metadata:
         annotations:
           argo-hub-template/description: 'Report image info to argo platform'

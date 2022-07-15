@@ -13,9 +13,8 @@ class GitlabApi {
     }
 
     async getCommitsInfo(repo, pr) {
-        const reversedCommits = await this.api.MergeRequests.commits(repo, pr.iid);
-        const avatarsByName = await this._getParticipantsAvatars(repo, pr.iid);
-        const commits = _.reverse(reversedCommits);
+        const commits = await this.api.MergeRequests.commits(repo, pr.iid);
+        const avatarsByName = await this._getParticipantsAvatars(repo, pr.iid)
         if (commits && commits.length > 0) {
             const firstCommitDate = commits[0].created_at;
             const lastCommitDate = _.last(commits).created_at;
@@ -35,8 +34,7 @@ class GitlabApi {
                     url: commit.web_url,
                     userName,
                     sha: commit.id,
-                    message: commit.message,
-                    commitDate: commit.created_at
+                    message: commit.message
                 });
             }
             return {
