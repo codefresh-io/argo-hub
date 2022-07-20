@@ -6,6 +6,7 @@ Script to send a message to a named Slack channel
 import os
 import sys
 import logging
+import json
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
@@ -13,9 +14,10 @@ def main():
     log_format = "%(asctime)s:%(levelname)s:%(name)s.%(funcName)s: %(message)s"
     logging.basicConfig(format = log_format, level = os.environ['LOG_LEVEL'].upper())
 
-    channel=os.getenv('SLACK_CHANNEL')
-    message=os.getenv('SLACK_MESSAGE', "")
-    token  =os.getenv('SLACK_TOKEN')
+    channel     =os.getenv('SLACK_CHANNEL')
+    message     =os.getenv('SLACK_MESSAGE', "")
+    token       =os.getenv('SLACK_TOKEN')
+    attachments =os.getenv('SLACK_ATTACHMENTS', "")
 
     if ( channel == None ):
         logging.error("SLACK_CHANNEL is not defined")
@@ -24,6 +26,13 @@ def main():
     if ( token == None ):
         logging.error("SLACK_TOKEN is not defined")
         sys.exit(1)
+
+    if ( attachments != "" ):
+        try:
+            attachments = json.loads(attachments)
+        except ValueError as e:
+            logging.error(f"Error decoding attachments: {e}")
+            sys.exit(3)
 
     logging.info("Connecting to Slack")
     client = WebClient(token=token)
@@ -41,8 +50,7 @@ def main():
             sys.exit(3)
 
     try:
-        response = client.chat_postMessage(channel=channel, text=message)
-        assert response["message"]["text"] == message
+        response = client.chat_postMessage(channel=channel, text=message, attachments=attachments)
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
         assert e.response["ok"] is False
