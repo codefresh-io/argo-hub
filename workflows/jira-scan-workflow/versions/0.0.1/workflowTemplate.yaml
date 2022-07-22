@@ -64,11 +64,11 @@ spec:
           - name: ISSUE_SUMMARY
             default: ''
           - name: ISSUE_DESCRIPTION
-            default: ''
+            default: 'Start of new workflow'
           - name: ISSUE_COMPONENTS
             default: ''
           - name: ISSUE_TYPE
-            default: ''
+            default: 'task'
           - name: REVISION
             default: main
           - name: IMAGE_NAME
@@ -88,10 +88,10 @@ spec:
             default: cf-secret
           - name: CF_API_KEY_SECRET_KEY
             default: token
-          - name: IMAGE_SHA
           - name: GIT_PROVIDER
             default: github
           - name: SONAR_HOST_URL
+            default: 'https://sonarcloud.io'
           # Create sonar secret and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic sonar-secret \
           #   --from-literal=token=$SONAR_TOKEN --dry-run=client \
@@ -101,13 +101,26 @@ spec:
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
           - name: COMMENT_BODY
-            default: ''
+            default: 'Image test and scan successful'
+          # Create sonar secret and apply it to your cluster under the runtime namespace
+          #   kubectl create secret generic dockerhub-creds \
+          #   --from-literal=username=$DOCKER_USERNAME --dry-run=client \
+          #   --from-literal=password=$DOCKER_PASSWORD --dry-run=client \
+          #   --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
+          - name: DOCKERHUB_SECRET
+            default: 'dockerhub-creds'
+          - name: DOCKER_USERNAME_SECRET_KEY
+            default: 'username'
+          - name: DOCKER_PASSWORD_SECRET_KEY
+            default: 'password'
           - name: value-to-promote
           - name: env
           - name: svc-name-list
           - name: file-path-pattern
           - name: promotion-type
+            default: kustomize-image
           - name: kust-image-pattern
+            default: '[[SVC_NAME]]'
       dag:
         tasks:
           # clone github repository
@@ -222,6 +235,28 @@ spec:
                   value: 'Get started'
                 - name: VERBOSE
                   value: '{{ inputs.parameters.VERBOSE }}'
+          
+          # reports image to argo platform
+          - name: report-image-info
+            templateRef:
+              name: argo-hub.codefresh-csdp.1.1.0
+              template: report-image-info
+            arguments:
+              parameters:
+                - name: CF_API_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY }}'
+                - name: CF_API_KEY_SECRET_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+                - name: IMAGE_NAME
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                - name: DOCKERHUB_USERNAME
+                  value: '{{ inputs.parameters.DOCKERHUB_SECRET }}'
+                - name: USERNAME_SECRET_KEY
+                  value: '{{ inputs.parameters.DOCKER_USERNAME_SECRET_KEY }}'
+                - name: DOCKERHUB_PASSWORD
+                  value: '{{ inputs.parameters.DOCKERHUB_SECRET }}'
+                - name: PASSWORD_SECRET_KEY
+                  value: '{{ inputs.parameters.DOCKER_PASSWORD_SECRET_KEY }}'
 
           # enrich image with git info
           # https://codefresh.io/argohub/workflow-template/CSDP-metadata
@@ -236,9 +271,9 @@ spec:
                 - name: CF_API_KEY_SECRET_KEY
                   value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
                 - name: IMAGE_NAME
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: "{{tasks.report-image-info.outputs.parameters.image-name}}"
                 - name: IMAGE_SHA
-                  value: '{{ inputs.parameters.IMAGE_SHA }}'
+                  value: "{{tasks.report-image-info.outputs.parameters.image-sha}}"
                 - name: GIT_PROVIDER
                   value: '{{ inputs.parameters.GIT_PROVIDER }}'
                 - name: REPO
@@ -263,9 +298,9 @@ spec:
                 - name: CF_API_KEY_SECRET_KEY
                   value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
                 - name: IMAGE_NAME
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: "{{tasks.report-image-info.outputs.parameters.image-name}}"
                 - name: IMAGE_SHA
-                  value: '{{ inputs.parameters.IMAGE_SHA }}'
+                  value: "{{tasks.report-image-info.outputs.parameters.image-sha}}"
                 - name: JIRA_PROJECT_PREFIX
                   value: '{{ inputs.parameters.ISSUE_PROJECT }}'
                 - name: JIRA_MESSAGE
