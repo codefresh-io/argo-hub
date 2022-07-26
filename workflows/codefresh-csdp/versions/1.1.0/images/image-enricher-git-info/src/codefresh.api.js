@@ -22,7 +22,7 @@ class CodefreshAPI {
             ? `${prefix} (${formattedMessage || e.message})`
             : formattedMessage || e.message);
     }
-    
+
     async getContext(name) {
         try {
             return await rp({
@@ -48,17 +48,18 @@ class CodefreshAPI {
         return await graphQLClient.request(query, variables);
     }
 
-    async patchImageWithGitBranchData(imageDigest, branch) {
+    async patchImageWithGitBranchData(imageDigest, branch, imageName) {
         console.log(chalk.green(`patching image with data from branch: ${branch.name}`));
         try {
 
-            const patchImageBinaryMutation = gql`mutation patchImageBinary($imageId: String!, $imagePatch: ImageBinaryPatchInput!) {
-                patchImageBinary(imageId: $imageId, imagePatch: $imagePatch) {
+            const patchImageBinaryMutation = gql`mutation patchImageBinary($imageId: String!, $imagePatch: ImageBinaryPatchInput!, $imageName: String) {
+                patchImageBinary(imageId: $imageId, imagePatch: $imagePatch, imageName: $imageName) {
                     imageName
                 }
             }`;
             const vars = {
                 imageId: imageDigest,
+                imageName,
                 imagePatch: {
                     branch: branch.name,
                     commit: branch.commit,
