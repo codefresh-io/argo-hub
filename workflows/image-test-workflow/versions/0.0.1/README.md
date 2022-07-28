@@ -12,4 +12,4 @@ This Workflow Template is used to create a CI/CD pipeline that createes an image
 
 Minimal required permissions
 
-[Full rbac permissions list](./rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/image-test-template/versions/0.0.1/rbac.yaml)

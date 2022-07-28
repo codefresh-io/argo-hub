@@ -120,6 +120,11 @@ spec:
                   value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
 
     - name: mysql-service
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Builds a service container for mysql'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: MYSQL_SECRET
@@ -161,6 +166,11 @@ spec:
             value: '{{ inputs.parameters.MYSQL_HOST }}'
 
     - name: mysql-client
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Intializes the service container and tests the image'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs: 
         parameters:
           - name: IMAGE
