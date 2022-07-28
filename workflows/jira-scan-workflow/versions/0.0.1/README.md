@@ -12,4 +12,4 @@ This Workflow Template is used to create a CI/CD pipeline that clones both a sou
 
 Minimal required permissions
 
-[Full rbac permissions list](./rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-template/versions/0.0.1/rbac.yaml)
