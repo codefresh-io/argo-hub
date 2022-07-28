@@ -55,7 +55,7 @@ no outputs
 
 ## Examples
 
-### task Example
+### Task Example
 ```
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
