@@ -183,3 +183,4 @@ spec:
           nc -z test_mysql_db 3306
           cd /usr/src/app
           npm test
+          
