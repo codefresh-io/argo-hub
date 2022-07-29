@@ -2,7 +2,7 @@
 
 ## Summary
 
-This Workflow Template is used to create a CI/CD pipeline that createes an image and tests the image through a service container
+This Workflow Template is used to create a CI/CD pipeline that creates and tests an image through a service container
 
 ## Templates
 
