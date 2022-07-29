@@ -322,7 +322,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.1.0-images-report-image-info:main
+        image: quay.io/codefreshplugins/argo-hub-workflows-codefresh-csdp-versions-1.1.1-images-report-image-info:main
         volumeMounts:
           - name: gcr-key-file
             mountPath: /gcr/
@@ -330,7 +330,7 @@ spec:
             mountPath: /.docker/
         command:
           - node
-          - index.js
+          - /app/src/index.js
         env:
           - name: CF_API_KEY
             valueFrom:
