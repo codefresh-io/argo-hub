@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
   volumes:
@@ -27,7 +27,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Builds a docker image using Kaniko, creates and updates a jira through each step, scans and tests the image repo, and deploys using a canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -491,7 +491,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Test image pulling correctly and printing it content files'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -506,7 +506,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 10% canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -528,7 +528,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 33% canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -547,7 +547,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 100% canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
