@@ -6,11 +6,10 @@ This Workflow Template is used to create a pipeline that takes a source reposito
 ## Inputs/Outputs
 
 ### Inputs
-* REPO_URL (required) - The github repository you want to clone that holds the source code (for example: https://github.com/codefresh-io/cli-v2)
+* REPO (required) - The github repository you want to clone that holds the source code (for example: https://github.com/codefresh-io/cli-v2)
 * IMAGE_NAME (required) - The image name to give to the built image
 * MYSQL_DATABASE (required) - name of mysql database
 * MYSQL_HOST (required) - mysql host name
-* DOCKER_CONFIG_SECRET (required) - The k8s secret name from type docker-registry with all registries credentials you need to pull from or push to. defaults secret name docker-config . https://codefresh.io/csdp-docs/docs/getting-started/quick-start/create-ci-pipeline/#create-docker-registry-secret
 
 
 ### Volumes 
@@ -69,25 +68,23 @@ spec:
       items:
       - key: .dockerconfigjson
         path: config.json
-      secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET}}'
+      secretName: 'docker-config'
   templates:
   - name: main
     dag:
       tasks:
       - name: workflow-template
         templateRef:
-          name: argo-hub.jira-sonar-template.0.0.1
+          name: argo-hub.image-test-template.0.0.1
           template: main
         arguments:
           parameters:
-          - name: REPO_URL
-            value: 'codefreshdemo/cf-example-unit-tests-with-composition'
+          - name: REPO
+            value: 'https://github.com/codefreshdemo/cf-example-unit-tests-with-composition'
           - name: IMAGE_NAME
             value: 'mysql-tests'
           - name: MYSQL_DATABASE
             value: nodejs
           - name: MYSQL_HOST
             value: test_mysql_db
-          - name: DOCKER_CONFIG_SECRET
-            value: 'docker-config'
 ```
