@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/image-test-workflow/assets/icon.svg"
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
   volumes:
@@ -27,7 +27,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Builds a docker image using Kaniko and tests the image through service containers'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -43,17 +43,14 @@ spec:
           #   --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
           - name: MYSQL_SECRET
             default: mysql-secret
-          - name: MYSQL_ROOT_PASSWORD
-            default: root-password
-          - name: MYSQL_USER
-            default: user
-          - name: MYSQL_PASSWORD
-            default: password
           - name: MYSQL_DATABASE
+            default: nodejs
           - name: MYSQL_HOST
-          - name: REPO_URL
+            default: test_mysql_db
+          - name: REPO
+            default: https://github.com/codefreshdemo/cf-example-unit-tests-with-composition
           - name: REVISION
-            default: main
+            default: master
           - name: IMAGE_NAME
           # Create git secret token and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic github-token \
@@ -78,8 +75,8 @@ spec:
               template: build
             arguments:
               parameters:
-                - name: REPO_URL
-                  value: '{{ inputs.parameters.REPO_URL }}'
+                - name: REPO
+                  value: '{{ inputs.parameters.REPO }}'
                 - name: REVISION
                   value: '{{ inputs.parameters.REVISION }}'
                 - name: IMAGE_NAME
@@ -95,17 +92,12 @@ spec:
 
           # create mysql service container
           - name: create-service-container
+            dependencies: [build-docker-image]
             template: mysql-service
             arguments:
               parameters:
                 - name: MYSQL_SECRET
                   value: '{{ inputs.parameters.MYSQL_SECRET }}'
-                - name: MYSQL_ROOT_PASSWORD
-                  value: '{{ inputs.parameters.MYSQL_ROOT_PASSWORD }}'
-                - name: MYSQL_USER
-                  value: '{{ inputs.parameters.MYSQL_USER }}'
-                - name: MYSQL_PASSWORD
-                  value: '{{ inputs.parameters.MYSQL_PASSWORD }}'
                 - name: MYSQL_DATABASE
                   value: '{{ inputs.parameters.MYSQL_DATABASE }}'
                 - name: MYSQL_HOST
@@ -113,6 +105,7 @@ spec:
 
           # intialize mysql service container and test
           - name: initialize-service-container
+            dependencies: [create-service-container]
             template: mysql-client
             arguments:
               parameters:
@@ -120,16 +113,15 @@ spec:
                   value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
 
     - name: mysql-service
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Build service container for MYSQL'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: MYSQL_SECRET
             default: mysql-secret
-          - name: MYSQL_ROOT_PASSWORD
-            default: root-password
-          - name: MYSQL_USER
-            default: user
-          - name: MYSQL_PASSWORD
-            default: password
           - name: MYSQL_DATABASE
           - name: MYSQL_HOST
       daemon: true
@@ -144,23 +136,28 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.MYSQL_SECRET }}'
-                key: '{{ inputs.parameters.MYSQL_ROOT_PASSWORD }}'
+                key: root-password
           - name: MYSQL_USER
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.MYSQL_USER }}'
-                key: '{{ inputs.parameters.MYSQL_ROOT_PASSWORD }}'
+                key: user
           - name: MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.MYSQL_PASSWORD }}'
-                key: '{{ inputs.parameters.MYSQL_ROOT_PASSWORD }}'
+                key: password
           - name: MYSQL_DATABASE
             value: '{{ inputs.parameters.MYSQL_DATABASE }}'
           - name: MYSQL_HOST
             value: '{{ inputs.parameters.MYSQL_HOST }}'
 
     - name: mysql-client
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Initialize service container and test image'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
       inputs: 
         parameters:
           - name: IMAGE
