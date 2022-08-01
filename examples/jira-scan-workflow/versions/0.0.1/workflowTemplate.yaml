@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
   volumes:
@@ -27,7 +27,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Builds a docker image using Kaniko, creates and updates a jira through each step, scans and tests the image repo, and deploys using a canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -64,11 +64,11 @@ spec:
           - name: ISSUE_SUMMARY
             default: ''
           - name: ISSUE_DESCRIPTION
-            default: ''
+            default: 'Start of new workflow pipeline'
           - name: ISSUE_COMPONENTS
             default: ''
           - name: ISSUE_TYPE
-            default: ''
+            default: 'task'
           - name: REVISION
             default: main
           - name: IMAGE_NAME
@@ -88,10 +88,10 @@ spec:
             default: cf-secret
           - name: CF_API_KEY_SECRET_KEY
             default: token
-          - name: IMAGE_SHA
           - name: GIT_PROVIDER
             default: github
           - name: SONAR_HOST_URL
+            default: 'https://sonarcloud.io'
           # Create sonar secret and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic sonar-secret \
           #   --from-literal=token=$SONAR_TOKEN --dry-run=client \
@@ -101,13 +101,28 @@ spec:
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
           - name: COMMENT_BODY
-            default: ''
-          - name: value-to-promote
-          - name: env
-          - name: svc-name-list
-          - name: file-path-pattern
-          - name: promotion-type
-          - name: kust-image-pattern
+            default: 'image test and scan complete'
+          - name: VALUE_TO_PROMOTE
+          - name: ENV
+          - name: SVC_NAME_LIST
+          - name: FILE_PATH_PATTERN
+          - name: PROMOTION_TYPE
+            default: kustomize-image
+          - name: KUST_IMAGE_PATTERN
+            default: [[SVC_NAME]]
+          # Create docker secret and apply it to your cluster under the runtime namespace
+          #   kubectl create secret generic docker-secret \
+          #   --from-literal=username=$DOCKERHUB_USERNAME --dry-run=client \
+          #   --from-literal=password=$PASSWORD_SECRET_KEY --dry-run=client \
+          #   --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
+          - name: DOCKERHUB_USERNAME
+            default: 'dockerhub-secret'
+          - name: USERNAME_SECRET_KEY
+            default: 'username'
+          - name: DOCKERHUB_PASSWORD
+            default: 'dockerhub-secret'
+          - name: PASSWORD_SECRET_KEY
+            default: 'password'
       dag:
         tasks:
           # clone github repository
@@ -124,7 +139,7 @@ spec:
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
             outputs:
               artifacts:
-                - name: REPO
+                - name: repo
                   path: '/tmp/repo'
 
           # clone github deployment repository
@@ -141,7 +156,7 @@ spec:
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
             outputs:
               artifacts:
-                - name: DEPLOYMENT
+                - name: deployment
                   path: '/tmp/deployment'
 
           # create a jira for the workflow
@@ -223,9 +238,34 @@ spec:
                 - name: VERBOSE
                   value: '{{ inputs.parameters.VERBOSE }}'
 
+          # report image to argo platform
+          # https://codefresh.io/argohub/workflow-template/CSDP-metadata
+          - name: report-image-info
+            dependencies: [transition-jira-in-progress]
+            templateRef:
+              name: argo-hub.codefresh-csdp.1.1.1
+              template: report-image-info
+            arguments:
+              parameters:
+                - name: CF_API_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY }}'
+                - name: CF_API_KEY_SECRET_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+                - name: IMAGE_NAME
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                - name: DOCKERHUB_USERNAME
+                  value: 'dockerhub-creds'
+                - name: USERNAME_SECRET_KEY
+                  value: 'username'
+                - name: DOCKERHUB_PASSWORD
+                  value: 'dockerhub-creds'
+                - name: PASSWORD_SECRET_KEY
+                  value: 'password'
+
           # enrich image with git info
           # https://codefresh.io/argohub/workflow-template/CSDP-metadata
           - name: image-enricher-git-info
+            dependencies: [report-image-info]
             templateRef:
               name: argo-hub.codefresh-csdp.1.1.0
               template: image-enricher-git-info
@@ -236,9 +276,9 @@ spec:
                 - name: CF_API_KEY_SECRET_KEY
                   value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
                 - name: IMAGE_NAME
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-name}}'
                 - name: IMAGE_SHA
-                  value: '{{ inputs.parameters.IMAGE_SHA }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-sha}}'
                 - name: GIT_PROVIDER
                   value: '{{ inputs.parameters.GIT_PROVIDER }}'
                 - name: REPO
@@ -253,6 +293,7 @@ spec:
           # enrich image with jira info
           # https://codefresh.io/argohub/workflow-template/CSDP-metadata
           - name: image-enricher-jira-info
+            dependencies: [report-image-info]
             templateRef:
               name: argo-hub.codefresh-csdp.1.1.0
               template: image-enricher-jira-info
@@ -263,9 +304,9 @@ spec:
                 - name: CF_API_KEY_SECRET_KEY
                   value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
                 - name: IMAGE_NAME
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-name}}'
                 - name: IMAGE_SHA
-                  value: '{{ inputs.parameters.IMAGE_SHA }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-sha}}'
                 - name: JIRA_PROJECT_PREFIX
                   value: '{{ inputs.parameters.ISSUE_PROJECT }}'
                 - name: JIRA_MESSAGE
@@ -281,6 +322,7 @@ spec:
 
           # test the image
           - name: test-image
+            dependencies: [image-enricher-jira-info, image-enricher-git-info]
             template: test
             arguments:
               parameters:
@@ -297,7 +339,7 @@ spec:
             arguments:
               artifacts:
                 - name: REPO
-                  from: "{{tasks.clone-step-repo.outputs.artifacts.REPO}}"
+                  from: "{{tasks.clone-step-repo.outputs.artifacts.repo}}"
               parameters:
                 - name: SONAR_HOST_URL
                   value: '{{ inputs.parameters.SONAR_HOST_URL }}'
@@ -366,21 +408,21 @@ spec:
             arguments:
               parameters:
                 - name: git-repo-url
-                  value: '{{ inputs.parameters.REPO_URL }}'
+                  value: '{{ inputs.parameters.DEPLOYMENT_URL }}'
                 - name: git-auth-secret
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
                 - name: value-to-promote
-                  value: '{{ inputs.parameters.value-to-promote }}'
+                  value: '{{ inputs.parameters.VALUE_TO_PROMOTE }}'
                 - name: env
-                  value: '{{ inputs.parameters.env }}'
+                  value: '{{ inputs.parameters.ENV }}'
                 - name: svc-name-list
-                  value: '{{ inputs.parameters.svc-name-list }}'
+                  value: '{{ inputs.parameters.SVC_NAME_LIST }}'
                 - name: file-path-pattern
-                  value: '{{ inputs.parameters.file-path-pattern }}'
+                  value: '{{ inputs.parameters.FILE_PATH_PATTERN }}'
                 - name: promotion-type
-                  value: '{{ inputs.parameters.promotion-type }}'
+                  value: '{{ inputs.parameters.PROMOTION_TYPE }}'
                 - name: kust-image-pattern
-                  value: '{{ inputs.parameters.kust-image-pattern }}'
+                  value: '{{ inputs.parameters.KUST_IMAGE_PATTERN }}'
         
           # begin canary rollout with 10% deployment
           - name: rollout-10
@@ -449,7 +491,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Test image pulling correctly and printing it content files'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -464,7 +506,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 10% canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -486,7 +528,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 33% canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -505,7 +547,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 100% canary rollout'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
