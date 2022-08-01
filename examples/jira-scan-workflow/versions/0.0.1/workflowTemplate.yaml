@@ -64,11 +64,11 @@ spec:
           - name: ISSUE_SUMMARY
             default: ''
           - name: ISSUE_DESCRIPTION
-            default: ''
+            default: 'Start of new workflow pipeline'
           - name: ISSUE_COMPONENTS
             default: ''
           - name: ISSUE_TYPE
-            default: ''
+            default: 'task'
           - name: REVISION
             default: main
           - name: IMAGE_NAME
@@ -88,10 +88,10 @@ spec:
             default: cf-secret
           - name: CF_API_KEY_SECRET_KEY
             default: token
-          - name: IMAGE_SHA
           - name: GIT_PROVIDER
             default: github
           - name: SONAR_HOST_URL
+            default: 'https://sonarcloud.io'
           # Create sonar secret and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic sonar-secret \
           #   --from-literal=token=$SONAR_TOKEN --dry-run=client \
@@ -101,13 +101,28 @@ spec:
           - name: SONAR_LOGIN_SECRET_KEY
             default: token
           - name: COMMENT_BODY
-            default: ''
+            default: 'image test and scan complete'
           - name: value-to-promote
           - name: env
           - name: svc-name-list
           - name: file-path-pattern
           - name: promotion-type
+            default: kustomize-image
           - name: kust-image-pattern
+            default: [[SVC_NAME]]
+          # Create docker secret and apply it to your cluster under the runtime namespace
+          #   kubectl create secret generic docker-secret \
+          #   --from-literal=username=$DOCKERHUB_USERNAME --dry-run=client \
+          #   --from-literal=password=$PASSWORD_SECRET_KEY --dry-run=client \
+          #   --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
+          - name: DOCKERHUB_USERNAME
+            default: 'dockerhub-secret'
+          - name: USERNAME_SECRET_KEY
+            default: 'username'
+          - name: DOCKERHUB_PASSWORD
+            default: 'dockerhub-secret'
+          - name: PASSWORD_SECRET_KEY
+            default: 'password'
       dag:
         tasks:
           # clone github repository
@@ -223,9 +238,34 @@ spec:
                 - name: VERBOSE
                   value: '{{ inputs.parameters.VERBOSE }}'
 
+          # report image to argo platform
+          # https://codefresh.io/argohub/workflow-template/CSDP-metadata
+          - name: report-image-info
+            dependencies: [transition-jira-in-progress]
+            templateRef:
+              name: argo-hub.codefresh-csdp.1.1.1
+              template: report-image-info
+            arguments:
+              parameters:
+                - name: CF_API_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY }}'
+                - name: CF_API_KEY_SECRET_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+                - name: IMAGE_NAME
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                - name: DOCKERHUB_USERNAME
+                  value: 'dockerhub-creds'
+                - name: USERNAME_SECRET_KEY
+                  value: 'username'
+                - name: DOCKERHUB_PASSWORD
+                  value: 'dockerhub-creds'
+                - name: PASSWORD_SECRET_KEY
+                  value: 'password'
+
           # enrich image with git info
           # https://codefresh.io/argohub/workflow-template/CSDP-metadata
           - name: image-enricher-git-info
+            dependencies: [report-image-info]
             templateRef:
               name: argo-hub.codefresh-csdp.1.1.0
               template: image-enricher-git-info
@@ -236,9 +276,9 @@ spec:
                 - name: CF_API_KEY_SECRET_KEY
                   value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
                 - name: IMAGE_NAME
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-name}}'
                 - name: IMAGE_SHA
-                  value: '{{ inputs.parameters.IMAGE_SHA }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-sha}}'
                 - name: GIT_PROVIDER
                   value: '{{ inputs.parameters.GIT_PROVIDER }}'
                 - name: REPO
@@ -253,6 +293,7 @@ spec:
           # enrich image with jira info
           # https://codefresh.io/argohub/workflow-template/CSDP-metadata
           - name: image-enricher-jira-info
+            dependencies: [report-image-info]
             templateRef:
               name: argo-hub.codefresh-csdp.1.1.0
               template: image-enricher-jira-info
@@ -263,9 +304,9 @@ spec:
                 - name: CF_API_KEY_SECRET_KEY
                   value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
                 - name: IMAGE_NAME
-                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-name}}'
                 - name: IMAGE_SHA
-                  value: '{{ inputs.parameters.IMAGE_SHA }}'
+                  value: '{{tasks.report-image-info.outputs.parameters.image-sha}}'
                 - name: JIRA_PROJECT_PREFIX
                   value: '{{ inputs.parameters.ISSUE_PROJECT }}'
                 - name: JIRA_MESSAGE
@@ -281,6 +322,7 @@ spec:
 
           # test the image
           - name: test-image
+            dependencies: [image-enricher-jira-info, image-enricher-git-info]
             template: test
             arguments:
               parameters:
@@ -366,7 +408,7 @@ spec:
             arguments:
               parameters:
                 - name: git-repo-url
-                  value: '{{ inputs.parameters.REPO_URL }}'
+                  value: '{{ inputs.parameters.DEPLOYMENT_URL }}'
                 - name: git-auth-secret
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
                 - name: value-to-promote
