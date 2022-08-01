@@ -12,10 +12,10 @@ This Workflow Template is used to create a CICD pipeline that clones both a sour
 * ISSUE_PROJECT (optional) - Jira project key: necessary for issue creation
 * ISSUE_SUMMARY (optional) - Jira issue summary (main title)
 * IMAGE_NAME (required) - The image name to give to the built image
-* value-to-promote (required) - New value to apply to the target environment.
-* env (required) - Replaces [[ENV]] in destination paths.
-* svc-name-list (required) - Space-separated list of microservices to promote. Each one replaces [[SVC_NAME]] in paths.
-* file-path-pattern (required) - Path to the source/destination YAML file.
+* VALUE_TO_PROMOTE (required) - New value to apply to the target environment.
+* ENV (required) - Replaces [[ENV]] in destination paths.
+* SVC_NAME_LIST (required) - Space-separated list of microservices to promote. Each one replaces [[SVC_NAME]] in paths.
+* FILE_PATH_PATTERN (required) - Path to the source/destination YAML file.
 
 ### Volumes 
 * docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG_SECRET name.
@@ -129,12 +129,12 @@ spec:
             value: Brandons test 4
           - name: IMAGE_NAME
             value: 'codefresh/argo-hub'
-          - name: value-to-promote
+          - name: VALUE_TO_PROMOTE
             value: aaaa1111
-          - name: env
+          - name: ENV
             value: dev
-          - name: svc-name-list
+          - name: SVC_NAME_LIST
             value: "example-image"
-          - name: file-path-pattern
+          - name: FILE_PATH_PATTERN
             value: "kustomize/example-app/overlays/[[ENV]]/kustomization.yaml"
 ```

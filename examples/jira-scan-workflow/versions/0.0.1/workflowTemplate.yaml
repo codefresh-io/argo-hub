@@ -102,13 +102,13 @@ spec:
             default: token
           - name: COMMENT_BODY
             default: 'image test and scan complete'
-          - name: value-to-promote
-          - name: env
-          - name: svc-name-list
-          - name: file-path-pattern
-          - name: promotion-type
+          - name: VALUE_TO_PROMOTE
+          - name: ENV
+          - name: SVC_NAME_LIST
+          - name: FILE_PATH_PATTERN
+          - name: PROMOTION_TYPE
             default: kustomize-image
-          - name: kust-image-pattern
+          - name: KUST_IMAGE_PATTERN
             default: [[SVC_NAME]]
           # Create docker secret and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic docker-secret \
@@ -139,7 +139,7 @@ spec:
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
             outputs:
               artifacts:
-                - name: REPO
+                - name: repo
                   path: '/tmp/repo'
 
           # clone github deployment repository
@@ -156,7 +156,7 @@ spec:
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
             outputs:
               artifacts:
-                - name: DEPLOYMENT
+                - name: deployment
                   path: '/tmp/deployment'
 
           # create a jira for the workflow
@@ -339,7 +339,7 @@ spec:
             arguments:
               artifacts:
                 - name: REPO
-                  from: "{{tasks.clone-step-repo.outputs.artifacts.REPO}}"
+                  from: "{{tasks.clone-step-repo.outputs.artifacts.repo}}"
               parameters:
                 - name: SONAR_HOST_URL
                   value: '{{ inputs.parameters.SONAR_HOST_URL }}'
@@ -412,17 +412,17 @@ spec:
                 - name: git-auth-secret
                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
                 - name: value-to-promote
-                  value: '{{ inputs.parameters.value-to-promote }}'
+                  value: '{{ inputs.parameters.VALUE_TO_PROMOTE }}'
                 - name: env
-                  value: '{{ inputs.parameters.env }}'
+                  value: '{{ inputs.parameters.ENV }}'
                 - name: svc-name-list
-                  value: '{{ inputs.parameters.svc-name-list }}'
+                  value: '{{ inputs.parameters.SVC_NAME_LIST }}'
                 - name: file-path-pattern
-                  value: '{{ inputs.parameters.file-path-pattern }}'
+                  value: '{{ inputs.parameters.FILE_PATH_PATTERN }}'
                 - name: promotion-type
-                  value: '{{ inputs.parameters.promotion-type }}'
+                  value: '{{ inputs.parameters.PROMOTION_TYPE }}'
                 - name: kust-image-pattern
-                  value: '{{ inputs.parameters.kust-image-pattern }}'
+                  value: '{{ inputs.parameters.KUST_IMAGE_PATTERN }}'
         
           # begin canary rollout with 10% deployment
           - name: rollout-10
