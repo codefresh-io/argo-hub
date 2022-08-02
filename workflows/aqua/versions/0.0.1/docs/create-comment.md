@@ -10,9 +10,8 @@ Execute an Aqua container security scan.
 * AQUA_SECRET (required) - The Kubernetes secret with Aqua log in credentials
 * AQUA_PASSWORD (optional) - The key in the Kubernetes secret with the Aqua password. Default is 'password'
 * AQUA_USERNAME (optional) - The key in the Kubernetes secret with the Aqua username. Default is 'username'
-* CF_ACCOUNT (optional) - Auto pulled from pipeline also replaces REGISTRY if not provided
 * IMAGE (required) - Docker Image Name
-* REGISTRY (optional) - Name of Codefresh Registry setup in Aqua
+* REGISTRY (required) - Name of Registry setup in Aqua
 * TAG (optional) - Docker Image Tag. Default is 'latest'
 
 ### Outputs
@@ -44,4 +43,6 @@ spec:
                         value: 'aqua-secret'
                     -   name: IMAGE
                         value: 'image'
+                    -   name: REGISTRY
+                        value: 'dockerhub'
 ```

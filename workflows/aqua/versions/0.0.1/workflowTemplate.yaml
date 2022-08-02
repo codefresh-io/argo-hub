@@ -39,8 +39,6 @@ spec:
             default: password
           - name: AQUA_USERNAME
             default: username
-          - name: CF_ACCOUNT 
-            default: ""
           - name: REGISTRY
             default: ""
           - name: TAG
@@ -48,7 +46,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/cfstep-aqua
+        image: quay.io/codefreshplugins/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
         command:
           - python
           - /aqua.py
@@ -67,8 +65,6 @@ spec:
                 key: '{{ inputs.parameters.AQUA_USERNAME }}'
           - name: IMAGE
             value: '{{ inputs.parameters.IMAGE }}'
-          - name: CF_ACCOUNT
-            value: '{{ inputs.parameters.CF_ACCOUNT }}'
           - name: REGISTRY
             value: '{{ inputs.parameters.REGISTRY }}'
           - name: TAG

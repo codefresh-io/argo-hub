@@ -39,8 +39,7 @@ def main():
     aqua_host = os.getenv('AQUA_HOST')
     aqua_password =  os.getenv('AQUA_PASSWORD')
     aqua_username =  os.getenv('AQUA_USERNAME')
-    cf_account = os.getenv('CF_ACCOUNT')
-    registry = os.getenv('REGISTRY', cf_account) 
+    registry = os.getenv('REGISTRY') 
     image = os.getenv('IMAGE')
     tag = os.getenv('TAG')
 
@@ -68,7 +67,7 @@ def main():
 
     headers = {"Authorization": "Bearer {}".format(jwt_token)}
     
-    full_docker_image = '{}/{}'.format(cf_account, image)
+    full_docker_image = '{}'.format(image)
     encoded_docker_image = urllib.parse.quote(full_docker_image, safe='')
 
     aqua_endpoint = '{}/api/v1/scanner/registry/{}/image/{}:{}'.format(aqua_host, registry, encoded_docker_image, tag)
@@ -105,7 +104,7 @@ def main():
 
     annotation_list = create_annotation_list(json_data['cves_counts'])
 
-    uri_docker_image = '{}~2F{}/{}'.format(cf_account, image.replace('/', '~2F'), tag)
+    uri_docker_image = '{}/{}'.format(image.replace('/', '~2F'), tag)
 
     annotations = '-l AQUA_REPORT="{}/ng#!/app/images/{}/{}" {}'.format(aqua_host, registry, uri_docker_image, annotation_list)
 
