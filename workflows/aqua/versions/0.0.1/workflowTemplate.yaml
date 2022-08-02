@@ -46,7 +46,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
+        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
         command:
           - python
           - /aqua.py
