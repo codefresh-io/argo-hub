@@ -1,21 +1,22 @@
-# create-comment
+# aqua-secuirty-scan
 
 ## Summary
-Create comment on Jira
+Execute an Aqua container security scan.
 
 ## Inputs/Outputs
 
 ### Inputs
-* COMMENT_BODY (optional) - Text to add to the comment
-* JIRA_API_KEY (required) - The Kubernetes secret with the jira access key
-* JIRA_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'api-key'
-* JIRA_BASE_URL (required) - Jira base url
-* JIRA_ISSUE_SOURCE_FIELD (optional) - Jira issue ID or key source field
-* JIRA_USERNAME (required) - The Kubernetes secret with the jira username
-* JIRA_USERNAME_SECRET_KEY (optional) - The key in the Kubernetes secret with the jira username. Default is 'username'
+* AQUA_HOST (required) - Aqua Host URI including protocol ex. https://aqua.mydomain.com
+* AQUA_SECRET (required) - The Kubernetes secret with Aqua log in credentials
+* AQUA_PASSWORD (optional) - The key in the Kubernetes secret with the Aqua password. Default is 'password'
+* AQUA_USERNAME (optional) - The key in the Kubernetes secret with the Aqua username. Default is 'username'
+* CF_ACCOUNT (optional) - Auto pulled from pipeline also replaces REGISTRY if not provided
+* IMAGE (required) - Docker Image Name
+* REGISTRY (optional) - Name of Codefresh Registry setup in Aqua
+* TAG (optional) - Docker Image Tag. Default is 'latest'
 
 ### Outputs
-* JIRA_COMMENT_ID - Jira comment ID to update a comment
+no outputs
 
 ## Examples
 
@@ -24,31 +25,23 @@ Create comment on Jira
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: jira-create-comment-
+  generateName: aqua-security-scan-
 spec:
     entrypoint: main
     templates:
     -   name: main
         dag:
             tasks:
-            -   name: create-comment
+            -   name: aqua-seciurity-scan
                 templateref:
-                    name: argo-hub.jira.0.0.1
-                    template: create-comment
+                    name: argo-hub.aqua.0.0.1
+                    template: aqua-seciurity-scan
                 arguments:
                     parameters:
-                    -   name: JIRA_BASE_URL
-                        value: 'https://company-name.atlassian.net/'
-                    -   name: JIRA_USERNAME
-                        value: 'jira-creds'
-                    -   name: JIRA_USERNAME_SECRET_KEY
-                        value: 'username'
-                    -   name: JIRA_API_KEY
-                        value: 'jira-creds'
-                    -   name: JIRA_API_KEY_SECRET_KEY
-                        value: 'api-key'
-                    -   name: JIRA_ISSUE_SOURCE_FIELD
-                        value: Jira issue ID or key source field
-                    -   name: COMMENT_BODY
-                        value: Test from codefresh pipeline
+                    -   name: AQUA_HOST
+                        value: 'https://aqua.mydomain.com'
+                    -   name: AQUA_SECRET
+                        value: 'aqua-secret'
+                    -   name: IMAGE
+                        value: 'image'
 ```
