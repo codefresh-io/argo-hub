@@ -46,7 +46,8 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/matthew_chung_codefresh/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
+        image: quay.io/codefreshplugins/cfstep-aqua
+        #quay.io/matthew_chung_codefresh/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
         command:
           - python
           - /aqua.py
@@ -69,6 +70,8 @@ spec:
             value: '{{ inputs.parameters.REGISTRY }}'
           - name: TAG
             value: '{{ inputs.parameters.TAG }}'
+          - name: CF_ACCOUNT
+            value: matthewchungcodefresh
           
 
     
