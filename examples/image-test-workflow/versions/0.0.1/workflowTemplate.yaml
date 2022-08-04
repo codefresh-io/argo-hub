@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/image-test-workflow/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
   volumes:
@@ -27,7 +27,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Builds a docker image using Kaniko and tests the image through service containers'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/image-test-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -116,7 +116,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Build service container for MYSQL'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/image-test-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -156,7 +156,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Initialize service container and test image'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/examples/image-test-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/image-test-workflow/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs: 
         parameters:
