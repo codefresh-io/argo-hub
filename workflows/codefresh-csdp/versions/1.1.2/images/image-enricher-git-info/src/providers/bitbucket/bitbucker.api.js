@@ -10,9 +10,10 @@ class BitbucketApi {
     }
 
     async _sendGetRequest(uri, qs) {
+        const url = `${this.serverURL}/${uri}`
         return rp({
             method: 'GET',
-            uri: `${this.serverURL}/${uri}`,
+            uri: url,
             qs,
             auth: {
                 user: this.username,
@@ -36,13 +37,13 @@ class BitbucketApi {
 
     async getBranch(repo, branch) {
         const [ workspace, repoSlug ] = repo.split('/');
-        return this._sendGetRequest(`/repositories/${workspace}/${repoSlug}/refs/branches/${branch}`);
+        return this._sendGetRequest(`repositories/${workspace}/${repoSlug}/refs/branches/${branch}`);
     }
 
     async getPullRequests(repo, branch) {
         const [ workspace, repoSlug ] = repo.split('/');
 
-        const result = await this._sendGetRequest(`/repositories/${workspace}/${repoSlug}/pullrequests`,{
+        const result = await this._sendGetRequest(`repositories/${workspace}/${repoSlug}/pullrequests`,{
             pagelen: 50,
             fields: '+values.participants',
             q: `source.branch.name="${branch}"`
@@ -52,7 +53,7 @@ class BitbucketApi {
 
     async getCommitsInfo(repo, pr) {
         const [workspace, repoSlug] = repo.split('/');
-        let result = await this._sendGetRequest(`/repositories/${workspace}/${repoSlug}/pullrequests/${pr.id}/commits`);
+        let result = await this._sendGetRequest(`repositories/${workspace}/${repoSlug}/pullrequests/${pr.id}/commits`);
         const commits = _.get(result, 'values', []);
         while (result.next) {
             result = await this._getPageByUrl(result.next);
