@@ -48,7 +48,7 @@ class CodefreshAPI {
         return await graphQLClient.request(query, variables);
     }
 
-    async patchImageWithGitBranchData(imageDigest, branch, imageName) {
+    async patchImageWithGitBranchData(imageDigest, imageName,  branch) {
         console.log(chalk.green(`patching image with data from branch: ${branch.name}`));
         try {
 
@@ -93,7 +93,13 @@ class CodefreshAPI {
                         url: pullRequest.url,
                         title: pullRequest.title,
                         committers: pullRequest.committers,
-                        commits: pullRequest.commits
+                        commits: pullRequest.commits.map(c => ({
+                            url: c.url,
+                            userName: c.userName,
+                            sha: c.sha,
+                            message: c.message,
+                            commitDate: c.commitDate
+                        }))
                     }
                 }
             };
