@@ -1,6 +1,11 @@
 # Changelog
 
-## v1.1.0 (12.7.2022)
+## v1.1.2 (13.7.2022)
+### image-enricher-git-info
+* Fix workflow name not being applied to the image binary.
+* Changed the way git revision information retrieved. If branch was deleted we couldn't retrieve git data, so now git date taken from the PR commits.
+
+## v1.1.1 (13.7.2022)
 
 Add bitbucket support to image-enricher-git-info plugin
 

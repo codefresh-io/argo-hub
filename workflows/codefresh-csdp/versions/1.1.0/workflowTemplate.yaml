@@ -57,14 +57,6 @@ spec:
             default: 'gitlab'
           - name: GITLAB_TOKEN_SECRET_KEY
             default: 'token'
-          - name: BITBUCKET_HOST_URL
-            default: 'https://api.bitbucket.org/2.0'
-          - name: BITBUCKET_SECRET_NAME
-            default: 'bitbucket'
-          - name: BITBUCKET_USERNAME_SECRET_KEY
-            default: 'username'
-          - name: BITBUCKET_PASSWORD_SECRET_KEY
-            default: 'password'
 
       outputs:
         parameters:
@@ -117,20 +109,6 @@ spec:
                 name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
                 optional: true
                 key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
-          - name: BITBUCKET_HOST_URL
-            value: '{{ inputs.parameters.BITBUCKET_HOST_URL }}'
-          - name: BITBUCKET_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.BITBUCKET_SECRET_NAME }}'
-                optional: true
-                key: '{{ inputs.parameters.BITBUCKET_USERNAME_SECRET_KEY }}'
-          - name: BITBUCKET_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.BITBUCKET_SECRET_NAME }}'
-                optional: true
-                key: '{{ inputs.parameters.BITBUCKET_PASSWORD_SECRET_KEY }}'
     - name: image-enricher-jira-info
       metadata:
         annotations:
@@ -327,7 +305,7 @@ spec:
             mountPath: /.docker/
         command:
           - node
-          - index.js
+          - /app/src/index.js
         env:
           - name: CF_API_KEY
             valueFrom:
