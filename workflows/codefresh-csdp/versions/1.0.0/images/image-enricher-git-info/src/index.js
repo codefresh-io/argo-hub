@@ -21,7 +21,7 @@ async function execute() {
         // * more consistent because branch is reference that can be updated
         const branch = await provider.getBranch(inputs.repo, inputs.branch);
         if (branch) {
-            await codefreshApi.patchImageWithGitBranchData(inputs.imageDigest, branch)
+            await codefreshApi.patchImageWithGitBranchData(inputs.imageDigest, branch, inputs.imageName)
         }
 
         const pullRequests = await provider.getPullRequestsWithCommits(inputs.repo, inputs.branch);
