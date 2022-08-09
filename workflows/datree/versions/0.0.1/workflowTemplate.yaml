@@ -75,4 +75,5 @@ spec:
             value: '{{ inputs.parameters.WORKING_DIRECTORY }}'
         command: [sh]
         source: |
+          ls
           codefresh-datree.sh
