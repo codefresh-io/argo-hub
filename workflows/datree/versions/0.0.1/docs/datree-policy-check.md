@@ -16,7 +16,7 @@ Run a policy check on a cloned repository with Datree
 * WORKING_DIRECTORY (optional) - The directory to which the repository is cloned. It can be an explicit path in the container’s file system, or a variable that references another step. The default value is '/codefresh/volume/${{CF_REPO_NAME}}'
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
 * GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
-* REPO (required) - Use this property when you need analysis to take place in a directory other than the one from which it was launched. E.G. analysis begins from jenkins/jobs/myjob/workspace but the files to be analyzed are in ftpdrop/cobol/project1. The path may be relative or absolute. Specify not the the source directory, but some parent of the source directory. The value specified here becomes the new 'analysis directory', and other paths are then specified as though the analysis were starting from the specified value of sonar.projectBaseDir. Note that the analysis process will need write permissions in this directory; it is where the sonar.working.directory will be created.
+* REPO (required) - Use this property when you need analysis to take place in a directory other than the one from which it was launched. E.G. analysis begins from jenkins/jobs/myjob/workspace but the files to be analyzed are in ftpdrop/cobol/project1. The path may be relative or absolute. Specify not the the source directory, but some parent of the source directory.
 
 ### Secrets
 * DATREE Secret - in order for this template to work a secret named `datree-secret` must exist with datree token.
