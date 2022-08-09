@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/datree/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/datree/assets/icon.svg"
     argo-hub/icon-background: "#f4f4f4"
 spec:
   templates:
@@ -20,7 +20,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Invokes scan using Datree'
-          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/datree/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/datree/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -36,6 +36,7 @@ spec:
           - name: DATREE_TOKEN
             default: datree-secret
           - name: INPUT_PATH
+          # optional
           - name: CLI_ARGUMENTS
             default: ""
           - name: IS_HELM_CHART
@@ -74,4 +75,4 @@ spec:
             value: '{{ inputs.parameters.WORKING_DIRECTORY }}'
         command: [sh]
         source: |
-          /bin/codefresh-datree.sh
+          codefresh-datree.sh
