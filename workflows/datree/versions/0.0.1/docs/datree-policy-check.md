@@ -9,7 +9,7 @@ Run a policy check on a cloned repository with Datree
 * CLI_ARGUMENTS (optional) - Datree CLI arguments as specified here: https://hub.datree.io/setup/cli-arguments#flags
 * DATREE_TOKEN (required) - the k8s secret name that contains a key named token with the datree secret inside it
 * HELM_ARGUMENTS (optional) - The Helm arguments to be used, if the path is a Helm chart
-* INPUT_PATH (required) - File/s to be tested
+* INPUT_PATH (required) - Path to file/s to be tested
 * IS_HELM_CHART (optional) - Is the desired path a Helm chart?
 * IS_KUSTOMIZATION (optional) - Is the desired path a Kustomization?
 * KUSTOMIZE_ARGUMENTS (optional) - The Kustomize arguments to be used, if the path is a Kustomization
@@ -85,5 +85,5 @@ spec:
                     -   name: DATREE_TOKEN
                         value: datree-secret
                     -   name: INPUT_PATH
-                        value: fileName.yaml
+                        value: workflows/datree/versions/0.0.1/workflowTemplate.yaml
 ```
