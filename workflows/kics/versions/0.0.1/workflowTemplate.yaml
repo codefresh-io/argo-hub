@@ -1,0 +1,343 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.kics.0.0.1
+  annotations:
+    argo-hub/version: "0.0.1"
+    argo-hub/description: "Execute operations against KICS"
+    argo-hub/license: "MIT"
+    argo-hub/owner_name: "Checkmarx"
+    argo-hub/owner_email: "kics@checkmarx.com"
+    argo-hub/owner_avatar: "https://avatars.githubusercontent.com/u/15811295?s=200&v=4"
+    argo-hub/owner_url: "https://github.com/Checkmarx"
+    argo-hub/categories: "security"
+    argo-hub/icon_url: "https://user-images.githubusercontent.com/74001161/160897079-7d8ac970-8843-49ac-b1f2-082c2bb40ceb.svg"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  serviceAccountName: argo-hub.kics.0.0.1
+  templates:
+    - name: kics-scan-report
+      metadata:
+        annotations:
+          argo-hub-template/description: 'kics-scan-report'
+          argo-hub-template/icon_url: "https://user-images.githubusercontent.com/74001161/160897079-7d8ac970-8843-49ac-b1f2-082c2bb40ceb.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: PATH
+          - name: VERBOSE
+            default: false
+          - name: LOG_LEVEL
+            default: ""
+          - name: DISABLE_SECRETS
+            default: false
+          - name: DISABLE_FULL_DESCRIPTIONS
+            default: false
+          - name: BOM
+            default: false
+          - name: FAIL_ON
+            default: ""
+          - name: TYPES
+            default: ""
+          - name: EXCLUDE_CATEGORIES
+            default: ""
+          - name: EXCLUDE_SEVERITIES
+            default: ""
+          - name: EXCLUDE_QUERIES
+            default: ""
+          - name: EXCLUDE_RESULTS
+            default: ""
+          - name: EXCLUDE_PATHS
+            default: ""
+          - name: IGNORE_ON_EXIT
+            default: ""
+          - name: TIME_OUT
+            default: 60
+          - name: INCLUDE_QUERIES
+            default: ""
+          - name: QUERIES_PATH
+            default: ""
+          - name: LIBRARIES_PATH
+            default: ""
+          - name: PROFILING
+            default: ""
+          - name: OUTPUT_PATH
+            default: ""
+          - name: REPORT_FORMATS
+            default: ""
+          - name: PAYLOAD
+            default: ""
+          - name: SECRETS_REGEXES_PATH
+            default: ""
+          - name: CLOUD_PROVIDER
+            default: ""
+
+      script:
+        image: checkmarx/kics:v1.5.13
+        command: [sh]
+        env:
+          - name: path
+            value: "{{ inputs.parameters.PATH }}"
+          - name: verbose
+            value: "{{ inputs.parameters.VERBOSE }}"
+          - name: log_level
+            value: "{{ inputs.parameters.LOG_LEVEL }}"
+          - name: disable_secrets
+            value: "{{ inputs.parameters.DISABLE_SECRETS }}"
+          - name: disable_full_descriptions
+            value: "{{ inputs.parameters.DISABLE_FULL_DESCRIPTIONS }}"
+          - name: bom
+            value: "{{ inputs.parameters.BOM }}"
+          - name: fail_on
+            value: "{{ inputs.parameters.FAIL_ON }}"
+          - name: types
+            value: "{{ inputs.parameters.TYPES }}"
+          - name: exclude_categories
+            value: "{{ inputs.parameters.EXCLUDE_CATEGORIES }}"
+          - name: exclude_severities
+            value: "{{ inputs.parameters.EXCLUDE_SEVERITIES }}"
+          - name: exclude_queries
+            value: "{{ inputs.parameters.EXCLUDE_QUERIES }}"
+          - name: exclude_results
+            value: "{{ inputs.parameters.EXCLUDE_RESULTS }}"
+          - name: exclude_paths
+            value: "{{ inputs.parameters.EXCLUDE_PATHS }}"
+          - name: ignore_on_exit
+            value: "{{ inputs.parameters.IGNORE_ON_EXIT }}"
+          - name: time_out
+            value: "{{ inputs.parameters.TIME_OUT }}"
+          - name: include_queries
+            value: "{{ inputs.parameters.INCLUDE_QUERIES }}"
+          - name: queries_path
+            value: "{{ inputs.parameters.QUERIES_PATH }}"
+          - name: libraries_path
+            value: "{{ inputs.parameters.LIBRARIES_PATH }}"
+          - name: profiling
+            value: "{{ inputs.parameters.PROFILING }}"
+          - name: output_path
+            value: "{{ inputs.parameters.OUTPUT_PATH }}"
+          - name: report_formats
+            value: "{{ inputs.parameters.REPORT_FORMATS }}"
+          - name: payload
+            value: "{{ inputs.parameters.PAYLOAD }}"
+          - name: secrets_regexes_path
+            value: "{{ inputs.parameters.SECRETS_REGEXES_PATH }}"
+          - name: cloud_provider
+            value: "{{ inputs.parameters.CLOUD_PROVIDER }}"
+        source: |
+          if ($verbose == true); then verbose='-v'; else verbose=''; fi;
+
+          if ($disable_secrets == true); then disable_secrets='--disable-secrets'; else disable_secrets=''; fi;
+
+          if ($disable_full_descriptions == true); then disable_full_descriptions='--disable-full-descriptions'; else disable_full_descriptions=''; fi;
+
+          if ($bom == true); then bom='--bom'; else bom=''; fi;
+
+          if [ -n "$fail_on" ]; then fail_on='--fail-on {{inputs.parameters.FAIL_ON}}' ; fi;
+
+          if [ -n "$types" ]; then types='-t {{inputs.parameters.TYPES}}' ; fi;
+
+          if [ -n "$exclude_categories" ]; then exclude_categories_flag='--exclude-categories' ; fi;
+          if [ -n "$exclude_categories" ]; then exclude_categories_params="$exclude_categories" ; fi;
+
+          if [ -n "$exclude_severities" ]; then exclude_severities='--exclude-severities {{inputs.parameters.EXCLUDE_SEVERITIES}}' ; fi;
+
+          if [ -n "$exclude_queries" ]; then exclude_queries='--exclude-queries {{inputs.parameters.EXCLUDE_QUERIES}}' ; fi;
+
+          if [ -n "$exclude_results" ]; then exclude_results='-x {{inputs.parameters.EXCLUDE_RESULTS}}' ; fi;
+
+          if [ -n "$exclude_paths" ]; then exclude_paths='-e {{inputs.parameters.EXCLUDE_PATHS}}' ; fi;
+
+          if [ -n "$ignore_on_exit" ]; then ignore_on_exit='--ignore-on-exit {{inputs.parameters.IGNORE_ON_EXIT}}' ; fi;
+
+          if [ -n "$include_queries" ]; then include_queries='-i {{inputs.parameters.INCLUDE_QUERIES}}' ; fi;
+
+          if [ -n "$queries_path" ]; then queries_path='-q {{inputs.parameters.QUERIES_PATH}}' ; fi;
+
+          if [ -n "$libraries_path" ]; then libraries_path='-b {{inputs.parameters.LIBRARIES_PATH}}' ; fi;
+
+          if [ -n "$log_level" ]; then log_level='--log-level {{inputs.parameters.LOG_LEVEL}}' ; fi;
+
+          if [ -n "$profiling" ]; then profiling='--profiling {{inputs.parameters.PROFILING}}' ; fi;
+
+          if [ -n "$output_path" ]; then output_path='-o {{inputs.parameters.OUTPUT_PATH}}' ; fi;
+
+          if [ -n "$report_formats" ]; then report_formats='--report-formats {{inputs.parameters.REPORT_FORMATS}}' ; fi;
+
+          if [ -n "$payload" ]; then payload='-d {{inputs.parameters.PAYLOAD}}' ; fi;
+
+          if [ -n "$secrets_regexes_path" ]; then secrets_regexes_path='-r {{inputs.parameters.SECRETS_REGEXES_PATH}}' ; fi;
+
+          if [ -n "$cloud_provider" ]; then cloud_provider='--cloud-provider {{inputs.parameters.CLOUD_PROVIDER}}' ; fi;
+
+
+          echo kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path $ignore_on_exit --timeout $time_out $include_queries $queries_path $libraries_path $log_level $profiling $output_path $report_formats $payload
+
+
+
+          kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $cloud_provider \
+          $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path \
+          $ignore_on_exit \
+          --timeout $time_out \
+          $include_queries \
+          $queries_path $libraries_path $log_level $profiling \
+          $output_path $report_formats $payload
+      outputs:
+        artifacts:
+          - name: results
+            path: "{{inputs.parameters.OUTPUT_PATH}}"
+
+
+    - name: kics-scan
+      metadata:
+        annotations:
+          argo-hub-template/description: 'kics-scan'
+          argo-hub-template/icon_url: "https://user-images.githubusercontent.com/74001161/160897079-7d8ac970-8843-49ac-b1f2-082c2bb40ceb.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: PATH
+          - name: VERBOSE
+            default: false
+          - name: LOG_LEVEL
+            default: ""
+          - name: DISABLE_SECRETS
+            default: false
+          - name: DISABLE_FULL_DESCRIPTIONS
+            default: false
+          - name: BOM
+            default: false
+          - name: FAIL_ON
+            default: ""
+          - name: TYPES
+            default: ""
+          - name: EXCLUDE_CATEGORIES
+            default: ""
+          - name: EXCLUDE_SEVERITIES
+            default: ""
+          - name: EXCLUDE_QUERIES
+            default: ""
+          - name: EXCLUDE_RESULTS
+            default: ""
+          - name: EXCLUDE_PATHS
+            default: ""
+          - name: IGNORE_ON_EXIT
+            default: ""
+          - name: TIME_OUT
+            default: 60
+          - name: INCLUDE_QUERIES
+            default: ""
+          - name: QUERIES_PATH
+            default: ""
+          - name: LIBRARIES_PATH
+            default: ""
+          - name: PROFILING
+            default: ""
+          - name: PAYLOAD
+            default: ""
+          - name: SECRETS_REGEXES_PATH
+            default: ""
+          - name: CLOUD_PROVIDER
+            default: ""
+
+      script:
+        image: checkmarx/kics:v1.5.13
+        command: [sh]
+        env:
+          - name: path
+            value: "{{ inputs.parameters.PATH }}"
+          - name: verbose
+            value: "{{ inputs.parameters.VERBOSE }}"
+          - name: log_level
+            value: "{{ inputs.parameters.LOG_LEVEL }}"
+          - name: disable_secrets
+            value: "{{ inputs.parameters.DISABLE_SECRETS }}"
+          - name: disable_full_descriptions
+            value: "{{ inputs.parameters.DISABLE_FULL_DESCRIPTIONS }}"
+          - name: bom
+            value: "{{ inputs.parameters.BOM }}"
+          - name: fail_on
+            value: "{{ inputs.parameters.FAIL_ON }}"
+          - name: types
+            value: "{{ inputs.parameters.TYPES }}"
+          - name: exclude_categories
+            value: "{{ inputs.parameters.EXCLUDE_CATEGORIES }}"
+          - name: exclude_severities
+            value: "{{ inputs.parameters.EXCLUDE_SEVERITIES }}"
+          - name: exclude_queries
+            value: "{{ inputs.parameters.EXCLUDE_QUERIES }}"
+          - name: exclude_results
+            value: "{{ inputs.parameters.EXCLUDE_RESULTS }}"
+          - name: exclude_paths
+            value: "{{ inputs.parameters.EXCLUDE_PATHS }}"
+          - name: ignore_on_exit
+            value: "{{ inputs.parameters.IGNORE_ON_EXIT }}"
+          - name: time_out
+            value: "{{ inputs.parameters.TIME_OUT }}"
+          - name: include_queries
+            value: "{{ inputs.parameters.INCLUDE_QUERIES }}"
+          - name: queries_path
+            value: "{{ inputs.parameters.QUERIES_PATH }}"
+          - name: libraries_path
+            value: "{{ inputs.parameters.LIBRARIES_PATH }}"
+          - name: profiling
+            value: "{{ inputs.parameters.PROFILING }}"
+          - name: payload
+            value: "{{ inputs.parameters.PAYLOAD }}"
+          - name: secrets_regexes_path
+            value: "{{ inputs.parameters.SECRETS_REGEXES_PATH }}"
+          - name: cloud_provider
+            value: "{{ inputs.parameters.CLOUD_PROVIDER }}"
+        source: |
+          if ($verbose == true); then verbose='-v'; else verbose=''; fi;
+
+          if ($disable_secrets == true); then disable_secrets='--disable-secrets'; else disable_secrets=''; fi;
+
+          if ($disable_full_descriptions == true); then disable_full_descriptions='--disable-full-descriptions'; else disable_full_descriptions=''; fi;
+
+          if ($bom == true); then bom='--bom'; else bom=''; fi;
+
+          if [ -n "$fail_on" ]; then fail_on='--fail-on {{inputs.parameters.FAIL_ON}}' ; fi;
+
+          if [ -n "$types" ]; then types='-t {{inputs.parameters.TYPES}}' ; fi;
+
+          if [ -n "$exclude_categories" ]; then exclude_categories_flag='--exclude-categories' ; fi;
+          if [ -n "$exclude_categories" ]; then exclude_categories_params="$exclude_categories" ; fi;
+
+          if [ -n "$exclude_severities" ]; then exclude_severities='--exclude-severities {{inputs.parameters.EXCLUDE_SEVERITIES}}' ; fi;
+
+          if [ -n "$exclude_queries" ]; then exclude_queries='--exclude-queries {{inputs.parameters.EXCLUDE_QUERIES}}' ; fi;
+
+          if [ -n "$exclude_results" ]; then exclude_results='-x {{inputs.parameters.EXCLUDE_RESULTS}}' ; fi;
+
+          if [ -n "$exclude_paths" ]; then exclude_paths='-e {{inputs.parameters.EXCLUDE_PATHS}}' ; fi;
+
+          if [ -n "$ignore_on_exit" ]; then ignore_on_exit='--ignore-on-exit {{inputs.parameters.IGNORE_ON_EXIT}}' ; fi;
+
+          if [ -n "$include_queries" ]; then include_queries='-i {{inputs.parameters.INCLUDE_QUERIES}}' ; fi;
+
+          if [ -n "$queries_path" ]; then queries_path='-q {{inputs.parameters.QUERIES_PATH}}' ; fi;
+
+          if [ -n "$libraries_path" ]; then libraries_path='-b {{inputs.parameters.LIBRARIES_PATH}}' ; fi;
+
+          if [ -n "$log_level" ]; then log_level='--log-level {{inputs.parameters.LOG_LEVEL}}' ; fi;
+
+          if [ -n "$profiling" ]; then profiling='--profiling {{inputs.parameters.PROFILING}}' ; fi;
+
+          if [ -n "$payload" ]; then payload='-d {{inputs.parameters.PAYLOAD}}' ; fi;
+
+          if [ -n "$secrets_regexes_path" ]; then secrets_regexes_path='-r {{inputs.parameters.SECRETS_REGEXES_PATH}}' ; fi;
+
+          if [ -n "$cloud_provider" ]; then cloud_provider='--cloud-provider {{inputs.parameters.CLOUD_PROVIDER}}' ; fi;
+
+
+          echo kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path $ignore_on_exit --timeout $time_out $include_queries $queries_path $libraries_path $log_level $profiling $output_path $report_formats $payload
+
+
+          kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $cloud_provider \
+          $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path \
+          $ignore_on_exit \
+          --timeout $time_out \
+          $include_queries \
+          $queries_path $libraries_path $log_level $profiling \
+          $payload
