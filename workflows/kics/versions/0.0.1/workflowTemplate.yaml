@@ -171,9 +171,6 @@ spec:
           if [ -n "$cloud_provider" ]; then cloud_provider='--cloud-provider {{inputs.parameters.CLOUD_PROVIDER}}' ; fi;
 
 
-          echo kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path $ignore_on_exit --timeout $time_out $include_queries $queries_path $libraries_path $log_level $profiling $output_path $report_formats $payload
-
-
 
           kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $cloud_provider \
           $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path \
@@ -330,8 +327,6 @@ spec:
 
           if [ -n "$cloud_provider" ]; then cloud_provider='--cloud-provider {{inputs.parameters.CLOUD_PROVIDER}}' ; fi;
 
-
-          echo kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $exclude_categories_flag "$exclude_categories_params" $exclude_severities $exclude_queries $exclude_results $exclude_paths $secrets_regexes_path $ignore_on_exit --timeout $time_out $include_queries $queries_path $libraries_path $log_level $profiling $output_path $report_formats $payload
 
 
           kics scan -p $path --no-progress $verbose $disable_secrets $disable_full_descriptions $bom $fail_on $types $cloud_provider \
