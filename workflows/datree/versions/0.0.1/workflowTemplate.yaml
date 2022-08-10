@@ -48,7 +48,7 @@ spec:
           - name: KUSTOMIZE_ARGUMENTS
             default: ""
           - name: WORKING_DIRECTORY
-            default: .
+            default: /tmp/repo
       script:
         imagePullPolicy: Always
         image: datree/codefresh-datree
