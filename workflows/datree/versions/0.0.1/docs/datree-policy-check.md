@@ -13,7 +13,7 @@ Run a policy check on a cloned repository with Datree
 * IS_HELM_CHART (optional) - Is the desired path a Helm chart?
 * IS_KUSTOMIZATION (optional) - Is the desired path a Kustomization?
 * KUSTOMIZE_ARGUMENTS (optional) - The Kustomize arguments to be used, if the path is a Kustomization
-* WORKING_DIRECTORY (optional) - The working directory inside the cloned git repo that holds the files to be run against datree's policy check.
+* WORKING_DIRECTORY (optional) - The working directory inside the cloned git repo that holds the files to be run against datree's policy check. Default is '.'
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
 * GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
 * REPO (required) - Use this property when you need analysis to take place in a directory other than the one from which it was launched. E.G. analysis begins from jenkins/jobs/myjob/workspace but the files to be analyzed are in ftpdrop/cobol/project1. The path may be relative or absolute. Specify not the the source directory, but some parent of the source directory.
