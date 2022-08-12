@@ -70,3 +70,4 @@ spec:
           shasum -a 256 -c codecov.SHA256SUM
           chmod +x ./codecov
           ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-2.0.0 | tee codecov.log
+          
