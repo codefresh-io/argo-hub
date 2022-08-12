@@ -48,7 +48,7 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: datree-policy-check-
+  generateName: codecov-report-
 spec:
     entrypoint: main
     templates:
