@@ -61,7 +61,6 @@ spec:
             value: '{{ inputs.parameters.OS }}'
         command: [sh]
         source: |
-          echo "$CODECOV_TOKEN/hellow"
           cd $WORKING_DIRECTORY
           curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           curl -Os "https://uploader.codecov.io/latest/$OS/codecov"
@@ -70,5 +69,4 @@ spec:
           gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
           shasum -a 256 -c codecov.SHA256SUM
           chmod +x ./codecov
-          echo "here"
           ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-2.0.0 | tee codecov.log
