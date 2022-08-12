@@ -37,7 +37,7 @@ def annotate_image(docker_image_id, annotation_list):
 
 def main():
     aqua_host = os.getenv('AQUA_HOST')
-    aqua_password =  os.getenv('AQUA_PASSWORD')
+    aqua_password = os.getenv('AQUA_PASSWORD')
     aqua_username =  os.getenv('AQUA_USERNAME')
     registry = os.getenv('REGISTRY') 
     image = os.getenv('IMAGE')

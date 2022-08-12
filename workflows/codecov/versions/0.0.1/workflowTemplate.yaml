@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.codecov.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'codecov template'
+    argo-hub/categories: 'argo'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Matthew Chung'
+    argo-hub/owner_email: 'matthew.chung@codefresh.io'
+    argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
+    argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codecov/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+spec:
+  templates:
+    - name: codecov-report
+      serviceAccountName: argo-hub.codecov.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Sends a code scan report to codecov'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codecov/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        artifacts:
+          - name: REPO
+            path: /tmp/repo
+        parameters:
+          # required
+          - name: CODECOV_API_KEY
+            default: codecov-secret
+          - name: CODECOV_API_KEY_SECRET_KEY
+            default: token
+          - name: CODECOV_URL
+          # optional
+          - name: WORKING_DIRECTORY
+            default: "."
+          - name: OS
+            default: linux
+      script:
+        imagePullPolicy: Always
+        image: node:15.2
+        workingDir: /tmp/repo
+        env:
+          - name: CODECOV_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CODECOV_API_KEY }}'
+                key: '{{ inputs.parameters.CODECOV_API_KEY_SECRET_KEY }}'
+          - name: CODECOV_URL
+            value: '{{ inputs.parameters.CODECOV_URL }}'
+          - name: WORKING_DIRECTORY
+            value: '{{ inputs.parameters.WORKING_DIRECTORY }}'
+          - name: OS
+            value: '{{ inputs.parameters.OS }}'
+        command: [sh]
+        source: |
+          cd $WORKING_DIRECTORY
+          curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+          curl -Os "https://uploader.codecov.io/latest/$OS/codecov"
+          curl -Os "https://uploader.codecov.io/latest/$OS/codecov.SHA256SUM"
+          curl -Os "https://uploader.codecov.io/latest/${{os}}/codecov.SHA256SUM.sig"
+          gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+          shasum -a 256 -c codecov.SHA256SUM
+          chmod +x ./codecov
+          ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-2.0.0 | tee codecov.log
