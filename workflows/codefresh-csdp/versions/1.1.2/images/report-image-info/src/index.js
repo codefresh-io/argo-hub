@@ -4,9 +4,8 @@ const { GraphQLClient, gql, ClientError } = require('graphql-request')
 const _ = require('lodash')
 
 const { OUTPUTS, storeOutputParam } = require('./outputs')
-const createRegistryClient = require('./registry-client')
 const configuration = require('./configuration');
-const { parseImageName } = require("./registry-client");
+const { parseImageName, getRegistryClient} = require("./registry-client");
 
 async function main() {
     console.log('starting image reporter')
@@ -18,7 +17,7 @@ async function main() {
     }
 
     const image = inputs.imageName;
-    const client = await createRegistryClient(image);
+    const client = await getRegistryClient(image);
 
     const workflowName = inputs.workflow.name;
     const workflowUrl = inputs.workflow.workflowUrl;
