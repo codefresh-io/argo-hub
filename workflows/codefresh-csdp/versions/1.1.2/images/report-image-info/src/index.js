@@ -27,8 +27,7 @@ async function main() {
 
     const manifest = await registry.getManifest();
     const config = await registry.getConfig(manifest);
-    console.log('config:', config);
-    console.log('manifest:', manifest);
+
     // store in FS to use as an output param later (in argo workflow)
     storeOutputParam(OUTPUTS.IMAGE_NAME, image)
     storeOutputParam(OUTPUTS.IMAGE_SHA, manifest.config.digest)
