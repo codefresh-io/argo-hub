@@ -5,7 +5,7 @@ const _ = require('lodash')
 
 const { OUTPUTS, storeOutputParam } = require('./outputs')
 const configuration = require('./configuration');
-const { parseImageName, getRegistryClient} = require("./registry-client");
+const { parseImageName, getRegistryClient } = require("./registry-client");
 
 async function main() {
     console.log('starting image reporter')
