@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.2 (15.8.2022)
+## v1.1.3 (15.8.2022)
 ### report-image-info
 * Added new output param `image_link` to the image in codefresh.
 
