@@ -12,7 +12,7 @@ function checkNotEmpty(testVar) {
     return (testVar && testVar!==CF_NOT_EXIST);
 }
 
-function _parseImageName(imageName) {
+export function parseImageName(imageName) {
     return parseFamiliarName(imageName, parseQualifiedNameOptimized)
 }
 
@@ -20,7 +20,7 @@ const _decodeBase64 = (str) => Buffer.from(str, 'base64').toString();
 
 function getCredentialsFromDockerConfig(image) {
     const dockerConfig = JSON.parse(fs.readFileSync(inputs.dockerConfigPath));
-    const imageData = _parseImageName(image);
+    const imageData = parseImageName(image);
     const auths = _.get(dockerConfig, 'auths', {});
     const domainKey = _.findKey(auths, (auth, domain) => {
         if (domain.includes(imageData.domain)) {
@@ -72,7 +72,7 @@ async function createECRUsingSTS(role, region) {
 }
 
 async function createRegistryClientByImage(image) {
-    const imageData = _parseImageName(image);
+    const imageData = parseImageName(image);
     if (imageData.domain.includes('docker.io')) {
         if (checkNotEmpty(inputs.dockerhub.username)
             && checkNotEmpty(inputs.dockerhub.password)) {

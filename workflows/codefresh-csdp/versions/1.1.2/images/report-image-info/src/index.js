@@ -1,12 +1,12 @@
 // registering error handler
 require('./outputs')
-const { parseQualifiedNameOptimized, parseFamiliarName } = require('@codefresh-io/docker-reference')
 const { GraphQLClient, gql, ClientError } = require('graphql-request')
 const _ = require('lodash')
 
 const { OUTPUTS, storeOutputParam } = require('./outputs')
 const createRegistryClient = require('./registry-client')
 const configuration = require('./configuration');
+const { parseImageName } = require("./registry-client");
 
 async function main() {
     console.log('starting image reporter')
@@ -25,14 +25,15 @@ async function main() {
     const logsUrl = inputs.workflow.logsUrl;
 
     const registry = client.repoTag(image);
-    console.log('registry:', registry);
+
     const manifest = await registry.getManifest();
     const config = await registry.getConfig(manifest);
-
+    console.log('config:', config);
+    console.log('manifest:', manifest);
     // store in FS to use as an output param later (in argo workflow)
     storeOutputParam(OUTPUTS.IMAGE_NAME, image)
     storeOutputParam(OUTPUTS.IMAGE_SHA, manifest.config.digest)
-    const repositoryName = _.get(parseFamiliarName(image, parseQualifiedNameOptimized), 'repository')
+    const repositoryName = _.get(parseImageName(image), 'repository')
     const imageLink = `${inputs.codefresh.host}/2.0/images/${encodeURIComponent(repositoryName)}/${manifest.config.digest}/${encodeURIComponent(image)}`
     storeOutputParam(OUTPUTS.IMAGE_LINK, imageLink)
 
