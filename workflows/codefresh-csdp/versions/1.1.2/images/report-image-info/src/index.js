@@ -25,7 +25,7 @@ async function main() {
     const logsUrl = inputs.workflow.logsUrl;
 
     const registry = client.repoTag(image);
-
+    console.log('registry:', registry);
     const manifest = await registry.getManifest();
     const config = await registry.getConfig(manifest);
 
