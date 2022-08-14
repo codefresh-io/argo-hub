@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.2 (15.8.2022)
+### report-image-info
+* Added new output param `image_link` to the image in codefresh.
+
 ## v1.1.2 (13.7.2022)
 ### image-enricher-git-info
 * Fix workflow name not being applied to the image binary.

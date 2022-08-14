@@ -35,8 +35,6 @@ const ensureOutputFilesExists = () => {
 }
 
 const OUTPUTS = {
-    IMAGE_NAME: 'image_name',
-    IMAGE_SHA: 'image_sha',
     EXIT_ERROR: 'exit_error'
 }
 
@@ -50,9 +48,6 @@ function handleProcessException(err) {
     process.exit(1);
 }
 
-// 
-// registering process error handler
-//
 process.addListener('uncaughtException', handleProcessException)
 process.addListener('unhandledRejection', handleProcessException)
 

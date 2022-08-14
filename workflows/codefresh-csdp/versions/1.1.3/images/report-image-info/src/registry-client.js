@@ -12,7 +12,7 @@ function checkNotEmpty(testVar) {
     return (testVar && testVar!==CF_NOT_EXIST);
 }
 
-function _parseImageName(imageName) {
+function parseImageName(imageName) {
     return parseFamiliarName(imageName, parseQualifiedNameOptimized)
 }
 
@@ -20,7 +20,7 @@ const _decodeBase64 = (str) => Buffer.from(str, 'base64').toString();
 
 function getCredentialsFromDockerConfig(image) {
     const dockerConfig = JSON.parse(fs.readFileSync(inputs.dockerConfigPath));
-    const imageData = _parseImageName(image);
+    const imageData = parseImageName(image);
     const auths = _.get(dockerConfig, 'auths', {});
     const domainKey = _.findKey(auths, (auth, domain) => {
         if (domain.includes(imageData.domain)) {
@@ -72,7 +72,7 @@ async function createECRUsingSTS(role, region) {
 }
 
 async function createRegistryClientByImage(image) {
-    const imageData = _parseImageName(image);
+    const imageData = parseImageName(image);
     if (imageData.domain.includes('docker.io')) {
         if (checkNotEmpty(inputs.dockerhub.username)
             && checkNotEmpty(inputs.dockerhub.password)) {
@@ -156,9 +156,14 @@ async function createRegistryClient(image) {
     throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: REGISTRY_USERNAME, REGISTRY_PASSWORD, REGISTRY_DOMAIN');
 }
 
-module.exports = async function getRegistryClient(image) {
+module.exports = {
+    parseImageName,
+    async getRegistryClient(image) {
     if (inputs.retrieveCredentialsByDomain) {
         return createRegistryClientByImage(image);
     }
     return createRegistryClient(image);
+    }
 }
+
+

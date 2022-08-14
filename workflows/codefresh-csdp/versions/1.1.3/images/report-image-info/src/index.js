@@ -1,12 +1,11 @@
 // registering error handler
 require('./outputs')
-
 const { GraphQLClient, gql, ClientError } = require('graphql-request')
 const _ = require('lodash')
 
 const { OUTPUTS, storeOutputParam } = require('./outputs')
-const createRegistryClient = require('./registry-client')
 const configuration = require('./configuration');
+const { parseImageName, getRegistryClient} = require("./registry-client");
 
 async function main() {
     console.log('starting image reporter')
@@ -18,7 +17,7 @@ async function main() {
     }
 
     const image = inputs.imageName;
-    const client = await createRegistryClient(image);
+    const client = await getRegistryClient(image);
 
     const workflowName = inputs.workflow.name;
     const workflowUrl = inputs.workflow.workflowUrl;
@@ -32,6 +31,9 @@ async function main() {
     // store in FS to use as an output param later (in argo workflow)
     storeOutputParam(OUTPUTS.IMAGE_NAME, image)
     storeOutputParam(OUTPUTS.IMAGE_SHA, manifest.config.digest)
+    const repositoryName = _.get(parseImageName(image), 'repository')
+    const imageLink = `${inputs.codefresh.host}/2.0/images/${encodeURIComponent(repositoryName)}/${manifest.config.digest}/${encodeURIComponent(image)}`
+    storeOutputParam(OUTPUTS.IMAGE_LINK, imageLink)
 
     const size = manifest.config.size + _.reduce(manifest.layers, (sum, layer) => {
         return sum + layer.size;
