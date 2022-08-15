@@ -156,14 +156,15 @@ async function createRegistryClient(image) {
     throw new Error('Registry credentials is required parameter. Add one from following registry parameters in your workflow to continue:\n - Docker credentials: DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD\n - GCR credentials: GCR_KEY_FILE_PATH\n - AWS registry credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION\n - Standard registry credentials: REGISTRY_USERNAME, REGISTRY_PASSWORD, REGISTRY_DOMAIN');
 }
 
-module.exports = {
-    parseImageName,
-    async getRegistryClient(image) {
+async function getRegistryClient(image) {
     if (inputs.retrieveCredentialsByDomain) {
         return createRegistryClientByImage(image);
     }
     return createRegistryClient(image);
-    }
+}
+module.exports = {
+    parseImageName,
+    getRegistryClient
 }
 
 
