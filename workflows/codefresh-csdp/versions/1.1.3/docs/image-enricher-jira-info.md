@@ -13,14 +13,14 @@ Enrich images with metadata and annotation such as ticket number, title, assigne
 * JIRA_EMAIL_SECRET_KEY (required) - The key in the Kubernetes secret with the Jira Email associated with the API token. Default is 'email'
 * JIRA_MESSAGE (required) - message from which you want retrieve issue name, can be a branch, commit message, whatever
 * JIRA_PROJECT_PREFIX (required) - jira project prefix like: SAAS, CF, etc
-* CF_API_KEY (required) - The Kubernetes secret containing the Codefresh API key
-* CF_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret that has the Codefresh API Key. Default is 'token'
+* CF_API_KEY (required) - The Kubernetes secret containing the Codefresh API key created by **runtime**
+* CF_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret that has the Codefresh API key created by **runtime**. Default is 'token'
 * CF_HOST_URL (optional) - The URL to reach Codefresh (support on-premises Codefresh). Default is 'https://g.codefresh.io'
 * JIRA_CONTEXT (optional) - The Jira context to use
 * FAIL_ON_NOT_FOUND (optional) - fail in case of ticket not found. Default is 'false'
 
 ### Outputs
-no outputs
+* `exit-error` – message of the error that caused template failure
 
 ## Examples
 
@@ -38,7 +38,7 @@ spec:
       tasks:
       - name: image-enricher-jira-info
         templateRef:
-          name: argo-hub.codefresh-csdp.1.0.0
+          name: argo-hub.codefresh-csdp.1.1.3
           template: image-enricher-jira-info
         arguments:
           parameters:
