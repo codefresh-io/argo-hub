@@ -10,9 +10,24 @@ Execute an Aqua container security scan.
 * AQUA_SECRET (required) - The Kubernetes secret with Aqua log in credentials
 * AQUA_PASSWORD (optional) - The key in the Kubernetes secret with the Aqua password. Default is 'password'
 * AQUA_USERNAME (optional) - The key in the Kubernetes secret with the Aqua username. Default is 'username'
-* IMAGE (required) - Docker Image Name
-* REGISTRY (required) - Name of Registry setup in Aqua
-* TAG (optional) - Docker Image Tag. Default is 'latest'
+* AQUA_TOKEN (optional) - The key in the Kubernetes secret with the Aqua scanner token. A unique token generated for each scanner while adding a scanner daemon from the Administration > Scanners page. Default is 'token'
+* IMAGE (required) - Image Name
+* REGISTRY (required) - Name of registry that holds the image
+* TAG (optional) - Image Tag. Default is 'latest'
+
+### Secrets
+* Aqua Secret - in order for this template to work a secret named `aqua-secret` must exist with aqua token.
+```
+    apiVersion: v1
+    kind: Secret
+    metadata:
+        name: aqua-secret
+    type: Opaque
+    data:
+        token: echo -n 'aqua scanner token' | base64
+        username: echo -n 'aqua username' | base64
+        password: echo -n 'aqua password' | base64
+```
 
 ### Outputs
 no outputs

@@ -21,7 +21,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Execute an Aqua container security scan'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/jira/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/aqua/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       retryStrategy:
         limit: "3"
@@ -39,21 +39,16 @@ spec:
             default: password
           - name: AQUA_USERNAME
             default: username
+          - name: AQUA_TOKEN
+            default: token
           - name: REGISTRY
             default: ""
           - name: TAG
             default: latest
-      container:
-        name: main
+      script:
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/cfstep-aqua
-        #quay.io/matthew_chung_codefresh/argo-hub-workflows-aqua-versions-0.0.1-images-aqua-manager:main
-        command:
-          - python
-          - /aqua.py
+        image: node:15.2
         env:
-          - name: AQUA_HOST
-            value: '{{ inputs.parameters.AQUA_HOST }}'
           - name: AQUA_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -64,14 +59,24 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.AQUA_SECRET }}'
                 key: '{{ inputs.parameters.AQUA_USERNAME }}'
+          - name: AQUA_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.AQUA_SECRET }}'
+                key: '{{ inputs.parameters.AQUA_TOKEN }}'
+          - name: AQUA_HOST
+            value: '{{ inputs.parameters.AQUA_HOST }}'
           - name: IMAGE
             value: '{{ inputs.parameters.IMAGE }}'
-          - name: REGISTRY
-            value: '{{ inputs.parameters.REGISTRY }}'
           - name: TAG
             value: '{{ inputs.parameters.TAG }}'
-          - name: CF_ACCOUNT
-            value: matthewchungcodefresh
+          - name: REGISTRY
+            value: '{{ inputs.parameters.REGISTRY }}'
+        command: [sh]
+        source: |
+          docker login registry.aquasec.com -u $AQUA_USERNAME -p $AQUA_PASSWORD
+          docker pull registry.aquasec.com/scanner:6.5
+          docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:6.5 scan -H $AQUA_HOST --token $AQUA_TOKEN --registry $REGISTRY $IMAGE:$TAG 
           
 
     
