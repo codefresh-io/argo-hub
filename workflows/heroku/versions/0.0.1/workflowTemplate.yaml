@@ -45,7 +45,7 @@ spec:
             default: "."
       script:
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/heroku-cli:alpine
+        image: quay.io/codefreshplugins/argo-hub-workflows-heroku-versions-0.0.1-images-heroku-manager:main
         workingDir: /tmp/repo
         env:
           - name: HEROKU_API_TOKEN
