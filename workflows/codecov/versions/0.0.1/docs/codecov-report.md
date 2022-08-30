@@ -8,12 +8,12 @@ Sends a code scan report to codecov
 ### Inputs
 * CODECOV_API_KEY (required) - The Kubernetes secret with the Codecov login token
 * CODECOV_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Codecov login token. Default is 'token'
-* CODECOV_URL (required) - URL to codecov 
+* CODECOV_URL (required) - URL to codecov
 * WORKING_DIRECTORY (optional) - Path to working directory within cloned repository. Default is '.'.
 * OS (optional) - OS being used ( alpine | linux | macos | windows ). Default is linux.
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
 * GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
-* REPO (required) - Path to artifact where repository is to be cloned. 
+* REPO (required) - Path to artifact where repository is to be cloned.
 
 ### Secrets
 * Codecov Secret - in order for this template to work a secret named `codecov-secret` must exist with codecov token.
@@ -70,8 +70,8 @@ spec:
                     -   name: REPO
                         path: '/tmp/repo'
             -   name: codecov-report
-                dependencies: [clone-step]
-                templateref:
+                depends: clone-step
+                templateRef:
                     name: argo-hub.codecov.0.0.1
                     template: codecov-report
                 arguments:
