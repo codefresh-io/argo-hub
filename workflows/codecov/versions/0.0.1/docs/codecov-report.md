@@ -8,7 +8,7 @@ Sends a code scan report to codecov
 ### Inputs
 * CODECOV_API_KEY (required) - The Kubernetes secret with the Codecov login token
 * CODECOV_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Codecov login token. Default is 'token'
-* CODECOV_URL (required) - URL to codecov
+* CODECOV_URL (optional) - URL to codecov instance. Default is https://codecov.io
 * WORKING_DIRECTORY (optional) - Path to working directory within cloned repository. Default is '.'.
 * OS (optional) - OS being used ( alpine | linux | macos | windows ). Default is linux.
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.

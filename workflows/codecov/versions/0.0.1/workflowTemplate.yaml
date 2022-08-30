@@ -37,8 +37,9 @@ spec:
             default: codecov-secret
           - name: CODECOV_API_KEY_SECRET_KEY
             default: token
-          - name: CODECOV_URL
           # optional
+          - name: CODECOV_URL
+            default: 'https://codecov.io'
           - name: WORKING_DIRECTORY
             default: "."
           - name: OS
@@ -70,4 +71,3 @@ spec:
           shasum -a 256 -c codecov.SHA256SUM
           chmod +x ./codecov
           ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-2.0.0 | tee codecov.log
-          
