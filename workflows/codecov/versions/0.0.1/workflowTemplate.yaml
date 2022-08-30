@@ -44,6 +44,10 @@ spec:
             default: "."
           - name: OS
             default: linux
+      outputs:
+        artifact:
+          - name: LOG
+            path: /tmp/repo/codecov.log
       script:
         imagePullPolicy: Always
         image: node:15.2
@@ -71,4 +75,4 @@ spec:
           shasum -a 256 -c codecov.SHA256SUM
           chmod +x ./codecov
           set -o pipefail
-          ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-2.0.0 -Z | tee codecov.log
+          ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-gitops -Z | tee /tmp/repo/codecov.log
