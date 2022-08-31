@@ -50,7 +50,8 @@ spec:
             path: /cf-outputs/codecov.log
         parameters:
           - name: RESULT_URL
-            path: /cf-outputs/url.txt
+            valueFrom:
+              path: /cf-outputs/url.txt
       script:
         imagePullPolicy: Always
         image: node:15.2
