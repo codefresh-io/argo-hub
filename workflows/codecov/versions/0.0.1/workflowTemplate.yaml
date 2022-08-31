@@ -46,9 +46,11 @@ spec:
             default: linux
       outputs:
         artifacts:
-          - name: LOG
-            path: /tmp/codecov.log
+
         parameters:
+          - name: CODECOV_LOG
+            valueFrom:
+              path: /tmp/codecov.log
           - name: RESULT_URL
             valueFrom:
               path: /tmp/url.txt
