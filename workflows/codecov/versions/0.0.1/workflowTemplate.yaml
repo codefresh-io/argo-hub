@@ -47,11 +47,11 @@ spec:
       outputs:
         artifacts:
           - name: LOG
-            path: /cf-outputs/codecov.log
+            path: /tmp/codecov.log
         parameters:
           - name: RESULT_URL
             valueFrom:
-              path: /cf-outputs/url.txt
+              path: /tmp/url.txt
       script:
         imagePullPolicy: Always
         image: node:15.2
@@ -79,6 +79,5 @@ spec:
           shasum -a 256 -c codecov.SHA256SUM
           chmod +x ./codecov
           set -o pipefail
-          mkdir -p /cf-outputs
-          ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-gitops -Z | tee /cf-outputs/codecov.log
-          grep -A0 'resultURL' codecov.log | awk 'BEGIN{FS="\"";}{print $8}' > /cf-outputs/url.txt
+          ./codecov -t $CODECOV_TOKEN -u $CODECOV_URL -Q codefresh-gitops -Z | tee /tmp/codecov.log
+          grep -A0 'resultURL' /tmp/codecov.log | awk 'BEGIN{FS="\"";}{print $8}' > /tmp/url.txt
