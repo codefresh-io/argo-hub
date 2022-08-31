@@ -6,10 +6,10 @@ This Workflow Template is used to create a CI/CD pipeline that clones both a sou
 
 ## Templates
 
-1. [jira-sonar-template](https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-template/versions/0.0.1/docs/jira-sonar-template.md) 
+1. [jira-scan-workflow](https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/versions/0.0.1/docs/jira-scan-workflow.md) 
 
 ## Security
 
 Minimal required permissions
 
-[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-template/versions/0.0.1/rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/examples/jira-scan-workflow/versions/0.0.1/rbac.yaml)
