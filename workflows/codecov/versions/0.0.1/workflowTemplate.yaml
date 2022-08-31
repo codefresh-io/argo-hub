@@ -45,8 +45,6 @@ spec:
           - name: OS
             default: linux
       outputs:
-        artifacts:
-
         parameters:
           - name: CODECOV_LOG
             valueFrom:
