@@ -1,4 +1,4 @@
-# aqua-secuirty-scan
+# aqua-security-scan
 
 ## Summary
 Execute an Aqua container security scan.
@@ -46,10 +46,10 @@ spec:
     -   name: main
         dag:
             tasks:
-            -   name: aqua-seciurity-scan
-                templateref:
+            -   name: aqua-security-scan
+                templateRef:
                     name: argo-hub.aqua.0.0.1
-                    template: aqua-seciurity-scan
+                    template: aqua-security-scan
                 arguments:
                     parameters:
                     -   name: AQUA_HOST
