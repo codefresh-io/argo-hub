@@ -39,7 +39,8 @@ Sends a code scan report to codecov
 ```
 
 ### Outputs
-no outputs
+* CODECOV_LOG - contains the log as text
+* RESULT_URL - THE URL to the test coverage report for that commit
 
 ## Examples
 
