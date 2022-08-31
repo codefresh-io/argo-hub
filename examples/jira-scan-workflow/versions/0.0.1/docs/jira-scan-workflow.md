@@ -1,4 +1,4 @@
-# jira-sonar-template
+# jira-scan-workflow
 
 ## Summary
 This Workflow Template is used to create a CICD pipeline that clones both a source repository and deployment repository, builds an image, runs tests, scans and upgrades the image, and conduct a canary rollout all while creating and updating a jira during each step. 
