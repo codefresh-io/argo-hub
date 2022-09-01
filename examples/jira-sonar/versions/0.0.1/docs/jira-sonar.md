@@ -113,7 +113,7 @@ spec:
       tasks:
       - name: workflow-template
         templateRef:
-          name: argo-hub.jira-sonar-template.0.0.1
+          name: argo-hub.jira-sonar.0.0.1
           template: main
         arguments:
           parameters:
