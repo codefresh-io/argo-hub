@@ -1,4 +1,4 @@
-# image-test-template
+# image-test-daemon-container
 
 ## Summary
 This Workflow Template is used to create a pipeline that takes a source repository and creates an image through Kaniko. Using that image, a service container is set up and the image is tested using the service container. This example runs nodejs on a mysql server. Template based off https://codefresh.io/docs/docs/yaml-examples/examples/integration-tests-with-mysql/#the-example-nodejs-project.
@@ -12,7 +12,7 @@ This Workflow Template is used to create a pipeline that takes a source reposito
 * MYSQL_HOST (required) - mysql host name
 
 
-### Volumes 
+### Volumes
 * docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG_SECRET name.
 ```
   volumes:
@@ -59,9 +59,9 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: workflow-template-image-test-
+  generateName: image-test-daemon-container-
 spec:
-  entrypoint: main
+  entrypoint: image-test-daemon-container
   volumes:
   - name: docker-config
     secret:
@@ -70,13 +70,13 @@ spec:
         path: config.json
       secretName: 'docker-config'
   templates:
-  - name: main
+  - name: image-test-daemon-container
     dag:
       tasks:
-      - name: workflow-template
+      - name: image-test-daemon-container
         templateRef:
-          name: argo-hub.image-test-template.0.0.1
-          template: main
+          name: argo-hub.image-test-daemon-container.0.0.1
+          template: image-test-daemon-container
         arguments:
           parameters:
           - name: REPO
