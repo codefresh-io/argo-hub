@@ -14,13 +14,6 @@ metadata:
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
-  arguments:
-    parameters:
-        # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
-        # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
-        - name: DOCKER_CONFIG_SECRET
-          default: docker-config  # the name of the registry-creds secret you created
-
   volumes:
     - name: docker-config
       secret:
@@ -38,10 +31,10 @@ spec:
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
-        #   # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
-        #   # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
-        #   - name: DOCKER_CONFIG_SECRET
-        #     default: docker-config  # the name of the registry-creds secret you created
+          # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
+          # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
+          - name: DOCKER_CONFIG_SECRET
+            default: docker-config  # the name of the registry-creds secret you created
           - name: REPO_URL
           # Create git secret token and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic github-token \
