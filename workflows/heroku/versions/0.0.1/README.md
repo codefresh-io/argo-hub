@@ -2,7 +2,7 @@
 
 ## Summary
 
-A template that deploys to heroku via codefresh pipeline
+A template that deploys to Heroku via Codefresh GitOps Workflow
 
 ## Templates
 

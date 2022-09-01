@@ -2,8 +2,8 @@
 
 ## v0.0.1 8/10/2022
 
-Initial Codecov template that sends a code scan report to codecov
+Initial Heroku template to deploy
 
-Template includes: 
+Template includes:
 
-* codecov-report
+* heroku-deployer

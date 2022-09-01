@@ -35,9 +35,9 @@ spec:
           # required
           - name: HEROKU_SECRET
             default: heroku-secret
-          - name: HEROKY_API_TOKEN_SECRET_KEY
+          - name: HEROKU_API_TOKEN_SECRET_KEY
             default: token
-          - name: HEROKY_EMAIL_SECRET_KEY
+          - name: HEROKU_EMAIL_SECRET_KEY
             default: email
           - name: APP_NAME
           # optional
@@ -45,19 +45,21 @@ spec:
             default: "."
       script:
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-heroku-versions-0.0.1-images-heroku-manager:main
+  #      image: quay.io/codefreshplugins/argo-hub-workflows-heroku-versions-0.0.1-images-heroku-manager:main
+        image: quay.io/lrochette/argo-hub-heroku-heroku-manager:0.0.1-main
+
         workingDir: /tmp/repo
         env:
           - name: HEROKU_API_TOKEN
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.HEROKU_SECRET }}'
-                key: '{{ inputs.parameters.HEROKY_API_TOKEN_SECRET_KEY }}'
+                key: '{{ inputs.parameters.HEROKU_API_TOKEN_SECRET_KEY }}'
           - name: HEROKU_EMAIL
             valueFrom:
               secretKeyRef:
                 name: '{{ inputs.parameters.HEROKU_SECRET }}'
-                key: '{{ inputs.parameters.HEROKY_EMAIL_SECRET_KEY }}'
+                key: '{{ inputs.parameters.HEROKU_EMAIL_SECRET_KEY }}'
           - name: APP_NAME
             value: '{{ inputs.parameters.APP_NAME }}'
           - name: WORKING_DIRECTORY
@@ -69,5 +71,3 @@ spec:
           heroku create $APP_NAME || true
           heroku git:remote --app $APP_NAME
           git push heroku master --force
-          
-          

@@ -7,13 +7,13 @@ Sends a code scan report to codecov
 
 ### Inputs
 * HEROKU_SECRET (required) - The Kubernetes secret with the Heroku login details
-* HEROKY_API_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret with the Heroku api token. Default is 'token'
-* HEROKY_EMAIL_SECRET_KEY (optional) - The key in the Kubernetes secret with the Heroku login email. Default is 'email'
+* HEROKU_API_TOKEN_SECRET_KEY (optional) - The key in the Kubernetes secret with the Heroku api token. Default is 'token'
+* HEROKU_EMAIL_SECRET_KEY (optional) - The key in the Kubernetes secret with the Heroku login email. Default is 'email'
 * APP_NAME (required) - Name of application
 * WORKING_DIRECTORY (optional) - Path to working directory within cloned repository. Default is '.'.
 * REPO_URL (required) - Git repo to be run containing sonar-project.properties. Key defaults to token.
 * GIT_TOKEN (optional) - the k8s secret name that contains a key named token with the git secret inside it
-* REPO (required) - Path to artifact where repository is to be cloned. 
+* REPO (required) - Path to artifact where repository is to be cloned.
 
 ### Secrets
 * Heroku Secret - in order for this template to work a secret named `heroku-secret` must exist with heroku login details.
@@ -71,7 +71,7 @@ spec:
                     -   name: REPO
                         path: '/tmp/repo'
             -   name: heroku-deployer
-                dependencies: [clone-step]
+                depends: clone-step
                 templateref:
                     name: argo-hub.heroku.0.0.1
                     template: heroku-deployer
