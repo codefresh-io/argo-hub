@@ -308,7 +308,7 @@ spec:
             mountPath: /.docker/
         command:
           - node
-          - index.js
+          - /app/src/index.js
         env:
           - name: CF_API_KEY
             valueFrom:

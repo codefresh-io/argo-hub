@@ -24,7 +24,7 @@ async function main() {
     // * more consistent because branch is reference that can be updated
     const branch = await provider.getBranch(inputs.repo, inputs.branch);
     if (branch) {
-        await codefreshApi.patchImageWithGitBranchData(inputs.imageDigest, branch)
+        await codefreshApi.patchImageWithGitBranchData(inputs.imageDigest, branch, inputs.imageName)
     } else {
         console.warn(`branch "${inputs.branch}" not found, it could be deleted, continue execution`)
     }
