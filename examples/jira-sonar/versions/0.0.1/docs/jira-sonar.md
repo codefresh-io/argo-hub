@@ -97,7 +97,7 @@ no outputs
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: workflow-template-jira-scan-
+  generateName: jira-sonar-
 spec:
   entrypoint: main
   volumes:
