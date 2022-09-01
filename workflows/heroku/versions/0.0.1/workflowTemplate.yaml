@@ -45,8 +45,7 @@ spec:
             default: "."
       script:
         imagePullPolicy: Always
-  #      image: quay.io/codefreshplugins/argo-hub-workflows-heroku-versions-0.0.1-images-heroku-manager:main
-        image: quay.io/lrochette/argo-hub-heroku-heroku-manager:0.0.1-main
+        image: quay.io/codefreshplugins/argo-hub-heroku-heroku-manager:0.0.1-main
 
         workingDir: /tmp/repo
         env:
