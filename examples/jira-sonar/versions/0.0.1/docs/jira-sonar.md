@@ -1,7 +1,7 @@
-# jira-sonar-template
+# jira-sonar
 
 ## Summary
-This Workflow Template is used to create a CICD pipeline that clones both a source repository and deployment repository, builds an image, runs tests, scans and upgrades the image, and conduct a canary rollout all while creating and updating a jira during each step. 
+This Workflow Template is used to create a CICD pipeline that clones both a source repository and deployment repository, builds an image, runs tests, scans and upgrades the image, and conduct a canary rollout all while creating and updating a jira during each step.
 
 ## Inputs/Outputs
 
@@ -17,7 +17,7 @@ This Workflow Template is used to create a CICD pipeline that clones both a sour
 * svc-name-list (required) - Space-separated list of microservices to promote. Each one replaces [[SVC_NAME]] in paths.
 * file-path-pattern (required) - Path to the source/destination YAML file.
 
-### Volumes 
+### Volumes
 * docker-config - in order for this template to work a volume named `docker-config` must exist with DOCKER_CONFIG_SECRET name.
 ```
   volumes:
