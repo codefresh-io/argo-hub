@@ -489,10 +489,6 @@ spec:
     # test template
     - name: test
       metadata:
-        annotations:
-          argo-hub-template/description: 'Test image pulling correctly and printing it content files'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
-          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
           - name: IMAGE
@@ -504,10 +500,6 @@ spec:
     # canary rollout template 10%
     - name: rollout-10
       metadata:
-        annotations:
-          argo-hub-template/description: 'Applies a 10% canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
-          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
           - name: REPO
@@ -526,10 +518,6 @@ spec:
     # canary rollout template 33%
     - name: rollout-33
       metadata:
-        annotations:
-          argo-hub-template/description: 'Applies a 33% canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
-          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
           - name: REPO
@@ -545,10 +533,6 @@ spec:
     # canary rollout template 100%
     - name: rollout-100
       metadata:
-        annotations:
-          argo-hub-template/description: 'Applies a 100% canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
-          argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
           - name: REPO
