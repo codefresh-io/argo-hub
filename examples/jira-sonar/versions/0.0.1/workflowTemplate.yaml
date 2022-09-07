@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.jira-sonar-template.0.0.1
+  name: argo-hub.jira-sonar.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
     argo-hub/description: 'Workflow template for a full deployment using jira, sonar and a canary rollout'
@@ -11,7 +11,7 @@ metadata:
     argo-hub/owner_email: 'matthew.chung@codefresh.io'
     argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
     argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-scan-workflow/assets/icon.svg"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
   volumes:
@@ -21,13 +21,13 @@ spec:
           - key: .dockerconfigjson
             path: config.json
         secretName: '{{ inputs.parameters.DOCKER_CONFIG_SECRET }}'
-  entrypoint: main
+  entrypoint: jira-sonar
   templates:
-    - name: main
+    - name: jira-sonar
       metadata:
         annotations:
           argo-hub-template/description: 'Builds a docker image using Kaniko, creates and updates a jira through each step, scans and tests the image repo, and deploys using a canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -55,7 +55,7 @@ spec:
             default: jira-secret # the name of the jira secret token you applied to your cluster
           - name: JIRA_USERNAME_SECRET_KEY
             default: jira-username # the key in the jira secret with the jira username
-          - name: JIRA_API_KEY 
+          - name: JIRA_API_KEY
             default: jira-secret # the name of the jira secret token you applied to your cluster
           - name: JIRA_API_KEY_SECRET_KEY
             default: jira-api # the key in the jira secret with the jira api key
@@ -109,7 +109,7 @@ spec:
           - name: PROMOTION_TYPE
             default: kustomize-image
           - name: KUST_IMAGE_PATTERN
-            default: [[SVC_NAME]]
+            default: "service_name"
           # Create docker secret and apply it to your cluster under the runtime namespace
           #   kubectl create secret generic docker-secret \
           #   --from-literal=username=$DOCKERHUB_USERNAME --dry-run=client \
@@ -423,7 +423,7 @@ spec:
                   value: '{{ inputs.parameters.PROMOTION_TYPE }}'
                 - name: kust-image-pattern
                   value: '{{ inputs.parameters.KUST_IMAGE_PATTERN }}'
-        
+
           # begin canary rollout with 10% deployment
           - name: rollout-10
             dependencies: [promote-kustomize-image, transition-jira-ready-for-review, create-jira-comment]
@@ -460,7 +460,7 @@ spec:
                 - name: IMAGE
                   value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.IMAGE_TAG }}'
 
-          # close the jira if rollout successful 
+          # close the jira if rollout successful
           # https://codefresh.io/argohub/workflow-template/jira
           - name: transition-jira-done
             dependencies: [rollout-100]
@@ -491,7 +491,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Test image pulling correctly and printing it content files'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         parameters:
@@ -506,7 +506,7 @@ spec:
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 10% canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -518,17 +518,17 @@ spec:
         image: codefresh/cf-deploy-kubernetes:master
         workingDir: /tmp/repo
         commands:
-          - /cf-deploy-kubernetes ./canary-manual-approval/service.yaml 
+          - /cf-deploy-kubernetes ./canary-manual-approval/service.yaml
           - /cf-deploy-kubernetes ./canary-manual-approval/service-preview.yaml
-          - /cf-deploy-kubernetes ./canary-manual-approval/service-all.yaml  
-          - /cf-deploy-kubernetes ./canary-manual-approval/rollout.yaml   
+          - /cf-deploy-kubernetes ./canary-manual-approval/service-all.yaml
+          - /cf-deploy-kubernetes ./canary-manual-approval/rollout.yaml
 
     # canary rollout template 33%
     - name: rollout-33
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 33% canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
@@ -541,13 +541,13 @@ spec:
         workingDir: /tmp/repo
         commands:
           - /app/kubectl-argo-rollouts-linux-amd64 promote golang-sample-app-deployment -n canary --context "mydemoAkscluster@BizSpark Plus"
-    
+
     # canary rollout template 100%
     - name: rollout-100
       metadata:
         annotations:
           argo-hub-template/description: 'Applies a 100% canary rollout'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-scan-workflow/assets/icon.svg"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/jira-sonar/assets/icon.svg"
           argo-hub-template/icon_background: "#f4f4f4"
       inputs:
         artifacts:
