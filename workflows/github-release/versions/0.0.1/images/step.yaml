@@ -1,0 +1,156 @@
+kind: step-type
+version: '1.0'
+metadata:
+  name: github-release
+  title: Create a GitHub release
+  version: 1.1.5
+  isPublic: true
+  description: Create a GitHub release.
+  sources:
+    - >-
+      https://github.com/codefresh-io/steps/tree/master/incubating/github-release
+  stage: incubating
+  maintainers:
+    - name: Alex Cheshko
+      email: a.cheshko@codefresh.io
+  categories:
+    - git
+    - release
+  official: false
+  tags: []
+  icon:
+    type: svg
+    url: https://cdn.jsdelivr.net/gh/codefresh-io/steps/incubating/github-release/icon.svg
+    background: "#f4f4f4"
+  examples:
+    - description: typical
+      workflow:
+        github_release:
+          type: github-release
+          title: Typical usage example
+          description: |-
+            The git_context_name, repo_owner and repo_name vars
+            will be taken automatically from the trigger.
+            Requires the pipeline to be started by a github trigger
+          arguments:
+            release_name: my-release
+            release_tag: my-tag-0.1.0
+            files:
+            - ${{CF_VOLUME_PATH}}/${{CF_REPO_NAME}}/my-file1
+            - ${{CF_VOLUME_PATH}}/${{CF_REPO_NAME}}/my-file2
+    - description: full
+      workflow:
+        github_release:
+          type: github-release
+          title: 'Full example'
+          arguments:
+            git_context_name: my-github-context
+            release_name: my-release
+            release_tag: my-tag-0.1.0
+            release_description: "My description"
+            draft: true
+            prerelease: false
+            repo_owner: some-owner
+            repo_name: my-repo
+            base_url: "https://api.github.com"
+            files:
+            - ${{CF_VOLUME_PATH}}/${{CF_REPO_NAME}}/my-file1
+            - ${{CF_VOLUME_PATH}}/${{CF_REPO_NAME}}/my-file2
+    - description: simplest
+      workflow:
+        github_release:
+          type: github-release
+          title: A simplest example with minimum arguments provided
+          description: |-
+            Minimum arguments.
+            The git_context_name, release_tag, repo_owner and repo_name vars
+            will be taken from the trigger automatically.
+            Requires the pipeline to be started by a github trigger
+          arguments:
+            release_name: my-release
+    - description: override-cmd
+      workflow:
+        github_release:
+          type: freestyle
+          title: An example showing how to override the commands to be executed
+          arguments:
+            image: codefresh/github-release
+            commands:
+              - github-release --help
+              - github-release list --token ${{MY_GITHUB_TOKEN}} --owner john-snow --repo night-watch
+spec:
+  arguments: |-
+    {
+        "definitions": {},
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "additionalProperties": false,
+        "patterns": [],
+        "required": [
+            "release_name"
+        ],
+        "properties": {
+            "git_context_name": {
+                "name": "git Context Name",
+                "type": "string",
+                "description": "Codefresh Git Context to be used by the plugin. Must be a github git context. If empty, it will try to get the context from the pipeline trigger"
+            },
+            "release_tag": {
+                "type": "string",
+                "description": "Git tag to create a release"
+            },
+             "release_name": {
+                "type": "string",
+                "description": "Name of the release"
+            },
+            "release_description": {
+                "type": "string",
+                "description": "Release description"
+            },
+            "repo_owner": {
+                "type": "string",
+                "description": "Codefresh provided variable containing repository owner name"
+            },
+            "repo_name": {
+                "type": "string",
+                "description": "Codefresh provided variable containing repository name"
+            },
+            "draft": {
+                "type": "boolean",
+                "description": "`true` makes the release a draft, and `false` publishes the release"
+            },
+            "prerelease": {
+                "type": "boolean",
+                "description": "If true, this variable tells the plugin to create a pre-release"
+            },
+            "files": {
+                "type": "array",
+                 "items": {
+                     "type": "string"
+                 },
+                "description": "A list of files to be uploaded"
+            },
+            "base_url": {
+                "type": "string",
+                "description": "API endpoint (default: \"https://api.github.com\")"
+            }
+        }
+    }
+  steps:
+    main:
+      name: github-release
+      image: codefresh/github-release
+      environment:
+        - 'GIT_CONTEXT=${{git_context_name}}'
+        - 'CF_BRANCH_TAG_NORMALIZED=${{CF_BRANCH_TAG_NORMALIZED}}'
+        - 'CF_REPO_OWNER=${{CF_REPO_OWNER}}'
+        - 'CF_REPO_NAME=${{CF_REPO_NAME}}'
+        - 'REPO_OWNER=${{repo_owner}}'
+        - 'REPO_NAME=${{repo_name}}'
+        - 'RELEASE_NAME=${{release_name}}'
+        - 'RELEASE_TAG=${{release_tag}}'
+        - 'RELEASE_DESCRIPTION=${{release_description}}'
+        - 'DRAFT=${{draft}}'
+        - 'PRERELEASE=${{prerelease}}'
+        - 'FILES=${{files}}'
+        - 'BASE_URL=${{base_url}}'

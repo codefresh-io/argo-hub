@@ -1,0 +1,6 @@
+    GITHUB_TOKEN=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
+    REPO_OWNER=olegcf
+    REPO_NAME=node
+    RELEASE_TAG=1.0.2
+    RELEASE_NAME="test release"
+    RELEASE_DESCRIPTION="love"

@@ -1,0 +1,69 @@
+ apiVersion: argoproj.io/v1alpha1
+ kind: WorkflowTemplate
+ metadata:
+   name: git-release.0.0.1
+   annotations:
+     argo-hub/version: '0.0.1'
+     argo-hub/description: 'Create github-release'
+     argo-hub/license: 'MIT'
+     argo-hub/owner_name: 'Oleg Sergiyuk'
+     argo-hub/owner_email: 'oleg.sergiyuk@codefresh.io'
+     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/62545337?v=4'
+     argo-hub/owner_url: 'https://github.com/olegcf'
+     argo-hub/categories: 'git'
+     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
+     argo-hub/icon_background: "#f4f4f4"
+ spec:
+   entrypoint: git-release
+   templates:
+     - name: upload
+       serviceAccountName: git-release.0.0.1
+       metadata:
+         annotations:
+           argo-hub-template/description: 'Publish github release'
+           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/git/assets/icon.svg"
+           argo-hub-template/icon_background: "#f4f4f4"
+       inputs:
+         # Move default values here probably
+         parameters:
+           # https://api.github.com
+           - name: BASE_URL
+             default: 'https://api.github.com'
+           # set to true to create draft
+           - name: DRAFT
+             default: 'false'
+           # set to true to create pre-release
+           - name: PRERELEASE
+             default: 'false'
+           - name: REPO_OWNER
+             default: ''
+           - name: REPO_NAME
+             default: ''
+           - name: REVISION
+             default: main
+           - name: GIT_TOKEN_SECRET
+             default: github-token   # name of secret
+           # MANDATORY vars
+           - name: RELEASE_NAME
+           - name: RELEASE_TAG
+           - name: RELEASE_DESCRIPTION
+       container:
+         image: quay.io/codefreshplugins/argo-hub-workflows-github-release-versions-1.0.0-images:main
+         env:
+           - name: GITHUB_TOKEN
+             valueFrom:
+               secretKeyRef:
+                 name: '{{inputs.parameters.GIT_TOKEN_SECRET}}'
+                 key: token
+           - name: REPO_NAME
+             value: '{{ inputs.parameters.REPO_NAME }}'
+           - name: REPO_OWNER
+             value: '{{ inputs.parameters.REPO_OWNER }}'
+           - name: RELEASE_NAME
+             value: '{{ inputs.parameters.RELEASE_NAME }}'
+           - name: RELEASE_TAG
+             value: '{{ inputs.parameters.RELEASE_TAG }}'
+           - name: RELEASE_DESCRIPTION
+             value: '{{ inputs.parameters.RELEASE_DESCRIPTION }}'
+         command: [ "/bin/bash" ]
+         args: [ "/plugin/run.sh" ]
