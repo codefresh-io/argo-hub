@@ -27,7 +27,7 @@ spec:
           - name: IMAGE_NAME
           - name: TAG
             default: latest
-          - name: COSIGN_PASSWORD # Need to find better way to pass this
+          - name: COSIGN_PASSWORD
             default: password
       container:
         image: bitnami/cosign:1.11.1

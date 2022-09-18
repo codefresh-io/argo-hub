@@ -27,7 +27,7 @@ Make sure `secretName` matches the name of the secret you generated in step 2.
 
 ## Templates
 
-1. [Sign](https://github.com/codefresh-io/argo-hub/blob/main/workflows/cosign/versions/0.0.1/docs/sign.md) 
+1. [Cosign](https://github.com/codefresh-io/argo-hub/blob/main/workflows/cosign/versions/0.0.1/docs/cosign.md) 
 
 ## Security
 
