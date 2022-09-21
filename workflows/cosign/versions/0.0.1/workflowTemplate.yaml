@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.cosign.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Sign container images using Sigstore to verify their origin.'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Dan Garfield'
+    argo-hub/owner_email: 'dan@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/3849900?v=4'
+    argo-hub/owner_url: 'https://github.com/todaywasawesome'
+    argo-hub/categories: 'docker,image,security'
+    argo-hub/icon_url: "https://avatars.githubusercontent.com/u/71096353?s=200&v=4"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  templates:
+    - name: cosign
+      serviceAccountName: argo-hub.cosign.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Cosign cli image provided by bitnami'
+          argo-hub-template/icon_url: "https://avatars.githubusercontent.com/u/71096353?s=200&v=4"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: IMAGE_NAME
+          - name: TAG
+            default: latest
+          - name: COSIGN_PASSWORD
+            default: password
+      container:
+        image: bitnami/cosign:1.11.1
+        env:
+          - name: COSIGN_PASSWORD
+            value: '{{ inputs.parameters.COSIGN_PASSWORD }}'
+        workingDir: '/'
+        command: [cosign]
+        args:
+          - 'sign'
+          - '--key'
+          - '/cosign-keys/cosign.key'
+          - '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+        volumeMounts:
+          - mountPath: /cosign-keys/
+            name: cosign-key
+          - mountPath: /.docker/
+            name: docker-config
