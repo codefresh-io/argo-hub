@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: failure-notification-example
+spec:
+  entrypoint: intentional-fail
+  onExit: failure-notification # invoke pipeline-hook template at end of the workflow
+  templates:
+    # primary workflow template
+    - name: intentional-fail
+      container:
+        image: alpine:latest
+        command: [sh, -c]
+        args: ["echo intentional failure; exit 1"]
+
+    # After the completion of the entrypoint template, the status of the
+    # workflow is made available in the global variable {{workflow.status}}.
+    # {{workflow.status}} will be one of: Succeeded, Failed, Error
+    # useing slack from https://codefresh.io/argohub/workflow-template/slack
+    - name: failure-notification
+      steps:
+        - - name: parse-failure-info
+            template: parse-info
+            when: "{{workflow.status}} != Succeeded"
+        - - name: slack-notification
+            templateRef:
+              name: argo-hub.slack.0.0.2
+              template: send-message
+            arguments:
+              parameters:
+                - name: SLACK_HOOK_URL
+                  value: <INSERT SLACK URL>
+                - name: SLACK_TEXT
+                  value: "Workflow {{workflow.name}} has {{workflow.status}}. The template {{steps.parse-failure-info.outputs.parameters.templateName}} had the error of {{steps.parse-failure-info.outputs.parameters.message}} at {{steps.parse-failure-info.outputs.parameters.finishedAt}}"
+            when: "{{workflow.status}} != Succeeded"
+
+    # This Steps parses the information to be utlized in the slack notifcation.
+    - name: parse-info
+      serviceAccountName: codefresh-sa
+      script:
+        image: alpine
+        command: [sh]
+        source: |
+          apk add jq
+          echo {{workflow.failures}} | jq -r '.[].message' > /tmp/message.txt
+          echo {{workflow.failures}} | jq -r '.[].templateName' > /tmp/templateName.txt
+          echo {{workflow.failures}} | jq -r '.[].finishedAt' > /tmp/finishedAt.txt
+      outputs:
+        parameters:
+          - name: message
+            valueFrom:
+              path: /tmp/message.txt
+          - name: templateName
+            valueFrom:
+              path: /tmp/templateName.txt
+          - name: finishedAt
+            valueFrom:
+              path: /tmp/finishedAt.txt
