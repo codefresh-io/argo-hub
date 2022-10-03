@@ -1,13 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: failure-notification-example
+  name: argo-hub.failure-notification-example.0.0.1
+annotations:
+  argo-hub/version: '0.0.1'
+  argo-hub/description: 'Example Workflow Template for Failure Notifcations'
+  argo-hub/categories: 'argo'
+  argo-hub/license: 'MIT'
+  argo-hub/owner_name: 'Luke Goodfellow'
+  argo-hub/owner_email: 'lukas.goodfellow@codefresh.io'
+  argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/107487942'
+  argo-hub/owner_url: 'https://github.com/xplrior'
+  argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
+  argo-hub/icon_background: '#f4f4f4'
 spec:
   entrypoint: intentional-fail
   onExit: failure-notification # invoke pipeline-hook template at end of the workflow
+  arguments:
+    parameters:
+      - name: SLACK_HOOK_URL
   templates:
     # primary workflow template
     - name: intentional-fail
+      metadata:
+        annotations:
+          argo-hub-template/description: 'This Template is an intentional failure'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
+          argo-hub-template/icon_background: '#f4f4f4'
       container:
         image: alpine:latest
         command: [sh, -c]
@@ -18,10 +37,15 @@ spec:
     # {{workflow.status}} will be one of: Succeeded, Failed, Error
     # useing slack from https://codefresh.io/argohub/workflow-template/slack
     - name: failure-notification
+      metadata:
+        annotations:
+          argo-hub-template/description: 'This process the failure information and sends a slack notification'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
+          argo-hub-template/icon_background: '#f4f4f4'
       steps:
         - - name: parse-failure-info
             template: parse-info
-            when: "{{workflow.status}} != Succeeded"
+            when: '{{workflow.status}} != Succeeded'
         - - name: slack-notification
             templateRef:
               name: argo-hub.slack.0.0.2
@@ -29,13 +53,18 @@ spec:
             arguments:
               parameters:
                 - name: SLACK_HOOK_URL
-                  value: <INSERT SLACK URL>
+                  value: '{{ workflow.parameters.SLACK_HOOK_URL }}'
                 - name: SLACK_TEXT
                   value: "Workflow {{workflow.name}} has {{workflow.status}}. The template {{steps.parse-failure-info.outputs.parameters.templateName}} had the error of {{steps.parse-failure-info.outputs.parameters.message}} at {{steps.parse-failure-info.outputs.parameters.finishedAt}}"
-            when: "{{workflow.status}} != Succeeded"
+            when: '{{workflow.status}} != Succeeded'
 
-    # This Steps parses the information to be utlized in the slack notifcation.
+    # This steps parses the information to be utlized in the slack notifcation.
     - name: parse-info
+      metadata:
+        annotations:
+          argo-hub-template/description: 'This Template parses the failure information into individual components'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
+          argo-hub-template/icon_background: '#f4f4f4'
       serviceAccountName: codefresh-sa
       script:
         image: alpine
