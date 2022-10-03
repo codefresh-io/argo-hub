@@ -2,17 +2,17 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: argo-hub.failure-notification-example.0.0.1
-annotations:
-  argo-hub/version: '0.0.1'
-  argo-hub/description: 'Example Workflow Template for Failure Notifcations'
-  argo-hub/categories: 'argo'
-  argo-hub/license: 'MIT'
-  argo-hub/owner_name: 'Luke Goodfellow'
-  argo-hub/owner_email: 'lukas.goodfellow@codefresh.io'
-  argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/107487942'
-  argo-hub/owner_url: 'https://github.com/xplrior'
-  argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
-  argo-hub/icon_background: '#f4f4f4'
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Example Workflow Template for Failure Notifcations'
+    argo-hub/categories: 'argo'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Luke Goodfellow'
+    argo-hub/owner_email: 'lukas.goodfellow@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/107487942'
+    argo-hub/owner_url: 'https://github.com/xplrior'
+    argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
+    argo-hub/icon_background: '#f4f4f4'
 spec:
   entrypoint: intentional-fail
   onExit: failure-notification # invoke pipeline-hook template at end of the workflow
