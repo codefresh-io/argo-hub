@@ -65,7 +65,7 @@ spec:
           argo-hub-template/description: 'This Template parses the failure information into individual components'
           argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/failure-notification/assets/icon.webp'
           argo-hub-template/icon_background: '#f4f4f4'
-      serviceAccountName: codefresh-sa
+      serviceAccountName: argo-hub.failure-notification-example.0.0.1
       script:
         image: alpine
         command: [sh]
