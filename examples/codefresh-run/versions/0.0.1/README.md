@@ -1,0 +1,16 @@
+# codefresh-run
+
+## Summary
+
+This template is used to trigger Codefresh Classic pipelines
+
+
+## Templates
+
+1. [Codefresh-run](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-run/versions/0.0.1/docs/codefresh-run.md) 
+
+## Security
+
+Minimal required permissions
+
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-run/versions/0.0.1/rbac.yaml)

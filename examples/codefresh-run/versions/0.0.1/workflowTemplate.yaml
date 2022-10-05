@@ -1,0 +1,97 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.codefresh-run.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Template that run Codefresh Classic pipeline'
+    argo-hub/categories: 'argo'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Alexander M'
+    argo-hub/owner_email: 'alexander.mankinenko@codefresh.io'
+    argo-hub/owner_avatar: 'https://github.com/a-mankinenko.png'
+    argo-hub/owner_url: 'https://github.com/a-mankinenko'
+    argo-hub/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/smtp/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+spec:
+  entrypoint: codefresh-run
+  templates:
+    - name: codefresh-run
+      serviceAccountName: argo-hub.codefresh-run.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Run a Codefresh Classic pipeline'
+          argo-hub-template/icon_url: "https://github.com/codefresh-io/argo-hub/blob/main/workflows/smtp/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          # required
+          - name: CF_API_SECRET
+          - name: PIPELINE_ID
+          # optional
+          - name: TRIGGER_ID
+            default: ''
+          - name: BRANCH
+            default: ''
+          - name: SHA
+            default: ''
+          - name: NO_CACHE
+            default: false
+          - name: NO_CF_CACHE
+            default: false
+          - name: ENABLE_NOTIFICATIONS
+            default: false
+          - name: RESET_VOLUME
+            default: false
+          - name: RUNTIME_NAME
+            default: ''
+          - name: CONTEXT
+            default: ''
+          - name: VARIABLE_FILE
+            default: ''
+          - name: VARIABLES
+            default: ''
+
+
+      script:
+        name: main
+        imagePullPolicy: Always
+        image: codefresh/cli
+        env:
+          - name: CF_API_KEY_SECRET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_SECRET }}'
+                key: token
+          - name: VARIABLE_FILE
+            value: '{{ inputs.parameters.VARIABLE_FILE }}'
+          - name: VARIABLES
+            value: '{{ inputs.parameters.VARIABLES }}'  
+        command: [sh]
+        source: |
+          export CMD="codefresh run \
+          '{{ inputs.parameters.PIPELINE_ID }}' -d \
+          $(if [[ {{ inputs.parameters.BRANCH }} ]]; then echo '-b={{ inputs.parameters.BRANCH }}'; fi) \
+          $(if [[ {{ inputs.parameters.SHA }} ]]; then echo '-s={{ inputs.parameters.SHA }}'; fi) \
+          $(if [[ {{ inputs.parameters.CONTEXT }} ]]; then echo '-c={{ inputs.parameters.CONTEXT }}'; fi) \
+          $(if [[ {{ inputs.parameters.TRIGGER_ID }} ]]; then echo '-t={{ inputs.parameters.TRIGGER_ID }}'; fi) \
+          $(if [[ {{ inputs.parameters.RUNTIME_NAME }} ]]; then echo '--runtime-name={{ inputs.parameters.RUNTIME_NAME }}'; fi) \
+          $(if [[ {{ inputs.parameters.NO_CACHE }} = *"true"* ]]; then echo '--no-cache'; fi)  \
+          $(if [[ {{ inputs.parameters.NO_CF_CACHE }} = *"true"* ]]; then echo '--no-cf-cache'; fi) \
+          $(if [[ {{ inputs.parameters.ENABLE_NOTIFICATIONS }} = *"true"* ]]; then echo '--enable-notifications'; fi)  \
+          $(if [[ {{ inputs.parameters.VARIABLE_FILE }} ]]; then echo '--var-file={{ inputs.parameters.VARIABLE_FILE }}'; fi) \
+          $(if [[ {{ inputs.parameters.VARIABLES }} ]]; then echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g'; fi)"
+          echo $CMD
+          echo
+          export BUILD_ID=$( eval $CMD )
+          if [ -z "$BUILD_ID" ]; then exit 1; fi
+          export CF_BUILD_URL="https://g.codefresh.io/build/$BUILD_ID"
+          echo "Retrieving logs for build $BUILD_ID"
+          codefresh logs -f --no-timestamps $BUILD_ID
+          echo
+          echo "Build Result:"
+          codefresh get build $BUILD_ID --sc=status
+          echo
+          echo "Build link: $CF_BUILD_URL"
+
+          
