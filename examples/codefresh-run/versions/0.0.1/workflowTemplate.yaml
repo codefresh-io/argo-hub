@@ -30,11 +30,11 @@ spec:
           - name: PIPELINE_ID
           # optional
           - name: TRIGGER_ID
-            default: ''
+            default: " "
           - name: BRANCH
-            default: ''
+            default: " "
           - name: SHA
-            default: ''
+            default: " "
           - name: NO_CACHE
             default: false
           - name: NO_CF_CACHE
@@ -44,13 +44,13 @@ spec:
           - name: RESET_VOLUME
             default: false
           - name: RUNTIME_NAME
-            default: ''
+            default: " "
           - name: CONTEXT
-            default: ''
+            default: " "
           - name: VARIABLE_FILE
-            default: ''
+            default: " "
           - name: VARIABLES
-            default: ''
+            default: " "  #one line with no spaces
 
 
       script:
@@ -79,6 +79,7 @@ spec:
           $(if [[ {{ inputs.parameters.NO_CACHE }} = *"true"* ]]; then echo '--no-cache'; fi)  \
           $(if [[ {{ inputs.parameters.NO_CF_CACHE }} = *"true"* ]]; then echo '--no-cf-cache'; fi) \
           $(if [[ {{ inputs.parameters.ENABLE_NOTIFICATIONS }} = *"true"* ]]; then echo '--enable-notifications'; fi)  \
+          $(if [[ {{ inputs.parameters.RESET_VOLUME }} = *"true"* ]]; then echo '--reset-volume'; fi)  \
           $(if [[ {{ inputs.parameters.VARIABLE_FILE }} ]]; then echo '--var-file={{ inputs.parameters.VARIABLE_FILE }}'; fi) \
           $(if [[ {{ inputs.parameters.VARIABLES }} ]]; then echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g'; fi)"
           echo $CMD

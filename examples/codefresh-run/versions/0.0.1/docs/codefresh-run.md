@@ -6,7 +6,7 @@ This template is used to trigger Codefresh Classic pipelines, it prints build lo
 ## Inputs/Outputs
 
 ### Inputs
-* CF_API_SECRET (required) - K8s secret name that contains a key named `token` with codefresh [api key](https://codefresh.io/docs/docs/integrations/codefresh-api/#authentication-instructions).
+* CF_API_SECRET (required) - Kubernetes secret name that contains a key named `token` with the codefresh [api key](https://codefresh.io/docs/docs/integrations/codefresh-api/#authentication-instructions).
 * PIPELINE_ID (required) - Pipeline name or ID
 * TRIGGER_ID (optional) - Trigger name
 * BRANCH (optional) - Branch name
