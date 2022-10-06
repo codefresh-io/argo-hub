@@ -2,7 +2,7 @@
 
 ## Summary
 
-This template is used to trigger Codefresh Classic pipelines
+This template is used to trigger Codefresh Classic pipelines, it prints build logs, build ID, build result and build link.
 
 
 ## Templates
