@@ -17,7 +17,6 @@ spec:
   entrypoint: codefresh-run
   templates:
     - name: codefresh-run
-      serviceAccountName: argo-hub.codefresh-run.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Run a Codefresh Classic pipeline'
