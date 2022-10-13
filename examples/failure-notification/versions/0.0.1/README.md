@@ -10,4 +10,4 @@ This Workflow Template is an example of parsing and sending a slack notification
 
 ## Security
 
-This Utilizizes the codefresh-sa service account that is available with the codefresh hybrid installation.  Also, the service account from the Slack Notification worklow.
+This utilizes the codefresh-sa service account that is available with the codefresh hybrid installation.  Also, the service account from the Slack Notification worklow.
