@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: time-of-day-check.0.0.1
+  name: time-of-day.0.0.1
   annotations:
     argo-hub/version: '0.0.1'
     argo-hub/description: 'An example of a workflow template that uses the time of day to limit if a pipeline continues or not'
@@ -9,12 +9,12 @@ metadata:
     argo-hub/license: 'MIT'
     argo-hub/owner_name: "Paul O'Reilly"
     argo-hub/owner_email: "paul.oreilly@codefresh.io"
-    argo-hub/owner_avatar: 'https://github.,com/paul-codefresh.png'
+    argo-hub/owner_avatar: 'https://github.com/paul-codefresh.png'
     argo-hub/owner_url: 'https://github.com/paul-codefresh'
-    argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day-check/assets/icon.svg'
+    argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
     argo-hub/icon_background: "#f4f4f4"
 spec:
-  serviceAccountName: codefresh-sa
+  serviceAccountName: argo-hub.time-of-day.0.0.1
   entrypoint: example-workflow
   arguments:
     parameters:
@@ -29,11 +29,11 @@ spec:
       - name: TIME_WINDOW_DAYS
         default: 'Monday Tuesday Wednesday Friday'
   templates:
-  - name: time-of-day-check-template
+  - name: time-of-day
     metadata:
       annotations:
         argo-hub-template/description: 'Checks the day and time and fails if the current time is outside of a specified window or day of the week'
-        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day-check/assets/icon.svg'
+        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
         argo-hub/icon_background: "#f4f4f4"
     inputs:
       parameters:
@@ -102,7 +102,7 @@ spec:
     metadata:
       annotations:
         argo-hub-template/description: 'Simple example of using the time of day check to determine what step(s) run next'
-        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day-check/assets/icon.svg'
+        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
         argo-hub/icon_background: "#f4f4f4"
     dag:
       tasks:
@@ -114,7 +114,7 @@ spec:
             value: Deployment is ready
       - name: check-deploy-window
         depends: "prepare-deployment"
-        template: time-of-day-check-template
+        template: time-of-day
       - name: successful-deploy
         depends: "check-deploy-window"
         template: whalesay-template
