@@ -1,12 +1,12 @@
-# Ci Simple
+# Upgrade Runtime
 
 ## Summary
 
- This Workflow Template is used to create your first CI pipeline in CSDP
-## Templates 
+ This Workflow Template is used to upgrade a runtime
+## Templates
 
-1. [ci-tasks](https://github.com/codefresh-io/argo-hub/blob/main/examples/upgrade-cluster/versions/0.0.1/docs/ci-tasks.md) 
-2. [test](https://github.com/codefresh-io/argo-hub/blob/main/examples/upgrade-cluster/versions/0.0.1/docs/test.md)
+1. [upgrade](https://github.com/codefresh-io/argo-hub/blob/main/examples/upgrade-cluster/versions/0.0.1/docs/upgrade.md)
+2. [freestyle](https://github.com/codefresh-io/argo-hub/blob/main/examples/upgrade-cluster/versions/0.0.1/docs/freestyle.md)
 
 ## Security
 

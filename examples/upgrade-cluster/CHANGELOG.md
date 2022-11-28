@@ -1,8 +1,7 @@
 # Changelog
 
-## v0.0.1 (24.01.2022)
+## v0.0.1 (23.11.2022)
 
-### ci simple
+### Upgrade Cluster
 
-This CI pipeline builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image
-
+A simple workflow to upgrade your cluster
