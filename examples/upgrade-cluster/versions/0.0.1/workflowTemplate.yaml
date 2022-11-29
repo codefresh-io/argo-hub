@@ -40,10 +40,10 @@ spec:
         # imagePullPolicy: Always
         command: ['sh', '-c']
         args:
-          - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
+          - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN ;'
           - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
         env:
-        - name: CF_API_KEY
+        - name: CF_TOKEN
           valueFrom:
             secretKeyRef:
               name: '{{ inputs.parameters.CF_API_KEY }}'
