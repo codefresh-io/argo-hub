@@ -27,12 +27,10 @@ spec:
         parameters:
         # required
         - name: RUNTIME_NAME
-          default: csdp
+        - name: CF_API_SECRET
+
         # optional
-        - name: CF_API_KEY
-          default: 'codefresh-v1-token'
-          #default: 'codefresh-token'
-        - name: CF_API_KEY_SECRET_KEY
+        - name: CF_TOKEN_SECRET_KEY
           default: token
         - name: CF_HOST_URL
           default: https://g.codefresh.io
@@ -47,18 +45,17 @@ spec:
         command: ['sh', '-c']
         args: ['
           touch /tmp/.cfconfig ;
-          echo "cf config create-context upgrade-ctx  --cfconfig /tmp/ --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
-          cf config create-context upgrade --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --log-level debug --api-key $CF_TOKEN ;
-          ls -ail /tmp ;
-          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --git-token **** --cfconfig /tmp/ --silent" ;
-          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --git-token $GIT_TOKEN --cfconfig /tmp/ --silent
+          echo "cf config create-context upgrade-ctx --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
+          cf config create-context upgrade-ctx --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN ;
+          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --git-token **** --cfconfig /tmp --silent" ;
+          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --git-token $GIT_TOKEN --cfconfig /tmp --silent
         ']
         env:
         - name: CF_TOKEN
           valueFrom:
             secretKeyRef:
-              name: '{{ inputs.parameters.CF_API_KEY }}'
-              key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+              name: '{{ inputs.parameters.CF_API_SECRET }}'
+              key: '{{ inputs.parameters.CF_TOKEN_SECRET_KEY }}'
         - name: GIT_TOKEN
           valueFrom:
             secretKeyRef:
