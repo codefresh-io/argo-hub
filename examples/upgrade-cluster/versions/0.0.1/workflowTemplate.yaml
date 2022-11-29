@@ -40,8 +40,8 @@ spec:
         # imagePullPolicy: Always
         command: ['sh', '-c']
         args: ['
-          echo "cf config create-context upgrade-ctx  --cfconfig /tmp/.config --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
-          cf config create-context upgrade --cfconfig /tmp/.config --url {{ inputs.parameters.CF_HOST_URL }} --log-level debug --api-key $CF_TOKEN ;
+          echo "cf config create-context upgrade-ctx  --cfconfig /tmp/ --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
+          cf config create-context upgrade --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --log-level debug --api-key $CF_TOKEN ;
           ls -ail /tmp
           echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/.config --silent" ;
           cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/.config --silent
