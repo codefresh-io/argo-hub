@@ -35,7 +35,7 @@ spec:
                 - name: image
                   value: 'quay.io/codefresh/cli-v2'
                 - name: commands
-                  value: 'cf upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
+                  value: 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
 
     # Test template
     - name: freestyle
