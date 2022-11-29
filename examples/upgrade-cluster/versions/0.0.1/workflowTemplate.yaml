@@ -40,14 +40,11 @@ spec:
         # imagePullPolicy: Always
         command: ['sh', '-c']
         args: ['
-          ls -ail / ;
-          ls -ail /home || true ;
-          id ;
-          mkdir -p /home/codefresh || true ;
-          echo "cf config create-context upgrade-ctx --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN" ;
-          cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --log-level debug --api-key $CF_TOKEN ;
-          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent" ;
-          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent
+          echo "cf config create-context upgrade-ctx  --cfconfig /tmp/.config --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
+          cf config create-context upgrade --cfconfig /tmp/.config --url {{ inputs.parameters.CF_HOST_URL }} --log-level debug --api-key $CF_TOKEN ;
+          ls -ail /tmp
+          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/.config --silent" ;
+          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/.config --silent
         ']
         env:
         - name: CF_TOKEN
