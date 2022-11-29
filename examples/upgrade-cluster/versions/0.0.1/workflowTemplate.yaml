@@ -38,7 +38,7 @@ spec:
         # name: main
         image: quay.io/codefresh/cli-v2
         # imagePullPolicy: Always
-        command: [sh, -c]
+        command: ['sh', '-c']
         args:
           - 'ls -ail'
           # - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
