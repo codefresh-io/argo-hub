@@ -39,9 +39,10 @@ spec:
         image: quay.io/codefresh/cli-v2
         # imagePullPolicy: Always
         command: ['sh', '-c']
-        args:
-          - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN ;'
-          - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
+        args: ['
+          cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN
+          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent
+        ']
         env:
         - name: CF_TOKEN
           valueFrom:
