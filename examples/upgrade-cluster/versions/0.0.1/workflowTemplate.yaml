@@ -37,7 +37,7 @@ spec:
         - name: CF_HOST_URL
           default: https://g.codefresh.io
         - name: GIT_SECRET
-          default: 'codefresh-token'
+          default: 'github-token'
         - name: GIT_TOKEN_SECRET_KEY
           default: 'token'
       container:
