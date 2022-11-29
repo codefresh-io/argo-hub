@@ -27,9 +27,11 @@ spec:
         parameters:
         # required
         - name: RUNTIME_NAME
+          default: csdp
         # optional
         - name: CF_API_KEY
-          default: 'codefresh-token'
+          default: 'codefresh-v1-token'
+          #default: 'codefresh-token'
         - name: CF_API_KEY_SECRET_KEY
           default: token
         - name: CF_HOST_URL
@@ -44,8 +46,8 @@ spec:
           echo "cf config create-context upgrade-ctx  --cfconfig /tmp/ --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
           cf config create-context upgrade --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --log-level debug --api-key $CF_TOKEN ;
           ls -ail /tmp ;
-          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/.cfconfig --silent" ;
-          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/.cfconfig --silent
+          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/ --silent" ;
+          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --cfconfig /tmp/ --silent
         ']
         env:
         - name: CF_TOKEN
