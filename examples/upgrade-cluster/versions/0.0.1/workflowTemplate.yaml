@@ -27,9 +27,9 @@ spec:
         parameters:
         # required
         - name: RUNTIME_NAME
-      #     # optional
-      #     - name: CF_API_KEY
-      #       default: 'codefresh-token'
+        # optional
+        - name: CF_API_KEY
+          default: 'codefresh-token'
       #     - name: CF_API_KEY_SECRET_KEY
       #       default: token
       #     - name: CF_HOST_URL
@@ -42,7 +42,7 @@ spec:
         args:
           - 'ls -ail'
           # - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
-          # - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
+          - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
         # env:
         #   - name: CF_API_KEY
         #     valueFrom:
