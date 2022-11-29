@@ -2,27 +2,27 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: argo-hub.upgrade-cluster.0.0.1
-  annotations:
-    argo-hub/version: '0.0.1'
-    argo-hub/description: 'This Workflow Template is used to upgrade a GitOps Runtime'
-    argo-hub/categories: 'Administration'
-    argo-hub/license: 'MIT'
-    argo-hub/owner_name: 'Laurent Rochette'
-    argo-hub/owner_email: 'laurent.rochette@codefresh.io'
-    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/lrochette'
-    argo-hub/owner_url: 'https://github.com/lrochette'
-    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/upgrade-cluster/assets/icon.svg"
-    argo-hub/icon-background: "#004C76"
+  # annotations:
+  #   argo-hub/version: '0.0.1'
+  #   argo-hub/description: 'This Workflow Template is used to upgrade a GitOps Runtime'
+  #   argo-hub/categories: 'Administration'
+  #   argo-hub/license: 'MIT'
+  #   argo-hub/owner_name: 'Laurent Rochette'
+  #   argo-hub/owner_email: 'laurent.rochette@codefresh.io'
+  #   argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/lrochette'
+  #   argo-hub/owner_url: 'https://github.com/lrochette'
+  #   argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/upgrade-cluster/assets/icon.svg"
+  #   argo-hub/icon-background: "#004C76"
 spec:
   entrypoint: upgrade
   templates:
     - name: upgrade
-      serviceAccountName: argo-hub.upgrade-cluster.0.0.1
-      metadata:
-        annotations:
-          argo-hub-template/description: 'Upgrade a runtime'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/upgrade-cluster/assets/icon.svg"
-          argo-hub-template/icon_background: "#004C76"
+      # serviceAccountName: argo-hub.upgrade-cluster.0.0.1
+      # metadata:
+      #   annotations:
+      #     argo-hub-template/description: 'Upgrade a runtime'
+      #     argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/upgrade-cluster/assets/icon.svg"
+      #     argo-hub-template/icon_background: "#004C76"
       inputs:
         parameters:
           # required
@@ -35,17 +35,17 @@ spec:
           - name: CF_HOST_URL
             default: https://g.codefresh.io
       container:
-        name: main
-        image: "quay.io/codefresh/cli-v2"
-        imagePullPolicy: Always
+        # name: main
+        image: quay.io/codefresh/cli-v2
+        # imagePullPolicy: Always
         command: [sh, -c]
         args:
-          - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
-          - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
-
-        env:
-          - name: CF_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: '{{ inputs.parameters.CF_API_KEY }}'
-                key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+          - 'ls -ail'
+          # - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
+          # - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
+        # env:
+        #   - name: CF_API_KEY
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: '{{ inputs.parameters.CF_API_KEY }}'
+        #         key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
