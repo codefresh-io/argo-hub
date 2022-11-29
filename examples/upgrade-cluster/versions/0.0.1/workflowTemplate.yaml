@@ -39,13 +39,12 @@ spec:
             arguments:
               parameters:
                 - name: RUNTIME_NAME
-                  value: '{{ inputs.parameters.RUNTIME_NAME }}'
                 - name: CF_HOST_URL
-                  value: '{{ inputs.parameters.CF_HOST_URL }}'
+                  value: https://g.codefresh.io
                 - name: CF_API_KEY
-                  value: '{{ inputs.parameters.CF_API_KEY }}'
+                  value: token
                 - name: CF_API_KEY_SECRET_KEY
-                  value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+                  value: 'codefresh-token'
 
     # Test template
     - name: upgrade-command
@@ -57,9 +56,13 @@ spec:
       inputs:
         parameters:
           - name: RUNTIME_NAME
+            value: '{{ inputs.parameters.RUNTIME_NAME }}'
           - name: CF_HOST_URL
+            value: '{{ inputs.parameters.CF_HOST_URL }}'
           - name: CF_API_KEY
+            value: '{{ inputs.parameters.CF_API_KEY }}'
           - name: CF_API_KEY_SECRET-KEY
+            value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
 
       container:
         name: main
