@@ -9,6 +9,9 @@ This pipeline template is deisgned to help you upgrade your COdefresh GitOps run
 
 #### Parameters
 * RUNTIME_NAME (required) - The name of the RUNTIME to upgrade
+* CF_API_KEY (required) - The Kubernetes secret containing the Codefresh API key
+* CF_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret that has the Codefresh API Key. Default is 'token'
+* CF_HOST_URL (optional) - The URL to reach Codefresh (support on-premises Codefresh). Default is 'https://g.codefresh.io'
 
 #### Volumes
 

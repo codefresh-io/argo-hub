@@ -25,20 +25,30 @@ spec:
       inputs:
         parameters:
           - name: RUNTIME_NAME
+          - name: CF_API_KEY
+            value: 'codefresh-token'
+          - name: CF_API_KEY_SECRET_KEY
+            value: token
+          - name: CF_HOST_URL
+            value: https://g.codefresh.io
       dag:
         tasks:
           # https://codefresh.io/argohub/workflow-template/kaniko
           - name: upgrade
-            template: freestyle
+            template: upgrade-command
             arguments:
               parameters:
-                - name: image
-                  value: 'quay.io/codefresh/cli-v2'
-                - name: commands
-                  value: 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
+                - name: RUNTIME_NAME
+                  value: '{{ inputs.parameters.RUNTIME_NAME }}'
+                - name: CF_HOST_URL
+                  value: '{{ inputs.parameters.CF_HOST_URL }}'
+                - name: CF_API_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY }}'
+                - name: CF_API_KEY_SECRET_KEY
+                  value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
 
     # Test template
-    - name: freestyle
+    - name: upgrade-command
       metadata:
         annotations:
           argo-hub-template/description: 'Run any command on any image'
@@ -46,17 +56,22 @@ spec:
           argo-hub-template/icon_background: "#004C76"
       inputs:
         parameters:
-          - name: image
-          - name: commands
-          - name: working_directory
-            value: ./
-          - name: shell
-            value: sh
+          - name: RUNTIME_NAME
+          - name: CF_HOST_URL
+          - name: CF_API_KEY
+          - name: CF_API_KEY_SECRET-KEY
 
-      script:
-        image: "{{ inputs.parameters.image }}"
-        command: ["{{ inputs.parameters.shell }}"]
-        source: |
-          cd {{ inputs.parameters.working_directory }}
-          echo Executing commands:
-          {{inputs.parameters.commands}}
+      container:
+        name: main
+        image: "quay.io/codefresh/cli-v2"
+        imagePullPolicy: Always
+        command:
+          - cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY
+          - cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
+
+        env:
+          - name: CF_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.CF_API_KEY }}'
+                key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
