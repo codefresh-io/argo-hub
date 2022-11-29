@@ -23,17 +23,17 @@ spec:
       #     argo-hub-template/description: 'Upgrade a runtime'
       #     argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/upgrade-cluster/assets/icon.svg"
       #     argo-hub-template/icon_background: "#004C76"
-      inputs:
-        parameters:
-          # required
-          - name: RUNTIME_NAME
-          # optional
-          - name: CF_API_KEY
-            default: 'codefresh-token'
-          - name: CF_API_KEY_SECRET_KEY
-            default: token
-          - name: CF_HOST_URL
-            default: https://g.codefresh.io
+      # inputs:
+      #   parameters:
+      #     # required
+      #     - name: RUNTIME_NAME
+      #     # optional
+      #     - name: CF_API_KEY
+      #       default: 'codefresh-token'
+      #     - name: CF_API_KEY_SECRET_KEY
+      #       default: token
+      #     - name: CF_HOST_URL
+      #       default: https://g.codefresh.io
       container:
         # name: main
         image: quay.io/codefresh/cli-v2
