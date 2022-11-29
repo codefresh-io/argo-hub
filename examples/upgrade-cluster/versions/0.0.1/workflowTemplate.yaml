@@ -40,7 +40,9 @@ spec:
         # imagePullPolicy: Always
         command: ['sh', '-c']
         args: ['
+          echo "cf onfig create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key *****"
           cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN
+          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent"
           cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent
         ']
         env:
