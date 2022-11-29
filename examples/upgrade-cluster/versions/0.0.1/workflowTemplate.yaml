@@ -14,9 +14,9 @@ metadata:
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/upgrade-cluster/assets/icon.svg"
     argo-hub/icon-background: "#004C76"
 spec:
-  entrypoint: upgrade
   templates:
     - name: upgrade
+      serviceAccountName: argo-hub.upgrade-cluster.0.0.1
       metadata:
         annotations:
           argo-hub-template/description: 'Upgrade a runtime'
@@ -24,46 +24,15 @@ spec:
           argo-hub-template/icon_background: "#004C76"
       inputs:
         parameters:
+          # required
           - name: RUNTIME_NAME
+          # optional
           - name: CF_API_KEY
-            value: 'codefresh-token'
+            default: 'codefresh-token'
           - name: CF_API_KEY_SECRET_KEY
-            value: token
+            default: token
           - name: CF_HOST_URL
-            value: https://g.codefresh.io
-      dag:
-        tasks:
-          # https://codefresh.io/argohub/workflow-template/kaniko
-          - name: upgrade
-            template: upgrade-command
-            arguments:
-              parameters:
-                - name: RUNTIME_NAME
-                - name: CF_HOST_URL
-                  value: https://g.codefresh.io
-                - name: CF_API_KEY
-                  value: token
-                - name: CF_API_KEY_SECRET_KEY
-                  value: 'codefresh-token'
-
-    # Test template
-    - name: upgrade-command
-      metadata:
-        annotations:
-          argo-hub-template/description: 'Run any command on any image'
-          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/freestyle/assets/icon.svg"
-          argo-hub-template/icon_background: "#004C76"
-      inputs:
-        parameters:
-          - name: RUNTIME_NAME
-            value: '{{ inputs.parameters.RUNTIME_NAME }}'
-          - name: CF_HOST_URL
-            value: '{{ inputs.parameters.CF_HOST_URL }}'
-          - name: CF_API_KEY
-            value: '{{ inputs.parameters.CF_API_KEY }}'
-          - name: CF_API_KEY_SECRET-KEY
-            value: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
-
+            default: https://g.codefresh.io
       container:
         name: main
         image: "quay.io/codefresh/cli-v2"
