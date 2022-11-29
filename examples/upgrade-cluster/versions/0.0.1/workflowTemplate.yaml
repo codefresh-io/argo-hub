@@ -30,18 +30,17 @@ spec:
         # optional
         - name: CF_API_KEY
           default: 'codefresh-token'
-      #     - name: CF_API_KEY_SECRET_KEY
-      #       default: token
-      #     - name: CF_HOST_URL
-      #       default: https://g.codefresh.io
+        - name: CF_API_KEY_SECRET_KEY
+          default: token
+        - name: CF_HOST_URL
+          default: https://g.codefresh.io
       container:
         # name: main
         image: quay.io/codefresh/cli-v2
         # imagePullPolicy: Always
         command: ['sh', '-c']
         args:
-          - 'ls -ail ; '
-          # - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
+          - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
           - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
         # env:
         #   - name: CF_API_KEY
