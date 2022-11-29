@@ -42,9 +42,9 @@ spec:
         args:
           - 'cf config create-context upgrade --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_API_KEY ;'
           - 'cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --silent'
-        # env:
-        #   - name: CF_API_KEY
-        #     valueFrom:
-        #       secretKeyRef:
-        #         name: '{{ inputs.parameters.CF_API_KEY }}'
-        #         key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
+        env:
+        - name: CF_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: '{{ inputs.parameters.CF_API_KEY }}'
+              key: '{{ inputs.parameters.CF_API_KEY_SECRET_KEY }}'
