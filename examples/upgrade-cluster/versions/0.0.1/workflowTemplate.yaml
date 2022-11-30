@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/lrochette'
     argo-hub/owner_url: 'https://github.com/lrochette'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/upgrade-cluster/assets/icon.svg"
-    argo-hub/icon-background: "#004C76"
+    argo-hub/icon_background: "#004C76"
 spec:
   entrypoint: upgrade
   templates:
@@ -39,9 +39,7 @@ spec:
         - name: GIT_TOKEN_SECRET_KEY
           default: 'token'
       container:
-        # name: main
         image: quay.io/codefresh/cli-v2
-        # imagePullPolicy: Always
         command: ['sh', '-c']
         args: ['
           touch /tmp/.cfconfig ;
