@@ -1,0 +1,251 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.gitlab.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'Execute operations against Gitlab'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Vadim Kharin'
+    argo-hub/owner_email: 'vadim.kharin@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/58422638?v=4'
+    argo-hub/owner_url: 'https://github.com/vadim-kharin-codefresh'
+    argo-hub/categories: 'git'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitlab/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  templates:
+    - name: commit-status
+      serviceAccountName: argo-hub.gitlab.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Report a commit status check'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitlab/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "10"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: BUILD_BASE_URL
+          - name: REPO_OWNER
+          - name: REPO_NAME
+          - name: REVISION
+          - name: STATE
+          - name: CONTEXT
+            default: 'default'
+          - name: DESCRIPTION
+            default: ''
+          - name: PIPELINE_ID
+            default: ''
+          - name: GITLAB_HOST
+            default: 'gitlab.com'
+          - name: GITLAB_TOKEN_SECRET_NAME
+          - name: GITLAB_TOKEN_SECRET_KEY
+            default: 'token'
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitlab-versions-0.0.1-images-commit-status:main
+        command:
+          - node
+          - index.js
+        env:
+          - name: CF_BUILD_BASE_URL
+            value: '{{ inputs.parameters.BUILD_BASE_URL }}'
+          - name: CF_REPO_OWNER
+            value: '{{ inputs.parameters.REPO_OWNER }}'
+          - name: CF_REPO_NAME
+            value: '{{ inputs.parameters.REPO_NAME }}'
+          - name: CF_REVISION
+            value: '{{ inputs.parameters.REVISION }}'
+          - name: STATE
+            value: '{{ inputs.parameters.STATE }}'
+          - name: CONTEXT
+            value: '{{ inputs.parameters.CONTEXT }}'
+          - name: DESCRIPTION
+            value: '{{ inputs.parameters.DESCRIPTION }}'
+          - name: PIPELINE_ID
+            value: '{{ inputs.parameters.PIPELINE_ID }}'
+          - name: GITLAB_HOST
+            value: '{{ inputs.parameters.GITLAB_HOST }}'
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
+
+    - name: create-pr
+      serviceAccountName: argo-hub.gitlab.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create a pull request'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitlab/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        artifacts:
+          - name: repo
+            path: /code
+        parameters:
+          - name: BRANCH
+          - name: TARGET_BRANCH
+            default: 'main'
+          - name: MESSAGE
+          - name: PR_TEMPLATE
+          - name: GITLAB_HOST
+            default: 'https://gitlab.com'
+          - name: GITLAB_TOKEN_SECRET_NAME
+          - name: GITLAB_TOKEN_SECRET_KEY
+            default: 'token'
+      script:
+        workingDir: '{{ inputs.artifacts.repo.path }}'
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitlab-versions-0.0.1-images-create-pr:main
+        command: [sh]
+        source: |
+          git checkout {{inputs.parameters.BRANCH}}
+          export EXISTING_PR=$(glab mr list  --target-branch "{{ inputs.parameters.TARGET_BRANCH }}" --source-branch "{{ inputs.parameters.BRANCH }}" | grep 'No open merge requests')
+          if [ -n "$EXISTING_PR" ] ; then glab mr create --target-branch "{{ inputs.parameters.TARGET_BRANCH }}" --source-branch "{{ inputs.parameters.BRANCH }}" --title "{{ inputs.parameters.MESSAGE }}" --no-editor --description "$(curl {{ inputs.parameters.PR_TEMPLATE }} )" ; else echo "Pull request already exists"; fi;
+        env:
+          - name: GITLAB_HOST
+            value: '{{ inputs.parameters.GITLAB_HOST }}'
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
+
+    - name: create-pr-comment
+      serviceAccountName: argo-hub.gitlab.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Create a pull request comment'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitlab/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: REPO_OWNER
+          - name: REPO_NAME
+          - name: PR_COMMENT
+          - name: PULL_REQUEST_NUMBER
+          - name: GITLAB_TOKEN_SECRET_NAME
+            default: 'gitlab-token'
+          - name: GITLAB_TOKEN_SECRET_KEY
+            default: 'token'
+          - name: GITLAB_HOST
+            default: 'https://gitlab.com'
+      script:
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitlab-versions-0.0.1-images-create-pr-comment:main
+        command: [sh]
+        source: |
+          glab mr note {{ inputs.parameters.PULL_REQUEST_NUMBER }} \
+            --repo {{ inputs.parameters.REPO_OWNER }}/{{ inputs.parameters.REPO_NAME }} \
+            --message "{{ inputs.parameters.PR_COMMENT }}"
+        env:
+          - name: GITLAB_HOST
+            value: '{{ inputs.parameters.GITLAB_HOST }}'
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_NAME }}'
+                key: '{{ inputs.parameters.GITLAB_TOKEN_SECRET_KEY }}'
+
+    - name: extract-webhook-variables
+      serviceAccountName: argo-hub.gitlab.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Parses the GitLab Event Payload (JSON) and output the most useful payload fields as artifact files.'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitlab/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: GITLAB_JSON
+      container:
+        image: quay.io/codefreshplugins/argo-hub-workflows-gitlab-versions-0.0.1-images-extract-webhook-variables:main
+        command:
+          - node
+          - index.js
+        env:
+          - name: GITLAB_JSON
+            value: '{{ inputs.parameters.GITLAB_JSON }}'
+      outputs:
+        parameters:
+          - name: CF_REPO_OWNER
+            valueFrom:
+              path: /tmp/gitvars/CF_REPO_OWNER
+            globalName: CF_REPO_OWNER
+          - name: CF_REPO_NAME
+            valueFrom:
+              path: /tmp/gitvars/CF_REPO_NAME
+            globalName: CF_REPO_NAME
+          - name: CF_BRANCH
+            valueFrom:
+              path: /tmp/gitvars/CF_BRANCH
+            globalName: CF_BRANCH
+          - name: CF_BASE_BRANCH
+            valueFrom:
+              path: /tmp/gitvars/CF_BASE_BRANCH
+            globalName: CF_BASE_BRANCH
+          - name: CF_COMMIT_AUTHOR
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_AUTHOR
+            globalName: CF_COMMIT_AUTHOR
+          - name: CF_COMMIT_USERNAME
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_USERNAME
+            globalName: CF_COMMIT_USERNAME
+          - name: CF_COMMIT_EMAIL
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_EMAIL
+            globalName: CF_COMMIT_EMAIL
+          - name: CF_COMMIT_URL
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_URL
+            globalName: CF_COMMIT_URL
+          - name: CF_COMMIT_MESSAGE
+            valueFrom:
+              path: /tmp/gitvars/CF_COMMIT_MESSAGE
+            globalName: CF_COMMIT_MESSAGE
+          - name: CF_REVISION
+            valueFrom:
+              path: /tmp/gitvars/CF_REVISION
+            globalName: CF_REVISION
+          - name: CF_SHORT_REVISION
+            valueFrom:
+              path: /tmp/gitvars/CF_SHORT_REVISION
+            globalName: CF_SHORT_REVISION
+          - name: CF_PULL_REQUEST_ACTION
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_ACTION
+            globalName: CF_PULL_REQUEST_ACTION
+          - name: CF_PULL_REQUEST_TARGET
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_TARGET
+            globalName: CF_PULL_REQUEST_TARGET
+          - name: CF_PULL_REQUEST_ID
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_ID
+            globalName: CF_PULL_REQUEST_ID
+          - name: CF_PULL_REQUEST_LABELS
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_LABELS
+            globalName: CF_PULL_REQUEST_LABELS
+          - name: CF_PULL_REQUEST_MERGED
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_MERGED
+            globalName: CF_PULL_REQUEST_MERGED
+          - name: CF_PULL_REQUEST_HEAD_BRANCH
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_BRANCH
+            globalName: CF_PULL_REQUEST_HEAD_BRANCH
+          - name: CF_PULL_REQUEST_MERGED_COMMIT_SHA
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_MERGED_COMMIT_SHA
+            globalName: CF_PULL_REQUEST_MERGED_COMMIT_SHA
+          - name: CF_PULL_REQUEST_HEAD_COMMIT_SHA
+            valueFrom:
+              path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_COMMIT_SHA
+            globalName: CF_PULL_REQUEST_HEAD_COMMIT_SHA

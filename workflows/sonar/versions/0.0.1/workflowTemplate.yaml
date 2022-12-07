@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.sonar.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'sonar template'
+    argo-hub/categories: 'argo'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Matthew Chung'
+    argo-hub/owner_email: 'matthew.chung@codefresh.io'
+    argo-hub/owner_avatar: 'https://github.com/matthewchungcodefresh.png'
+    argo-hub/owner_url: 'https://github.com/matthewchungcodefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/sonar/assets/icon.svg"
+    argo-hub/icon-background: "#f4f4f4"
+spec:
+  templates:
+    - name: sonar-scanner
+      serviceAccountName: argo-hub.sonar.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Invokes scan using Sonarqube'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/sonar/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      retryStrategy:
+        limit: "3"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        artifacts:
+          - name: REPO
+            path: /tmp/repo
+        parameters:
+          # required
+          - name: SONAR_HOST_URL
+          - name: SONAR_LOGIN
+          - name: SONAR_LOGIN_SECRET_KEY
+            default: token
+      script:
+        imagePullPolicy: Always
+        image: sonarsource/sonar-scanner-cli
+        workingDir: /tmp/repo
+        env:
+          - name: SONAR_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SONAR_LOGIN }}'
+                key: '{{ inputs.parameters.SONAR_LOGIN_SECRET_KEY }}'
+          - name: SONAR_HOST_URL
+            value: '{{ inputs.parameters.SONAR_HOST_URL }}'
+        command: [sh]
+        source: |
+          sonar-scanner -Dsonar.projectBaseDir=/tmp/repo -Dsonar.verbose=true

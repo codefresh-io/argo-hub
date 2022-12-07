@@ -1,0 +1,131 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: time-of-day.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'An example of a workflow template that uses the time of day to limit if a pipeline continues or not'
+    argo-hub/categories: 'argo'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: "Paul O'Reilly"
+    argo-hub/owner_email: "paul.oreilly@codefresh.io"
+    argo-hub/owner_avatar: 'https://github.com/paul-codefresh.png'
+    argo-hub/owner_url: 'https://github.com/paul-codefresh'
+    argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  serviceAccountName: argo-hub.time-of-day.0.0.1
+  entrypoint: example-workflow
+  arguments:
+    parameters:
+      - name: TIME_WINDOW_STARTS
+        default: '09:00'
+      - name: TIME_WINDOW_FINISHES
+        default: '16:00'
+      - name: TIME_WINDOW_INVERTED
+        default: 'false'
+      - name: TIME_WINDOW_TIMEZONE
+        default: 'UTC'
+      - name: TIME_WINDOW_DAYS
+        default: 'Monday Tuesday Wednesday Friday'
+  templates:
+  - name: time-of-day
+    metadata:
+      annotations:
+        argo-hub-template/description: 'Checks the day and time and fails if the current time is outside of a specified window or day of the week'
+        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
+        argo-hub/icon_background: "#f4f4f4"
+    inputs:
+      parameters:
+      - name: early
+        value: "{{workflow.parameters.TIME_WINDOW_STARTS}}"
+      - name: late
+        value: "{{workflow.parameters.TIME_WINDOW_FINISHES}}"
+      - name: inverted
+        value: "{{workflow.parameters.TIME_WINDOW_INVERTED}}"
+      - name: days
+        value: "{{workflow.parameters.TIME_WINDOW_DAYS}}"
+      - name: timezone
+        value: "{{workflow.parameters.TIME_WINDOW_TIMEZONE}}"
+    script:
+      image: debian:latest
+      command: [bash]
+      source: |
+        echo "Checking time window:"
+        echo "  Selected time zone is {{inputs.parameters.timezone}}"
+        echo "  Time window starts at {{inputs.parameters.early}} and finishes at {{inputs.parameters.late}}"
+        echo "    (format should be 24 hour time, HH:MM)"
+        echo "  Valid days are {{inputs.parameters.days}}"
+        echo ""
+        if [ '{{inputs.parameters.inverted}}' = 'false' ]; then 
+          echo "The window is not inverted, so if we are inside the window we can proceed"
+        else 
+          echo "The window is inverted. We need to be outside the window for the pipeline to proceed (inverted != false)"
+        fi
+        echo "Current container time is $(date)"
+        echo "Time in {{inputs.parameters.timezone}} is $(TZ={{inputs.parameters.timezone}} date)"
+        DAY=$(TZ={{inputs.parameters.timezone}} date +%A)
+        NOW=$(TZ={{inputs.parameters.timezone}} date +%s)
+        EARLY=$(TZ={{inputs.parameters.timezone}} date +%s -d "{{inputs.parameters.early}}")
+        LATE=$(TZ={{inputs.parameters.timezone}} date +%s -d "{{inputs.parameters.late}}")
+        if [[ "{{inputs.parameters.days}}" == *"$DAY"* ]];
+        then
+          echo "$DAY's are included"
+        else
+          echo ""
+          echo "Above settings do not include $DAY. Exiting."
+          exit 1
+        fi
+        INSIDE_TIME_WINDOW='false'
+        if (( $EARLY < $NOW && $NOW < $LATE )); then
+          INSIDE_TIME_WINDOW='true'
+        fi
+        echo "Inside time window? $INSIDE_TIME_WINDOW"
+        echo ""
+        if [ $INSIDE_TIME_WINDOW = '{{inputs.parameters.inverted}}' ]; then
+          echo "Current time is outside of the time window defined above"
+          exit 2
+        else
+          echo "Pipeline is allowed to proceed"
+        fi
+        
+  - name: whalesay-template
+    inputs:
+      parameters:
+      - name: message
+    container:
+      image: docker/whalesay
+      command: [cowsay]
+      args: ["{{inputs.parameters.message}}"]
+      
+  - name: example-workflow
+    metadata:
+      annotations:
+        argo-hub-template/description: 'Simple example of using the time of day check to determine what step(s) run next'
+        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
+        argo-hub/icon_background: "#f4f4f4"
+    dag:
+      tasks:
+      - name: prepare-deployment
+        template: whalesay-template
+        arguments:
+          parameters:
+          - name: message
+            value: Deployment is ready
+      - name: check-deploy-window
+        depends: "prepare-deployment"
+        template: time-of-day
+      - name: successful-deploy
+        depends: "check-deploy-window"
+        template: whalesay-template
+        arguments:
+          parameters:
+          - name: message
+            value: We have deployed successfully
+      - name: unsuccessful-deploy
+        depends: "check-deploy-window.Failed"
+        template: whalesay-template
+        arguments:
+          parameters:
+          - name: message
+            value: We were not allowed to deploy due to time of day contraints        

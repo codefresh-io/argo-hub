@@ -1,5 +1,26 @@
 # Changelog
 
+## v1.1.3 (15.8.2022)
+### report-image-info
+* Added new output param `image_link` to the image in codefresh.
+
+## v1.1.2 (13.7.2022)
+### image-enricher-git-info
+* Fix workflow name not being applied to the image binary.
+* Changed the way git revision information retrieved. If branch was deleted we couldn't retrieve git data, so now git date taken from the PR commits.
+
+## v1.1.1 (13.7.2022)
+
+Add bitbucket support to image-enricher-git-info plugin
+
+## v1.1.0 (28.6.2022)
+
+Refactor. Added new output param `exit_error` to all templates that stores the error message in case template execution failed.
+
+## v1.0.1 (20.6.2022)
+
+Updated all images to be based on debian distro to avoid DNS issues found on alpine
+
 ## v0.0.6 (13.5.2022)
 
 ### image-enricher-git-info
