@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.upgrade-cluster.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'This Workflow Template is used to upgrade a GitOps Runtime'
+    argo-hub/categories: 'Administration'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Laurent Rochette'
+    argo-hub/owner_email: 'laurent.rochette@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/lrochette'
+    argo-hub/owner_url: 'https://github.com/lrochette'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/upgrade-cluster/assets/icon.svg"
+    argo-hub/icon_background: "#004C76"
+spec:
+  entrypoint: upgrade
+  templates:
+    - name: upgrade
+      serviceAccountName: argo-hub.upgrade-cluster.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Upgrade a runtime'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/upgrade-cluster/assets/icon.svg"
+          argo-hub-template/icon_background: "#004C76"
+      inputs:
+        parameters:
+        # required
+        - name: RUNTIME_NAME
+        - name: CF_API_SECRET
+
+        # optional
+        - name: CF_TOKEN_SECRET_KEY
+          default: token
+        - name: CF_HOST_URL
+          default: https://g.codefresh.io
+        - name: GIT_SECRET
+          default: 'github-token'
+        - name: GIT_TOKEN_SECRET_KEY
+          default: 'token'
+      container:
+        image: quay.io/codefresh/cli-v2
+        command: ['sh', '-c']
+        args: ['
+          touch /tmp/.cfconfig ;
+          echo "cf config create-context upgrade-ctx --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --api-key ******" ;
+          cf config create-context upgrade-ctx --cfconfig /tmp --url {{ inputs.parameters.CF_HOST_URL }} --api-key $CF_TOKEN ;
+          echo "cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --git-token **** --cfconfig /tmp --silent" ;
+          cf runtime upgrade {{ inputs.parameters.RUNTIME_NAME }} --git-token $GIT_TOKEN --cfconfig /tmp --silent
+        ']
+        env:
+        - name: CF_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: '{{ inputs.parameters.CF_API_SECRET }}'
+              key: '{{ inputs.parameters.CF_TOKEN_SECRET_KEY }}'
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: '{{ inputs.parameters.GIT_SECRET }}'
+              key: '{{ inputs.parameters.GIT_TOKEN_SECRET_KEY}}'
