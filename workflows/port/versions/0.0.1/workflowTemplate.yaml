@@ -1,0 +1,65 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.port.0.0.1
+  annotations:
+    argo-hub/version: "0.0.1"
+    argo-hub/description: "A template that executes operations against Port"
+    argo-hub/categories: "gitops"
+    argo-hub/license: "MIT"
+    argo-hub/owner_name: "Mor Paz"
+    argo-hub/owner_email: "mor@getport.io"
+    argo-hub/owner_avatar: "https://avatars.githubusercontent.com/u/9868797?s=120&v=4"
+    argo-hub/owner_url: "https://github.com/MPTG94"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/port/assets/icon.svg"
+    argo-hub/icon_background: "#FFFFFF"
+spec:
+  templates:
+    - name: get-port-entity
+      serviceAccountName: argo-hub.port.0.0.1
+      metadata:
+        annotations:
+          argo-hub-template/description: "Get a Port Entity based on it's identifier and output the response as artifacts"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/port/assets/icon.svg"
+          argo-hub-template/icon_background: "#FFFFFF"
+      inputs:
+        parameters:
+          # required
+          - name: PORT_CLIENT_ID
+            default: PORT_CLIENT_ID
+          - name: PORT_CLIENT_SECRET
+            default: PORT_CLIENT_SECRET
+          - name: ENTITY_IDENTIFIER
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-port-get-entity:0.0.1-main
+        command:
+          - node
+          - lib/index.js
+        env:
+          - name: PORT_CLIENT_ID
+            value: "{{ inputs.parameters.PORT_CLIENT_ID }}"
+          - name: PORT_CLIENT_SECRET
+            value: "{{ inputs.parameters.PORT_CLIENT_SECRET }}"
+          - name: BLUEPRINT_IDENTIFIER
+            value: "{{ inputs.parameters.BLUEPRINT_IDENTIFIER }}"
+          - name: ENTITY_IDENTIFIER
+            value: "{{ inputs.parameters.ENTITY_IDENTIFIER }}"
+        outputs:
+          parameters:
+            - name: PORT_BLUEPRINT_IDENTIFIER
+              valueFrom:
+                path: /tmp/portvars/PORT_BLUEPRINT_IDENTIFIER
+            - name: PORT_ENTITY_IDENTIFIER
+              valueFrom:
+                path: /tmp/portvars/PORT_ENTITY_IDENTIFIER
+            - name: PORT_ENTITY_TITLE
+              valueFrom:
+                path: /tmp/portvars/PORT_ENTITY_TITLE
+            - name: PORT_ENTITY_PROPERTIES
+              valueFrom:
+                path: /tmp/portvars/PORT_ENTITY_PROPERTIES
+            - name: PORT_ENTITY_RELATIONS
+              valueFrom:
+                path: /tmp/portvars/PORT_ENTITY_RELATIONS
