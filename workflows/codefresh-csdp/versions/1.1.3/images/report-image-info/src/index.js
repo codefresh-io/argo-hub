@@ -26,7 +26,12 @@ async function main() {
     const registry = client.repoTag(image);
 
     const manifest = await registry.getManifest();
+
+    console.log(`image manifest has been received:`, '\n', manifest)
+
     const config = await registry.getConfig(manifest);
+
+    console.log(`image config has been received:`, '\n', config)
 
     // store in FS to use as an output param later (in argo workflow)
     storeOutputParam(OUTPUTS.IMAGE_NAME, image)
