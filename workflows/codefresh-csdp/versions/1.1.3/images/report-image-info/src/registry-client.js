@@ -109,7 +109,7 @@ async function createRegistryClientByImage(image) {
     if (checkNotEmpty(inputs.generic.credentials.username)
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
-        console.log(`Use standard registry with ignore redirects`);
+
         inputs.generic.ignoreRedirects = true;
         return new StandardRegistry(inputs.generic);
     }
@@ -135,7 +135,6 @@ async function createRegistryClient(image) {
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
 
-        console.log(`Use standard registry with ignore redirects`);
         inputs.generic.ignoreRedirects = true;
         return new StandardRegistry(inputs.generic);
     }

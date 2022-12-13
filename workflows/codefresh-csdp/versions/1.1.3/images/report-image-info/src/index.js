@@ -19,6 +19,8 @@ async function main() {
     const image = inputs.imageName;
     const client = await getRegistryClient(image);
 
+    console.log(`using ${client.constructor.name} client`)
+
     const workflowName = inputs.workflow.name;
     const workflowUrl = inputs.workflow.workflowUrl;
     const logsUrl = inputs.workflow.logsUrl;
