@@ -40,6 +40,7 @@ function getCredentialsFromDockerConfig(image) {
     } else if (domainKey.includes('gcr.io')) {
         throw new Error('Google container registry using docker config json is not supported.')
     }
+    console.log(`Use standard registry with ignore redirects`);
     return new StandardRegistry({
         request: {
             host: domainKey
@@ -48,6 +49,7 @@ function getCredentialsFromDockerConfig(image) {
             username,
             password,
         },
+        ignoreRedirects: true
     });
 }
 
@@ -107,6 +109,8 @@ async function createRegistryClientByImage(image) {
     if (checkNotEmpty(inputs.generic.credentials.username)
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
+        console.log(`Use standard registry with ignore redirects`);
+        inputs.generic.ignoreRedirects = true;
         return new StandardRegistry(inputs.generic);
     }
     if (inputs.dockerConfigPath) {
@@ -131,6 +135,8 @@ async function createRegistryClient(image) {
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
 
+        console.log(`Use standard registry with ignore redirects`);
+        inputs.generic.ignoreRedirects = true;
         return new StandardRegistry(inputs.generic);
     }
 
