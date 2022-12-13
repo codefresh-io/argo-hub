@@ -40,7 +40,6 @@ function getCredentialsFromDockerConfig(image) {
     } else if (domainKey.includes('gcr.io')) {
         throw new Error('Google container registry using docker config json is not supported.')
     }
-    console.log(`Use standard registry with ignore redirects`);
     return new StandardRegistry({
         request: {
             host: domainKey
