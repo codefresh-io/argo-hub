@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.4 (13.12.2022)
+### report-image-info
+* Handle redirects correctly when interacting with the standard container registries
+
 ## v1.1.3 (15.8.2022)
 ### report-image-info
 * Added new output param `image_link` to the image in codefresh.
