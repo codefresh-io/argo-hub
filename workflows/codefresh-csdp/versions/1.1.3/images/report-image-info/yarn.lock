@@ -1031,10 +1031,10 @@ node-gyp@^9.0.0:
     tar "^6.1.2"
     which "^2.0.2"
 
-nodegistry@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/nodegistry/-/nodegistry-1.2.4.tgz#4748db82452362f4510422022a6cdd5958b1c62d"
-  integrity sha512-t6iivUeGSNvEsZeoRuQ8S+Z8Oa/+cGUGa+4tqp5AGrzu1FDnxxstFMuJfTalgV++HNFirQM+NyxvWSOZhh9zCA==
+nodegistry@^1.1.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/nodegistry/-/nodegistry-1.2.3.tgz#35d224eea3703e17b1b5dc876cc085ee6815644a"
+  integrity sha512-BPHfO6W2vMeMBO8KyFhUGKW5Jx0IZkGPNYbkZjqhE3El6OOqlL007bjz70ye40VF0L7U76Aw7YHq+NbZ4gwI2A==
   dependencies:
     "@codefresh-io/docker-reference" "^0.0.5"
     aws-sdk "^2.868.0"

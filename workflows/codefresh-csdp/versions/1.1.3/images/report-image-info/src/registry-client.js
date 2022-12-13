@@ -48,7 +48,6 @@ function getCredentialsFromDockerConfig(image) {
             username,
             password,
         },
-        ignoreRedirects: true
     });
 }
 
@@ -108,8 +107,6 @@ async function createRegistryClientByImage(image) {
     if (checkNotEmpty(inputs.generic.credentials.username)
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
-
-        inputs.generic.ignoreRedirects = true;
         return new StandardRegistry(inputs.generic);
     }
     if (inputs.dockerConfigPath) {
@@ -134,7 +131,6 @@ async function createRegistryClient(image) {
         && checkNotEmpty(inputs.generic.credentials.password)
         && checkNotEmpty(inputs.generic.request.host)) {
 
-        inputs.generic.ignoreRedirects = true;
         return new StandardRegistry(inputs.generic);
     }
 

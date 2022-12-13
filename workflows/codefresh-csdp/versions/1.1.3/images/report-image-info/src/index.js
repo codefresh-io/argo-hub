@@ -19,8 +19,6 @@ async function main() {
     const image = inputs.imageName;
     const client = await getRegistryClient(image);
 
-    console.log(`using ${client.constructor.name} client`)
-
     const workflowName = inputs.workflow.name;
     const workflowUrl = inputs.workflow.workflowUrl;
     const logsUrl = inputs.workflow.logsUrl;
@@ -28,20 +26,13 @@ async function main() {
     const registry = client.repoTag(image);
 
     const manifest = await registry.getManifest();
-
-    console.log(`image manifest has been fetched:`, '\n', manifest)
-
     const config = await registry.getConfig(manifest);
-
-    console.log(`image config has been fetched:`, '\n', config)
 
     // store in FS to use as an output param later (in argo workflow)
     storeOutputParam(OUTPUTS.IMAGE_NAME, image)
     storeOutputParam(OUTPUTS.IMAGE_SHA, manifest.config.digest)
-
     const repositoryName = _.get(parseImageName(image), 'repository')
     const imageLink = `${inputs.codefresh.host}/2.0/images/${encodeURIComponent(repositoryName)}/${manifest.config.digest}/${encodeURIComponent(image)}`
-
     storeOutputParam(OUTPUTS.IMAGE_LINK, imageLink)
 
     const size = manifest.config.size + _.reduce(manifest.layers, (sum, layer) => {
