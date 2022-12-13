@@ -14,7 +14,7 @@
     "graphql": "^16.1.0",
     "graphql-request": "^3.7.0",
     "lodash": "^4.17.21",
-    "nodegistry": "^1.1.0"
+    "nodegistry": "^1.2.4"
   },
   "dependencies": {
     "joi": "^17.6.0"
