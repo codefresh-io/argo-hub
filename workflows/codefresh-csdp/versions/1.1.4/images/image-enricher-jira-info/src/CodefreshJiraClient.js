@@ -3,13 +3,13 @@ const codefreshApi = require('./codefresh.api');
 class CodefreshJiraClient {
     constructor(context) {
         this.context = context;
-        this.issue = {
+        this.issues = {
             getIssue: this.getIssue.bind(this),
         };
     }
 
-    async getIssue({ issueKey }) {
-        return codefreshApi.getJiraIssue(this.context, issueKey);
+    async getIssue({ issueIdOrKey }) {
+        return codefreshApi.getJiraIssue(this.context, issueIdOrKey);
     }
 }
 

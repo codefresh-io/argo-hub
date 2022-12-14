@@ -8,6 +8,7 @@ const codefreshApi = require('./codefresh.api');
 const CodefreshJiraClient = require('./CodefreshJiraClient');
 
 class JiraService {
+    // jira: Version2Client
 
     async init() {
         let jiraConfig = _.cloneDeep(inputs.jira)
@@ -50,8 +51,8 @@ class JiraService {
 
     async getInfoAboutIssue(issue) {
         try {
-            return await this.jira.issue.getIssue({
-                issueKey: issue
+            return await this.jira.issues.getIssue({
+                issueIdOrKey: issue,
             });
         } catch (error) {
             return this._handleJiraError(error, issue)
