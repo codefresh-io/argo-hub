@@ -4,6 +4,9 @@
 ### report-image-info
 * Handle redirects correctly when interacting with the standard container registries
 
+### image-enricher-git-info
+* Support personal bitbucket server repos
+
 ## v1.1.3 (15.8.2022)
 ### report-image-info
 * Added new output param `image_link` to the image in codefresh.
