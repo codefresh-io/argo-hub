@@ -25,6 +25,11 @@ async function main() {
         throw new Error(`Cant initialize jira client, reason: ${e.message}`)
     }
 
+    // todo: remove
+    const res = await jiraService.jira.myself.getCurrentUser();
+    console.log(res)
+    return
+
     const issues = jiraService.extract();
 
     if (!_.isArray(issues)) {

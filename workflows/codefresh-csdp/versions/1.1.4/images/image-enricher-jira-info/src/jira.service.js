@@ -1,4 +1,6 @@
 const JiraClient = require('jira-connector');
+const { Version2Client } = require('jira.js');
+
 const _ = require('lodash');
 
 const inputs = require('./configuration').inputs;
@@ -20,21 +22,23 @@ class JiraService {
                 return;
             }
 
-            const { hostname } = new URL(jiraContext.spec.data.auth.apiURL);
+            // const { hostname } = new URL(jiraContext.spec.data.auth.apiURL);
             jiraConfig = {
-                host: hostname,
-                basic_auth: {
-                    email: jiraContext.spec.data.auth.username,
-                    api_token: jiraContext.spec.data.auth.password
+                host: jiraContext.spec.data.auth.apiURL,
+                authentication: {
+                    basic: {
+                        email: jiraContext.spec.data.auth.username,
+                        apiToken: jiraContext.spec.data.auth.password
+                    },
                 },
                 context: jiraConfig.context,
             }
-        } else {
+        }/* else {
             const { hostname } = new URL(jiraConfig.host);
             jiraConfig.host = hostname
-        }
+        }*/
 
-        this.jira = new JiraClient({
+        this.jira = new Version2Client({
             ...jiraConfig
         })
 

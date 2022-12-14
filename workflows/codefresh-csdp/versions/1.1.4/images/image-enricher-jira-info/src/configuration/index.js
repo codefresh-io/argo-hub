@@ -9,9 +9,18 @@ const inputs = {
     message: process.env.JIRA_MESSAGE?.trim(),
     jira: {
         host: process.env.JIRA_HOST_URL?.trim(),
-        basic_auth: {
-            email: process.env.JIRA_EMAIL?.trim(),
-            api_token: process.env.JIRA_API_TOKEN?.trim()
+        newErrorHandling: true,
+        authentication: {
+            // if true or undefined
+            ...(process.env.JIRA_USE_BASIC_AUTH !== 'false' && {
+                basic: {
+                    email: process.env.JIRA_EMAIL?.trim(),
+                    apiToken: process.env.JIRA_API_TOKEN?.trim(),
+                }
+            }),
+            ...(process.env.JIRA_USE_BASIC_AUTH === 'false' && {
+                personalAccessToken: process.env.JIRA_API_TOKEN?.trim()
+            }),
         },
         context: process.env.JIRA_CONTEXT?.trim(),
     },
@@ -25,14 +34,17 @@ const schema = Joi.object({
     FAIL_ON_NOT_FOUND: Joi.boolean(),
 
     JIRA_CONTEXT: Joi.string().empty(''),
-    JIRA_EMAIL: Joi.string().empty(''),
+    JIRA_EMAIL: Joi.string()
+        .empty('')
+        .when('JIRA_USE_BASIC_AUTH', {is: true, then: Joi.required()}),
+    JIRA_USE_BASIC_AUTH: Joi.boolean()/*.empty(undefined)*/,
     JIRA_API_TOKEN: Joi.string().empty(''),
     JIRA_HOST_URL: Joi.string().uri().empty(''),
     JIRA_MESSAGE: Joi.string().required(),
     JIRA_PROJECT_PREFIX: Joi.string().required(),
 })
 .xor('JIRA_CONTEXT', 'JIRA_API_TOKEN')
-.with('JIRA_API_TOKEN', ['JIRA_EMAIL', 'JIRA_HOST_URL'])
+.with('JIRA_API_TOKEN', ['JIRA_HOST_URL'])
 
 module.exports = {
     inputs,
