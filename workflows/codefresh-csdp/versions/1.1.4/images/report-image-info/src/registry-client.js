@@ -54,22 +54,27 @@ function getCredentialsFromDockerConfig(image) {
 
 async function createECRUsingSTS(role, region) {
     console.log(`Retrieving credentials for ECR ${region} using STS token`);
-    const sts = new AWS.STS();
-    const timestamp = (new Date()).getTime();
-    const params = {
-        RoleArn: role,
-        RoleSessionName: `be-descriptibe-here-${timestamp}`
+    try {
+        const sts = new AWS.STS();
+        const timestamp = (new Date()).getTime();
+        const params = {
+            RoleArn: role,
+            RoleSessionName: `be-descriptibe-here-${timestamp}`
+        }
+        const data = await sts.assumeRole(params).promise();
+        return new EcrRegistry({
+            promise: Promise,
+            credentials: {
+                accessKeyId: data.Credentials.AccessKeyId,
+                secretAccessKey: data.Credentials.SecretAccessKey,
+                sessionToken: data.Credentials.SessionToken,
+                region: region,
+            },
+        })
+    } catch (error) {
+        console.error(error.message)
+        throw error
     }
-    const data = await sts.assumeRole(params).promise();
-    return new EcrRegistry({
-        promise: Promise,
-        credentials: {
-            accessKeyId: data.Credentials.AccessKeyId,
-            secretAccessKey: data.Credentials.SecretAccessKey,
-            sessionToken: data.Credentials.SessionToken,
-            region: region,
-        },
-    })
 }
 
 async function createRegistryClientByImage(image) {
