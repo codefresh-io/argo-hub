@@ -1,6 +1,6 @@
 const fs = require('fs')
 const _ = require('lodash')
-const AWS = require('aws-sdk');
+const { STS } = require('@aws-sdk/client-sts');
 const { parseQualifiedNameOptimized, parseFamiliarName } = require('@codefresh-io/docker-reference')
 const { registries: { GcrRegistry, EcrRegistry, DockerhubRegistry, StandardRegistry } } = require('nodegistry');
 
@@ -55,13 +55,22 @@ function getCredentialsFromDockerConfig(image) {
 async function createECRUsingSTS(role, region) {
     console.log(`Retrieving credentials for ECR ${region} using STS token`);
     try {
-        const sts = new AWS.STS();
+        const sts = new STS({ region });
+        sts.middlewareStack.add( (next, context) => (args) => {
+              console.log('\n -- printed from inside STS middleware -- ');
+              console.log('hostname: ', args.request.hostname);
+              console.log('input: ', args.input, '\n');
+              return next(args);
+          },
+          {
+              step: "build",
+          })
         const timestamp = (new Date()).getTime();
         const params = {
             RoleArn: role,
             RoleSessionName: `be-descriptibe-here-${timestamp}`
         }
-        const data = await sts.assumeRole(params).promise();
+        const data = await sts.assumeRole(params);
         return new EcrRegistry({
             promise: Promise,
             credentials: {
