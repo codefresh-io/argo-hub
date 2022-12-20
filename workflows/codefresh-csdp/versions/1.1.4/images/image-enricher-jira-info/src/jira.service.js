@@ -14,6 +14,7 @@ class JiraService {
         let jiraConfig = _.cloneDeep(inputs.jira)
 
         if (jiraConfig.context) {
+            console.log('Using jira context auth')
             const jiraContext = await codefreshApi.getJiraContext(jiraConfig.context);
             if (!jiraContext) {
                 throw new Error(`Codefresh jira integration \"configuration.jira.context\" not found`)
@@ -35,9 +36,15 @@ class JiraService {
             }
         }
 
+        if (jiraConfig.authentication.basic) {
+            console.log('Using jira basic auth')
+        } else if (jiraConfig.authentication.personalAccessToken) {
+            console.log('Using jira personalAccessToken auth')
+        }
+
         this.jira = new Version2Client({
             ...jiraConfig
-        })
+        });
 
     }
 
