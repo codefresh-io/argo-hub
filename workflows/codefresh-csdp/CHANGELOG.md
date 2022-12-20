@@ -1,8 +1,9 @@
 # Changelog
 
-## v1.1.4 (13.12.2022)
+## v1.1.4 (20.12.2022)
 ### report-image-info
 * Handle redirects correctly when interacting with the standard container registries
+* Used @aws-sdk v3 library
 
 ### image-enricher-git-info
 * Support personal bitbucket server repos
