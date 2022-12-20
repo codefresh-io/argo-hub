@@ -23,7 +23,6 @@ class JiraService {
                 return;
             }
 
-            // const { hostname } = new URL(jiraContext.spec.data.auth.apiURL);
             jiraConfig = {
                 host: jiraContext.spec.data.auth.apiURL,
                 authentication: {
@@ -34,10 +33,7 @@ class JiraService {
                 },
                 context: jiraConfig.context,
             }
-        }/* else {
-            const { hostname } = new URL(jiraConfig.host);
-            jiraConfig.host = hostname
-        }*/
+        }
 
         this.jira = new Version2Client({
             ...jiraConfig
@@ -60,20 +56,13 @@ class JiraService {
     }
 
     _handleJiraError(error, issueId) {
-        let errorObject = error
-        if (_.isString(errorObject)) { // jira returns errors in string format
-            errorObject = JSON.parse(errorObject);
-        }
-        const errorMessage = JSON.stringify(errorObject.body)
+        const errorMessage = JSON.stringify(error.response.data)
         console.error(`failed to get jira issue ${issueId}: ${errorMessage}`)
 
-        if (errorObject.statusCode === 401) {
+        if (error.response.status === 401) {
             throw new Error('failed to authenticate to Jira, please verify you are using valid credentials')
         }
-        if (errorObject.statusCode === 404) {
-            if (errorObject.body.errorMessage === 'Site temporarily unavailable') {
-                throw new Error(`provided jira host is unavailable – ${errorObject.request.uri.host}`)
-            }
+        if (error.response.status === 404) {
             if (inputs.failOnNotFound === 'true') {
                 throw new Error(`issue ${issueId} not found`)
             } else {
