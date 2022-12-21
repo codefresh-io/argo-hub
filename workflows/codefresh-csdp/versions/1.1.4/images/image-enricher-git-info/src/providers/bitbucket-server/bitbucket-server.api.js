@@ -9,27 +9,12 @@ class BitbucketServerApi {
         this.password = inputs.bitbucketPassword;
     }
 
-    async _sendGetRequest(uri) {
-        return rp({
-            method: 'GET',
-            uri: `${this.serverURL}/${uri}`,
-            auth: {
-                user: this.username,
-                pass: this.password
-            },
-            json: true
-        });
-    }
+    async getRepo(repo) {
+        const [ workspace, repoSlug ] = this._getRepoSlugAndWorkspaceFromRepo(repo);
 
-    _buildCommitUrl(workspace, repoSlug, commitId) {
-        if (!commitId) {
-            return undefined;
-        }
-        return `${this.serverURL}/projects/${workspace}/repos/${repoSlug}/commits/${commitId}`;
-    }
-
-    _getRepoSlugAndWorkspaceFromRepo(repo) {
-        return repo.split('/')
+        return await this._withPersonalWorkspaceFallback((attemptedWorkspace) => {
+            return this._sendGetRequest(`rest/api/latest/projects/${attemptedWorkspace}/repos/${repoSlug}`);
+        }, workspace);
     }
 
     async getBranch(repo, branch) {
@@ -90,6 +75,44 @@ class BitbucketServerApi {
             };
         }
         return null;
+    }
+    
+    async _sendGetRequest(uri) {
+        return rp({
+            method: 'GET',
+            uri: `${this.serverURL}/${uri}`,
+            auth: {
+                user: this.username,
+                pass: this.password
+            },
+            json: true
+        });
+    }
+
+    _buildCommitUrl(workspace, repoSlug, commitId) {
+        if (!commitId) {
+            return undefined;
+        }
+        return `${this.serverURL}/projects/${workspace}/repos/${repoSlug}/commits/${commitId}`;
+    }
+
+    _getRepoSlugAndWorkspaceFromRepo(repo) {
+        return repo.split('/')
+    }
+
+    async _withPersonalWorkspaceFallback(cb, workspace) {
+        return await cb(workspace).catch(
+            async (error) => {
+                if (error.statusCode === 404) {
+    
+                    const personalWorkspace = `~${workspace}`
+                    console.log(`looking for personal workspace ${personalWorkspace} as a fallback`)
+    
+                    return await cb(personalWorkspace);
+                }
+                throw error;
+            }
+        )
     }
 }
 module.exports = new BitbucketServerApi();
