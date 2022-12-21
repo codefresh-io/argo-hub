@@ -1,9 +1,16 @@
 {
-	"name": "port-codefresh-get-entity",
+	"name": "codefresh-port-entity",
 	"version": "1.0.0",
 	"main": "lib/index.js",
 	"private": true,
 	"license": "MIT",
+	"scripts": {
+		"build": "tsc",
+		"format": "prettier --write '**/*.ts'",
+		"format-check": "prettier --check '**/*.ts'",
+		"lint": "eslint src/**/*.ts",
+		"build-tag-deploy": "docker build -t codefresh-port-entity . && docker tag codefresh-port-entity:latest public.ecr.aws/y8q1v8m0/codefresh-port-entity:latest && docker push public.ecr.aws/y8q1v8m0/codefresh-port-entity:latest"
+	},
 	"dependencies": {
 		"axios": "^1.2.1"
 	},

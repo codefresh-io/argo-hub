@@ -1,10 +1,8 @@
-import assert from 'assert';
-
-import clients from '../../clients';
-import { Entity, EntityToGet, WorkflowInput } from '../../types';
+import clients from '../clients';
+import { Entity, EntityToGet, WorkflowGetInput } from '../types';
 
 export default class EntityGetterOperation {
-	constructor(private input: WorkflowInput) {
+	constructor(private input: WorkflowGetInput) {
 		this.input = input;
 	}
 

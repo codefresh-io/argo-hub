@@ -1,7 +1,11 @@
 # Changelog
 
-## v0.0.1 (?)
+## v1.0.0 (21.12.2022)
 
-### task
+### entity-get
 
-short description
+Initial commit
+
+### entity-upsert
+
+Initial commit

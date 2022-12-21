@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-import deleteEntity from './deleteEntity';
 import getEntity from './getEntity';
 import getToken from './getToken';
-import searchEntities from './searchEntities';
 import upsertEntity from './upsertEntity';
 
 const USER_AGENT = 'codefresh-workflow/v1.0';
@@ -21,8 +19,6 @@ axios.delete = async (url: string, config?: any) => axdelete(url, getConfigWithA
 
 export default {
 	getToken,
-	upsertEntity,
-	deleteEntity,
-	searchEntities,
 	getEntity,
+	upsertEntity,
 };

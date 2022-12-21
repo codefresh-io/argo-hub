@@ -4,6 +4,7 @@ const getToken = async (baseUrl: string, clientId: string, clientSecret: string)
 	try {
 		console.info(`Trying to obtain Port access token`);
 		const { data } = await axios.post(`${baseUrl}/v1/auth/access_token`, { clientId, clientSecret });
+		console.info(`Token obtained`);
 
 		return data.accessToken;
 	} catch (e: any) {
