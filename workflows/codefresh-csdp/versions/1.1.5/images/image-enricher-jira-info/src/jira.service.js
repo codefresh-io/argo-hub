@@ -1,4 +1,5 @@
-const JiraClient = require('jira-connector');
+const { Version2Client } = require('jira.js');
+
 const _ = require('lodash');
 
 const inputs = require('./configuration').inputs;
@@ -11,6 +12,7 @@ class JiraService {
         let jiraConfig = _.cloneDeep(inputs.jira)
 
         if (jiraConfig.context) {
+            console.log('using jira context auth')
             const jiraContext = await codefreshApi.getJiraContext(jiraConfig.context);
             if (!jiraContext) {
                 throw new Error(`Codefresh jira integration \"configuration.jira.context\" not found`)
@@ -20,23 +22,27 @@ class JiraService {
                 return;
             }
 
-            const { hostname } = new URL(jiraContext.spec.data.auth.apiURL);
             jiraConfig = {
-                host: hostname,
-                basic_auth: {
-                    email: jiraContext.spec.data.auth.username,
-                    api_token: jiraContext.spec.data.auth.password
+                host: jiraContext.spec.data.auth.apiURL,
+                authentication: {
+                    basic: {
+                        email: jiraContext.spec.data.auth.username,
+                        apiToken: jiraContext.spec.data.auth.password
+                    },
                 },
                 context: jiraConfig.context,
             }
-        } else {
-            const { hostname } = new URL(jiraConfig.host);
-            jiraConfig.host = hostname
         }
 
-        this.jira = new JiraClient({
+        if (jiraConfig.authentication.basic) {
+            console.log('using jira basic auth')
+        } else if (jiraConfig.authentication.personalAccessToken) {
+            console.log('using jira personalAccessToken auth')
+        }
+
+        this.jira = new Version2Client({
             ...jiraConfig
-        })
+        });
 
     }
 
@@ -46,8 +52,8 @@ class JiraService {
 
     async getInfoAboutIssue(issue) {
         try {
-            return await this.jira.issue.getIssue({
-                issueKey: issue
+            return await this.jira.issues.getIssue({
+                issueIdOrKey: issue,
             });
         } catch (error) {
             return this._handleJiraError(error, issue)
@@ -55,20 +61,13 @@ class JiraService {
     }
 
     _handleJiraError(error, issueId) {
-        let errorObject = error
-        if (_.isString(errorObject)) { // jira returns errors in string format
-            errorObject = JSON.parse(errorObject);
-        }
-        const errorMessage = JSON.stringify(errorObject.body)
+        const errorMessage = JSON.stringify(error.response.data)
         console.error(`failed to get jira issue ${issueId}: ${errorMessage}`)
 
-        if (errorObject.statusCode === 401) {
+        if (error.response.status === 401) {
             throw new Error('failed to authenticate to Jira, please verify you are using valid credentials')
         }
-        if (errorObject.statusCode === 404) {
-            if (errorObject.body.errorMessage === 'Site temporarily unavailable') {
-                throw new Error(`provided jira host is unavailable – ${errorObject.request.uri.host}`)
-            }
+        if (error.response.status === 404) {
             if (inputs.failOnNotFound === 'true') {
                 throw new Error(`issue ${issueId} not found`)
             } else {

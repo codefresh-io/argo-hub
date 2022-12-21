@@ -9,9 +9,18 @@ const inputs = {
     message: process.env.JIRA_MESSAGE?.trim(),
     jira: {
         host: process.env.JIRA_HOST_URL?.trim(),
-        basic_auth: {
-            email: process.env.JIRA_EMAIL?.trim(),
-            api_token: process.env.JIRA_API_TOKEN?.trim()
+        // do not enable
+        // newErrorHandling: true,
+        authentication: {
+            ...(!process.env.JIRA_SERVER_PAT && {
+                basic: {
+                    email: process.env.JIRA_EMAIL?.trim(),
+                    apiToken: process.env.JIRA_API_TOKEN?.trim(),
+                }
+            }),
+            ...(process.env.JIRA_SERVER_PAT && {
+                personalAccessToken: process.env.JIRA_SERVER_PAT?.trim()
+            }),
         },
         context: process.env.JIRA_CONTEXT?.trim(),
     },
@@ -27,12 +36,14 @@ const schema = Joi.object({
     JIRA_CONTEXT: Joi.string().empty(''),
     JIRA_EMAIL: Joi.string().empty(''),
     JIRA_API_TOKEN: Joi.string().empty(''),
+    JIRA_SERVER_PAT: Joi.string().empty(''),
     JIRA_HOST_URL: Joi.string().uri().empty(''),
     JIRA_MESSAGE: Joi.string().required(),
     JIRA_PROJECT_PREFIX: Joi.string().required(),
 })
-.xor('JIRA_CONTEXT', 'JIRA_API_TOKEN')
+.xor('JIRA_CONTEXT', 'JIRA_API_TOKEN', 'JIRA_SERVER_PAT')
 .with('JIRA_API_TOKEN', ['JIRA_EMAIL', 'JIRA_HOST_URL'])
+.with('JIRA_SERVER_PAT', ['JIRA_HOST_URL'])
 
 module.exports = {
     inputs,
