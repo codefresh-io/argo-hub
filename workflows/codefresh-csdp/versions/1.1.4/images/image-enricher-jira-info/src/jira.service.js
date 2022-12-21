@@ -1,4 +1,3 @@
-const JiraClient = require('jira-connector');
 const { Version2Client } = require('jira.js');
 
 const _ = require('lodash');
@@ -8,13 +7,12 @@ const codefreshApi = require('./codefresh.api');
 const CodefreshJiraClient = require('./CodefreshJiraClient');
 
 class JiraService {
-    // jira: Version2Client
 
     async init() {
         let jiraConfig = _.cloneDeep(inputs.jira)
 
         if (jiraConfig.context) {
-            console.log('Using jira context auth')
+            console.log('using jira context auth')
             const jiraContext = await codefreshApi.getJiraContext(jiraConfig.context);
             if (!jiraContext) {
                 throw new Error(`Codefresh jira integration \"configuration.jira.context\" not found`)
@@ -37,9 +35,9 @@ class JiraService {
         }
 
         if (jiraConfig.authentication.basic) {
-            console.log('Using jira basic auth')
+            console.log('using jira basic auth')
         } else if (jiraConfig.authentication.personalAccessToken) {
-            console.log('Using jira personalAccessToken auth')
+            console.log('using jira personalAccessToken auth')
         }
 
         this.jira = new Version2Client({
