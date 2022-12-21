@@ -17,6 +17,7 @@
     "nodegistry": "^1.2.4"
   },
   "dependencies": {
+    "@aws-sdk/client-sts": "^3.231.0",
     "joi": "^17.6.0"
   }
 }

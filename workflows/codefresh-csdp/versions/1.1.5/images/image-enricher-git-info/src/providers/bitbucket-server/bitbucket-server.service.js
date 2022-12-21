@@ -5,9 +5,11 @@ class BitbucketServerService {
 
     async getPullRequestsWithCommits(repo, branch) {
         try {
-            const prs = await bitBucketServerApi.getPullRequests(repo, branch);
+            const repoId = await this.getRepoId(repo);
+
+            const prs = await bitBucketServerApi.getPullRequests(repoId, branch);
             return Promise.all(prs.map(async (pr) => {
-                const info = await bitBucketServerApi.getCommitsInfo(repo, pr);
+                const info = await bitBucketServerApi.getCommitsInfo(repoId, pr);
                 const result = {
                     ...info,
                     prDate: pr.updatedDate || pr.createdDate,
@@ -25,7 +27,9 @@ class BitbucketServerService {
 
     async getBranch(repo, branch) {
         try {
-            const bitBucketBranch = await bitBucketServerApi.getBranch(repo, branch)
+            const repoId = await this.getRepoId(repo);
+
+            const bitBucketBranch = await bitBucketServerApi.getBranch(repoId, branch)
             if (!bitBucketBranch) {
                 return null
             }
@@ -43,6 +47,11 @@ class BitbucketServerService {
             }
             throw new Error(`failed to get branch: ${error.message}`)
         }
+    }
+
+    async getRepoId(repoInput) {
+        const repo = await bitBucketServerApi.getRepo(repoInput);
+        return `${repo.project.key}/${repo.slug}`
     }
 }
 module.exports = new BitbucketServerService();
