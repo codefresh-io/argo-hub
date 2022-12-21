@@ -2,7 +2,7 @@
 
 ## Summary
 
-A set of templates to perform operations against Port such as getting an existing Entity or creating/updating an Entity as part of your CI/CD.
+A set of templates to perform operations against [Port](https://getport.io) such as getting an existing Entity or creating/updating an Entity as part of your CI/CD.
 
 ## Templates
 
