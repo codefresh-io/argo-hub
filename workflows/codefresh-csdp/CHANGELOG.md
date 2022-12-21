@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.5 (21.12.2022)
+### image-enricher-jira-info
+* Add ability to use personal access token for Jira Server
+
 ## v1.1.4 (13.12.2022)
 ### report-image-info
 * Handle redirects correctly when interacting with the standard container registries
