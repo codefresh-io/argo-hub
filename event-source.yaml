@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: github-event-source
+  namespace: argo-events
+spec:
+  service:
+    ports:
+      - port: 12000
+        targetPort: 12000
+  github:
+    push:
+      repositories:
+        - owner: PhilippPlotnikov
+          names:
+            - argo-hub
+      webhook:
+        endpoint: /push
+        port: "12000"
+        method: POST
+        url: http://philipp.hybrid-team.cf-cd.com
+      events:
+        - push
+      
+      apiToken:
+        name: github-token
+        key: token
+      
+      insecure: true
+      active: true
+      contentType: json
