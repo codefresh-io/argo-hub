@@ -9,18 +9,16 @@ spec:
       - port: 12000
         targetPort: 12000
   github:
-    push:
-      repositories:
-        - owner: PhilippPlotnikov
-          names:
-            - argo-hub
+    pull-request:
+      owner: PhilippPlotnikov
+      repository: aws-local-runtime
       webhook:
-        endpoint: /push
+        endpoint: /pull-request
         port: "12000"
         method: POST
-        url: http://philipp.hybrid-team.cf-cd.com
+        url: https://philipp.hybrid-team.cf-cd.com
       events:
-        - push
+        - pull_request
       
       apiToken:
         name: github-token

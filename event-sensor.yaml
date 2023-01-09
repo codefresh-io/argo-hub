@@ -1,3 +1,5 @@
+# 1 Sync PR
+# 2 Github workflow
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
@@ -7,17 +9,19 @@ spec:
   template:
     serviceAccountName: operate-workflow-sa
   dependencies:
-    - name: github-push
+    - name: github-pull-request
       eventSourceName: github-event-source
-      eventName: push
+      eventName: pull-request
       filters:
         data:
-          # Type of Github event that triggered the delivery: [pull_request, push, issues, label, ...]
-          # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
-          - path: body.deleted
-            type: bool
+          - path: body.action
+            type: string
             value:
-              - "false"
+              - "synchronize"     
+          - path: body.pull_request.base.ref
+            type: string
+            value:
+              - "main"
   triggers:
     - template:
         name: github-workflow-trigger
@@ -28,14 +32,23 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                name: github-
+                name: github-workflow
               spec:
                 entrypoint: whalesay
+                arguments:
+                  parameters:
+                    - name: repo
                 templates:
                   - name: whalesay
+                    inputs:
+                      parameters:
+                        - name: repo
                     container:
                       image: docker/whalesay:latest
                       command: [cowsay]
-                      args: ["Test"]
-      retryStrategy:
-        steps: 3
+                      args: ["{{inputs.parameters.repo}}"]
+          parameters:
+            - src:
+                dependencyName: github-pull-request
+                dataKey: body.pull_request.base.ref
+              dest: spec.arguments.parameters.0.value
