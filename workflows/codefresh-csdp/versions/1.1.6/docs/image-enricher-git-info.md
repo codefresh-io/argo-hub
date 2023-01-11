@@ -55,8 +55,6 @@ spec:
             value: 'token'
           - name: IMAGE_NAME
             value: 'gcr.io/codefresh/cfstep-helm:lastest'
-          - name: IMAGE_SHA
-            value: 'sha256:cbe433136120cea1f146cf1b7f72e77fa763ff0c18b10ef605c1fc5c3d5fbec'
           - name: GIT_PROVIDER
             value: 'github'
           - name: REPO
