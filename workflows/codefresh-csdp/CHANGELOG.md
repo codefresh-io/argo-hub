@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.6 (21.12.2022)
+## v1.1.6 (13.1.2022)
 ### image-enricher-git-info
 * Deprecated usage of image SHA
 
