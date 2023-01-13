@@ -1,112 +1,3 @@
-# # 1 Sync PR
-# # 2 Github workflow
-# apiVersion: argoproj.io/v1alpha1
-# kind: Sensor
-# metadata:
-#   name: github-sensor
-#   namespace: argo-events
-# spec:
-#   template:
-#     serviceAccountName: operate-workflow-sa
-#   dependencies:
-#     - name: github-pull-request
-#       eventSourceName: github-event-source
-#       eventName: pull-request
-#       filters:
-#         data:
-#           - path: body.action
-#             type: string
-#             value:
-#               - "synchronize"     
-#           - path: body.pull_request.base.ref
-#             type: string
-#             value:
-#               - "main"
-#   triggers:
-#     - template:
-#         name: github-workflow-trigger
-#         k8s:
-#           operation: create
-#           source:
-#             resource:
-#               apiVersion: argoproj.io/v1alpha1
-#               kind: Workflow
-#               metadata:
-#                 name: github-workflow
-#               spec:
-#                 entrypoint: whalesay
-#                 arguments:
-#                   parameters:
-#                     - name: GIT_REPO
-#                     - name: GIT_BRANCH
-#                     - name: GIT_REVISION
-#                     - name: FILES_MODIFIED
-#                     - name: FILES_ADDED
-#                     - name: GIT_REPO_OWNER
-#                     - name: GIT_REPO_NAME
-#                     - name: GIT_COMMIT_MESSAGE
-#                     - name: GIT_COMMIT_URL
-#                 templates:
-#                   - name: whalesay
-#                     inputs:
-#                       parameters:
-#                         - name: GIT_REPO
-#                         - name: GIT_BRANCH
-#                         - name: GIT_REVISION
-#                         - name: FILES_MODIFIED
-#                         - name: FILES_ADDED
-#                         - name: GIT_REPO_OWNER
-#                         - name: GIT_REPO_NAME
-#                         - name: GIT_COMMIT_MESSAGE
-#                         - name: GIT_COMMIT_URL
-#                     container:
-#                       image: docker/whalesay:latest
-#                       command: [cowsay]
-#                       args: ["{{inputs.parameters.GIT_BRANCH}}"]
-#           parameters:
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.head.repo.html_url
-#               dest: spec.arguments.parameters.0.value
-#               # TODO: SEARCH FOR WAYS TO DO THIS:
-#               # dest: spec.arguments.parameters.(?name=='GIT_REPO').value
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.head.ref
-#               dest: spec.arguments.parameters.1.value
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.head.sha
-#               dest: spec.arguments.parameters.2.value
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.changed_files
-#               dest: spec.arguments.parameters.3.value
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.additions
-#               dest: spec.arguments.parameters.4.value
-#             # GIT_REPO_OWNER
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.user.login
-#               dest: spec.arguments.parameters.5.value
-#             # GIT_REPO_NAME
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.repository.name
-#               dest: spec.arguments.parameters.6.value
-#             # GIT_COMMIT_MESSAGE
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.head.repo.merge_commit_message
-#               dest: spec.arguments.parameters.7.value
-#             # GIT_COMMIT_URL
-#             - src:
-#                 dependencyName: github-pull-request
-#                 dataKey: body.pull_request.commits_url
-#               dest: spec.arguments.parameters.8.value
-
 
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
@@ -130,10 +21,20 @@ spec:
             type: string
             value:
               - "main"
+    - name: argo-hub-push
+      eventSourceName: github-event-source
+      eventName: push
+      filters:
+        data:
+          - path: body.deleted
+            type: bool
+            value:
+              - "false"
 
   triggers:
     - template:
-        name: build-images
+        conditions: "argo-hub-pull-request"
+        name: build-images-on-pull-request
         k8s:
           operation: create
           source:
@@ -214,5 +115,90 @@ spec:
             - src:
                 dependencyName: argo-hub-pull-request
                 dataKey: body.pull_request.commits_url
+              dest: spec.arguments.parameters.8.value
+
+    - template:
+        conditions: "argo-hub-push"
+        name: build-images-on-push
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                name: github-workflow
+              spec:
+                entrypoint: whalesay
+                arguments:
+                  parameters:
+                    - name: GIT_REPO
+                    - name: GIT_BRANCH
+                    - name: GIT_REVISION
+                    - name: FILES_MODIFIED
+                    - name: FILES_ADDED
+                    - name: GIT_REPO_OWNER
+                    - name: GIT_REPO_NAME
+                    - name: GIT_COMMIT_MESSAGE
+                    - name: GIT_COMMIT_URL
+                templates:
+                  - name: whalesay
+                    inputs:
+                      parameters:
+                        - name: GIT_REPO
+                        - name: GIT_BRANCH
+                        - name: GIT_REVISION
+                        - name: FILES_MODIFIED
+                        - name: FILES_ADDED
+                        - name: GIT_REPO_OWNER
+                        - name: GIT_REPO_NAME
+                        - name: GIT_COMMIT_MESSAGE
+                        - name: GIT_COMMIT_URL
+                    container:
+                      image: docker/whalesay:latest
+                      command: [cowsay]
+                      args: ["{{inputs.parameters.GIT_BRANCH}}"]
+          parameters:
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.repository.clone_url
+              dest: spec.arguments.parameters.0.value
+              # TODO: SEARCH FOR WAYS TO DO THIS:
+              # dest: spec.arguments.parameters.(?name=='GIT_REPO').value
+            - src:
+                dependencyName: argo-hub-push
+                dataTemplate: "{{ trimPrefix \"refs/heads/\" .Input.body.ref }}"
+              dest: spec.arguments.parameters.1.value
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.after
+              dest: spec.arguments.parameters.2.value
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.head_commit.modified
+              dest: spec.arguments.parameters.3.value
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.head_commit.added
+              dest: spec.arguments.parameters.4.value
+            # GIT_REPO_OWNER
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.repository.owner.name
+              dest: spec.arguments.parameters.5.value
+            # GIT_REPO_NAME
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.repository.name
+              dest: spec.arguments.parameters.6.value
+            # GIT_COMMIT_MESSAGE
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.head_commit.message
+              dest: spec.arguments.parameters.7.value
+            # GIT_COMMIT_URL
+            - src:
+                dependencyName: argo-hub-push
+                dataKey: body.head_commit.url
               dest: spec.arguments.parameters.8.value
 

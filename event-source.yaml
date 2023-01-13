@@ -16,9 +16,19 @@ spec:
         endpoint: /pull-request
         port: "12000"
         method: POST
-        url: https://philipp.hybrid-team.cf-cd.com
+        url: https://a8f7237aefe2e4dea9bb71aa01e18e6b-1907811978.us-east-1.elb.amazonaws.com
       events:
         - pull_request
+    push:
+      owner: PhilippPlotnikov
+      repository: aws-local-runtime
+      webhook:
+        endpoint: /push
+        port: "12000"
+        method: POST
+        url: https://a8f7237aefe2e4dea9bb71aa01e18e6b-1907811978.us-east-1.elb.amazonaws.com
+      events:
+        - push
       
       apiToken:
         name: github-token
