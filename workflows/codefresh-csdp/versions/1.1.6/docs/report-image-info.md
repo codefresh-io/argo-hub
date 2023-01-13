@@ -14,6 +14,8 @@ Report image info to argo platform.
 * LOGS_URL (optional) - external url of the workflow logs
 * REGISTRY_INSECURE (optional) - security flag for standard registry protocol, when set to true it enables http protocol.
 * RETRIEVE_CREDENTIALS_BY_DOMAIN (optional) - decide about the authentication method based on the image domain
+* DOCKERFILE_CONTENT (optional) - content of the Dockerfile used for building image
+* DOCKERFILE_PATH (optional) - path to the Dockerfile used for building image (used if DOCKERFILE_CONTENT is empty)
 #### Specify one from following required registry parameters:
 * GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
 * GCR_KEY_SECRET (required) - The Kubernetes secret containing the GCR key information. Default is 'gcr-key-file'
@@ -62,7 +64,7 @@ spec:
       tasks:
       - name: report-image-info
         templateRef:
-          name: argo-hub.codefresh-csdp.1.1.6
+          name: argo-hub.codefresh-csdp.1.1.7
           template: report-image-info
         arguments:
           parameters:
