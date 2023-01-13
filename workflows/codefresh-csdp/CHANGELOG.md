@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.6 (21.12.2022)
+### image-enricher-git-info
+* Deprecated usage of image SHA
+
 ## v1.1.5 (21.12.2022)
 ### image-enricher-jira-info
 * Add ability to use personal access token for Jira Server
