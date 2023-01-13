@@ -1,9 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: argo-hub.codefresh-csdp.1.1.6
+  name: argo-hub.codefresh-csdp.1.1.7
   annotations:
-    argo-hub/version: '1.1.6'
+    argo-hub/version: '1.1.7'
     argo-hub/name: 'CSDP-metadata'
     argo-hub/description: 'Templates that execute operations against CSDP'
     argo-hub/license: 'MIT'
@@ -17,7 +17,7 @@ metadata:
 spec:
   templates:
     - name: image-enricher-git-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.6
+      serviceAccountName: argo-hub.codefresh-csdp.1.1.7
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich images with metadata and annotation such as PR, commits, committers'
@@ -81,7 +81,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-codefresh-csdp-image-enricher-git-info:1.1.6-main
+        image: quay.io/codefreshplugins/argo-hub-codefresh-csdp-image-enricher-git-info:1.1.7-main
         command:
           - node
           - /app/src/index.js
@@ -136,7 +136,7 @@ spec:
                 optional: true
                 key: '{{ inputs.parameters.BITBUCKET_PASSWORD_SECRET_KEY }}'
     - name: image-enricher-jira-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.6
+      serviceAccountName: argo-hub.codefresh-csdp.1.1.7
       metadata:
         annotations:
           argo-hub-template/description: 'Enrich images with metadata and annotation such as ticket number, title, assignee, status'
@@ -182,7 +182,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-codefresh-csdp-image-enricher-jira-info:1.1.6-main
+        image: quay.io/codefreshplugins/argo-hub-codefresh-csdp-image-enricher-jira-info:1.1.7-main
         command:
           - node
           - /app/src/index.js
@@ -217,7 +217,7 @@ spec:
                 name: '{{ inputs.parameters.JIRA_API_TOKEN_SECRET }}'
                 key: '{{ inputs.parameters.JIRA_EMAIL_SECRET_KEY }}'
     - name: report-image-info
-      serviceAccountName: argo-hub.codefresh-csdp.1.1.6
+      serviceAccountName: argo-hub.codefresh-csdp.1.1.7
       metadata:
         annotations:
           argo-hub-template/description: 'Report image info to argo platform'
@@ -325,7 +325,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-codefresh-csdp-report-image-info:1.1.6-main
+        image: quay.io/codefreshplugins/argo-hub-codefresh-csdp-report-image-info:1.1.7-main
         volumeMounts:
           - name: gcr-key-file
             mountPath: /gcr/
