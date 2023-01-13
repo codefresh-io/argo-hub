@@ -29,10 +29,6 @@ spec:
         backoff:
           duration: "5s"
       inputs:
-        artifacts:
-          - name: dockerfile
-            path: /tmp/Dockerfile
-            optional: true
         parameters:
           # required
           - name: CF_API_KEY
@@ -69,8 +65,6 @@ spec:
             default: 'username'
           - name: BITBUCKET_PASSWORD_SECRET_KEY
             default: 'password'
-          - name: DOCKERFILE_CONTENT
-            default: ''
 
       outputs:
         parameters:
@@ -245,6 +239,10 @@ spec:
             optional: true
 
       inputs:
+        artifacts:
+          - name: dockerfile
+            path: /tmp/Dockerfile
+            optional: true
         parameters:
           # required
           - name: IMAGE_NAME
@@ -309,6 +307,8 @@ spec:
             default: '.dockerconfigjson'
           - name: AWS_ROLE_SECRET_KEY
             default: 'role'
+          - name: DOCKERFILE_CONTENT
+            default: ''
 
       outputs:
         parameters:
@@ -358,6 +358,8 @@ spec:
             value: '{{ inputs.parameters.WORKFLOW_URL }}'
           - name: LOGS_URL
             value: '{{ inputs.parameters.LOGS_URL }}'
+          - name: DOCKERFILE_CONTENT
+            value: '{{ inputs.parameters.DOCKERFILE_CONTENT }}'
           - name: AWS_ACCESS_KEY
             valueFrom:
               secretKeyRef:
