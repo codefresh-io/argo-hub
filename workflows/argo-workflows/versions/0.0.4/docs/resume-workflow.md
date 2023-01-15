@@ -3,7 +3,7 @@
 ## Summary
 A wrapper on top of argo cli resume operation.
 
-The template provides the easy ability to resume a specific workflow by its name or by label/field selectors
+The template provides the easy ability to resume a specific workflow by its name
 
 ## Inputs/Outputs
 
