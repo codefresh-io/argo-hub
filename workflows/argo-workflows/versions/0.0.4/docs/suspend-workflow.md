@@ -26,3 +26,4 @@ no outputs
             - name: NAME
               value: workflow-xyz
 ```
+
