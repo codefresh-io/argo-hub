@@ -41,7 +41,7 @@ spec:
             https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg
       script:
         name: main
-        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main # TODO verify where this image is being built and if the image name should change (0.0.3 -> 0.0.4)
+        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main
         command:
           - sh
         resources: { }
@@ -58,7 +58,7 @@ spec:
           inputs.parameters.TEMPLATE_NAME }},codefresh.io/submit-wf-parent-uid={{ workflow.uid }} --output=json) > output
       serviceAccountName: argo-hub.argo-workflows.0.0.4
 
-    - name: terminate-workflow2
+    - name: terminate-workflow
       metadata:
         annotations:
           argo-hub-template/description: 'A wrapper on top of argo cli terminate operation'
@@ -74,7 +74,7 @@ spec:
             default: ''
       script:
         name: main
-        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main # TODO verify where this image is being built and if the image name should change (0.0.3 -> 0.0.4)
+        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main
         imagePullPolicy: Always
         command:
           - sh
@@ -87,33 +87,6 @@ spec:
             cmd="${cmd} ${workflow_name}"
           fi
           eval $cmd
-
-    - name: terminate-workflow
-      metadata:
-        annotations:
-          argo-hub-template/description: 'A wrapper on top of argo cli terminate operation'
-          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
-          argo-hub-template/icon_background: '#f4f4f4'
-      inputs:
-        parameters:
-          - name: NAME
-            default: ''
-          - name: LABEL_SELECTOR
-            default: ''
-          - name: FIELD_SELECTOR
-            default: ''
-      container:
-        name: main
-        imagePullPolicy: Always
-        image: argoproj/argocli:v3.2.6
-        command:
-          - argo
-          - terminate
-          - '{{ inputs.parameters.NAME }}'
-          - --selector
-          - '{{ inputs.parameters.LABEL_SELECTOR }}'
-          - --field-selector
-          - '{{ inputs.parameters.FIELD_SELECTOR }}'
 
     - name: stop-workflow
       metadata:
@@ -135,7 +108,7 @@ spec:
             default: ''
       script:
         name: main
-        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main # TODO verify where this image is being built and if the image name should change (0.0.3 -> 0.0.4)
+        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main
         imagePullPolicy: Always
         command:
           - sh
