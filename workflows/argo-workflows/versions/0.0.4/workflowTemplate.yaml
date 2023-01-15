@@ -1,0 +1,192 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.argo-workflows.0.0.4
+  annotations:
+    argo-hub/version: '0.0.4'
+    argo-hub/description: 'Templates that interact with your Argo Workflow instance'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Itai Gendler'
+    argo-hub/owner_email: 'itai@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/10414627?s=120&v=4'
+    argo-hub/owner_url: 'https://github.com/itai-codefresh'
+    argo-hub/categories: 'argo'
+    argo-hub/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
+    argo-hub/icon_background: '#f4f4f4'
+spec:
+  templates:
+    - name: submit-workflow
+      inputs:
+        parameters:
+          - name: TEMPLATE_NAME
+          - name: ENTRYPOINT
+          - name: GIT_REPO
+            value: ''
+          - name: GIT_REVISION
+            value: ''
+          - name: GIT_REVISION_SHORT
+            value: ''
+          - name: GIT_BRANCH
+            value: ''
+      outputs:
+        parameters:
+          - name: codefresh-io-child-workflow-def
+            valueFrom:
+              path: /output
+      metadata:
+        annotations:
+          argo-hub-template/description: A wrapper on top of argo cli submit operation
+          argo-hub-template/icon_background: '#f4f4f4'
+          argo-hub-template/icon_url: >-
+            https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg
+      script:
+        name: main
+        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main # TODO verify where this image is being built and if the image name should change (0.0.3 -> 0.0.4)
+        command:
+          - sh
+        resources: { }
+        imagePullPolicy: Always
+        source: >
+          echo $(argo submit --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
+          --entrypoint={{ inputs.parameters.ENTRYPOINT }} -p=GIT_REPO={{
+          inputs.parameters.GIT_REPO }}  -p=GIT_REVISION={{
+          inputs.parameters.GIT_REVISION }} -p=GIT_REVISION_SHORT={{
+          inputs.parameters.GIT_REVISION_SHORT }} -p=GIT_BRANCH={{
+          inputs.parameters.GIT_BRANCH }}
+          -l=git-revision={{inputs.parameters.GIT_REVISION }},git-branch={{
+          inputs.parameters.GIT_BRANCH }},workflow-template-name={{
+          inputs.parameters.TEMPLATE_NAME }},codefresh.io/submit-wf-parent-uid={{ workflow.uid }} --output=json) > output
+      serviceAccountName: argo-hub.argo-workflows.0.0.4
+
+    - name: terminate-workflow2
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of argo cli terminate operation'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
+          argo-hub-template/icon_background: '#f4f4f4'
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+          - name: LABEL_SELECTOR
+            default: ''
+          - name: FIELD_SELECTOR
+            default: ''
+      script:
+        name: main
+        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main # TODO verify where this image is being built and if the image name should change (0.0.3 -> 0.0.4)
+        imagePullPolicy: Always
+        command:
+          - sh
+        resources: {}
+        source: |
+          cmd='argo terminate --selector "{{ inputs.parameters.LABEL_SELECTOR }}" --field-selector "{{ inputs.parameters.FIELD_SELECTOR }}"'
+          workflow_name="{{inputs.parameters.NAME}}"
+          if [[ ! -z $workflow_name ]]
+          then
+            cmd="${cmd} ${workflow_name}"
+          fi
+          eval $cmd
+
+    - name: terminate-workflow
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of argo cli terminate operation'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
+          argo-hub-template/icon_background: '#f4f4f4'
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+          - name: LABEL_SELECTOR
+            default: ''
+          - name: FIELD_SELECTOR
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: argoproj/argocli:v3.2.6
+        command:
+          - argo
+          - terminate
+          - '{{ inputs.parameters.NAME }}'
+          - --selector
+          - '{{ inputs.parameters.LABEL_SELECTOR }}'
+          - --field-selector
+          - '{{ inputs.parameters.FIELD_SELECTOR }}'
+
+    - name: stop-workflow
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of argo cli stop operation'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
+          argo-hub-template/icon_background: '#f4f4f4'
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+          - name: LABEL_SELECTOR
+            default: ''
+          - name: FIELD_SELECTOR
+            default: ''
+          - name: NODE_FIELD_SELECTOR
+            default: ''
+          - name: MESSAGE
+            default: ''
+      script:
+        name: main
+        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main # TODO verify where this image is being built and if the image name should change (0.0.3 -> 0.0.4)
+        imagePullPolicy: Always
+        command:
+          - sh
+        resources: {}
+        source: |
+          cmd='argo stop --selector "{{ inputs.parameters.LABEL_SELECTOR }}" --field-selector "{{ inputs.parameters.FIELD_SELECTOR }}" --node-field-selector "{{ inputs.parameters.NODE_FIELD_SELECTOR }}" --message "{{ inputs.parameters.MESSAGE }}"'
+          workflow_name="{{inputs.parameters.NAME}}"
+          if [[ ! -z $workflow_name ]]
+          then
+            cmd="${cmd} ${workflow_name}"
+          fi
+          eval $cmd
+
+    - name: suspend-workflow
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of argo cli suspend operation'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
+          argo-hub-template/icon_background: '#f4f4f4'
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: argoproj/argocli:v3.2.6
+        command:
+          - argo
+          - suspend
+          - '{{ inputs.parameters.NAME }}'
+
+    - name: resume-workflow
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of argo cli resume operation'
+          argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg'
+          argo-hub-template/icon_background: '#f4f4f4'
+      inputs:
+        parameters:
+          - name: NAME
+            default: ''
+          - name: NODE_FIELD_SELECTOR
+            default: ''
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: argoproj/argocli:v3.2.6
+        command:
+          - argo
+          - resume
+          - '{{ inputs.parameters.NAME }}'
+          - --node-field-selector
+          - '{{ inputs.parameters.NODE_FIELD_SELECTOR }}'
