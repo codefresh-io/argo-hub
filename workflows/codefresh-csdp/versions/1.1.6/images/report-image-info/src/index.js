@@ -222,7 +222,7 @@ async function _buildDockerfile() {
     try {
         const { dockerfileContent, dockerfilePath } = configuration.inputs
         if (dockerfileContent) {
-            return dockerfileContent
+            return Buffer.from(dockerfileContent, 'base64').toString()
         }
         return await fs.readFile(dockerfilePath ? dockerfilePath : '/tmp/Dockerfile') // use path or artifact
     } catch (error) {
