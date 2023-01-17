@@ -1,4 +1,4 @@
-# Changelog
+# Changelog 
 
 ## v1.1.7 (16.01.2023)
 ### report-image-info
