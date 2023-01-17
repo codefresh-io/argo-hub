@@ -224,7 +224,8 @@ async function _buildDockerfile() {
         if (dockerfileContent) {
             return Buffer.from(dockerfileContent, 'base64').toString()
         }
-        return await fs.readFile(dockerfilePath ? dockerfilePath : '/tmp/Dockerfile') // use path or artifact
+        const file = await fs.readFile(dockerfilePath ? dockerfilePath : '/tmp/Dockerfile') // use path or artifact
+        return file.toString()
     } catch (error) {
         console.error(`Can't get Dockerfile. ${error.message}`)
         return ''
