@@ -71,7 +71,7 @@ Every workflowTemplate folder has the following structure and files: <br>
 Every version folder has the following structure and files: <br>
 * `workflowTemplate.yaml` - the main manifest that follows the [conventions](#WorkflowTemplate-manifest-conventions)
 * `rbac.yaml` - a single file with 3 required manifests that provides the permissions for workflow template
-* `images` folder - each sub-folder results in a docker build according to the inner Dockerfile, and is automatically built scanned and pushed to argo-hub registry: `quay.io/codefreshplugins/argo-hub-workflows-{NAME}-versions-${VERSION}-${IMAGE_FOLDER_NAME}:main`
+* `images` folder - each sub-folder results in a docker build according to the inner Dockerfile, and is automatically built scanned and pushed to argo-hub registry: `quay.io/codefreshplugins/argo-hub-{NAME}:${VERSION}-main`
 * `docs` folder - contains documentation for every template within the workflowTemplate (name be identical to the template name)
 
 ### Versioning
