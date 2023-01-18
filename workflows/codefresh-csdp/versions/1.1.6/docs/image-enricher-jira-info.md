@@ -48,8 +48,6 @@ spec:
             value: 'token'
           - name: IMAGE_NAME
             value: 'gcr.io/codefresh/cfstep-helm:lastest'
-          - name: IMAGE_SHA
-            value: 'sha256:b5fd0f2fe40fa240975abc4b1b7bf101d4cadcf296f51af799917bcaa76aeb4f'
           - name: JIRA_PROJECT_PREFIX
             value: 'CR'
           - name: JIRA_MESSAGE
