@@ -41,4 +41,3 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: argo-hub.jira-sonar.0.0.1
-
