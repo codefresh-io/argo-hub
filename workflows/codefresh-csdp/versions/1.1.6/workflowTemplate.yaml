@@ -239,10 +239,6 @@ spec:
             optional: true
 
       inputs:
-        artifacts:
-          - name: dockerfile
-            path: /tmp/Dockerfile
-            optional: true
         parameters:
           # required
           - name: IMAGE_NAME
