@@ -47,6 +47,8 @@ const schema = Joi.object({
     CF_HOST_URL: Joi.string().uri().empty(''),
     CF_API_KEY: Joi.string().required(),
     IMAGE_NAME: Joi.string().required(),
+    DOCKERFILE_CONTENT: Joi.string().empty(''),
+    DOCKERFILE_PATH: Joi.string().empty(''),
     WORKFLOW_NAME: Joi.string().empty(''),
     WORKFLOW_URL: Joi.string().uri().empty(''),
     LOGS_URL: Joi.string().uri().empty(''),
