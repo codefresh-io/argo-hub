@@ -69,7 +69,7 @@ async function main() {
     };
 
     console.log('binaryMutation payload:', imageBinaryVars.imageBinary);
-    
+
     const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!){
         createImageBinary(imageBinary: $imageBinary) {
             id,

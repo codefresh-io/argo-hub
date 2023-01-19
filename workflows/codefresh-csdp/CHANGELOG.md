@@ -1,4 +1,12 @@
-# Changelog
+# Changelog 
+
+## v1.1.7 (16.01.2023)
+### report-image-info
+* Save Dockerfile and Layers to image info
+
+## v1.1.6 (13.01.2023)
+### image-enricher-git-info
+* Deprecated usage of image SHA
 
 ## v1.1.6 (13.1.2022)
 ### image-enricher-git-info
