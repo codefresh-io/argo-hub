@@ -41,7 +41,6 @@ async function main() {
 
     console.log(`image config has been fetched:`, '\n', config)
 
-
     // store in FS to use as an output param later (in argo workflow)
     storeOutputParam(OUTPUTS.IMAGE_NAME, image)
     storeOutputParam(OUTPUTS.IMAGE_SHA, manifest.config.digest)
