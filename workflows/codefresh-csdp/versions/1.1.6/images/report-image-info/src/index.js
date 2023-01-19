@@ -2,16 +2,10 @@
 require('./outputs')
 const { GraphQLClient, gql, ClientError } = require('graphql-request')
 const _ = require('lodash')
-const fs = require('fs').promises
 
 const { OUTPUTS, storeOutputParam } = require('./outputs')
 const configuration = require('./configuration');
 const { parseImageName, getRegistryClient } = require("./registry-client");
-
-const COMMON_INSTRUCTIONS = {
-    run: 'RUN',
-    shell: 'SHELL'
-};
 
 async function main() {
     console.log('starting image reporter')
@@ -60,29 +54,11 @@ async function main() {
         },
     });
 
-    const binaryResult = await _reportImageBinary({
-        manifest,
-        config,
-        image,
-        size,
-        workflowName,
-        workflowUrl,
-        logsUrl,
-        graphQLClient
-    })
-    await _reportImageLayers({ manifest, config, graphQLClient })
-    await _reportImageRegistry({ imageBinary: binaryResult.createImageBinary, image, manifest, config, graphQLClient })
-
-    console.log('image reported successfully');
-}
-
-async function _reportImageBinary({ manifest, config, image, size, workflowName, workflowUrl, logsUrl, graphQLClient }) {
     const imageBinaryVars = {
         imageBinary: {
             id: manifest.config.digest,
             created: config.created,
             imageName: image,
-            dockerFile: await _buildDockerfile(),
             size: size,
             os: config.os,
             architecture: config.architecture,
@@ -102,49 +78,13 @@ async function _reportImageBinary({ manifest, config, image, size, workflowName,
         }
     }`;
     const binaryResult = await graphQLClient.request(binaryMutation, imageBinaryVars)
-      .catch(_handleQlError('failed to create image binary'));
+        .catch(_handleQlError('failed to create image binary'));
 
     console.log(JSON.stringify(binaryResult, null, 2));
 
-    return binaryResult;
-}
-
-async function _reportImageLayers({ manifest, config, graphQLClient }) {
-    const imageLayersVars = {
-        imageLayers: {
-            image: manifest.config.digest,
-            layers: _getLayersFromHistory(config.history, manifest.layers),
-        }
-    };
-
-    console.log('ImageLayers Mutation payload:', JSON.stringify(imageLayersVars.imageLayers, null, 2));
-
-    const imageLayersMutation = gql`mutation($imageLayers: ImageLayersInput!) {
-        createImageLayers(imageLayers: $imageLayers) {
-            accountId
-            created
-            image
-            layerDigests
-            layers {
-                created
-                instruction
-                size
-                args
-            }
-        }
-    }`;
-    const imageLayersResult = await graphQLClient.request(imageLayersMutation, imageLayersVars)
-      .catch(_handleQlError('failed to create image layers'));
-
-    console.log(JSON.stringify(imageLayersResult, null, 2));
-
-    return imageLayersResult;
-}
-
-async function _reportImageRegistry({ imageBinary, image, manifest, config, graphQLClient }) {
     const imageRegistryVars = {
         imageRegistry: {
-            binaryId: imageBinary.id,
+            binaryId: binaryResult.createImageBinary.id,
             imageName: image,
             repoDigest: manifest.config.repoDigest,
             created: config.created
@@ -161,74 +101,11 @@ async function _reportImageRegistry({ imageBinary, image, manifest, config, grap
     }`;
 
     const registryResult = await graphQLClient.request(registryMutation, imageRegistryVars)
-      .catch(_handleQlError('failed to create image registry'));
+        .catch(_handleQlError('failed to create image registry'));
 
     console.log(JSON.stringify(registryResult, null, 2));
 
-    return registryResult;
-}
-
-/**
- * @param history {[*]}
- * @returns {[{size, created: (string|Boolean), instruction: string, args: string}]}
- */
-function _getLayersFromHistory(history, layers) {
-
-    let shell             = '/bin/sh -c';
-    let instructionPrefix = '#(nop)';
-
-    const layersSizes = _.map(layers, l => l.size);
-
-    history = history.reverse().map((row) => {
-        row = row || {};
-
-        const CreatedBy = _.get(row, 'created_by', '');
-        let instruction, args;
-
-        if (CreatedBy.indexOf(instructionPrefix) === -1) {
-            instruction = COMMON_INSTRUCTIONS.run;
-            args        = CreatedBy.replace(shell, '').trim();
-        } else {
-            let cmd               = CreatedBy.substr(CreatedBy.indexOf(instructionPrefix) +
-              instructionPrefix.length).trim();
-            let nextSpacePosition = cmd.indexOf(' ');
-
-            instruction = cmd.substr(0, nextSpacePosition).trim();
-            args        = cmd.substr(nextSpacePosition).trim();
-
-            if (instruction === COMMON_INSTRUCTIONS.shell) {
-                shell = (args[0] === '[' && args[args.length - 1] === ']') ? (args
-                  .slice(1, -1)
-                  .replace(/[\"\']/g, '')
-                  .split(',')
-                  .map(part => {return part.trim();})
-                  .join(' ')) : args;
-            }
-        }
-
-        return {
-            created: row.created,
-            size: row.empty_layer ? 0 : layersSizes.pop(),
-            instruction,
-            args
-        };
-    }).reverse();
-
-    return history;
-}
-
-async function _buildDockerfile() {
-    try {
-        const { dockerfileContent, dockerfilePath } = configuration.inputs
-        if (dockerfileContent) {
-            return Buffer.from(dockerfileContent, 'base64').toString()
-        }
-        const file = await fs.readFile(dockerfilePath ? dockerfilePath : '/tmp/Dockerfile') // use path or artifact
-        return file.toString()
-    } catch (error) {
-        console.error(`Can't get Dockerfile. ${error.message}`)
-        return ''
-    }
+    console.log('image reported successfully');
 }
 
 const _handleQlError = (prefix) => (e) => {
