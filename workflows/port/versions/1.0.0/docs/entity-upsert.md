@@ -11,13 +11,13 @@ The `upsert-entity` template creates or updates an entity with the identifier ma
 - `PORT_CREDENTIALS_SECRET` - name of the secret to get the `CLIENT_ID` and `CLIENT_SECRET` from (default: `port-credentials`)
 - `PORT_CLIENT_ID_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_ID` is stored (default: `PORT_CLIENT_ID`);
 - `PORT_CLIENT_SECRET_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_SECRET` is stored (default `PORT_CLIENT_SECRET`);
-- `BLUEPRINT_IDENTIFIER` - identifier of the blueprint to create an entity of;
-- `ENTITY_IDENTIFIER` - identifier of the new (or existing) entity. Leave empty to get an auto-generated identifier;
-- `ENTITY_TITLE` - Title of the new (or existing) entity;
-- `ENTITY_TEAM` - Team of the new (or existing) entity;
-- `ENTITY_ICON` - Icon of the new (or existing) entity;
-- `ENTITY_PROPERTIES` - Properties of the new (or existing) entity;
-- `ENTITY_RELATIONS` - Relations of the new (or existing) entity.
+- `BLUEPRINT_IDENTIFIER` - identifier of the blueprint to create an entity of (this is a **required** parameter);
+- `ENTITY_IDENTIFIER` - identifier of the new (or existing) entity. Leave empty to get an auto-generated identifier (default: `null`, Port will auto generate an identifier for this entity);
+- `ENTITY_TITLE` - Title of the new (or existing) entity (default: `null`, Port will create an entity without a title);
+- `ENTITY_TEAM` - Team of the new (or existing) entity (default: `null`, Port will create an entity without a team);
+- `ENTITY_ICON` - Icon of the new (or existing) entity (default: `null`, Port will create an entity with the default blueprint icon);
+- `ENTITY_PROPERTIES` - Properties of the new (or existing) entity (default: `null`, Port will create an entity with empty properties);
+- `ENTITY_RELATIONS` - Relations of the new (or existing) entity (default: `null`, Port will create an entity without relations).
 
 ### Outputs
 

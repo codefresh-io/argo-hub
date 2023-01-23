@@ -20,3 +20,7 @@ Note: if you use the exact same format specified in the portCredentials.yml file
 Minimal required permissions
 
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/port/versions/1.0.0/rbac.yaml)
+
+## Complete docs
+
+For more information and examples, take a look at our [documentation](https://docs.getport.io/api-providers/codefresh-workflow-template)
