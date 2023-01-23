@@ -1,4 +1,20 @@
-# Changelog
+# Changelog 
+
+## v1.1.7 (16.01.2023)
+### report-image-info
+* Save Dockerfile and Layers to image info
+
+## v1.1.6 (13.01.2023)
+### image-enricher-git-info
+* Deprecated usage of image SHA
+
+## v1.1.6 (13.1.2022)
+### image-enricher-git-info
+* Deprecated usage of image SHA
+
+## v1.1.5 (21.12.2022)
+### image-enricher-jira-info
+* Add ability to use personal access token for Jira Server
 
 ## v1.1.4 (20.12.2022)
 ### report-image-info
