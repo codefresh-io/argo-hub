@@ -25,7 +25,7 @@ async function main() {
         const branch = await provider.getBranch(inputs.repo, inputs.branch);
         if (branch) {
             // branch exists without PR, try to take git data from branch
-            await codefreshApi.patchImageWithGitBranchData(inputs.imageDigest, inputs.imageName, branch)
+            await codefreshApi.patchImageWithGitBranchData(inputs.imageName, branch)
             console.log(`image patched`);
         } else {
             console.warn(`branch "${inputs.branch}" not found, ensure that it is not deleted`)
