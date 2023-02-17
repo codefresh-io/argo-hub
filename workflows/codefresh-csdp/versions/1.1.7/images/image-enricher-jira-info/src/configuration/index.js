@@ -1,5 +1,4 @@
 const Joi = require('joi')
-const _ = require('lodash')
 
 const inputs = {
     cfHost: process.env.CF_HOST_URL?.trim() || 'https://g.codefresh.io',

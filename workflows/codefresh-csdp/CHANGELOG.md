@@ -1,5 +1,8 @@
 # Changelog 
 
+## v1.1.8 (24.02.2023)
+* Optimizing
+
 ## v1.1.7 (16.01.2023)
 ### report-image-info
 * Save Dockerfile and Layers to image info
