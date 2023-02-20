@@ -7,7 +7,7 @@
     "start": "node src/index.js"
   },
   "engines": {
-    "node": "14.18.1"
+    "node": "18.12.1"
   },
   "dependencies": {
     "joi": "^17.6.0"
