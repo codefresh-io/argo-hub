@@ -50,3 +50,7 @@ function handleProcessException(err) {
 //
 process.addListener('uncaughtException', handleProcessException)
 process.addListener('unhandledRejection', handleProcessException)
+
+module.exports = {
+    storeOutputParam,
+}
