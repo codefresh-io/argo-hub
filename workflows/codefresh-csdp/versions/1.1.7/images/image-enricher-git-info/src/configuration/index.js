@@ -1,6 +1,10 @@
 const Joi = require('joi')
 const _ = require('lodash')
 
+const platform = {
+    GITOPS: 'GITOPS',
+}
+
 const providers = {
     GITHUB: 'github',
     BITBUCKET: 'bitbucket',
@@ -9,6 +13,7 @@ const providers = {
 }
 
 const inputs = {
+    platform: platform.GITOPS,
     provider: process.env.GIT_PROVIDER?.trim(),
     cfHost: process.env.CF_HOST_URL?.trim() || 'https://g.codefresh.io',
     cfApiKey: process.env.CF_API_KEY?.trim(),
