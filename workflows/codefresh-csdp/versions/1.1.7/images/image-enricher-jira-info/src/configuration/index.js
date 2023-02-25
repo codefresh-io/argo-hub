@@ -1,6 +1,11 @@
 const Joi = require('joi')
 
+const platform = {
+    GITOPS: 'GITOPS',
+}
+
 const inputs = {
+    platform: platform.GITOPS,
     cfHost: process.env.CF_HOST_URL?.trim() || 'https://g.codefresh.io',
     cfApiKey: process.env.CF_API_KEY?.trim(),
     imageName: process.env.IMAGE_NAME?.trim(),
