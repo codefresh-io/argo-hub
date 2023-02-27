@@ -1,5 +1,4 @@
 const fs = require('fs')
-const { OUTPUTS } = require('@codefresh-io/cf-docker-images')
 
 // Outputs are used to provide some data about the template execution.
 // They are used by 3rd-party CI image-reporting feature.
@@ -35,6 +34,9 @@ const ensureOutputFilesExists = () => {
     }
 }
 
+const OUTPUTS = {
+    EXIT_ERROR: 'exit_error'
+}
 
 ensureOutputFilesExists()
 

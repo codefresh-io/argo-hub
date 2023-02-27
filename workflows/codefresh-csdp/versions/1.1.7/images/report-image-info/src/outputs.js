@@ -1,8 +1,14 @@
+const fs = require('fs')
+
+const OUTPUTS = {
+    IMAGE_NAME: 'image_name',
+    IMAGE_SHA: 'image_sha',
+    EXIT_ERROR: 'exit_error',
+    IMAGE_LINK: 'image_link'
+}
+
 // Outputs are used to provide some data about the template execution.
 // They are used by 3rd-party CI image-reporting feature.
-
-const fs = require('fs')
-const { OUTPUTS } = require('@codefresh-io/cf-docker-images')
 
 const storeOutputParam = (name, value) => {
     const OUTPUT_DIR = '/cf-outputs';
@@ -53,4 +59,5 @@ process.addListener('unhandledRejection', handleProcessException)
 
 module.exports = {
     storeOutputParam,
+    OUTPUTS
 }
