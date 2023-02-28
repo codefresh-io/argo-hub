@@ -1,4 +1,35 @@
 # Changelog
+ 
+## v1.1.8 (28.02.2023)
+* Using @codefresh-io/cf-report-image-toolbox library
+
+## v1.1.7 (16.01.2023)
+### report-image-info
+* Save Dockerfile and Layers to image info
+
+## v1.1.6 (13.01.2023)
+### image-enricher-git-info
+* Deprecated usage of image SHA
+
+## v1.1.6 (13.1.2022)
+### image-enricher-git-info
+* Deprecated usage of image SHA
+
+## v1.1.5 (21.12.2022)
+### image-enricher-jira-info
+* Add ability to use personal access token for Jira Server
+
+## v1.1.4 (20.12.2022)
+### report-image-info
+* Handle redirects correctly when interacting with the standard container registries
+* Used @aws-sdk v3 library
+
+### image-enricher-git-info
+* Support personal bitbucket server repos
+
+## v1.1.3 (15.8.2022)
+### report-image-info
+* Added new output param `image_link` to the image in codefresh.
 
 ## v1.1.2 (13.7.2022)
 ### image-enricher-git-info
