@@ -1,4 +1,7 @@
 # Changelog 
+ 
+## v1.1.8 (28.02.2023)
+* Using @codefresh-io/cf-report-image-toolbox library
 
 ## v1.1.7 (16.01.2023)
 ### report-image-info
