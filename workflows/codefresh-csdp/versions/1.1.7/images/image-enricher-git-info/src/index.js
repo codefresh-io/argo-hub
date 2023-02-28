@@ -1,4 +1,4 @@
-const { imageEnricherGitInfo } = require('@codefresh-io/cf-docker-images')
+const { imageEnricherGitInfo } = require('@codefresh-io/cf-report-image-toolbox')
 
 // registering error handler
 require('./outputs');

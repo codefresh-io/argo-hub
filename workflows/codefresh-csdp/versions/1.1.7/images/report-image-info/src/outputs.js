@@ -1,10 +1,11 @@
 const fs = require('fs')
+const { NOTIFICATIONS } = require('@codefresh-io/cf-report-image-toolbox')
 
 const OUTPUTS = {
-    IMAGE_NAME: 'image_name',
-    IMAGE_SHA: 'image_sha',
-    EXIT_ERROR: 'exit_error',
-    IMAGE_LINK: 'image_link'
+    IMAGE_NAME: NOTIFICATIONS.IMAGE_NAME,
+    IMAGE_SHA: NOTIFICATIONS.IMAGE_SHA,
+    EXIT_ERROR: NOTIFICATIONS.EXIT_ERROR,
+    IMAGE_LINK: NOTIFICATIONS.IMAGE_LINK,
 }
 
 // Outputs are used to provide some data about the template execution.
