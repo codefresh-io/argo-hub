@@ -301,6 +301,8 @@ spec:
             default: 'gcr.io'
           - name: GOOGLE_JSON_KEY
             default: 'cf-not-exist'
+          - name: GOOGLE_KEY_SECRET_KEY
+            default: 'keyjson'
           - name: DOCKER_CONFIG_SECRET
             default: 'docker-registry'
           - name: DOCKER_CONFIG_SECRET_KEY
@@ -347,7 +349,11 @@ spec:
           - name: GOOGLE_REGISTRY_HOST
             value: '{{ inputs.parameters.GOOGLE_REGISTRY_HOST }}'
           - name: GOOGLE_JSON_KEY
-            value: '{{ inputs.parameters.GOOGLE_JSON_KEY }}'
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.GOOGLE_JSON_KEY }}'
+                optional: true
+                key: '{{ inputs.parameters.GOOGLE_KEY_SECRET_KEY }}'
           - name: DOCKER_CONFIG_FILE_PATH
             value: '{{ inputs.parameters.DOCKER_CONFIG_FILE_PATH }}'
           - name: RETRIEVE_CREDENTIALS_BY_DOMAIN

@@ -1,4 +1,7 @@
 # Changelog 
+
+## v1.1.8 (22.03.2023)
+* Add GOOGLE_REGISTRY_HOST and GOOGLE_JSON_KEY to report-image-info
  
 ## v1.1.8 (28.02.2023)
 * Using @codefresh-io/cf-report-image-toolbox library
