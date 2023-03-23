@@ -10,6 +10,7 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 * GIT_PROVIDER (required) - One of the supported git providers: github, gitlab, bitbucket, bitbucket-server
 * BRANCH (required) - The git branch to use to enrich
 * REPO (required) - The repo to use to enrich
+* REVISION - The commit sha to use to enrich
 * CF_API_KEY (required) - The Kubernetes secret containing the Codefresh API key created by **runtime**
 * CF_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret that has the Codefresh API key created by **runtime**. Default is 'token'
 * CF_HOST_URL (optional) - The URL to reach Codefresh (support on-premises Codefresh). Default is 'https://g.codefresh.io'
@@ -61,6 +62,8 @@ spec:
             value: 'codefresh/cfstep-helm'
           - name: BRANCH
             value: 'main'
+          - name: REVISION
+            value: 'ec8cdced58869a9cbd315a1297a702bbd744a9ed'
           - name: GITHUB_TOKEN_SECRET_NAME
             value: 'github-creds'
           - name: GITHUB_TOKEN_SECRET_KEY

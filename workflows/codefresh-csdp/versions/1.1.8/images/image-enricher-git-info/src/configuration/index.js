@@ -20,6 +20,7 @@ const inputs = {
     imageName: process.env.IMAGE_NAME?.trim(),
     repo: process.env.REPO?.trim(),
     branch: process.env.BRANCH?.trim(),
+    revision: process.env.REVISION?.trim(),
 
     // github
     githubApiHost: process.env.GITHUB_API_HOST_URL?.trim() || 'https://api.github.com',
@@ -46,6 +47,7 @@ const schema = Joi.object({
     IMAGE_NAME: Joi.string().required(),
     REPO: Joi.string().required(),
     BRANCH: Joi.string().required(),
+    REVISION: Joi.string(),
 
     // others
     CF_COMMITS_BY_USER_LIMIT: Joi.number(),
