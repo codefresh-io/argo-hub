@@ -20,6 +20,9 @@ Report image info to argo platform.
 * GCR_KEY_FILE_PATH (required) - JSON key for authenticating to a Google GCR
 * GCR_KEY_SECRET (required) - The Kubernetes secret containing the GCR key information. Default is 'gcr-key-file'
 * GCR_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret containing the GCR key information. Default is '.keyjson'
+* GOOGLE_REGISTRY_HOST (optional)  - The host to Google GCR or Google ACR. Default is 'gcr.io'
+* GOOGLE_JSON_KEY (required) - The Kubernetes secret with the JSON key for authenticating to a Google GCR or Google ACR
+* GOOGLE_KEY_SECRET_KEY (optional) The key in the Kubernetes secret with Google JSON key. Default is 'keyjson'
 * AWS_ACCESS_KEY (required) - The Kubernetes secret with the Amazon access key
 * AWS_ACCESS_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret with the Amazon access key. Default is 'aws-access-key'
 * AWS_SECRET_KEY (required) - The Kubernetes secret with the Amazon secret key
