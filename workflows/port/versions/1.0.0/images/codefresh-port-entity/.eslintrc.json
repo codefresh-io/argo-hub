@@ -1,0 +1,52 @@
+{
+	"root": true,
+	"extends": [
+		"airbnb-base",
+		"airbnb-typescript/base",
+		"prettier",
+		"plugin:jest/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"project": "./tsconfig.json"
+	},
+	"rules": {
+		"no-underscore-dangle": "off",
+		"class-methods-use-this": "off",
+		"@typescript-eslint/naming-convention": [
+			"error",
+			{
+				"selector": "typeParameter",
+				"format": [
+					"PascalCase"
+				],
+				"prefix": [
+					"T"
+				]
+			},
+			{
+				"selector": "interface",
+				"format": [
+					"PascalCase"
+				],
+				"prefix": [
+					"I"
+				]
+			},
+			{
+				"selector": "class",
+				"modifiers": [
+					"abstract"
+				],
+				"format": [
+					"PascalCase"
+				],
+				"prefix": [
+					"Abstract"
+				]
+			}
+		]
+	}
+}
