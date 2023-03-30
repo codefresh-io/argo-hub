@@ -35,7 +35,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-codefresh-port-entity:1.0.0-main
+        image: quay.io/codefreshplugins/argo-hub-port-codefresh-port-entity:1.0.0-main
         command:
           - node
           - lib/index.js
@@ -113,7 +113,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-codefresh-port-entity:1.0.0-main
+        image: quay.io/codefreshplugins/argo-hub-port-codefresh-port-entity:1.0.0-main
         command:
           - node
           - lib/index.js
