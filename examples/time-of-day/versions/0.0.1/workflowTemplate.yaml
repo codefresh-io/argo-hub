@@ -88,8 +88,13 @@ spec:
         else
           echo "Pipeline is allowed to proceed"
         fi
-        
+
   - name: whalesay-template
+    metadata:
+      annotations:
+        argo-hub-template/description: 'whalesay-template'
+        argo-hub-template/icon_url: 'https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/time-of-day/assets/icon.svg'
+        argo-hub/icon_background: "#f4f4f4"
     inputs:
       parameters:
       - name: message
@@ -97,7 +102,7 @@ spec:
       image: docker/whalesay
       command: [cowsay]
       args: ["{{inputs.parameters.message}}"]
-      
+
   - name: example-workflow
     metadata:
       annotations:
@@ -128,4 +133,4 @@ spec:
         arguments:
           parameters:
           - name: message
-            value: We were not allowed to deploy due to time of day contraints        
+            value: We were not allowed to deploy due to time of day contraints
