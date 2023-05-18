@@ -1,0 +1,16 @@
+{
+  "name": "image-enricher-git-info",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": "18.12.1"
+  },
+  "dependencies": {
+    "@codefresh-io/cf-report-image-toolbox": "^1.0.5",
+    "joi": "^17.6.0",
+    "lodash": "^4.17.21"
+  }
+}

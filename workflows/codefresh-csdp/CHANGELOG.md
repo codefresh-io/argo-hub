@@ -1,5 +1,8 @@
 # Changelog 
 
+## v1.1.9 (19.03.2023)
+* Allow to use regular expressions or multiple project prefixes separated by comma in JIRA_PROJECT_PREFIX.
+
 ## v1.1.8 (22.03.2023)
 * Add GOOGLE_REGISTRY_HOST and GOOGLE_JSON_KEY to report-image-info
  
