@@ -1,6 +1,6 @@
 # Changelog 
 
-## v1.1.9 (19.03.2023)
+## v1.1.9 (22.03.2023)
 * Allow to use regular expressions or multiple project prefixes separated by comma in JIRA_PROJECT_PREFIX.
 
 ## v1.1.8 (22.03.2023)
