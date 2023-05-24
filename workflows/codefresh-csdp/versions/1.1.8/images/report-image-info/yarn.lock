@@ -665,7 +665,7 @@
     "@aws-sdk/util-buffer-from" "3.208.0"
     tslib "^2.3.1"
 
-"@codefresh-io/cf-report-image-toolbox@^1.0.4":
+"@codefresh-io/cf-report-image-toolbox@1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.0.4.tgz#823a22484094e65d203ab559a9635ce1c28790cf"
   integrity sha512-80YxS+ADLxP+atLupDJsHaMLzc2imylYf75h0CtwEG0eSUPxTdw5J66Sx5fk2i+IuKwyD5m3U0AeGvpQ6sDxDg==
