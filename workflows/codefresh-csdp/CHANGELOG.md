@@ -1,5 +1,9 @@
 # Changelog 
 
+## v1.1.9 (1.06.2023)
+### image-enricher-git-info
+* Changed annotation key to avoid PR collision.
+
 ## v1.1.9 (22.03.2023)
 * Allow to use regular expressions or multiple project prefixes separated by comma in JIRA_PROJECT_PREFIX.
 
