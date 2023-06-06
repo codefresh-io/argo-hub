@@ -665,10 +665,10 @@
     "@aws-sdk/util-buffer-from" "3.208.0"
     tslib "^2.3.1"
 
-"@codefresh-io/cf-report-image-toolbox@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.0.6.tgz#8b76ded3d8adfd0b03318fe9b1d30a9f4be4e3d8"
-  integrity sha512-FeYWsvbglmgVBLeQJJ7fPjAv8wgyALRXRVWco/dzfi9RGS4FyRs0fZC0PqL9Z7iwTZCA5hyTC7oij7ikhCGvdg==
+"@codefresh-io/cf-report-image-toolbox@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.0.7.tgz#9f1723372a2987290119681de79a129ba0cee8f0"
+  integrity sha512-p8INexNagbRTx18Hn+trZjQ6+SK5D4bR4Oxtpb97Mq/EIJWup1TTkJQTlPEi+2nlVMwZK3MmAxpMjDNDfz7Jnw==
   dependencies:
     "@aws-sdk/client-sts" "^3.272.0"
     "@codefresh-io/docker-reference" "^0.0.11"
