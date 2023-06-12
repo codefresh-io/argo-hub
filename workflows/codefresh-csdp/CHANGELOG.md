@@ -1,5 +1,9 @@
 # Changelog 
 
+## v1.1.9 (12.06.2023)
+### image-enricher-git-info
+* Add gerrit support.
+
 ## v1.1.9 (1.06.2023)
 ### image-enricher-git-info
 * Changed annotation key to avoid PR collision.
