@@ -7,11 +7,11 @@ Enrich images with metadata and annotation such as PR, commits, committers.
 
 ### Inputs
 * IMAGE_NAME (required) - The image name that was imported into Codefresh to enrich
-* GIT_PROVIDER (required) - One of the supported git providers: github, gitlab, bitbucket, bitbucket-server
-* BRANCH (required) - The git branch to use to enrich
+* GIT_PROVIDER (required) - One of the supported git providers: github, gitlab, bitbucket, bitbucket-server, gerrit
+* BRANCH (required with github, gitlab, bitbucket, bitbucket-server) - The git branch to use to enrich
 * REPO (required) - The repo to use to enrich
 * REVISION - The commit sha to use to enrich
-* GERRIT_CHANGE_ID (optional) - The change-id or a commit message that contain the change-id
+* GERRIT_CHANGE_ID (required with gerrit) - The change-id or a commit message that contain the change-id
 * CF_API_KEY (required) - The Kubernetes secret containing the Codefresh API key created by **runtime**
 * CF_API_KEY_SECRET_KEY (optional) - The key in the Kubernetes secret that has the Codefresh API key created by **runtime**. Default is 'token'
 * CF_HOST_URL (optional) - The URL to reach Codefresh (support on-premises Codefresh). Default is 'https://g.codefresh.io'
