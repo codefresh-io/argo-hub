@@ -10,7 +10,7 @@
     "node": "18.12.1"
   },
   "dependencies": {
-    "@codefresh-io/cf-report-image-toolbox": "1.0.5",
+    "@codefresh-io/cf-report-image-toolbox": "1.0.10",
     "joi": "^17.6.0"
   }
 }
