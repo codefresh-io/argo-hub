@@ -1,6 +1,6 @@
 # Changelog 
 
-## v1.1.10 (12.06.2023)
+## v1.1.10 (16.06.2023)
 ### image-enricher-git-info
 * Add gerrit support.
 
