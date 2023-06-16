@@ -1,0 +1,16 @@
+{
+  "name": "report-image-info",
+  "version": "1.0.2",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": "18.12.1"
+  },
+  "dependencies": {
+    "@codefresh-io/cf-report-image-toolbox": "1.0.10",
+    "joi": "^17.6.0"
+  }
+}
