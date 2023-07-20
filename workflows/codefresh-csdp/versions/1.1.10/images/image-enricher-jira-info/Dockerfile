@@ -1,4 +1,6 @@
-FROM node:18.12.1-alpine
+FROM node:18.12.1-bullseye-slim
+
+RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
 
 WORKDIR /app/
 
@@ -7,6 +9,8 @@ COPY yarn.lock .
 
 RUN yarn --prod
 
-COPY . .
+COPY --chown=cfu --chmod=775 . .
+
+USER cfu
 
 CMD [ "node", "/app/src/index.js" ]
