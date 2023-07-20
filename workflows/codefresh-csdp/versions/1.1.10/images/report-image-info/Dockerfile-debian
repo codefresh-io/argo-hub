@@ -1,0 +1,16 @@
+FROM node:18.12.1-bullseye-slim
+
+RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
+
+WORKDIR /app/
+
+COPY ../../../1.1.8/images/report-image-info/package.json .
+COPY ../../../1.1.8/images/report-image-info/yarn.lock .
+
+RUN yarn --prod
+
+COPY --chown=cfu --chmod=775 ../../../1.1.8/images/report-image-info .
+
+USER cfu
+
+CMD [ "node", "/app/src/index.js" ]
