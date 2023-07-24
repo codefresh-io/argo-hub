@@ -19,7 +19,7 @@ const storeOutputParam = (name, value) => {
 
     try {
         if (!fs.existsSync(OUTPUT_DIR)) {
-            fs.mkdirSync(OUTPUT_DIR);
+            fs.mkdirSync(OUTPUT_DIR, { recursive: true });
         }
         fs.writeFileSync(OUTPUT_FILE, value);
     } catch (error) {
