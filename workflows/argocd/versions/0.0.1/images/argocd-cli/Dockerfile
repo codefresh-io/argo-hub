@@ -1,4 +1,4 @@
-FROM alpine:3.15.0
+FROM alpine:3.16.7
 
 ARG ARGOCD_CLI_VERSION=v2.1.7
 
