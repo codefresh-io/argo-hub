@@ -665,10 +665,10 @@
     "@aws-sdk/util-buffer-from" "3.208.0"
     tslib "^2.3.1"
 
-"@codefresh-io/cf-report-image-toolbox@1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.0.12.tgz#7c660cbbff6f5f45aa7cce4eda694c08e02ed14a"
-  integrity sha512-NR3gH19ivayn7sqCwrJ8yWVXGomK+4CRc0PRfoVf4f/YwsFweL902b7mmo0fLiH0Ec8StWrdbEaihSELTvQ7PQ==
+"@codefresh-io/cf-report-image-toolbox@1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.0.15.tgz#ac21906faa81b3a58a0c8287015b5c6abba97c52"
+  integrity sha512-xFXXZ1Sv46j2AmaxH/jbjy5T4fTd+EEUHa2WwFqs+0kgBxUvepkzWkAnOp4qL3KKZkmoND2YSG+5Gw2/St3Saw==
   dependencies:
     "@aws-sdk/client-sts" "^3.272.0"
     "@codefresh-io/docker-reference" "^0.0.11"
@@ -682,6 +682,7 @@
     jira.js "^2.16.0"
     lodash "^4.17.21"
     nodegistry "^1.2.4"
+    polly-js "^1.8.3"
     request-promise "^4.2.6"
 
 "@codefresh-io/docker-reference@^0.0.11":
@@ -2325,6 +2326,11 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
+
+polly-js@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/polly-js/-/polly-js-1.8.3.tgz#c1bfe878f676a78146e394a95b41b4ba5143300c"
+  integrity sha512-pFgSsipKs5bxtXMM+Vfw2p8kOEZhJ+Z9xDZLbiMjjw57WZdlg+6eTZdSIHDycNii+4+7xmzCfryQVIqwgeYX4g==
 
 promise-inflight@^1.0.1:
   version "1.0.1"
