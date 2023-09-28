@@ -16,7 +16,6 @@ metadata:
 spec:
   templates:
     - name: commit-status
-      serviceAccountName: argo-hub.github.0.0.5
       metadata:
         annotations:
           argo-hub-template/description: 'Report a commit status check'
@@ -63,7 +62,6 @@ spec:
                 key: token
 
     - name: create-pr
-      serviceAccountName: argo-hub.github.0.0.5
       metadata:
         annotations:
           argo-hub-template/description: 'Create a pull request'
@@ -97,10 +95,9 @@ spec:
                 key: token
           - name: GITHUB_USER
             value: '{{ inputs.parameters.GITHUB_USER }}'
-              
+
 
     - name: create-pr-comment
-      serviceAccountName: argo-hub.github.0.0.5
       metadata:
         annotations:
           argo-hub-template/description: 'Create a pull request comment'
@@ -135,7 +132,6 @@ spec:
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
 
     - name: extract-webhook-variables
-      serviceAccountName: argo-hub.github.0.0.5
       metadata:
         annotations:
           argo-hub-template/description: 'Parses the GitHub Event Payload (JSON) and output the most useful payload fields as artifact files.'
@@ -251,7 +247,6 @@ spec:
           globalName: CF_PULL_REQUEST_HEAD_COMMIT_SHA
 
     - name: create-pr-codefresh
-      serviceAccountName: argo-hub.github.0.0.5
       metadata:
         annotations:
           argo-hub-template/description: 'Create git pull request and add a reference to the parent workflow as a label'
