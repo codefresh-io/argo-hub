@@ -37,6 +37,8 @@ const inputs = {
         }
     },
     gcr: {
+        host: process.env.GOOGLE_REGISTRY_HOST?.trim(),
+        json: process.env.GOOGLE_JSON_KEY?.trim(),
         keyFilePath: process.env.GCR_KEY_FILE_PATH?.trim(),
     },
     retrieveCredentialsByDomain: process.env.RETRIEVE_CREDENTIALS_BY_DOMAIN?.trim() === 'true'
@@ -61,6 +63,6 @@ module.exports = {
 
     validateInputs() {
         const { error } = schema.validate(process.env, { allowUnknown: true });
-        return [ error, this.inputs ];
+        return [error, this.inputs];
     }
 }

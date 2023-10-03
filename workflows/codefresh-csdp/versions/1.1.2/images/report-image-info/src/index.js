@@ -11,7 +11,7 @@ const configuration = require('./configuration');
 async function main() {
     console.log('starting image reporter')
 
-    const [ validationError, inputs ] = configuration.validateInputs()
+    const [validationError, inputs] = configuration.validateInputs()
 
     if (validationError) {
         throw validationError
@@ -58,7 +58,7 @@ async function main() {
     };
 
     console.log('binaryMutation payload:', imageBinaryVars.imageBinary);
-    
+
     const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!){
         createImageBinary(imageBinary: $imageBinary) {
             id,
@@ -85,7 +85,6 @@ async function main() {
     const registryMutation = gql`mutation($imageRegistry: ImageRegistryInput!) {
         createImageRegistry(imageRegistry: $imageRegistry) {
             binaryId
-            imageName
             repoDigest
         }
     }`;

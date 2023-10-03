@@ -1,0 +1,152 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.port.1.0.0
+  annotations:
+    argo-hub/version: "1.0.0"
+    argo-hub/description: "A template that executes operations against Port"
+    argo-hub/categories: "gitops"
+    argo-hub/license: "MIT"
+    argo-hub/owner_name: "Mor Paz"
+    argo-hub/owner_email: "mor@getport.io"
+    argo-hub/owner_avatar: "https://avatars.githubusercontent.com/u/9868797?s=120&v=4"
+    argo-hub/owner_url: "https://github.com/MPTG94"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/port/assets/icon.svg"
+    argo-hub/icon_background: "#FFFFFF"
+spec:
+  templates:
+    - name: entity-get
+      serviceAccountName: argo-hub.port.1.0.0
+      metadata:
+        annotations:
+          argo-hub-template/description: "Get a Port Entity based on it's identifier and output the response as artifacts"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/port/assets/icon.svg"
+          argo-hub-template/icon_background: "#FFFFFF"
+      inputs:
+        parameters:
+          - name: PORT_CREDENTIALS_SECRET
+            default: port-credentials
+          - name: PORT_CLIENT_ID_KEY
+            default: PORT_CLIENT_ID
+          - name: PORT_CLIENT_SECRET_KEY
+            default: PORT_CLIENT_SECRET
+          - name: BLUEPRINT_IDENTIFIER
+          - name: ENTITY_IDENTIFIER
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-port-codefresh-port-entity:1.0.0-main
+        command:
+          - node
+          - lib/index.js
+        env:
+          - name: OPERATION
+            value: "get"
+          - name: PORT_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: "{{ inputs.parameters.PORT_CREDENTIALS_SECRET }}"
+                key: "{{ inputs.parameters.PORT_CLIENT_ID_KEY }}"
+          - name: PORT_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: "{{ inputs.parameters.PORT_CREDENTIALS_SECRET }}"
+                key: "{{ inputs.parameters.PORT_CLIENT_SECRET_KEY }}"
+          - name: BLUEPRINT_IDENTIFIER
+            value: "{{ inputs.parameters.BLUEPRINT_IDENTIFIER }}"
+          - name: ENTITY_IDENTIFIER
+            value: "{{ inputs.parameters.ENTITY_IDENTIFIER }}"
+      outputs:
+        parameters:
+          - name: PORT_COMPLETE_ENTITY
+            valueFrom:
+              path: /tmp/portvars/PORT_COMPLETE_ENTITY
+            globalName: PORT_COMPLETE_ENTITY
+          - name: PORT_BLUEPRINT_IDENTIFIER
+            valueFrom:
+              path: /tmp/portvars/PORT_BLUEPRINT_IDENTIFIER
+            globalName: PORT_BLUEPRINT_IDENTIFIER
+          - name: PORT_ENTITY_IDENTIFIER
+            valueFrom:
+              path: /tmp/portvars/PORT_ENTITY_IDENTIFIER
+            globalName: PORT_ENTITY_IDENTIFIER
+          - name: PORT_ENTITY_TITLE
+            valueFrom:
+              path: /tmp/portvars/PORT_ENTITY_TITLE
+            globalName: PORT_ENTITY_TITLE
+          - name: PORT_ENTITY_PROPERTIES
+            valueFrom:
+              path: /tmp/portvars/PORT_ENTITY_PROPERTIES
+            globalName: PORT_ENTITY_PROPERTIES
+          - name: PORT_ENTITY_RELATIONS
+            valueFrom:
+              path: /tmp/portvars/PORT_ENTITY_RELATIONS
+            globalName: PORT_ENTITY_RELATIONS
+    - name: entity-upsert
+      serviceAccountName: argo-hub.port.1.0.0
+      metadata:
+        annotations:
+          argo-hub-template/description: "Upsert a Port Entity according to the provided values"
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/port/assets/icon.svg"
+          argo-hub-template/icon_background: "#FFFFFF"
+      inputs:
+        parameters:
+          - name: PORT_CREDENTIALS_SECRET
+            default: port-credentials
+          - name: PORT_CLIENT_ID_KEY
+            default: PORT_CLIENT_ID
+          - name: PORT_CLIENT_SECRET_KEY
+            default: PORT_CLIENT_SECRET
+          - name: BLUEPRINT_IDENTIFIER
+          - name: ENTITY_IDENTIFIER
+            default: ""
+          - name: ENTITY_TITLE
+            default: ""
+          - name: ENTITY_TEAM
+            default: ""
+          - name: ENTITY_ICON
+            default: ""
+          - name: ENTITY_PROPERTIES
+            default: ""
+          - name: ENTITY_RELATIONS
+            default: ""
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: quay.io/codefreshplugins/argo-hub-port-codefresh-port-entity:1.0.0-main
+        command:
+          - node
+          - lib/index.js
+        env:
+          - name: OPERATION
+            value: "upsert"
+          - name: PORT_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: "{{ inputs.parameters.PORT_CREDENTIALS_SECRET }}"
+                key: "{{ inputs.parameters.PORT_CLIENT_ID_KEY }}"
+          - name: PORT_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: "{{ inputs.parameters.PORT_CREDENTIALS_SECRET }}"
+                key: "{{ inputs.parameters.PORT_CLIENT_SECRET_KEY }}"
+          - name: BLUEPRINT_IDENTIFIER
+            value: "{{ inputs.parameters.BLUEPRINT_IDENTIFIER }}"
+          - name: ENTITY_IDENTIFIER
+            value: "{{ inputs.parameters.ENTITY_IDENTIFIER }}"
+          - name: ENTITY_TITLE
+            value: "{{ inputs.parameters.ENTITY_TITLE }}"
+          - name: ENTITY_TEAM
+            value: "{{ inputs.parameters.ENTITY_TEAM }}"
+          - name: ENTITY_ICON
+            value: "{{ inputs.parameters.ENTITY_ICON }}"
+          - name: ENTITY_PROPERTIES
+            value: "{{ inputs.parameters.ENTITY_PROPERTIES }}"
+          - name: ENTITY_RELATIONS
+            value: "{{ inputs.parameters.ENTITY_RELATIONS }}"
+      outputs:
+        parameters:
+          - name: PORT_ENTITY_IDENTIFIER
+            valueFrom:
+              path: /tmp/portvars/PORT_ENTITY_IDENTIFIER
+            globalName: PORT_ENTITY_IDENTIFIER

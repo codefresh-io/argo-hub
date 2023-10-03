@@ -6,10 +6,10 @@ A template that runs an instance of sonar scanner on a github repository
 
 ## Templates
 
-1. [sonar-scanner](https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/versions/0.0.1/docs/sonar-scanner.md) 
+1. [sonar-scanner](https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/versions/0.0.1/docs/sonar-scanner.md)
 
 ## Security
 
 Minimal required permissions
 
-[Full rbac permissions list](./rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/sonar/versions/0.0.1/rbac.yaml)

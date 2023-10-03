@@ -35,7 +35,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-slack-versions-0.0.2-images-send-message:main
+        image: quay.io/codefreshplugins/argo-hub-slack-send-message:0.0.2-main
         command:
           - node
           - /usr/src/app/index.js
@@ -69,7 +69,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-slack-versions-0.0.2-images-post-to-channel:main
+        image: quay.io/codefreshplugins/argo-hub-slack-post-to-channel:0.0.2-main
         command:
           - python
           - /slack/slack.py

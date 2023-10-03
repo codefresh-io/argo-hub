@@ -6,7 +6,7 @@ const createRegistryClient = require('./registry-client')
 const configuration = require('./configuration');
 
 const run = async () => {
-    const [ validationError, inputs ] = configuration.validateInputs()
+    const [validationError, inputs] = configuration.validateInputs()
 
     if (validationError) {
         throw validationError
@@ -53,7 +53,7 @@ const run = async () => {
     };
 
     console.log('binaryMutation payload:', imageBinaryVars.imageBinary);
-    
+
     const binaryMutation = gql`mutation($imageBinary: ImageBinaryInput!){
         createImageBinary(imageBinary: $imageBinary) {
             id,
@@ -80,7 +80,6 @@ const run = async () => {
     const registryMutation = gql`mutation($imageRegistry: ImageRegistryInput!) {
         createImageRegistry(imageRegistry: $imageRegistry) {
             binaryId
-            imageName
             repoDigest
         }
     }`;
