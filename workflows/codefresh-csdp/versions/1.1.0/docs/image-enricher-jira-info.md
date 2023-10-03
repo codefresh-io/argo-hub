@@ -7,11 +7,7 @@ Enrich images with metadata and annotation such as ticket number, title, assigne
 
 ### Inputs
 * IMAGE_NAME (required) - The image URI that was imported into Codefresh to enrich
-<<<<<<< HEAD
-* JIRA_HOST_URL (required) - jira host, should be without protocol and / in the end.
-=======
 * JIRA_HOST_URL (required) - jira host url
->>>>>>> 828e46338af34865834caca1e4d93a2abdfddce6
 * JIRA_API_TOKEN_SECRET (required) - Name of Kubernetes secret that contains a jira email and token that you generate in jira
 * JIRA_API_TOKEN_SECRET_KEY (required) - The key in the Kubernetes secret with the Jira API token. Default is 'token'
 * JIRA_EMAIL_SECRET_KEY (required) - The key in the Kubernetes secret with the Jira Email associated with the API token. Default is 'email'
