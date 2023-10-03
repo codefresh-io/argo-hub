@@ -238,7 +238,6 @@ const init = async () => {
     const registryQuery = gql`mutation($imageRegistry: ImageRegistryInput!) {
         createImageRegistry(imageRegistry: $imageRegistry) {
             binaryId
-            imageName
             repoDigest
         }
     }`

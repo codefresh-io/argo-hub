@@ -95,7 +95,7 @@ spec:
                 key: token
           - name: GITHUB_USER
             value: '{{ inputs.parameters.GITHUB_USER }}'
-              
+
 
     - name: create-pr-comment
       metadata:

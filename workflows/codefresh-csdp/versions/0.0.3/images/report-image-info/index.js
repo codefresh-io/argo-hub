@@ -109,7 +109,6 @@ const init = async () => {
             created: "${config.created}",
         }) {
             binaryId
-            imageName
             repoDigest
         }
     }`

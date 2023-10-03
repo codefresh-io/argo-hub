@@ -1,5 +1,19 @@
-# Changelog 
- 
+# Changelog
+
+## v1.1.10 (16.06.2023)
+### image-enricher-git-info
+* Add gerrit support.
+
+## v1.1.9 (1.06.2023)
+### image-enricher-git-info
+* Changed annotation key to avoid PR collision.
+
+## v1.1.9 (22.03.2023)
+* Allow to use regular expressions or multiple project prefixes separated by comma in JIRA_PROJECT_PREFIX.
+
+## v1.1.8 (22.03.2023)
+* Add GOOGLE_REGISTRY_HOST and GOOGLE_JSON_KEY to report-image-info
+
 ## v1.1.8 (28.02.2023)
 * Using @codefresh-io/cf-report-image-toolbox library
 * Adding commit sha as `revision` input
@@ -83,7 +97,7 @@ Added AWS_ROLE_SECRET to retrieve credentials for ECR using STS
 ### image-enricher-jira-info
 Add additional variables to allow users to select the keys in the secrets they are referencing
 
-### image-enricher-git-info 
+### image-enricher-git-info
 Add additional variables to allow users to select the keys in the secrets they are referencing
 
 ### report-image-info
