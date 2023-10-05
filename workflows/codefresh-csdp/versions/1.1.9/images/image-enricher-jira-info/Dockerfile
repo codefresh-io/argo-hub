@@ -7,7 +7,7 @@ COPY yarn.lock .
 
 RUN apk add --update python3 make g++ && \
   rm -rf /var/cache/apk/*
-RUN yarn --prod
+RUN yarn
 
 COPY . .
 
