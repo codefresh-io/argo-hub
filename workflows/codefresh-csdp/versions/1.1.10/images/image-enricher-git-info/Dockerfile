@@ -9,7 +9,7 @@ COPY yarn.lock .
 
 RUN apt-get update && \
   apt-get install -y python3 make g++
-RUN yarn --prod
+RUN yarn --prod --network-timeout 3000000
 
 COPY --chown=cfu --chmod=775 . .
 
