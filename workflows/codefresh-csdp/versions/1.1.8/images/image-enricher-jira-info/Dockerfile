@@ -7,7 +7,7 @@ COPY yarn.lock .
 
 RUN apk add --update python3 make g++ && \
   rm -rf /var/cache/apk/*
-RUN yarn --network-timeout 3000000
+RUN yarn
 
 COPY . .
 
