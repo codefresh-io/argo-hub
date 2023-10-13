@@ -56,7 +56,6 @@ spec:
           -l=git-revision={{inputs.parameters.GIT_REVISION }},git-branch={{
           inputs.parameters.GIT_BRANCH }},workflow-template-name={{
           inputs.parameters.TEMPLATE_NAME }},codefresh.io/submit-wf-parent-uid={{ workflow.uid }} --output=json) > output
-      serviceAccountName: argo-hub.argo-workflows.0.0.4
 
     - name: terminate-workflow
       metadata:
