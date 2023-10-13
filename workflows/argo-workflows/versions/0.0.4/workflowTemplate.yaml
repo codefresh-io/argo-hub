@@ -56,6 +56,13 @@ spec:
           -l=git-revision={{inputs.parameters.GIT_REVISION }},git-branch={{
           inputs.parameters.GIT_BRANCH }},workflow-template-name={{
           inputs.parameters.TEMPLATE_NAME }},codefresh.io/submit-wf-parent-uid={{ workflow.uid }} --output=json) > output
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
 
     - name: terminate-workflow
       metadata:
@@ -86,6 +93,13 @@ spec:
             cmd="${cmd} ${workflow_name}"
           fi
           eval $cmd
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
 
     - name: stop-workflow
       metadata:
@@ -120,6 +134,13 @@ spec:
             cmd="${cmd} ${workflow_name}"
           fi
           eval $cmd
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
 
     - name: suspend-workflow
       metadata:
@@ -139,6 +160,13 @@ spec:
           - argo
           - suspend
           - '{{ inputs.parameters.NAME }}'
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
 
     - name: resume-workflow
       metadata:
@@ -162,3 +190,10 @@ spec:
           - '{{ inputs.parameters.NAME }}'
           - --node-field-selector
           - '{{ inputs.parameters.NODE_FIELD_SELECTOR }}'
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
