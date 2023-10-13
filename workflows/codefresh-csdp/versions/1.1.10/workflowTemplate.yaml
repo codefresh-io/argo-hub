@@ -75,7 +75,6 @@ spec:
             default: 'username'
           - name: GERRIT_PASSWORD_SECRET_KEY
             default: 'password'
-
       outputs:
         parameters:
           - name: exit-error
@@ -155,6 +154,14 @@ spec:
                 name: '{{ inputs.parameters.GERRIT_SECRET_NAME }}'
                 optional: true
                 key: '{{ inputs.parameters.GERRIT_PASSWORD_SECRET_KEY }}'
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
+
     - name: image-enricher-jira-info
       metadata:
         annotations:
@@ -235,6 +242,14 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.JIRA_API_TOKEN_SECRET }}'
                 key: '{{ inputs.parameters.JIRA_EMAIL_SECRET_KEY }}'
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
+
     - name: report-image-info
       metadata:
         annotations:
@@ -448,3 +463,10 @@ spec:
                 name: '{{ inputs.parameters.REGISTRY_DOMAIN }}'
                 optional: true
                 key: '{{ inputs.parameters.REGISTRY_DOMAIN_SECRET_KEY }}'
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
