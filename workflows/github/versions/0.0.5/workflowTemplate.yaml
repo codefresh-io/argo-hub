@@ -60,11 +60,11 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
                 key: token
-      tolerations:
-      - key: arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+      # tolerations:
+      # - key: arch
+      #   operator: Equal
+      #   value: arm64
+      #   effect: NoSchedule
 
     - name: create-pr
       metadata:
@@ -100,11 +100,11 @@ spec:
                 key: token
           - name: GITHUB_USER
             value: '{{ inputs.parameters.GITHUB_USER }}'
-      tolerations:
-      - key: arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+      # tolerations:
+      # - key: arch
+      #   operator: Equal
+      #   value: arm64
+      #   effect: NoSchedule
 
     - name: create-pr-comment
       metadata:
@@ -139,11 +139,11 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.GITHUB_TOKEN_SECRET }}'
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
-      tolerations:
-      - key: arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+      # tolerations:
+      # - key: arch
+      #   operator: Equal
+      #   value: arm64
+      #   effect: NoSchedule
 
     - name: extract-webhook-variables
       metadata:
@@ -259,11 +259,11 @@ spec:
           valueFrom:
             path: /tmp/gitvars/CF_PULL_REQUEST_HEAD_COMMIT_SHA
           globalName: CF_PULL_REQUEST_HEAD_COMMIT_SHA
-      tolerations:
-      - key: arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+      # tolerations:
+      # - key: arch
+      #   operator: Equal
+      #   value: arm64
+      #   effect: NoSchedule
 
     - name: create-pr-codefresh
       metadata:
@@ -332,8 +332,8 @@ spec:
                 key: '{{ inputs.parameters.GITHUB_TOKEN_SECRET_KEY }}'
           - name: OUTPUT_FILE_PATH
             value: /tmp/output.txt
-      tolerations:
-      - key: arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+      # tolerations:
+      # - key: arch
+      #   operator: Equal
+      #   value: arm64
+      #   effect: NoSchedule
