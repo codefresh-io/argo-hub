@@ -7,7 +7,7 @@ const providers = require('./providers');
 
 async function execute() {
     try {
-        const [ validationError, inputs ] = configuration.validateInputs()
+        const [validationError, inputs] = configuration.validateInputs()
 
         if (validationError) {
             console.log(chalk.red(validationError.message));
@@ -47,3 +47,4 @@ async function execute() {
 }
 
 execute()
+
