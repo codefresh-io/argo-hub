@@ -41,7 +41,7 @@ spec:
             https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/argo-workflows/assets/icon.svg
       script:
         name: main
-        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main
+        image: quay.io/codefreshplugins/argo-hub-argo-workflows-argo-workflow-cli:0.0.4-main
         command:
           - sh
         resources: { }
@@ -74,7 +74,7 @@ spec:
             default: ''
       script:
         name: main
-        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main
+        image: quay.io/codefreshplugins/argo-hub-argo-workflows-argo-workflow-cli:0.0.4-main
         imagePullPolicy: Always
         command:
           - sh
@@ -108,7 +108,7 @@ spec:
             default: ''
       script:
         name: main
-        image: quay.io/codefreshplugins/argo-hub-workflows-argo-workflows-versions-0.0.3-images-argo-workflow-cli:main
+        image: quay.io/codefreshplugins/argo-hub-argo-workflows-argo-workflow-cli:0.0.4-main
         imagePullPolicy: Always
         command:
           - sh
