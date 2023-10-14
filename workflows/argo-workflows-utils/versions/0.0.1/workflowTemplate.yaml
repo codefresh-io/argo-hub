@@ -31,6 +31,13 @@ spec:
         image: alpine
         command: [echo]
         args: ["{{ inputs.parameters.TEXT }}"]
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
 
     - name: globalize-variable
       metadata:
@@ -52,3 +59,10 @@ spec:
         command: [sh]
         source: |
           echo exposing new variable {{ inputs.parameters.NAME }}:{{ inputs.parameters.VALUE }}
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
