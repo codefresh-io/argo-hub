@@ -52,3 +52,10 @@ spec:
           '-t={{ inputs.parameters.TRIGGER_NAME }}' \
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           '{{ inputs.parameters.EXTRA_OPTIONS }}'
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
