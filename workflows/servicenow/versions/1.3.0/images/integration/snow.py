@@ -174,12 +174,32 @@ def checkSysid(sysid):
         logging.criticak("CR_SYSID is not defined.")
         sys.exit(1)
 
+def checkToken(token):
+    logging.debug("Entering checkToken: ")
+    logging.debug("  TOKEN: %s" % (token))
+
+    if ( token == None ):
+        logging.error("FATAL: TOKEN is not defined.")
+        sys.exit(1)
+
+def checkConflictPolicy(policy):
+    logging.debug("Entering checkConflictPolicy: ")
+    logging.debug("  CR_CONFLICT_POLICY: %s" % (policy))
+
+    if policy == "ignore" or policy == "reject" or policy == "wait":
+            return
+    else:
+        logging.error("FATAL: CR_CONFLICT_POLICY invalid value. Accepted values are ignore, reject or wait.")
+        sys.exit(1)
+
 def main():
     ACTION   = os.getenv('ACTION', "createcr").lower()
     USER     = os.getenv('SN_USER')
     PASSWORD = os.getenv('SN_PASSWORD')
     INSTANCE = os.getenv('SN_INSTANCE')
     DATA     = os.getenv('CR_DATA')
+    TOKEN    = os.getenv('TOKEN')
+    POLICY   = os.getenv('CR_CONFLICT_POLICY')
     LOG_LEVEL = os.getenv('LOG_LEVEL', "info").upper()
 
     log_format = "%(asctime)s:%(levelname)s:%(name)s.%(funcName)s: %(message)s"
@@ -191,6 +211,9 @@ def main():
 
 
     if ACTION == "createcr":
+        # Used only later in the callback but eant to check for error early
+        checkToken(TOKEN)
+        checkConflictPolicy(POLICY)
         createChangeRequest(user=USER,
             password=PASSWORD,
             baseUrl=getBaseUrl(instance=INSTANCE),
