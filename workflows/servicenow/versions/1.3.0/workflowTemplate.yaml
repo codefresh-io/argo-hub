@@ -32,7 +32,7 @@ spec:
           - name: CR_CONFLICT_POLICY
             value: ignore
           - name: WORKFLOW_NAME
-            value: {{workflow.name}}
+            value: '{{workflow.name}}'
           - name: SN_IMAGE_NAME
             value: quay.io/codefreshplugins/argo-hub-servicenow-integration
           - name: SN_IMAGE_TAG
