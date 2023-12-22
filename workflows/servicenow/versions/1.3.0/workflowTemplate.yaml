@@ -58,8 +58,9 @@ spec:
             value: 'createcr'
           - name: TOKEN
             valueFrom:
-              secretKeyRef: '{{ inputs.parameters.TOKEN }}'
-              key: token
+              secretKeyRef:
+                name: '{{ inputs.parameters.TOKEN }}'
+                key: token
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
