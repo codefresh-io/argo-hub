@@ -16,9 +16,11 @@ metadata:
 spec:
   arguments:
     parameters:
+      # These values are injected by the gitops controller .
       - name: APP_NAME
       - name: APP_NAMESPACE
       - name: SERVER_URL
+        value: 'argo-cd-server.{{workflow.parameters.APP_NAMESPACE}}.svc.cluster.local'
   entrypoint: starter-manual-sync
   templates:
     - name: starter-manual-sync
@@ -34,10 +36,9 @@ spec:
                   value: '{{workflow.parameters.APP_NAME}}'
                 - name: flags
                   value: '--prune --timeout 120'
+                  # For example: `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
                 - name: serverUrl
                   value: '{{workflow.parameters.SERVER_URL}}'
-                  # For example: `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
-                  default: 'argo-cd-server.{{workflow.parameters.APP_NAMESPACE}}.svc.cluster.local'
                 - name: opts
                   value: '--grpc-web --plaintext'
                 - name: tokenSecret
@@ -55,7 +56,7 @@ spec:
                 - name: flags
                   value: '--health --timeout 120'
                 - name: serverUrl
-                  value: 'argo-cd-server.{{workflow.parameters.APP_NAMESPACE}}.svc.cluster.local'
+                  value: '{{workflow.parameters.SERVER_URL}}'
                 - name: opts
                   value: '--grpc-web --plaintext'
                 - name: tokenSecret
