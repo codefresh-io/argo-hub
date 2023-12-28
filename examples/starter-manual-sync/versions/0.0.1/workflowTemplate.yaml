@@ -36,7 +36,7 @@ spec:
                   value: '--prune --timeout 120'
                 - name: serverUrl
                   value: '{{workflow.parameters.SERVER_URL}}'
-                  # something like `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
+                  # For example: `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
                   default: 'argo-cd-server.{{workflow.parameters.APP_NAMESPACE}}.svc.cluster.local'
                 - name: opts
                   value: '--grpc-web --plaintext'
