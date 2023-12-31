@@ -56,6 +56,7 @@ spec:
                 - name: flags
                   value: '--health --timeout 120'
                 - name: serverUrl
+                  # For example: `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
                   value: '{{workflow.parameters.SERVER_URL}}'
                 - name: opts
                   value: '--grpc-web --plaintext'
@@ -71,7 +72,7 @@ spec:
             arguments:
               parameters:
                 - name: SLACK_HOOK_URL
-                  # Put here your slack hook url.
+                  # Please enter your Slack webhook URL here.
                   value: '<SLACK_HOOK_URL>'
                 - name: SLACK_TEXT
                   value: 'Successfully promoted {{workflow.parameters.APP_NAME}}!'
