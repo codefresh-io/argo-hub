@@ -1,0 +1,80 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.starter-manual-sync.0.0.1
+  annotations:
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'This Workflow Template is an example for post promotion workflow that sync, wait and send a slack message once the app is synced'
+    argo-hub/categories: 'promotion example workflow'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Eti Zaguri'
+    argo-hub/owner_email: 'eti.zaguri@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/85868206'
+    argo-hub/owner_url: 'https://github.com/eti-codefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/gitops-promotion/assets/icon.svg"
+    argo-hub/icon-background: "#004C76"
+spec:
+  arguments:
+    parameters:
+      # These values are injected by the gitops controller .
+      - name: APP_NAME
+      - name: APP_NAMESPACE
+      - name: SERVER_URL
+        value: 'argo-cd-server.{{workflow.parameters.APP_NAMESPACE}}.svc.cluster.local'
+  entrypoint: starter-manual-sync
+  templates:
+    - name: starter-manual-sync
+      dag:
+        tasks:
+          - name: sync
+            templateRef:
+              name: argo-hub.argocd.0.0.1
+              template: sync
+            arguments:
+              parameters:
+                - name: app
+                  value: '{{workflow.parameters.APP_NAME}}'
+                - name: flags
+                  value: '--prune --timeout 120'
+                  # For example: `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
+                - name: serverUrl
+                  value: '{{workflow.parameters.SERVER_URL}}'
+                - name: opts
+                  value: '--grpc-web --plaintext'
+                - name: tokenSecret
+                  value: 'argocd-token'
+                - name: tokenSecretKey
+                  value: 'token'
+          - name: wait
+            templateRef:
+              name: argo-hub.argocd.0.0.1
+              template: wait
+            arguments:
+              parameters:
+                - name: app
+                  value: '{{workflow.parameters.APP_NAME}}'
+                - name: flags
+                  value: '--health --timeout 120'
+                - name: serverUrl
+                  # For example: `argocd-server.<namespace>.svc.cluster.local` for cli based; `argo-cd-server.<namespace>.svc.cluster.local` for helm based.
+                  value: '{{workflow.parameters.SERVER_URL}}'
+                - name: opts
+                  value: '--grpc-web --plaintext'
+                - name: tokenSecret
+                  value: 'argocd-token'
+                - name: tokenSecretKey
+                  value: 'token'
+            depends: sync
+          - name: send-message
+            templateRef:
+              name: argo-hub.slack.0.0.2
+              template: send-message
+            arguments:
+              parameters:
+                - name: SLACK_HOOK_URL
+                  # Please enter your Slack webhook URL here.
+                  value: '<SLACK_HOOK_URL>'
+                - name: SLACK_TEXT
+                  value: 'Successfully promoted {{workflow.parameters.APP_NAME}}!'
+            depends: wait
+
