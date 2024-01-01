@@ -12,7 +12,7 @@ metadata:
     argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/85868206'
     argo-hub/owner_url: 'https://github.com/eti-codefresh'
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/starter-manual-sync/assets/icon.svg"
-    argo-hub/icon-background: "#f4f4f4"
+    argo-hub/icon_background: "#f4f4f4"
 spec:
   arguments:
     parameters:
