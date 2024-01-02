@@ -28,15 +28,15 @@ spec:
           - name: SN_AUTH              # secret name
           - name: CR_DATA
           - name: LOG_LEVEL
-            value: info
+            default: info
           - name: CR_CONFLICT_POLICY
             value: ignore
           - name: WORKFLOW_NAME
             value: '{{workflow.name}}'
           - name: SN_IMAGE_NAME
-            value: quay.io/codefreshplugins/argo-hub-servicenow-integration
+            value: 'quay.io/codefreshplugins/argo-hub-servicenow-integration'
           - name: SN_IMAGE_TAG
-            value: 1.3.0-main
+            value: '1.3.0-main'
       outputs:
         parameters:
           - name: CR_SYSID
@@ -46,9 +46,8 @@ spec:
             valueFrom:
               path: /tmp/CR_NUMBER
       script:
-        imagePullPolicy: Always
-        image: '{{ inputs.parameters.SN_IMAGE_NAME }}':'{{ inputs.parameters.SN_IMAGE_TAG }}'
-        command: ["python3", "/snow/snow.py"]
+        image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
+        command: ["bash"]
         source: |
           python3 /snow/snow.py
           export ACTION=callback
@@ -105,7 +104,7 @@ spec:
             value: 1.3.0-main
       container:
         imagePullPolicy: Always
-        image: '{{ inputs.parameters.SN_IMAGE_NAME }}':'{{ inputs.parameters.SN_IMAGE_TAG }}'
+        image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
         command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
@@ -154,12 +153,12 @@ spec:
           - name: CR_CLOSE_NOTES
             value: "Closed automatically by Argo-Hub ServiceNow workflow template"
           - name: SN_IMAGE_NAME
-            value: quay.io/codefreshplugins/argo-hub-servicenow-integration
+            value: 'quay.io/codefreshplugins/argo-hub-servicenow-integration'
           - name: SN_IMAGE_TAG
-            value: 1.3.0-main
+            value: '1.3.0-main'
       container:
         imagePullPolicy: Always
-        image: '{{ inputs.parameters.SN_IMAGE_NAME }}':'{{ inputs.parameters.SN_IMAGE_TAG }}'
+        image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
         command: ["python3", "/snow/snow.py"]
         env:
           - name: ACTION
