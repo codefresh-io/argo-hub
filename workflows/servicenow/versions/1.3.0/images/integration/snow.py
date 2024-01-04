@@ -15,7 +15,7 @@ def processCallbackResponse(response):
     logging.info("Processing answer from CR creation REST call")
     logging.debug("Callback returned code %s",response.status_code)
     if (response.status_code != 200 and response.status_code != 201):
-        logging.critical("Callback creation failed with code %s", esponse.status_code)
+        logging.critical("Callback creation failed with code %s", response.status_code)
         logging.critical("%s", response.text)
         sys.exit(response.status_code)
 
@@ -45,7 +45,7 @@ def processCreateChangeRequestResponse(response):
     exportVariable("CR_NUMBER", CR_NUMBER)
     exportVariable("CR_SYSID", CR_SYSID)
     exportVariable("CR_CREATE_JSON", FULL_JSON)
-
+    return CR_NUMBER
     # if LOG_LEVEL:
     #
     #     print( "  Change Request full answer:\n" + FULL_JSON)
@@ -76,7 +76,7 @@ def createChangeRequest(user, password, baseUrl, data):
         json = crBody,
         headers = {"content-type":"application/json"},
         auth=(user, password))
-    processCreateChangeRequestResponse(response=resp)
+    return processCreateChangeRequestResponse(response=resp)
 
 def processModifyChangeRequestResponse(response, action):
 
@@ -145,8 +145,8 @@ def updateChangeRequest(user, password, baseUrl, sysid, data):
 def callback(user, password, baseUrl, number, cf_build_id, token, policy):
 
     logging.debug("Entering callback:")
-    logging.debug("CR Number: " + number)
-    logging.debug("CF Build ID: " + cf_build_id)
+    logging.debug("CR Number: %s", number)
+    logging.debug("CF Build ID: %s", cf_build_id)
 
     url = "%s/%s/codefresh/callback" % (baseUrl, API_NAMESPACE)
     body = {
@@ -214,7 +214,7 @@ def main():
         # Used only later in the callback but eant to check for error early
         checkToken(TOKEN)
         checkConflictPolicy(POLICY)
-        createChangeRequest(user=USER,
+        cr_number=createChangeRequest(user=USER,
             password=PASSWORD,
             baseUrl=getBaseUrl(instance=INSTANCE),
             data=DATA
@@ -222,7 +222,7 @@ def main():
         callback(user=USER,
             password=PASSWORD,
             baseUrl=getBaseUrl(instance=INSTANCE),
-            number=os.getenv('CR_NUMBER'),
+            number=cr_number,
             token=TOKEN,
             cf_build_id=os.getenv('WORKFLOW_NAME'),
             policy=POLICY
