@@ -50,8 +50,6 @@ spec:
         command: ["bash"]
         source: |
           python3 /snow/snow.py
-          export ACTION=callback
-          python3 /snow/snow.py
         env:
           - name: ACTION
             value: 'createcr'
