@@ -46,6 +46,7 @@ spec:
             valueFrom:
               path: /tmp/CR_NUMBER
       script:
+        imagePullPolicy: Always
         image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
         command: ["bash"]
         source: |
