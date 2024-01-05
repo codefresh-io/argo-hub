@@ -59,6 +59,8 @@ spec:
               secretKeyRef:
                 name: '{{ inputs.parameters.TOKEN }}'
                 key: token
+          - name: WORKFLOW_NAME
+            value: '{{ inputs.parameters.WORKFLOW_NAME }}'
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
