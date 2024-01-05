@@ -33,6 +33,7 @@ spec:
             value: ignore
           - name: CF_URL
             value: 'https://g.codefresh.io'
+          - name: CF_RUNTIME
           - name: SN_IMAGE_NAME
             value: 'quay.io/codefreshplugins/argo-hub-servicenow-integration'
           - name: SN_IMAGE_TAG
@@ -63,6 +64,8 @@ spec:
             value: '{{workflow.name}}'
           - name: CF_URL
             value: '{{ inputs.parameters.CF_URL }}'
+          - name: CF_RUNTIME
+            value: '{{ inputs.parameters.CF_RUNTIME }}'
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER

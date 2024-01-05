@@ -11,6 +11,7 @@ Create a new Change Request on the ServiceNow instance
 * SN_INSTANCE (required) - URL of the ServiceNow instance aka https://instance.service-now.com
 * SN_AUTH (required) - Secret name containing the user and password to log into the instance
 * CR_DATA (required) - a string containing a JSON body to allow the creation of the Change Request. The exact content is dependent on your implementation of Change Management
+* CF_RUNTIME (required) - name of the GtiOps Runtime
 * CF_URL (required for onprem) - URL of your Codefresh instance. Default is 'https://g.codefresh.io'
 * CR_CONFLICT_POLICY (optional) - Policy to execute in case of schedule conflict. Accepted values are `ignore` (no check is done), `wait` (workflow will wait until the conflict is resolved) or `reject` (ServiceNow flow returns a deny answer). Default value is `ignore`
 * LOG_LEVEL (optional) - A flag to indicate log-level. Values are `info`, `debug`, `warning`, `error`, `critical`. Default value is `info`.

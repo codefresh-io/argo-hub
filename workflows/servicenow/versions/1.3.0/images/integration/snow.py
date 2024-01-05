@@ -156,6 +156,7 @@ def callback(user, password, baseUrl, number, cf_build_id, token, policy):
         "cf_url": os.getenv("CF_URL"),
         "cr_policy": policy,
         "ci_system": "workflow",
+        "cf_runtime": os.getenv("CF_RUNTIME")
     }
     logging.debug("Calling POST on " + url)
     logging.debug("Data: " + json.dumps(body))
