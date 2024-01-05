@@ -31,8 +31,8 @@ spec:
             default: info
           - name: CR_CONFLICT_POLICY
             value: ignore
-          - name: WORKFLOW_NAME
-            value: '{{workflow.name}}'
+          - name: CF_URL
+            value: 'https://g.codefresh.io'
           - name: SN_IMAGE_NAME
             value: 'quay.io/codefreshplugins/argo-hub-servicenow-integration'
           - name: SN_IMAGE_TAG
@@ -60,7 +60,9 @@ spec:
                 name: '{{ inputs.parameters.TOKEN }}'
                 key: token
           - name: WORKFLOW_NAME
-            value: '{{ inputs.parameters.WORKFLOW_NAME }}'
+            value: '{{workflow.name}}'
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
           - name: SN_INSTANCE
             value: '{{ inputs.parameters.SN_INSTANCE }}'
           - name: SN_USER
