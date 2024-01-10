@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cf-token
+type: Opaque
+data:
+  token: <encoded base64 CF API KEY>

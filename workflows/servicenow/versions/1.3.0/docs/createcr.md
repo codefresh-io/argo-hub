@@ -7,7 +7,7 @@ Create a new Change Request on the ServiceNow instance
 
 ### Inputs
 #### Parameters
-* TOKEN (required) - Codefresh Token
+* TOKEN (required) - Secret name containing the Codefresh API Key
 * SN_INSTANCE (required) - URL of the ServiceNow instance aka https://instance.service-now.com
 * SN_AUTH (required) - Secret name containing the user and password to log into the instance
 * CR_DATA (required) - a string containing a JSON body to allow the creation of the Change Request. The exact content is dependent on your implementation of Change Management
@@ -37,14 +37,18 @@ spec:
       tasks:
       - name: create-sn-cr
         templateRef:
-          name: argo-hub.servicenow.1.0.0
+          name: argo-hub.servicenow.1.3.0
           template: createcr
         arguments:
           parameters:
+          - name: TOKEN
+            value: cf-token
           - name: SN_INSTANCE
             value: "https://XXXX.service-now.com"
           - name: SN_AUTH
             value: "sn-auth"
+          - name: CF_RUNTIME
+            value: csdp
           - name: LOG_LEVEL
             value: debug
           - name: CR_DATA

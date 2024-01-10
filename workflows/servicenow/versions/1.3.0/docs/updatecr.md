@@ -32,7 +32,7 @@ spec:
       tasks:
       - name: update-sn-cr
         templateRef:
-          name: argo-hub.servicenow.1.0.0
+          name: argo-hub.servicenow.1.3.0
           template: updatecr
         arguments:
           parameters:
