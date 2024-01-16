@@ -26,7 +26,7 @@ spec:
           - name: TOKEN
           - name: SN_INSTANCE          # aka https://instance.service-now.com
           - name: SN_AUTH              # secret name
-          - name: CR_DATA
+          - name: CR_DATA              # JSON Body for the CR creation
           - name: LOG_LEVEL
             default: info
           - name: CR_CONFLICT_POLICY
