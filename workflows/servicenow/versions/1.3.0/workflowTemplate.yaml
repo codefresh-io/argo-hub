@@ -16,6 +16,7 @@ metadata:
 spec:
   templates:
     - name: createcr
+      serviceAccountName: argo-hub.servicenow.1.3.0
       metadata:
         annotations:
           argo-hub-template/description: 'createcr'
@@ -86,6 +87,7 @@ spec:
             value: '{{ inputs.parameters.LOG_LEVEL }}'
 
     - name: updatecr
+      serviceAccountName: argo-hub.servicenow.1.3.0
       metadata:
         annotations:
           argo-hub-template/description: 'updatecr'
@@ -135,6 +137,7 @@ spec:
             value: '{{ inputs.parameters.LOG_LEVEL }}'
 
     - name: closecr
+      serviceAccountName: argo-hub.servicenow.1.3.0
       metadata:
         annotations:
           argo-hub-template/description: 'closecr'
