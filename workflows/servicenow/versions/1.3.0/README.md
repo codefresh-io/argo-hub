@@ -4,6 +4,12 @@
 
 A set of templates to perform operations against a ServiceNow instance
 
+### Compatibility
+
+The workflowTemplate have been tested on the following instance releases:
+
+* Tokyo
+
 ## Requirements
 1. create a secret containing 2 pieces of informations to connect to your
 ServiceNow instance. See [example](../../assets/sn_auth.yml)
