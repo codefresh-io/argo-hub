@@ -22,11 +22,17 @@ spec:
           - name: ENTRYPOINT
           - name: GIT_REPO
             value: ''
+          - name: GIT_REPO_OWNER
+            value: ''
+          - name: GIT_REPO_NAME
+            value: ''
           - name: GIT_REVISION
             value: ''
           - name: GIT_REVISION_SHORT
             value: ''
           - name: GIT_BRANCH
+            value: ''
+          - name: GIT_PULL_REQUEST_NUMBER
             value: ''
       outputs:
         parameters:
@@ -49,10 +55,13 @@ spec:
         source: >
           echo $(argo submit --from=wftmpl/{{ inputs.parameters.TEMPLATE_NAME }}
           --entrypoint={{ inputs.parameters.ENTRYPOINT }} -p=GIT_REPO={{
-          inputs.parameters.GIT_REPO }}  -p=GIT_REVISION={{
+          inputs.parameters.GIT_REPO }} -p GIT_REPO_OWNER={{
+          inputs.parameters.GIT_REPO_OWNER}} -p GIT_REPO_NAME={{
+          inputs.parameters.GIT_REPO_NAME}} -p=GIT_REVISION={{
           inputs.parameters.GIT_REVISION }} -p=GIT_REVISION_SHORT={{
           inputs.parameters.GIT_REVISION_SHORT }} -p=GIT_BRANCH={{
-          inputs.parameters.GIT_BRANCH }}
+          inputs.parameters.GIT_BRANCH }} -P=GIT_PULL_REQUEST_NUMBER={{
+          inputs.parameters.GIT_PULL_REQUEST_NUMBER}}
           -l=git-revision={{inputs.parameters.GIT_REVISION }},git-branch={{
           inputs.parameters.GIT_BRANCH }},workflow-template-name={{
           inputs.parameters.TEMPLATE_NAME }},codefresh.io/submit-wf-parent-uid={{ workflow.uid }} --output=json) > output
