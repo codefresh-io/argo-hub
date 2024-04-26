@@ -23,7 +23,7 @@ spec:
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
           argo-hub-template/icon_background: "#171A2D"
       retryStrategy:
-        limit: "10"
+        limit: "3"
         retryPolicy: "Always"
         backoff:
           duration: "5s"
@@ -169,7 +169,7 @@ spec:
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
           argo-hub-template/icon_background: "#171A2D"
       retryStrategy:
-        limit: "10"
+        limit: "3"
         retryPolicy: "Always"
         backoff:
           duration: "5s"
@@ -257,7 +257,7 @@ spec:
           argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-csdp/assets/icon.svg"
           argo-hub-template/icon_background: "#171A2D"
       retryStrategy:
-        limit: "10"
+        limit: "3"
         retryPolicy: "Always"
         backoff:
           duration: "5s"
