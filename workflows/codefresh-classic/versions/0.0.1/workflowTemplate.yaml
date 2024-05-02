@@ -119,7 +119,7 @@ spec:
         command: ["/bin/sh"]
         source: |
           (dockerd &) &&
-          codefresh \
+          /opt/codefresh/codefresh \
           run \
           '{{ inputs.parameters.PIPELINE_NAME }}' \
           '-b={{ inputs.parameters.BRANCH_NAME }}' \
