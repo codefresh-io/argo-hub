@@ -111,8 +111,11 @@ spec:
             secretKeyRef:
               name: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_NAME }}'
               key: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_KEY }}'
+        - name: PIPELINE_NAME
+          value: '{{ inputs.parameters.PIPELINE_NAME }}'
         - name: TRIGGER_NAME
           value: '{{ inputs.parameters.TRIGGER_NAME }}'
+
         securityContext:
           privileged: true
         volumeMounts:
@@ -122,6 +125,7 @@ spec:
         source: |
           set -x
           EXTRA_FLAGS=""
+
           if [ -n "$TRIGGER_NAME" ]; then
             EXTRA_FLAGS="$EXTRA_FLAGS --trigger=$TRIGGER_NAME"
           fi
@@ -129,9 +133,8 @@ spec:
             EXTRA_FLAGS="$EXTRA_FLAGS --branch=$BRANCH_NAME"
           fi
 
+          CLI_COMMAND="/opt/codefresh/codefresh run $PIPELINE_NAME --local $EXTRA_FLAGS"
+
           dockerd &
-          /opt/codefresh/codefresh \
-          run \
-          '{{ inputs.parameters.PIPELINE_NAME }}' \
-          --local \
-          $EXTRA_FLAGS
+
+          eval "$CLI_COMMAND"
