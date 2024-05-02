@@ -81,7 +81,7 @@ spec:
           - name: BRANCH_NAME
             default: ''
           - name: CF_CLI_VERSION
-            default: 'v0.87.3'
+            default: 'v0.87.4'
           - name: EXTRA_OPTIONS
             default: ''
           - name: VARIABLES
