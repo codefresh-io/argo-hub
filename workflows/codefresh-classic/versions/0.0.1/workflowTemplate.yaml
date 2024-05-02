@@ -127,15 +127,13 @@ spec:
           EXTRA_FLAGS=""
 
           if [ -n "$TRIGGER_NAME" ]; then
-            EXTRA_FLAGS="$EXTRA_FLAGS --trigger=$TRIGGER_NAME"
+            EXTRA_FLAGS="--trigger=$TRIGGER_NAME"
           fi
           if [ -n "$BRANCH_NAME" ]; then
-            EXTRA_FLAGS="$EXTRA_FLAGS --branch=$BRANCH_NAME"
+            EXTRA_FLAGS="--branch=$BRANCH_NAME"
           fi
 
-          FOO="bar"
-
-          echo $FOO
+          echo $EXTRA_FLAGS
 
           CLI_COMMAND="/opt/codefresh/codefresh run $PIPELINE_NAME $EXTRA_FLAGS --local"
 
