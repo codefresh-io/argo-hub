@@ -128,11 +128,11 @@ spec:
           set -x
 
           if [ -n '{{ inputs.parameters.BRANCH_NAME }}' ]; then
-            EXTRA_OPTIONS+="$EXTRA_OPTIONS -b={{ inputs.parameters.BRANCH_NAME }}"
+            EXTRA_OPTIONS="$EXTRA_OPTIONS -b={{ inputs.parameters.BRANCH_NAME }}"
           fi
 
           if [ -n '{{ inputs.parameters.TRIGGER_NAME }}' ]; then
-            EXTRA_OPTIONS+="$EXTRA_OPTIONS -t={{ inputs.parameters.TRIGGER_NAME }}"
+            EXTRA_OPTIONS="$EXTRA_OPTIONS -t={{ inputs.parameters.TRIGGER_NAME }}"
           fi
 
           dockerd &
@@ -141,7 +141,7 @@ spec:
           '{{ inputs.parameters.PIPELINE_NAME }}' \W
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           '{{ inputs.parameters.EXTRA_OPTIONS }}' \
-          --local
+          --local``
       # nodeSelector:
       #   node-type: workflows-arm64
       # tolerations:
