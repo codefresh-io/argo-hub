@@ -152,7 +152,7 @@ spec:
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           $(echo $EXTRA_OPTIONS) \
           '--local'
-      podSpecPath: |
+      podSpecPatch: |
         containers:
         - name: main
           resources:
