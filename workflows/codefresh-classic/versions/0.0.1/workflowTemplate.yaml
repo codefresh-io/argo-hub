@@ -133,7 +133,7 @@ spec:
             EXTRA_FLAGS="$EXTRA_FLAGS --branch=$BRANCH_NAME"
           fi
 
-          CLI_COMMAND="/opt/codefresh/codefresh run $PIPELINE_NAME --local$EXTRA_FLAGS"
+          CLI_COMMAND="/opt/codefresh/codefresh run $PIPELINE_NAME $EXTRA_FLAGS --local"
 
           dockerd &
 
