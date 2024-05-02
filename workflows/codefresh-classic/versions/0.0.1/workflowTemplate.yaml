@@ -91,9 +91,9 @@ spec:
           - name: mem-request
             default: '128Mi'
           - name: cpu-limit
-            default: ''
+            default: '100m'
           - name: mem-limit
-            default: ''
+            default: '128Mi'
       initContainers:
         - name: cli
           image: alpine
