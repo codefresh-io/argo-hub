@@ -111,6 +111,8 @@ spec:
             secretKeyRef:
               name: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_NAME }}'
               key: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_KEY }}'
+        - name: TRIGGER_NAME
+          value: '{{ inputs.parameters.TRIGGER_NAME }}'
         securityContext:
           privileged: true
         volumeMounts:
