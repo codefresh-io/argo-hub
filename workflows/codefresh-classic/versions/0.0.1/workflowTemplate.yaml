@@ -126,3 +126,6 @@ spec:
           '-b={{ inputs.parameters.BRANCH_NAME }}' \
           '-t={{ inputs.parameters.TRIGGER_NAME }}' \
           --local
+
+          echo $(date)
+          sleep 300
