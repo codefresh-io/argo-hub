@@ -118,6 +118,7 @@ spec:
             mountPath: /opt/codefresh/
         command: ["/bin/sh"]
         source: |
+          set -x
           (dockerd &) &&
           /opt/codefresh/codefresh \
           run \
