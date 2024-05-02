@@ -114,10 +114,6 @@ spec:
             secretKeyRef:
               name: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_NAME }}'
               key: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_KEY }}'
-        - name: PIPELINE_NAME
-          value: '{{ inputs.parameters.PIPELINE_NAME }}'
-        - name: TRIGGER_NAME
-          value: '{{ inputs.parameters.TRIGGER_NAME }}'
         securityContext:
           privileged: true
         volumeMounts:
@@ -127,7 +123,10 @@ spec:
         source: |
           set -x
           dockerd &
-          /opt/codefresh/codefresh run \
-          $PIPELINE_NAME \
-          '--local' \
-          '{{ inputs.parameters.EXTRA_FLAGS }}'
+          /opt/codefresh/codefresh \
+          run \
+          '{{ inputs.parameters.PIPELINE_NAME }}' \
+          '-b={{ inputs.parameters.BRANCH_NAME }}' \
+          '-t={{ inputs.parameters.TRIGGER_NAME }}' \
+          '{{ inputs.parameters.EXTRA_OPTIONS }}' \
+          --local
