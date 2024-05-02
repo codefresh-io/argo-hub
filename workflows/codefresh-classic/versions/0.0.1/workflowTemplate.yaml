@@ -117,7 +117,7 @@ spec:
               name: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_NAME }}'
               key: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_KEY }}'
         - name: VARIABLES
-          value: '{{ input.parameters.VARIABLES }}'
+          value: '{{ inputs.parameters.VARIABLES }}'
         securityContext:
           privileged: true
         volumeMounts:
