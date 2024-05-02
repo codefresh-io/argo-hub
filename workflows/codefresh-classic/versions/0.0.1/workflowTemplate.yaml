@@ -133,4 +133,4 @@ spec:
           /opt/codefresh/codefresh \
           run \
           '{{ inputs.parameters.PIPELINE_NAME }}' \
-          --local $EXTRA_FLAGS
+          --local
