@@ -137,4 +137,4 @@ spec:
 
           dockerd &
 
-          eval "$CLI_COMMAND"
+          eval $CLI_COMMAND
