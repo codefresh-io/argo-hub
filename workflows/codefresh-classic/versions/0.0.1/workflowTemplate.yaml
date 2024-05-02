@@ -86,6 +86,14 @@ spec:
             default: ''
           - name: VARIABLES
             default: ''
+          - name: cpu-request
+            default: '100m'
+          - name: mem-request
+            default: '128Mi'
+          - name: cpu-limit
+            default: ''
+          - name: mem-limit
+            default: ''
       initContainers:
         - name: cli
           image: alpine
@@ -144,6 +152,16 @@ spec:
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           $(echo $EXTRA_OPTIONS) \
           '--local'
+      podSpecPath: |
+        containers:
+        - name: main
+          resources:
+            requests:
+              cpu: '{{ inputs.parameters.cpu-request }}'
+              memory: '{{ inputs.parameters.mem-request }}'
+            limits:
+              cpu: '{{ inputs.parameters.cpu-limit }}'
+              memory: '{{ inputs.parameters.mem-limit }}'
       # nodeSelector:
       #   node-type: workflows-arm64
       # tolerations:
