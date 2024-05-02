@@ -82,7 +82,7 @@ spec:
             default: ""
           - name: CF_CLI_VERSION
             default: "v0.87.3"
-          - name: EXTRA_FLAGS
+          - name: EXTRA_OPTIONS
             default: ""
       initContainers:
         - name: cli
