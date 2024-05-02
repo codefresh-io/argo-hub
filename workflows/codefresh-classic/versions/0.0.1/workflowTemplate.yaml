@@ -14,6 +14,10 @@ metadata:
     argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
     argo-hub/icon_background: "#f4f4f4"
 spec:
+  volumes:
+    - name: cli
+      emptyDir: {}
+
   templates:
     - name: run-pipeline
       metadata:
@@ -59,3 +63,63 @@ spec:
         operator: Equal
         value: workflows-arm64
         effect: NoSchedule
+
+    - name: run-pipeline-local
+      metadata:
+        annotations:
+          argo-hub-template/description: 'A wrapper on top of Codefresh cli run operation with sidecar DinD container'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/codefresh-classic/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: CF_API_KEY_SECRET_REF_NAME
+          - name: CF_API_KEY_SECRET_REF_KEY
+          - name: PIPELINE_NAME
+          - name: TRIGGER_NAME
+          - name: BRANCH_NAME
+          - name: CF_CLI_VERSION
+            default: 'v0.87.3'
+      initContainers:
+        - name: cli
+          image: alpine
+          command:
+            - /bin/sh
+            - -c
+            - |
+              apk add curl
+              OS_ARCH=$(uname -m)
+              if [ "$OS_ARCH" = "x86_64" ]; then
+                curl -sSL https://github.com/codefresh-io/cli/releases/download/${CF_CLI_VERSION}/codefresh-${CF_CLI_VERSION}-alpine-x64.tar.gz | \
+                tar xvz && mv codefresh /opt/codefresh/
+              elif [ "$OS_ARCH" = "aarch64" ]; then
+                curl -sSL https://github.com/codefresh-io/cli/releases/download/${CF_CLI_VERSION}/codefresh-${CF_CLI_VERSION}-alpine-arm64.tar.gz | \
+                tar xvz && mv codefresh /opt/codefresh/
+              fi
+          env:
+          - name: CF_CLI_VERSION
+            value: '{{ inputs.parameters.CF_CLI_VERSION }}'
+          mirrorVolumeMounts: true
+      script:
+        name: main
+        imagePullPolicy: Always
+        image: docker:26.0-dind
+        env:
+        - name: CF_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_NAME }}'
+              key: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_KEY }}'
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: cli
+            mountPath: /opt/codefresh/
+        command: ["/bin/sh"]
+        source: |
+          (dockerd &) &&
+          codefresh \
+          run \
+          '{{ inputs.parameters.PIPELINE_NAME }}' \
+          '-b={{ inputs.parameters.BRANCH_NAME }}' \
+          '-t={{ inputs.parameters.TRIGGER_NAME }}' \
+          --local
