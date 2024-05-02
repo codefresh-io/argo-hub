@@ -77,15 +77,15 @@ spec:
           - name: CF_API_KEY_SECRET_REF_KEY
           - name: PIPELINE_NAME
           - name: TRIGGER_NAME
-            default: ""
+            default: ''
           - name: BRANCH_NAME
-            default: ""
+            default: ''
           - name: CF_CLI_VERSION
-            default: "v0.87.3"
+            default: 'v0.87.3'
           - name: EXTRA_OPTIONS
-            default: ""
+            default: ''
           - name: VARIABLES
-            default: ""
+            default: ''
       initContainers:
         - name: cli
           image: alpine
@@ -130,6 +130,7 @@ spec:
           '{{ inputs.parameters.PIPELINE_NAME }}' \
           '-b={{ inputs.parameters.BRANCH_NAME }}' \
           '-t={{ inputs.parameters.TRIGGER_NAME }}' \
+          $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           '{{ inputs.parameters.EXTRA_OPTIONS }}' \
           --local
       nodeSelector:
