@@ -84,6 +84,8 @@ spec:
             default: "v0.87.3"
           - name: EXTRA_OPTIONS
             default: ""
+          - name: VARIABLES
+            default: ""
       initContainers:
         - name: cli
           image: alpine
@@ -130,3 +132,10 @@ spec:
           '-t={{ inputs.parameters.TRIGGER_NAME }}' \
           '{{ inputs.parameters.EXTRA_OPTIONS }}' \
           --local
+      nodeSelector:
+        node-type: workflows-arm64
+      tolerations:
+      - key: codefresh.io
+        operator: Equal
+        value: workflows-arm64
+        effect: NoSchedule
