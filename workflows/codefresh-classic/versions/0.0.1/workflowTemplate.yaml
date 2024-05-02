@@ -133,7 +133,9 @@ spec:
             EXTRA_FLAGS="$EXTRA_FLAGS --branch=$BRANCH_NAME"
           fi
 
-          echo $EXTRA_FLAGS
+          FOO="bar"
+
+          echo $FOO
 
           CLI_COMMAND="/opt/codefresh/codefresh run $PIPELINE_NAME $EXTRA_FLAGS --local"
 
