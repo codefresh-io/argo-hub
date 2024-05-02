@@ -140,7 +140,7 @@ spec:
           run \
           '{{ inputs.parameters.PIPELINE_NAME }}' \
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
-          '{{ inputs.parameters.EXTRA_OPTIONS }}' \
+          $(echo $EXTRA_OPTIONS) \
           '--local'
       # nodeSelector:
       #   node-type: workflows-arm64
