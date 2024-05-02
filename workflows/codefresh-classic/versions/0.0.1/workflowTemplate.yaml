@@ -49,6 +49,7 @@ spec:
                 key: token
         command: [sh]
         source: |
+          set -x
           codefresh \
           run \
           '{{ inputs.parameters.PIPELINE_NAME }}' \
