@@ -116,6 +116,8 @@ spec:
             secretKeyRef:
               name: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_NAME }}'
               key: '{{ inputs.parameters.CF_API_KEY_SECRET_REF_KEY }}'
+        - name: VARIABLES
+          value: '{{ input.parameters.VARIABLES }}'
         securityContext:
           privileged: true
         volumeMounts:
@@ -133,10 +135,10 @@ spec:
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           '{{ inputs.parameters.EXTRA_OPTIONS }}' \
           --local
-      nodeSelector:
-        node-type: workflows-arm64
-      tolerations:
-      - key: codefresh.io
-        operator: Equal
-        value: workflows-arm64
-        effect: NoSchedule
+      # nodeSelector:
+      #   node-type: workflows-arm64
+      # tolerations:
+      # - key: codefresh.io
+      #   operator: Equal
+      #   value: workflows-arm64
+      #   effect: NoSchedule
