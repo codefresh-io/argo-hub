@@ -123,10 +123,10 @@ spec:
           set -x
           EXTRA_FLAGS=""
           if [ -n "$TRIGGER_NAME" ]; then
-            EXTRA_FLAGS+=" --trigger=$TRIGGER_NAME"
+            EXTRA_FLAGS+=' --trigger=$TRIGGER_NAME'
           fi
           if [ -n "$BRANCH_NAME" ]; then
-            EXTRA_FLAGS+=" --branch=$BRANCH_NAME"
+            EXTRA_FLAGS+=' --branch=$BRANCH_NAME'
           fi
 
           dockerd &
