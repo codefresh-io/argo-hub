@@ -126,12 +126,19 @@ spec:
         command: ["/bin/sh"]
         source: |
           set -x
+
+          if [ -n '{{ inputs.parameters.BRANCH_NAME }}' ]; then
+            EXTRA_OPTIONS+="$EXTRA_OPTIONS -b={{ inputs.parameters.BRANCH_NAME }}"
+          fi
+
+          if [ -n '{{ inputs.parameters.TRIGGER_NAME }}' ]; then
+            EXTRA_OPTIONS+="$EXTRA_OPTIONS -t={{ inputs.parameters.TRIGGER_NAME }}"
+          fi
+
           dockerd &
           /opt/codefresh/codefresh \
           run \
-          '{{ inputs.parameters.PIPELINE_NAME }}' \
-          '-b={{ inputs.parameters.BRANCH_NAME }}' \
-          '-t={{ inputs.parameters.TRIGGER_NAME }}' \
+          '{{ inputs.parameters.PIPELINE_NAME }}' \W
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           '{{ inputs.parameters.EXTRA_OPTIONS }}' \
           --local
