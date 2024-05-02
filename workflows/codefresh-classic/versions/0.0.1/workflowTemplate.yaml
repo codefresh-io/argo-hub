@@ -80,7 +80,9 @@ spec:
           - name: BRANCH_NAME
             default: ""
           - name: CF_CLI_VERSION
-            default: 'v0.87.3'
+            default: "v0.87.3"
+          - name: EXTRA_FLAGS
+            default: ""
       initContainers:
         - name: cli
           image: alpine
@@ -115,7 +117,6 @@ spec:
           value: '{{ inputs.parameters.PIPELINE_NAME }}'
         - name: TRIGGER_NAME
           value: '{{ inputs.parameters.TRIGGER_NAME }}'
-
         securityContext:
           privileged: true
         volumeMounts:
@@ -124,19 +125,8 @@ spec:
         command: ["/bin/sh"]
         source: |
           set -x
-          EXTRA_FLAGS=""
-
-          if [ -n "$TRIGGER_NAME" ]; then
-            EXTRA_FLAGS="--trigger=$TRIGGER_NAME"
-          fi
-          if [ -n "$BRANCH_NAME" ]; then
-            EXTRA_FLAGS="--branch=$BRANCH_NAME"
-          fi
-
-          echo $EXTRA_FLAGS
-
-          CLI_COMMAND="/opt/codefresh/codefresh run $PIPELINE_NAME $EXTRA_FLAGS --local"
-
           dockerd &
-
-          eval $CLI_COMMAND
+          /opt/codefresh/codefresh run \
+          $PIPELINE_NAME \
+          '--local' \
+          '{{ inputs.parameters.EXTRA_FLAGS }}'
