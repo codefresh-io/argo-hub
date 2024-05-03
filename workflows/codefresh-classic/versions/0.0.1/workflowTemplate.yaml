@@ -100,6 +100,8 @@ spec:
             default: "kubernetes.io/os"
           - name: node-selector-value
             default: "linux"
+          - name: tolerations
+            default: '[{"key":"codefresh.io","operator":"Equal","value":"workflows-arm64","effect":"NoSchedule"}]'
           - name: node-toleration-key
             default: ""
           - name: node-toleration-value
@@ -194,6 +196,7 @@ spec:
               memory: '{{ inputs.parameters.mem-limit }}'
         nodeSelector:
           {{ inputs.parameters.node-selector-key }}: {{ inputs.parameters.node-selector-value }}
+        tolerations: {{ input.parameters.tolerations }}
 # tolerations:
 # - key: {{ inputs.parameters.node-toleration-key }}
 #   operator: Equal
