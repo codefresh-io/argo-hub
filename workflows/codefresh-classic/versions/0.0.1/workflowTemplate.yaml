@@ -75,6 +75,8 @@ spec:
         parameters:
           - name: CF_API_KEY_SECRET_REF_NAME
           - name: CF_API_KEY_SECRET_REF_KEY
+          - name: CF_API_HOST
+            default: 'https://g.codefresh.io'
           - name: PIPELINE_NAME
           - name: TRIGGER_NAME
             default: ''
