@@ -97,9 +97,9 @@ spec:
           - name: storage-request
             default: '8Gi'
           - name: node-selector-key
-            default: ""
+            default: "kubernetes.io/os"
           - name: node-selector-value
-            default: ""
+            default: "linux"
           - name: node-toleration-key
             default: ""
           - name: node-toleration-value
