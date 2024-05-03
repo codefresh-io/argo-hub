@@ -91,9 +91,9 @@ spec:
           - name: mem-request
             default: '128Mi'
           - name: cpu-limit
-            default: '100m'
+            default: '1000m'
           - name: mem-limit
-            default: '128Mi'
+            default: '1024Mi'
           - name: storage-request
             default: '8Gi'
           - name: node-selector-key
