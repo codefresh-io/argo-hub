@@ -101,7 +101,7 @@ spec:
           - name: node-selector-value
             default: "linux"
           - name: tolerations
-            default: '[{"key":"codefresh.io","operator":"Equal","value":"workflows-arm64","effect":"NoSchedule"}]'
+            default: "[{'key':'codefresh.io','operator':'Equal','value':'workflows-arm64','effect':'NoSchedule'}]"
           - name: node-toleration-key
             default: ""
           - name: node-toleration-value
