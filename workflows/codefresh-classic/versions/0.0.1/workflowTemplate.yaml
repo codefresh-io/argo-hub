@@ -143,8 +143,8 @@ spec:
         volumeMounts:
           - name: cli
             mountPath: /opt/codefresh/
-# - name: docker-data
-#   mountPath: /var/lib/docker
+          - name: docker-data
+            mountPath: /var/lib/docker
         command: ["/bin/sh"]
         source: |
           set -x
@@ -164,6 +164,15 @@ spec:
           $(echo $VARIABLES | sed 's/,/ /g' | sed -E 's/(^|[ ])/ -v /g') \
           $(echo $EXTRA_OPTIONS) \
           '--local'
+      volumes:
+      - name: docker-data
+        ephemeral:
+          volumeClaimTemplate:
+            spec:
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                requests:
+                  storage: "1Gi"
       podSpecPatch: |
         volumes:
         - name: docker-data
