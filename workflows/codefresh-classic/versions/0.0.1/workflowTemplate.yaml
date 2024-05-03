@@ -143,6 +143,8 @@ spec:
         volumeMounts:
           - name: cli
             mountPath: /opt/codefresh/
+          - name: docker-data
+            mountPath: /var/lib/docker
         command: ["/bin/sh"]
         source: |
           set -x
