@@ -172,17 +172,8 @@ spec:
               accessModes: [ "ReadWriteOnce" ]
               resources:
                 requests:
-                  storage: "1Gi"
+                  storage: "{{ inputs.parameters.storage-request }}"
       podSpecPatch: |
-        volumes:
-        - name: docker-data
-          ephemeral:
-            volumeClaimTemplate:
-              spec:
-                accessModes: [ "ReadWriteOnce" ]
-                resources:
-                  requests:
-                    storage: "{{ inputs.parameters.storage-request }}"
         containers:
         - name: main
           resources:
