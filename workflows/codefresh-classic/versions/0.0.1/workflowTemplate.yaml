@@ -94,6 +94,16 @@ spec:
             default: '100m'
           - name: mem-limit
             default: '128Mi'
+          - name: storage-request
+            default: '8Gi'
+          - name: node-selector-key
+            default: ""
+          - name: node-selector-value
+            default: ""
+          - name: node-toleration-key
+            default: ""
+          - name: node-toleration-value
+            default: ""
       initContainers:
         - name: cli
           image: alpine
@@ -153,6 +163,14 @@ spec:
           $(echo $EXTRA_OPTIONS) \
           '--local'
       podSpecPatch: |
+        volumes:
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes: [ "ReadWriteOnce" ]
+                resources:
+                  requests:
+                    storage: "{{ inputs.parameters.storage-request }}"
         containers:
         - name: main
           resources:
@@ -162,10 +180,10 @@ spec:
             limits:
               cpu: '{{ inputs.parameters.cpu-limit }}'
               memory: '{{ inputs.parameters.mem-limit }}'
-      # nodeSelector:
-      #   node-type: workflows-arm64
-      # tolerations:
-      # - key: codefresh.io
-      #   operator: Equal
-      #   value: workflows-arm64
-      #   effect: NoSchedule
+        nodeSelector:
+          {{ inputs.parameters.node-selector-key }}: {{ inputs.parameters.node-selector-value }}
+        tolerations:
+        - key: {{ inputs.parameters.node-toleration-key }}
+          operator: Equal
+          value: {{ inputs.parameters.node-toleration-value }}
+          effect: NoSchedule
