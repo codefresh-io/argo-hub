@@ -196,7 +196,7 @@ spec:
               memory: '{{ inputs.parameters.mem-limit }}'
         nodeSelector:
           {{ inputs.parameters.node-selector-key }}: {{ inputs.parameters.node-selector-value }}
-        tolerations: {{ input.parameters.tolerations }}
+        tolerations: '{{ input.parameters.tolerations }}'
 # tolerations:
 # - key: {{ inputs.parameters.node-toleration-key }}
 #   operator: Equal
