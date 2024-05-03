@@ -164,6 +164,7 @@ spec:
           '--local'
       podSpecPatch: |
         volumes:
+        - name: docker-data
           ephemeral:
             volumeClaimTemplate:
               spec:
