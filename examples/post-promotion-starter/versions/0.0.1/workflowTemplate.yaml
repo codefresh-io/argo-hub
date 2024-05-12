@@ -1,0 +1,50 @@
+# DO NOT REMOVE the following attributes:
+# annotations.codefresh.io/workflow-origin (identifies type of Workflow Template as Promotion Workflow)
+# annotations.version (identifies version of Promotion Workflow used)
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.post-promotion-starter.0.0.1
+  annotations:
+    codefresh.io/workflow-origin: promotion
+    version: 0.0.1
+    argo-hub/version: '0.0.1'
+    argo-hub/description: 'This Workflow Template is an example of a post-promotion workflow that uses a script template to display application details, commit information, and the Argo CD host, taking these parameters from the promotion flow process.'
+    argo-hub/categories: 'promotion example workflow'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Eti Zaguri'
+    argo-hub/owner_email: 'eti.zaguri@codefresh.io'
+    argo-hub/owner_avatar: 'https://avatars.githubusercontent.com/u/85868206'
+    argo-hub/owner_url: 'https://github.com/eti-codefresh'
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/post-promotion-starter/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
+spec:
+  arguments:
+    parameters:
+      - name: APP_NAME
+      - name: COMMIT_SHA
+      - name: COMMIT_AUTHOR
+      - name: COMMIT_MESSAGE
+      - name: COMMIT_DATE
+      - name: ARGOCD_HOST
+  entrypoint: echo
+  templates:
+    - name: echo
+      metadata:
+        annotations:
+          argo-hub-template/description: 'Echo the commit parameters and argo cd host from the promotion flow process'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/examples/post-promotion-starter/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      script:
+        image: alpine
+        command:
+          - sh
+        source: >
+          echo "syncing {{ workflow.parameters.APP_NAME }} to {{
+          workflow.parameters.COMMIT_SHA }}, author: {{
+          workflow.parameters.COMMIT_AUTHOR }}, commit message: {{
+          workflow.parameters.COMMIT_MESSAGE }}, commit date: {{
+          workflow.parameters.COMMIT_DATE }}, argo cd host: {{
+          workflow.parameters.ARGOCD_HOST }}"
+
+
