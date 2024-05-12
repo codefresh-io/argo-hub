@@ -1,4 +1,4 @@
-# starter manual sync
+# Post Promotion Starter
 
 ## Summary
 
