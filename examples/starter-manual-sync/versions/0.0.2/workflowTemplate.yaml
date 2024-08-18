@@ -3,9 +3,9 @@ kind: WorkflowTemplate
 metadata:
   name: argo-hub.starter-manual-sync.0.0.2
   annotations:
-    version: 0.0.1
+    version: 0.0.2
     codefresh.io/workflow-origin: promotion
-    argo-hub/version: '0.0.1'
+    argo-hub/version: '0.0.2'
     argo-hub/description: 'This Workflow Template is an example for post promotion workflow that sync, wait and send a slack message once the app is synced'
     argo-hub/categories: 'promotion example workflow'
     argo-hub/license: 'MIT'
