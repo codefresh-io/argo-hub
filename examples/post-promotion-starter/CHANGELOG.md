@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.2 (16.09.2024)
+
+### post-promotion-starter
+
+Update parameters and add service account name
+
+
 ## v0.0.1 (12.05.2024)
 
 ### post-promotion-starter
