@@ -26,6 +26,7 @@ spec:
       - name: COMMIT_AUTHOR
       - name: COMMIT_MESSAGE
       - name: COMMIT_DATE
+      - name: ARGOCD_HOST
   entrypoint: echo
   templates:
     - name: echo
@@ -43,6 +44,7 @@ spec:
           workflow.parameters.COMMIT_SHA }}, author: {{
           workflow.parameters.COMMIT_AUTHOR }}, commit message: {{
           workflow.parameters.COMMIT_MESSAGE }}, commit date: {{
-          workflow.parameters.COMMIT_DATE }}"
+          workflow.parameters.COMMIT_DATE }}, argo cd host: {{
+          workflow.parameters.ARGOCD_HOST }}"
 
 
