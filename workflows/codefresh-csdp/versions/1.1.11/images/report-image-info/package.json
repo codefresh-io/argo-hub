@@ -1,6 +1,6 @@
 {
   "name": "report-image-info",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
