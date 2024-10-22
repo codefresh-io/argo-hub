@@ -1,5 +1,9 @@
 # Changelog 
 
+## v1.1.11 (17.10.2024)
+### report-image-info
+* Add multi-arch image support.
+
 ## v1.1.10 (16.06.2023)
 ### image-enricher-git-info
 * Add gerrit support.
