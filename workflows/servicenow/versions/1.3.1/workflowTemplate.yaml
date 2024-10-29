@@ -1,0 +1,198 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: argo-hub.servicenow.1.3.1
+  annotations:
+    argo-hub/version: '1.3.1'
+    argo-hub/categories: 'utilities'
+    argo-hub/description: 'Execute operations against a Service Now instance'
+    argo-hub/license: 'MIT'
+    argo-hub/owner_name: 'Laurent Rochette'
+    argo-hub/owner_email: 'laurent.rochette@codefresh.io'
+    argo-hub/owner_url: "https://github.com/lrochette"
+    argo-hub/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+    argo-hub/icon_background: "#f4f4f4"
+
+spec:
+  templates:
+    - name: createcr
+      serviceAccountName: argo-hub.servicenow.1.3.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'createcr'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      inputs:
+        parameters:
+          - name: TOKEN
+          - name: SN_INSTANCE          # aka https://instance.service-now.com
+          - name: SN_AUTH              # secret name
+          - name: CR_DATA              # JSON Body for the CR creation
+          - name: LOG_LEVEL
+            default: info
+          - name: CR_CONFLICT_POLICY
+            value: ignore
+          - name: CF_URL
+            value: 'https://g.codefresh.io'
+          - name: CF_RUNTIME
+          - name: SN_IMAGE_NAME
+            value: 'quay.io/codefreshplugins/argo-hub-servicenow-integration'
+          - name: SN_IMAGE_TAG
+            value: '1.3.1-main'
+      outputs:
+        parameters:
+          - name: CR_SYSID
+            globalName: CR_SYSID
+            valueFrom:
+              path: /tmp/CR_SYSID
+          - name: CR_NUMBER
+            globalName: CR_NUMBER
+            valueFrom:
+              path: /tmp/CR_NUMBER
+      script:
+        imagePullPolicy: Always
+        image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
+        command: ["bash"]
+        source: |
+          python3 /snow/snow.py
+        env:
+          - name: ACTION
+            value: 'createcr'
+          - name: TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.TOKEN }}'
+                key: token
+          - name: WORKFLOW_NAME
+            value: '{{workflow.name}}'
+          - name: CF_URL
+            value: '{{ inputs.parameters.CF_URL }}'
+          - name: CF_RUNTIME
+            value: '{{ inputs.parameters.CF_RUNTIME }}'
+          - name: SN_INSTANCE
+            value: '{{ inputs.parameters.SN_INSTANCE }}'
+          - name: SN_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: username
+          - name: SN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
+          - name: CR_CONFLICT_POLICY
+            value: '{{ inputs.parameters.CR_CONFLICT_POLICY }}'
+          - name: CR_DATA
+            value: '{{ inputs.parameters.CR_DATA }}'
+          - name: LOG_LEVEL
+            value: '{{ inputs.parameters.LOG_LEVEL }}'
+
+    - name: updatecr
+      serviceAccountName: argo-hub.servicenow.1.3.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'updatecr'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      outputs:
+        parameters:
+          - name: FULL_JSON
+            valueFrom:
+              path: /tmp/CR_UPDATE_JSON
+      inputs:
+        parameters:
+          - name: SN_INSTANCE          # aka https://instance.service-now.com
+          - name: SN_AUTH              # secret name
+          - name: CR_DATA
+          - name: CR_SYSID
+          - name: LOG_LEVEL
+            value: info
+          - name: SN_IMAGE_NAME
+            value: quay.io/codefreshplugins/argo-hub-servicenow-integration
+          - name: SN_IMAGE_TAG
+            value: 1.3.1-main
+      container:
+        imagePullPolicy: Always
+        image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
+        command: ["python3", "/snow/snow.py"]
+        env:
+          - name: ACTION
+            value: 'updatecr'
+          - name: SN_INSTANCE
+            value: '{{ inputs.parameters.SN_INSTANCE }}'
+          - name: SN_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: username
+          - name: SN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
+          - name: CR_DATA
+            value: '{{ inputs.parameters.CR_DATA }}'
+          - name: CR_SYSID
+            value: '{{ inputs.parameters.CR_SYSID }}'
+          - name: LOG_LEVEL
+            value: '{{ inputs.parameters.LOG_LEVEL }}'
+
+    - name: closecr
+      serviceAccountName: argo-hub.servicenow.1.3.1
+      metadata:
+        annotations:
+          argo-hub-template/description: 'closecr'
+          argo-hub-template/icon_url: "https://cdn.jsdelivr.net/gh/codefresh-io/argo-hub@main/workflows/servicenow/assets/icon.svg"
+          argo-hub-template/icon_background: "#f4f4f4"
+      outputs:
+        parameters:
+          - name: FULL_JSON
+            valueFrom:
+              path: /tmp/CR_CLOSE_JSON
+      inputs:
+        parameters:
+          - name: SN_INSTANCE          # aka https://instance.service-now.com
+          - name: SN_AUTH              # secret name
+          - name: CR_DATA
+            value: '{}'
+          - name: CR_SYSID
+          - name: LOG_LEVEL
+            value: info
+          - name: CR_CLOSE_CODE
+            value: "successful"
+          - name: CR_CLOSE_NOTES
+            value: "Closed automatically by Argo-Hub ServiceNow workflow template"
+          - name: SN_IMAGE_NAME
+            value: 'quay.io/codefreshplugins/argo-hub-servicenow-integration'
+          - name: SN_IMAGE_TAG
+            value: '1.3.1-main'
+      container:
+        imagePullPolicy: Always
+        image: '{{ inputs.parameters.SN_IMAGE_NAME }}:{{ inputs.parameters.SN_IMAGE_TAG }}'
+        command: ["python3", "/snow/snow.py"]
+        env:
+          - name: ACTION
+            value: 'closecr'
+          - name: SN_INSTANCE
+            value: '{{ inputs.parameters.SN_INSTANCE }}'
+          - name: SN_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: username
+          - name: SN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ inputs.parameters.SN_AUTH }}'
+                key: password
+          - name: CR_DATA
+            value: '{{ inputs.parameters.CR_DATA }}'
+          - name: CR_SYSID
+            value: '{{ inputs.parameters.CR_SYSID }}'
+          - name: CR_CLOSE_CODE
+            value: '{{ inputs.parameters.CR_CLOSE_CODE }}'
+          - name: CR_CLOSE_NOTES
+            value: '{{ inputs.parameters.CR_CLOSE_NOTES }}'
+          - name: LOG_LEVEL
+            value: '{{ inputs.parameters.LOG_LEVEL }}'
