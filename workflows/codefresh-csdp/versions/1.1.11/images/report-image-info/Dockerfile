@@ -1,4 +1,4 @@
-FROM node:18.12.1-bullseye-slim
+FROM node:20.15.0-bullseye-slim
 
 RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
 
