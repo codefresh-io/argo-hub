@@ -7,10 +7,15 @@
     "start": "node src/index.js"
   },
   "engines": {
-    "node": "18.12.1"
+    "node": "20.15.0"
+  },
+  "resolutions": {
+    "re2": "1.21.4",
+    "tough-cookie": "4.1.3",
+    "semver": "7.5.2"
   },
   "dependencies": {
-    "@codefresh-io/cf-report-image-toolbox": "1.0.21",
+    "@codefresh-io/cf-report-image-toolbox": "1.0.22",
     "joi": "^17.6.0"
   }
 }
