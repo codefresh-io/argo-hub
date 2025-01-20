@@ -6,7 +6,7 @@
     "start": "node src/index.js"
   },
   "engines": {
-    "node": "22.11.0"
+    "node": "22.13.0"
   },
   "resolutions": {
     "re2": "1.21.4",

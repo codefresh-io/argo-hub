@@ -1,4 +1,4 @@
-FROM node:22.11.0-bookworm-slim
+FROM node:22.13.0-bookworm-slim
 
 RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
 
@@ -9,7 +9,8 @@ COPY yarn.lock .
 
 RUN apt-get update && \
   apt-get install -y python3 make g++
-RUN yarn --prod --network-timeout 3000000
+RUN yarn --prod --network-timeout 3000000 && \
+    yarn cache clean
 
 COPY --chown=cfu --chmod=775 . .
 
