@@ -62,8 +62,7 @@ spec:
           inputs.parameters.GIT_REVISION_SHORT }} -p=GIT_BRANCH={{
           inputs.parameters.GIT_BRANCH }} -p=GIT_PULL_REQUEST_NUMBER={{
           inputs.parameters.GIT_PULL_REQUEST_NUMBER}}
-          -l=git-revision={{inputs.parameters.GIT_REVISION }},git-branch={{
-          inputs.parameters.GIT_BRANCH | replace "/" "-" }},workflow-template-name={{
+          -l=git-revision={{inputs.parameters.GIT_REVISION }},workflow-template-name={{
           inputs.parameters.TEMPLATE_NAME }},codefresh.io/submit-wf-parent-uid={{ workflow.uid }} --output=json) > output
       nodeSelector:
         node-type: workflows-arm64
