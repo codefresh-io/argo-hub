@@ -15,7 +15,7 @@ The workflowTemplate have been tested on the following instance releases:
 ServiceNow instance. See [example](../../assets/sn_auth.yml)
   - username
   - password
-2. create a secret containing the Codefresh API Key (in the token field). See [example](../../assets/cf_token.yml)
+2. create a secret containing the Codefresh API Key (in the token field). See [example](../../assets/cf_token.yaml)
 3. install the [local update](../../assets/xml/ServiceNow-Codefresh_Integration_1.3.0.xml) set in your instance
 
 ## Templates
