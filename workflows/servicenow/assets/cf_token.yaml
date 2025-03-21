@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cf-api-key-aperture
+type: Opaque
+stringData:
+  token: "642xxxxxxxxxxxxxxxxxdedc.584xxxxxxxxxxxxxxxxxxxxxxxxxefda"

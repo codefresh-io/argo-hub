@@ -25,17 +25,17 @@ None
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: update-cr
+  generateName: close-cr
 spec:
   entrypoint: main
   templates:
   - name: main
     dag:
       tasks:
-      - name: update-sn-cr
+      - name: close-sn-cr
         templateRef:
           name: argo-hub.servicenow.1.3.1
-          template: updatecr
+          template: closecr
         arguments:
           parameters:
           - name: SN_INSTANCE
