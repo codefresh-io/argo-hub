@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: cf-api-key-aperture
-type: Opaque
-# not encoded as we use stringData (instead of data that requires base64 encoding)
-stringData:
-  token: "642ca0xxxx7b6620xxxxxxxx.584dyyyyyyyyyy26ce7c43byyyyyy"

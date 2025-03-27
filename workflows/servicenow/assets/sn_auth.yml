@@ -5,5 +5,4 @@ metadata:
 type: Opaque
 stringData:
   username: <username>
-data:
-  password: <encoded base64 password>
+  password: <password>
