@@ -27,6 +27,7 @@ spec:
           - name: TOKEN
           - name: SN_INSTANCE          # aka https://instance.service-now.com
           - name: SN_AUTH              # secret name
+          - name: STD_CR_TEMPLATE      # Name of the Standard Change Template
           - name: CR_DATA              # JSON Body for the CR creation
           - name: LOG_LEVEL
             default: info
@@ -85,6 +86,8 @@ spec:
             value: '{{ inputs.parameters.CR_CONFLICT_POLICY }}'
           - name: CR_DATA
             value: '{{ inputs.parameters.CR_DATA }}'
+          - name: STD_CR_TEMPLATE
+            value: '{{ inputs.parameters.STD_CR_TEMPLATE }}'
           - name: LOG_LEVEL
             value: '{{ inputs.parameters.LOG_LEVEL }}'
 
