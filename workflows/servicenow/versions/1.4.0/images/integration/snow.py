@@ -63,7 +63,6 @@ def createChangeRequest(user, password, baseUrl, data):
         logging.debug("  Data: None")
     crBody["cf_build_id"] = os.getenv('CF_BUILD_ID')
 
-
     url="%s/now/table/change_request" % (baseUrl)
 
     logging.debug("URL %s:",url)
@@ -72,7 +71,8 @@ def createChangeRequest(user, password, baseUrl, data):
 
     resp=requests.post(url,
         json = crBody,
-        headers = {"content-type":"application/json"},
+        headers = {"content-type":"application/json",
+                   "Accept": "application/json"},
         auth=(user, password))
     return processCreateChangeRequestResponse(response=resp)
 
@@ -101,14 +101,35 @@ def createStandardChangeRequest(user, password, baseUrl, data, standardName):
     logging.info("Creating a new Standard Change Request using '%s' template", standardName)
     encodedName=urllib.parse.quote_plus(standardName)
 
-    url="%s/now/table/std_change_template?sysparm_query=sys_name=%s" % (baseUrl, encodedName)
+    url="%s/now/table/std_change_record_producer?sysparm_query=sys_name=%s" % (baseUrl, encodedName)
+
     logging.debug("Standard Change URL %s:",url)
     resp=requests.get(url,
         headers = {"content-type":"application/json"},
         auth=(user, password))
     sysid=processSearchStandardTemplateResponse(name=standardName, response=resp)
     logging.info("Template found: %s", sysid)
-    sys.exit(0)
+
+    if (bool(data)):
+        crBody=json.loads(data)
+        logging.debug("Data: %s", data)
+    else:
+        crBody= {}
+        logging.debug("  Data: None")
+    crBody["cf_build_id"] = os.getenv('CF_BUILD_ID')
+
+
+    url="%s/sn_chg_rest/change/standard/%s" % (baseUrl, sysid)
+
+    logging.debug("URL %s:",url)
+    logging.debug("User: %s", user)
+    logging.debug("Body: %s", crBody)
+
+    resp=requests.post(url,
+        json = crBody,
+        headers = {"content-type":"application/json"},
+        auth=(user, password))
+    return processCreateChangeRequestResponse(response=resp)
 
 
 def processModifyChangeRequestResponse(response, action):
