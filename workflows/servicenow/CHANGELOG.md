@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.4.0 (Mar 27, 2025)
+### Added
+* ability to create a Standard Change passing the template name
+ in the `STD_CR_TEMPLATE` variable.
+
 ## v1.3.1 (Oct 29, 2024)
 ### Changed
 * Make CR_SYSID and CR_NUMBER global output parameters so they can be passed between pre and post actions in promotion workflows.
