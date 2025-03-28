@@ -12,6 +12,14 @@ def getBaseUrl(instance):
     logging.debug("baseUrl: %s", baseUrl)
     return baseUrl
 
+#
+# export vaiable in /tmp to be used as output parameter
+def exportVariable(name, value):
+    print(f"   {name}: {value}")
+    file=open(f"/tmp/{name}", "w")
+    file.write(f"{value}")
+    file.close()
+
 def processCallbackResponse(response):
     logging.info("Processing answer from CR creation REST call")
     logging.debug("Callback returned code %s",response.status_code)
@@ -21,15 +29,7 @@ def processCallbackResponse(response):
         sys.exit(response.status_code)
 
     logging.info("Callback creation successful")
-
-#
-# export vaiable in /tmp to be used as output parameter
-def exportVariable(name, value):
-    print(f"   {name}: {value}")
-    file=open(f"/tmp/{name}", "w")
-    file.write(f"{value}")
-    file.close()
-
+    
 def processCreateChangeRequestResponse(response):
     logging.info("Processing answer from CR creation REST call")
     logging.debug("Change Request returned code %s" % (response.status_code))
@@ -95,6 +95,24 @@ def processSearchStandardTemplateResponse(name, response):
     STD_SYSID=data["result"][0]["sys_id"]
     return STD_SYSID
 
+def processCreateStandardChangeRequestResponse(response):
+    logging.info("Processing answer from standard CR creation REST call")
+    logging.debug("Change Request returned code %s" % (response.status_code))
+    if (response.status_code != 200 and response.status_code != 201):
+        logging.critical("Change Request creation failed with code %s", response.status_code)
+        logging.critical("%s", response.text)
+        sys.exit(response.status_code)
+
+    logging.info("Change Request creation successful")
+    data=response.json()
+    FULL_JSON=json.dumps(data, indent=2)
+    CR_NUMBER=data["result"]["number"]["value"]
+    CR_SYSID=data["result"]["sys_id"]["value"]
+    exportVariable("CR_NUMBER", CR_NUMBER)
+    exportVariable("CR_SYSID", CR_SYSID)
+    exportVariable("CR_CREATE_JSON", FULL_JSON)
+    return CR_NUMBER
+
 # Call SNow REST API to create a new Standard Change Request
 # Fields required are pasted in the data
 def createStandardChangeRequest(user, password, baseUrl, data, standardName):
@@ -129,7 +147,7 @@ def createStandardChangeRequest(user, password, baseUrl, data, standardName):
         json = crBody,
         headers = {"content-type":"application/json"},
         auth=(user, password))
-    return processCreateChangeRequestResponse(response=resp)
+    return processCreateStandardChangeRequestResponse(response=resp)
 
 
 def processModifyChangeRequestResponse(response, action):
