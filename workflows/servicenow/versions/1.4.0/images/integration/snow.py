@@ -29,7 +29,7 @@ def processCallbackResponse(response):
         sys.exit(response.status_code)
 
     logging.info("Callback creation successful")
-    
+
 def processCreateChangeRequestResponse(response):
     logging.info("Processing answer from CR creation REST call")
     logging.debug("Change Request returned code %s" % (response.status_code))
