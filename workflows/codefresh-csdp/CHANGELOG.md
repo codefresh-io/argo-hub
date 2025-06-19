@@ -1,4 +1,8 @@
 # Changelog 
+## v1.1.14 (19.06.2025)
+### report-image-info
+* Security fixes.
+
 ## v1.1.13 (30.04.2025)
 ### report-image-info
 * Security fixes.
