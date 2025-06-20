@@ -15,3 +15,4 @@ A set of templates to operate against Codefresh Software Delivery Platform such 
 Minimal required permissions
 
 [Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csp/versions/1.1.14/rbac.yaml)
+
