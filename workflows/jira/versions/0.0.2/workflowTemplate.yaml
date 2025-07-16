@@ -51,7 +51,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -106,7 +106,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -175,8 +175,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        #image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
-        image: docker.io/lrochette/jira-manager:0.0.2
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
 
         command:
           - python
@@ -245,7 +244,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -311,7 +310,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -371,7 +370,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -425,7 +424,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -481,7 +480,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
@@ -541,7 +540,7 @@ spec:
       container:
         name: main
         imagePullPolicy: Always
-        image: quay.io/codefreshplugins/argo-hub-workflows-jira-versions-0.0.2-images-jira-manager:main
+        image: quay.io/codefreshplugins/argo-hub-jira-jira-manager:0.0.2-main
         command:
           - python
           - /jira/jira_issue_manager.py
