@@ -17,7 +17,7 @@ metadata:
 spec:
   templates:
     - name: create-comment
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Create comment on Jira'
@@ -76,7 +76,7 @@ spec:
             value: '{{ inputs.parameters.JIRA_ISSUE_SOURCE_FIELD }}'
 
     - name: update-comment
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Update comment on Jira'
@@ -133,7 +133,7 @@ spec:
             value: '{{ inputs.parameters.JIRA_COMMENT_ID }}'
 
     - name: create-issue
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Create issue on Jira'
@@ -210,7 +210,7 @@ spec:
             value: '{{ inputs.parameters.ISSUE_TYPE }}'
 
     - name: update-issue
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Update issue on Jira'
@@ -276,7 +276,7 @@ spec:
             value: '{{ inputs.parameters.ISSUE_TYPE }}'
 
     - name: update-all-from-jql
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Update all issues on Jira from JQL'
@@ -342,7 +342,7 @@ spec:
             value: '{{ inputs.parameters.JQL_QUERY_MAX_RESULTS }}'
 
     - name: issue-verify-status
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Verify Issue Status on Single Issue'
@@ -396,7 +396,7 @@ spec:
             value: '{{ inputs.parameters.DESIRED_ISSUE_STATUS }}'
 
     - name: issue-verify-status-from-jql
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Verify Issue Status on Issues from JQL Query'
@@ -450,7 +450,7 @@ spec:
             value: '{{ inputs.parameters.JQL_QUERY }}'
 
     - name: issue-transition-status
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Transition the Issue status on a single item'
@@ -508,7 +508,7 @@ spec:
             value: '{{ inputs.parameters.VERBOSE }}'
 
     - name: issue-transition-status-and-update
-      serviceAccountName: argo-hub.jira.0.0.2
+      # serviceAccountName: argo-hub.jira.0.0.2
       metadata:
         annotations:
           argo-hub-template/description: 'Transition the Issue status and update a single item'
