@@ -1,10 +1,13 @@
 # Changelog
 
+## v0.0.2 7/16/2025
+Update image to fix Issue #570
+
 ## v0.0.1 6/16/2022
 
 Initial  Jira template.
 
-Template includes: 
+Template includes:
 
 * create comment,
 * create issue,
