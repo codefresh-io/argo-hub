@@ -12,6 +12,7 @@ Send a message to a Slack channel using its name (or an email address for DM) wi
 - `SLACK_TOKEN` (required): The secret name containing the Slack bot token. Default is 'slack-token'
 - `SLACK_MESSAGE` (optional): The message text to send. Use `<@ID>` to tag users. See [Slack formatting guide](https://api.slack.com/reference/surfaces/formatting) for details
 - `SLACK_THREAD_TS` (optional): Thread timestamp to reply in an existing thread
+- `SLACK_MESSAGE_TS` (optional): Message timestamp to edit an existing message. When provided, the message will be updated instead of posting a new one
 - `SLACK_TEMPLATE_BODY` (optional): JSON string for custom Slack message template/attachment
 - `SLACK_TEMPLATE_ACTIONS` (optional): JSON string for interactive elements (buttons, etc.)
   - This replaces the actions in the template body
@@ -21,7 +22,8 @@ Send a message to a Slack channel using its name (or an email address for DM) wi
 
 ### Outputs
 
-- `thread_ts`: The timestamp of the posted message, which can be used as a thread identifier for replies.
+- `message_ts`: The timestamp of the posted message, which can be used as a thread identifier for replies.
+- `channel_id`: The ID of the channel where the message was posted, useful for subsequent operations like editing messages.
 
 ## Examples
 
@@ -74,42 +76,6 @@ parameters:
     value: 'This is a reply in the thread'
   - name: SLACK_THREAD_TS
     value: '1234567890.123456'
-  - name: SLACK_TOKEN
-    value: slack-token
-```
-
-### Default Codefresh-style Template
-
-```yaml
-parameters:
-  - name: SLACK_CHANNEL
-    value: 'team-channel'
-  - name: SLACK_MESSAGE
-    value: 'Build completed successfully'
-  - name: SLACK_TEMPLATE_BODY
-    value: |
-      {
-        "fallback": "Image push",
-        "color": "good",
-        "pretext": "Image pushed to repository",
-        "author_name": "Test Author",
-        "author_icon": "https://g.codefresh.io/modules/cf.resources/images/codefresh.png",
-        "thumb_url": "https://codefresh.io/docs/assets/brand/codefresh-social-logo.png"
-      }
-  - name: SLACK_TEMPLATE_FIELDS
-    value: |
-      [
-        {
-          "title": "Repository",
-          "value": "test-repo",
-          "short": true
-        },
-        {
-          "title": "Branch",
-          "value": "main",
-          "short": true
-        }
-      ]
   - name: SLACK_TOKEN
     value: slack-token
 ```
@@ -207,7 +173,51 @@ spec:
                 - name: SLACK_MESSAGE
                   value: 'Deployment completed successfully!'
                 - name: SLACK_THREAD_TS
-                  value: '{{tasks.initial-message.outputs.parameters.thread_ts}}'
+                  value: '{{tasks.initial-message.outputs.parameters.message_ts}}'
+                - name: SLACK_TOKEN
+                  value: slack-token
+            depends: initial-message
+```
+
+### Editing an Existing Message
+
+> Channel ID is required when editing a message
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: post-to-channel-edit-
+spec:
+  entrypoint: main
+  templates:
+    - name: main
+      dag:
+        tasks:
+          - name: initial-message
+            templateRef:
+              name: argo-hub.slack.0.0.3
+              template: post-to-channel
+            arguments:
+              parameters:
+                - name: SLACK_CHANNEL
+                  value: 'team-channel'
+                - name: SLACK_MESSAGE
+                  value: 'Deployment in progress...'
+                - name: SLACK_TOKEN
+                  value: slack-token
+          - name: update-message
+            templateRef:
+              name: argo-hub.slack.0.0.3
+              template: post-to-channel
+            arguments:
+              parameters:
+                - name: SLACK_CHANNEL
+                  value: '{{tasks.initial-message.outputs.parameters.channel_id}}'
+                - name: SLACK_MESSAGE
+                  value: 'Deployment completed successfully! ✅'
+                - name: SLACK_MESSAGE_TS
+                  value: '{{tasks.initial-message.outputs.parameters.message_ts}}'
                 - name: SLACK_TOKEN
                   value: slack-token
             depends: initial-message

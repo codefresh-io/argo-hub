@@ -72,6 +72,8 @@ spec:
             value: ""
           - name: SLACK_THREAD_TS
             value: ""
+          - name: SLACK_MESSAGE_TS
+            value: ""
           - name: SLACK_TEMPLATE_BODY
             value: ""
           - name: SLACK_TEMPLATE_ACTIONS
@@ -82,9 +84,12 @@ spec:
             value: "info"
       outputs:
         parameters:
-          - name: thread_ts
+          - name: message_ts
             valueFrom:
-              path: /tmp/thread_ts.txt
+              path: /tmp/message_ts.txt
+          - name: channel_id
+            valueFrom:
+              path: /tmp/channel_id.txt
       container:
         name: main
         imagePullPolicy: Always
@@ -99,6 +104,8 @@ spec:
             value: '{{ inputs.parameters.SLACK_MESSAGE }}'
           - name: SLACK_THREAD_TS
             value: '{{ inputs.parameters.SLACK_THREAD_TS }}'
+          - name: SLACK_MESSAGE_TS
+            value: '{{ inputs.parameters.SLACK_MESSAGE_TS }}'
           - name: SLACK_TEMPLATE_BODY
             value: '{{ inputs.parameters.SLACK_TEMPLATE_BODY }}'
           - name: SLACK_TEMPLATE_ACTIONS

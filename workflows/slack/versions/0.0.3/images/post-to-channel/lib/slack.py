@@ -19,7 +19,8 @@ def main():
     message = os.getenv("SLACK_MESSAGE", "")
     token = os.getenv("SLACK_TOKEN")
     thread_ts = os.getenv("SLACK_THREAD_TS")
-    
+    message_ts = os.getenv("SLACK_MESSAGE_TS")
+
     # Template mode support
     template_body = os.getenv("SLACK_TEMPLATE_BODY")
     template_actions = os.getenv("SLACK_TEMPLATE_ACTIONS")
@@ -49,44 +50,70 @@ def main():
 
     # Prepare message payload
     payload = {"channel": channel, "text": message}
-    
-    if thread_ts:
-        payload["thread_ts"] = thread_ts
+
+    # Check if we're editing an existing message
+    is_edit_mode = bool(message_ts)
+
+    if is_edit_mode:
+        # For editing, we need the timestamp of the message to edit
+        payload["ts"] = message_ts
+        logging.info("Edit mode: updating message with timestamp %s", message_ts)
+    else:
+        # For new messages, we can add thread_ts if provided
+        if thread_ts:
+            payload["thread_ts"] = thread_ts
+        logging.info("Post mode: creating new message")
 
     # Handle template mode
     if template_body:
         try:
             template = json.loads(template_body)
-            
+
             if template_actions:
                 template["actions"] = json.loads(template_actions)
-            
+
             if template_fields:
                 template["fields"] = json.loads(template_fields)
-            
+
             payload["attachments"] = [template]
-            
+
         except json.JSONDecodeError as e:
             logging.error("Invalid JSON in template: %s", e)
             sys.exit(4)
 
     try:
-        response = client.chat_postMessage(**payload)
+        if is_edit_mode:
+            response = client.chat_update(**payload)
+            logging.info("Message updated in Slack")
+        else:
+            response = client.chat_postMessage(**payload)
+            logging.info("Message posted to Slack")
 
         # Extract and output the thread timestamp for Argo Workflows
-        thread_ts = response.get("ts")
-        if thread_ts:
-            # Write thread_ts to file for Argo output parameter
-            with open("/tmp/thread_ts.txt", "w") as f:
-                f.write(thread_ts)
-            logging.info("Thread timestamp saved: %s", thread_ts)
+        # For both new messages and edits, we want to output the timestamp
+
+        message_ts_output = response.get("ts")
+        if message_ts_output:
+            # Write message timestamp to file for Argo output parameter
+            with open("/tmp/message_ts.txt", "w") as f:
+                f.write(message_ts_output)
+            logging.info("Message timestamp saved: %s", message_ts_output)
+
+        # If the message was posted to a channel, we can also output the channel ID
+        # This is useful for workflows that need to edit messages later
+        channel_id_output = response.get("channel")
+        if channel_id_output:
+            # Write channel ID to file for Argo output parameter
+            with open("/tmp/channel_id.txt", "w") as f:
+                f.write(channel_id_output)
+            logging.info("Channel ID saved: %s", channel_id_output)
 
     except SlackApiError as e:
         assert e.response["ok"] is False
         assert e.response["error"]
-        logging.error("Post error: %s", e.response["error"])
+        action = "update" if is_edit_mode else "post"
+        logging.error("%s error: %s", action.capitalize(), e.response["error"])
         sys.exit(2)
-    logging.info("Message posted to Slack")
 
 
 if __name__ == "__main__":
