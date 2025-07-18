@@ -38,9 +38,8 @@ spec:
   entrypoint: main
   templates:
     - name: main
-      dag:
-        tasks:
-          - name: send-message
+      steps:
+        - - name: send-message
             templateRef:
               name: argo-hub.slack.0.0.3
               template: post-to-channel
@@ -148,9 +147,8 @@ spec:
   entrypoint: main
   templates:
     - name: main
-      dag:
-        tasks:
-          - name: initial-message
+      steps:
+        - - name: initial-message
             templateRef:
               name: argo-hub.slack.0.0.3
               template: post-to-channel
@@ -162,7 +160,7 @@ spec:
                   value: 'Starting deployment...'
                 - name: SLACK_TOKEN
                   value: slack-token
-          - name: reply-message
+        - - name: reply-message
             templateRef:
               name: argo-hub.slack.0.0.3
               template: post-to-channel
@@ -173,10 +171,9 @@ spec:
                 - name: SLACK_MESSAGE
                   value: 'Deployment completed successfully!'
                 - name: SLACK_THREAD_TS
-                  value: '{{tasks.initial-message.outputs.parameters.message_ts}}'
+                  value: '{{steps.initial-message.outputs.parameters.message_ts}}'
                 - name: SLACK_TOKEN
                   value: slack-token
-            depends: initial-message
 ```
 
 ### Editing an Existing Message
@@ -192,9 +189,8 @@ spec:
   entrypoint: main
   templates:
     - name: main
-      dag:
-        tasks:
-          - name: initial-message
+      steps:
+        - - name: initial-message
             templateRef:
               name: argo-hub.slack.0.0.3
               template: post-to-channel
@@ -206,19 +202,18 @@ spec:
                   value: 'Deployment in progress...'
                 - name: SLACK_TOKEN
                   value: slack-token
-          - name: update-message
+        - - name: update-message
             templateRef:
               name: argo-hub.slack.0.0.3
               template: post-to-channel
             arguments:
               parameters:
                 - name: SLACK_CHANNEL
-                  value: '{{tasks.initial-message.outputs.parameters.channel_id}}'
+                  value: '{{steps.initial-message.outputs.parameters.channel_id}}'
                 - name: SLACK_MESSAGE
                   value: 'Deployment completed successfully! ✅'
                 - name: SLACK_MESSAGE_TS
-                  value: '{{tasks.initial-message.outputs.parameters.message_ts}}'
+                  value: '{{steps.initial-message.outputs.parameters.message_ts}}'
                 - name: SLACK_TOKEN
                   value: slack-token
-            depends: initial-message
 ```
