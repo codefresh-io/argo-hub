@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "slack-notifier",
+  "version": "0.0.3",
+  "private": true,
+  "scripts": {
+    "execute": "node index.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@slack/webhook": "^7.0.5",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.32.0"
+  },
+  "resolutions": {
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^4.3.0"
+  }
+}
