@@ -1,3 +1,5 @@
-itai@codefresh.io
+# https://github.com/orgs/codefresh-io/teams/r-d/teams
+# use teams and github usernames, instead of email addresses
+# *                             @codefresh-io/Codefresh_Developers @codefresh-io/DevOps @codefresh-io/r-d
 
-/workflows/codefresh-csdp denis@codefresh.io vadim.kharin@codefresh.io eti.zaguri@codefresh.io yaroslav@codefresh.io
+/workflows/codefresh-csdp @codefresh-io/teamleads @codefresh-io/DevOps @codefresh-io/Enterprise_fnm
