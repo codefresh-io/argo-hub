@@ -11,11 +11,11 @@
   "resolutions": {
     "re2": "1.21.4",
     "tough-cookie": "4.1.3",
-    "semver": "7.5.2",
+    "semver": "7.5.3",
     "**/request/form-data": "^2.5.4"
   },
   "dependencies": {
-    "@codefresh-io/cf-report-image-toolbox": "1.0.23",
+    "@codefresh-io/cf-report-image-toolbox": "1.0.24",
     "joi": "^17.6.0",
     "lodash": "^4.17.21"
   },
