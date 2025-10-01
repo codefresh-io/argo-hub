@@ -1,4 +1,4 @@
-FROM node:22.19.0-bookworm-slim
+FROM node:22.20.0-trixie-slim
 
 RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
 
