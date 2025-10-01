@@ -6,13 +6,13 @@ A set of templates to operate against Codefresh Software Delivery Platform such 
 
 ## Templates
 
-1. [image-enricher-git-info](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/1.1.16/docs/image-enricher-git-info.md)
-2. [image-enricher-jira-info](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/1.1.16/docs/image-enricher-jira-info.md)
-3. [report-image-info](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/1.1.16/docs/report-image-info.md)
+1. [image-enricher-git-info](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/1.1.17/docs/image-enricher-git-info.md)
+2. [image-enricher-jira-info](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/1.1.17/docs/image-enricher-jira-info.md)
+3. [report-image-info](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/1.1.17/docs/report-image-info.md)
 
 ## Security
 
 Minimal required permissions
 
-[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csp/versions/1.1.16/rbac.yaml)
+[Full rbac permissions list](https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csp/versions/1.1.17/rbac.yaml)
 

@@ -38,7 +38,7 @@ spec:
       tasks:
       - name: image-enricher-jira-info
         templateRef:
-          name: argo-hub.codefresh-csdp.1.1.16
+          name: argo-hub.codefresh-csdp.1.1.17
           template: image-enricher-jira-info
         arguments:
           parameters:
