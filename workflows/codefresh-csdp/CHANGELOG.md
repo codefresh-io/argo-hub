@@ -1,5 +1,8 @@
 # Changelog 
 
+## v1.1.18 (16.12.2025)
+* Security fixes.
+
 ## v1.1.17 (01.10.2025)
 * Security fixes.
 
