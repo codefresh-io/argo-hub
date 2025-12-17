@@ -1,4 +1,4 @@
-FROM node:22.20.0-trixie-slim
+FROM node:22.21.1-trixie-slim
 
 RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
 
@@ -8,7 +8,7 @@ COPY package.json .
 COPY yarn.lock .
 
 RUN apt-get update && \
-  apt-get install -y python3 make g++
+  apt-get install -y make g++
 RUN yarn --prod --network-timeout 3000000 && \
     yarn cache clean
 
