@@ -1,6 +1,9 @@
-# Changelog 
+# Changelog
 
-## v1.1.19(17.12.2025)
+## v1.1.20 (18.12.2025)
+* Security fixes.
+
+## v1.1.19 (17.12.2025)
 * Security fixes.
 
 ## v1.1.18 (16.12.2025)
