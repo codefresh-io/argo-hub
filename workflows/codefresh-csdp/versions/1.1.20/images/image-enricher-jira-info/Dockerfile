@@ -12,6 +12,9 @@ RUN apt-get update && \
 RUN yarn --prod --network-timeout 3000000 && \
     yarn cache clean
 
+#purpose of security
+RUN npm -g uninstall npm
+
 COPY --chown=cfu --chmod=775 . .
 
 RUN mkdir /cf-outputs && chmod 775 /cf-outputs && chown cfu /cf-outputs
