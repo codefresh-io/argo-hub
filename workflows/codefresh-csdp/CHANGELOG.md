@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.21 (18.01.2026)
+* Security fixes.
+
 ## v1.1.20 (18.12.2025)
 * Security fixes.
 
