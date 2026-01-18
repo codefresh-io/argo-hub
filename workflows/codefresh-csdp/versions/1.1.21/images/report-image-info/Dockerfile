@@ -1,24 +1,23 @@
-FROM node:22.21.1-trixie-slim
+# https://hub.docker.com/repository/docker/octopusdeploy/dhi-node
+FROM octopusdeploy/dhi-node:22.22.0-debian13-dev AS build
 
-RUN adduser --gecos "" --disabled-password --home /home/cfu --shell /bin/bash cfu
+RUN mkdir /cf-outputs
 
-WORKDIR /app/
+WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
+COPY package.json yarn.lock .yarnrc ./
 
-RUN apt-get update && \
-  apt-get install -y make g++
-RUN yarn --prod --network-timeout 3000000 && \
-    yarn cache clean
+RUN yarn --prod --frozen-lockfile && yarn cache clean
 
-#purpose of security
-RUN npm -g uninstall npm
+FROM octopusdeploy/dhi-node:22.22.0-debian13 AS production
 
-COPY --chown=cfu --chmod=775 . .
+WORKDIR /app
 
-RUN mkdir /cf-outputs && chmod 775 /cf-outputs && chown cfu /cf-outputs
+COPY --from=build --chown=nonroot:nonroot /cf-outputs /cf-outputs
+COPY --from=build --chown=nonroot:nonroot /app/node_modules ./node_modules
+COPY --chown=nonroot:nonroot package.json ./
+COPY --chown=nonroot:nonroot ./src ./src
 
-USER cfu
+USER nonroot
 
 CMD [ "node", "/app/src/index.js" ]
