@@ -10,7 +10,7 @@
     "node": "22.22.0"
   },
   "resolutions": {
-    "re2": "1.21.4",
+    "re2": "1.23.2",
     "tough-cookie": "4.1.3",
     "semver": "7.5.3",
     "**/request/form-data": "^2.5.4",
