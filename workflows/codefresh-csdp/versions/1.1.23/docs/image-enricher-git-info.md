@@ -51,7 +51,7 @@ spec:
       tasks:
       - name: image-enricher-git-info
         templateRef:
-          name: argo-hub.codefresh-csdp.1.1.22
+          name: argo-hub.codefresh-csdp.1.1.23
           template: image-enricher-git-info
         arguments:
           parameters:
