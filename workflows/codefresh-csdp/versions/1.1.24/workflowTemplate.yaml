@@ -290,10 +290,12 @@ spec:
             default: 'cf-not-exist'
           - name: AWS_SECRET_KEY
             default: 'cf-not-exist'
-          - name: AWS_REGION
-            default: 'cf-not-exist'
           - name: AWS_ROLE_SECRET
             default: 'cf-not-exist'
+          - name: AWS_REGION
+            default: 'cf-not-exist'
+          - name: ENABLE_AWS_REGION_VALIDATION
+            default: 'false'  
           - name: GCR_KEY_FILE_PATH
             default: ''
           - name: DOCKER_CONFIG_FILE_PATH
@@ -421,6 +423,8 @@ spec:
                 name: '{{ inputs.parameters.AWS_REGION }}'
                 optional: true
                 key: '{{ inputs.parameters.AWS_REGION_SECRET_KEY }}'
+          - name: ENABLE_AWS_REGION_VALIDATION
+            value: '{{ inputs.parameters.ENABLE_AWS_REGION_VALIDATION }}'      
           - name: DOCKERHUB_USERNAME
             valueFrom:
               secretKeyRef:
