@@ -10,7 +10,6 @@
     "node": "22.22.0"
   },
   "resolutions": {
-    "semver": "7.5.3"
   },
   "dependencies": {
     "@codefresh-io/cf-report-image-toolbox": "1.1.0",
