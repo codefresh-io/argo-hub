@@ -1,7 +1,7 @@
 # Changelog
 
-## v1.1.23 (27.02.2026)
-* Add AWS region validation flag.
+## v1.1.24 (25.03.2026)
+* Add AWS region validation flag into report-image-info.
 
 ## v1.1.23 (27.02.2026)
 * Security fixes.
