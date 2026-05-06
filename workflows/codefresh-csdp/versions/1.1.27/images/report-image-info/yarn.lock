@@ -404,10 +404,10 @@
   resolved "https://registry.yarnpkg.com/@aws/lambda-invoke-store/-/lambda-invoke-store-0.2.3.tgz#f1137f56209ccc69c15f826242cbf37f828617dd"
   integrity sha512-oLvsaPMTBejkkmHhjf09xTgk71mOqyr/409NKhRIL08If7AhVfUsJhVsx386uJaqNd42v9kWamQ9lFbkoC2dYw==
 
-"@codefresh-io/cf-report-image-toolbox@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.1.0.tgz#e2e811c30fef09fb19929761540671663be68333"
-  integrity sha512-E0wpRqC+c+9Rb/H8qATLBibpds08WEB9cDJFvbC8Ldij9Ki72BxyU8kVxxMqLJ2pdAZTQCGPn0UPtonLN7kE4g==
+"@codefresh-io/cf-report-image-toolbox@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@codefresh-io/cf-report-image-toolbox/-/cf-report-image-toolbox-1.1.1.tgz#c9c90b7ba48885ed2278f0557685241a2092b805"
+  integrity sha512-3PsbDVsda2ji6CAwOCNqnh/2mKGcf9dlPdG/ce+tXbUTcygPleYIqh2kafD3OBTD8I0mfHUo3Z+5EVHloUbGdA==
   dependencies:
     "@aws-sdk/client-sts" "^3.687.0"
     "@codefresh-io/docker-reference" "^0.1.0"
@@ -421,7 +421,7 @@
     graphql-request "^5.1.0"
     jira.js "^2.16.0"
     lodash "^4.17.21"
-    nodegistry "^1.3.0"
+    nodegistry "^1.3.2"
     polly-js "^1.8.3"
 
 "@codefresh-io/docker-reference@^0.1.0":
@@ -2407,10 +2407,10 @@ node-gyp@^12.2.0:
     tinyglobby "^0.2.12"
     which "^6.0.0"
 
-nodegistry@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/nodegistry/-/nodegistry-1.3.0.tgz#a42241ecb5f5926c0f221411d2be9d826a789583"
-  integrity sha512-py1BL/3yHL06+ByZuvPGufj0U6hznvP0z9TIc0jJBWTUgE2a0B5tFgXa+Bkss/8n1VbE/qg9eUtO8lCxODO4aA==
+nodegistry@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/nodegistry/-/nodegistry-1.3.2.tgz#d3da8a9b1ae6955d0e6db21596d9498ce69ad3df"
+  integrity sha512-Lzp+0NSeAUecehfopry9tHXEW6qTtV0HPY55t6OgMfcVcJ1W9rv/gSb1NC2Tf4GwwLT55ayRoj9rA4AyE9FpAg==
   dependencies:
     "@codefresh-io/docker-reference" "^0.1.0"
     aws-sdk "^2.1426.0"
