@@ -2,7 +2,7 @@
 
 ## v1.1.27 (01.05.2026)
 * Security fixes.
-* Add AWS region validation account feature flag into report-image-info.
+* Fix image fetching.
 
 ## v1.1.26 (16.04.2026)
 * Security fixes.
