@@ -9,6 +9,7 @@
     "node": "^22.22.0"
   },
   "resolutions": {
+    "lodash": "^4.18.1"
   },
   "dependencies": {
     "@codefresh-io/cf-report-image-toolbox": "1.1.1",
