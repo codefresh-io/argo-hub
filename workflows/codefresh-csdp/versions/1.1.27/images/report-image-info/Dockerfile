@@ -11,7 +11,7 @@ COPY package.json yarn.lock .yarnrc ./
 
 RUN yarn --prod --frozen-lockfile
 
-FROM octopusdeploy/dhi-node:${DHI_NODE_TAG} AS production
+FROM octopusdeploy/dhi-node:${DHI_NODE_TAG}@sha256:630af71fcc709a1f1a5da4f541f4aae89692838b9828cd2e8b511fab001cfa64 AS production
 
 WORKDIR /app
 
