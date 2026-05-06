@@ -1,5 +1,5 @@
 # DHI source: https://hub.docker.com/repository/docker/octopusdeploy/dhi-node
-ARG DHI_NODE_TAG=22.22.0-debian13
+ARG DHI_NODE_TAG=22.22.2-debian13
 
 FROM octopusdeploy/dhi-node:${DHI_NODE_TAG}-dev AS build
 
