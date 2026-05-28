@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "885485137a3e336210a1f7af00317ca0ab321050",
+  "prompts": {},
+  "humans": {
+    "h_bdc637847e5b6a": {
+      "author": "Mikhail Klimko <mikhail.klimko@octopus.com>"
+    }
+  }
+}
