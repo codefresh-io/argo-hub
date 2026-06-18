@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.28 (18.06.2026)
+* Security fixes.
+
 ## v1.1.27 (01.05.2026)
 * Security fixes.
 * Fix image fetching.
