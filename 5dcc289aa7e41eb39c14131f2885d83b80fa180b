@@ -1,0 +1,18 @@
+workflows/codefresh-csdp/versions/1.1.30/images/image-enricher-git-info/package.json
+  h_48b74706cf95a4 12-13
+workflows/codefresh-csdp/versions/1.1.30/images/image-enricher-jira-info/package.json
+  h_48b74706cf95a4 12-13
+workflows/codefresh-csdp/versions/1.1.30/images/report-image-info/package.json
+  h_48b74706cf95a4 13-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5dcc289aa7e41eb39c14131f2885d83b80fa180b",
+  "prompts": {},
+  "humans": {
+    "h_48b74706cf95a4": {
+      "author": "Bohdan Pysarenko <bohdan.pisarenko@octopus.com>"
+    }
+  }
+}
