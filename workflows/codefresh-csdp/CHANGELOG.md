@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.1.34 (25.09.2026)
+* Security fixes
+
+## v1.1.33 (10.09.2026)
+* Security fixes
+
+## v1.1.32 (18.08.2026)
+* Security fixes
+
+## v1.1.31 (05.08.2026)
+* Security fixes
+
 ## v1.1.30 (20.07.2026)
 * Security fixes.
 
