@@ -1,0 +1,14 @@
+workflows/codefresh-csdp/CHANGELOG.md
+  h_48b74706cf95a4 3-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "8f4185a7b09ff40f6c1b3f5d321e3fa5fc9da1d0",
+  "prompts": {},
+  "humans": {
+    "h_48b74706cf95a4": {
+      "author": "Bohdan Pysarenko <bohdan.pisarenko@octopus.com>"
+    }
+  }
+}
