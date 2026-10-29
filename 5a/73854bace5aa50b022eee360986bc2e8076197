@@ -1,0 +1,18 @@
+workflows/codefresh-csdp/versions/1.1.37/images/image-enricher-git-info/yarn.lock
+  h_9fee6e699064f1 2245-2247
+workflows/codefresh-csdp/versions/1.1.37/images/image-enricher-jira-info/yarn.lock
+  h_9fee6e699064f1 2245-2247
+workflows/codefresh-csdp/versions/1.1.37/images/report-image-info/yarn.lock
+  h_9fee6e699064f1 2245-2247
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5a73854bace5aa50b022eee360986bc2e8076197",
+  "prompts": {},
+  "humans": {
+    "h_9fee6e699064f1": {
+      "author": "Vadim Kharin <vadim.kharin@codefresh.io>"
+    }
+  }
+}
