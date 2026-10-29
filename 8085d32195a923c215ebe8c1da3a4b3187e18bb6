@@ -1,0 +1,32 @@
+workflows/codefresh-csdp/versions/1.1.30/workflowTemplate.yaml
+  h_48b74706cf95a4 1-457
+workflows/codefresh-csdp/versions/1.1.30/images/image-enricher-jira-info/package.json
+  h_48b74706cf95a4 1-19
+workflows/codefresh-csdp/versions/1.1.30/images/report-image-info/package.json
+  h_48b74706cf95a4 1-20
+workflows/codefresh-csdp/versions/1.1.30/docs/image-enricher-git-info.md
+  h_48b74706cf95a4 1-76
+workflows/codefresh-csdp/versions/1.1.30/docs/image-enricher-jira-info.md
+  h_48b74706cf95a4 1-63
+workflows/codefresh-csdp/versions/1.1.30/images/image-enricher-git-info/package.json
+  h_48b74706cf95a4 1-20
+workflows/codefresh-csdp/versions/1.1.30/README.md
+  h_48b74706cf95a4 1-17
+workflows/codefresh-csdp/versions/1.1.30/rbac.yaml
+  h_48b74706cf95a4 1-43
+workflows/codefresh-csdp/versions/1.1.30/docs/report-image-info.md
+  h_48b74706cf95a4 1-89
+workflows/codefresh-csdp/CHANGELOG.md
+  h_48b74706cf95a4 3-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "8085d32195a923c215ebe8c1da3a4b3187e18bb6",
+  "prompts": {},
+  "humans": {
+    "h_48b74706cf95a4": {
+      "author": "Bohdan Pysarenko <bohdan.pisarenko@octopus.com>"
+    }
+  }
+}

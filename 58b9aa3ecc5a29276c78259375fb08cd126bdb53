@@ -1,0 +1,14 @@
+workflows/codefresh-csdp/versions/1.1.31/images/image-enricher-jira-info/Dockerfile
+  h_9fd7d1a18c4091 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "58b9aa3ecc5a29276c78259375fb08cd126bdb53",
+  "prompts": {},
+  "humans": {
+    "h_9fd7d1a18c4091": {
+      "author": "Alina <alina.shportiuk@codefresh.io>"
+    }
+  }
+}

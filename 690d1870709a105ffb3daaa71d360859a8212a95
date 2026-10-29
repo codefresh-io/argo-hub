@@ -1,0 +1,84 @@
+workflows/codefresh-csdp/CHANGELOG.md
+  h_48b74706cf95a4 3-14
+workflows/codefresh-csdp/versions/1.1.34/README.md
+  h_48b74706cf95a4 1-17
+workflows/codefresh-csdp/versions/1.1.34/docs/image-enricher-git-info.md
+  h_48b74706cf95a4 1-76
+workflows/codefresh-csdp/versions/1.1.34/docs/image-enricher-jira-info.md
+  h_48b74706cf95a4 1-63
+workflows/codefresh-csdp/versions/1.1.34/docs/report-image-info.md
+  h_48b74706cf95a4 1-89
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/.nvmrc
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/.yarnrc
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/.yarnrc.yml
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/Dockerfile
+  h_48b74706cf95a4 1-25
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/README.md
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/package.json
+  h_48b74706cf95a4 1-20
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/src/configuration/index.js
+  h_48b74706cf95a4 1-103
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/src/index.js
+  h_48b74706cf95a4 1-19
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/src/outputs.js
+  h_48b74706cf95a4 1-52
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-git-info/yarn.lock
+  h_48b74706cf95a4 1-2794
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/.nvmrc
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/.yarnrc
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/.yarnrc.yml
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/Dockerfile
+  h_48b74706cf95a4 1-25
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/README.md
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/package.json
+  h_48b74706cf95a4 1-20
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/src/configuration/index.js
+  h_48b74706cf95a4 1-59
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/src/index.js
+  h_48b74706cf95a4 1-20
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/src/outputs.js
+  h_48b74706cf95a4 1-52
+workflows/codefresh-csdp/versions/1.1.34/images/image-enricher-jira-info/yarn.lock
+  h_48b74706cf95a4 1-2794
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/.nvmrc
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/.yarnrc
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/.yarnrc.yml
+  h_48b74706cf95a4 1
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/Dockerfile
+  h_48b74706cf95a4 1-25
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/package.json
+  h_48b74706cf95a4 1-21
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/src/configuration/index.js
+  h_48b74706cf95a4 1-69
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/src/index.js
+  h_48b74706cf95a4 1-23
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/src/outputs.js
+  h_48b74706cf95a4 1-64
+workflows/codefresh-csdp/versions/1.1.34/images/report-image-info/yarn.lock
+  h_48b74706cf95a4 1-2794
+workflows/codefresh-csdp/versions/1.1.34/rbac.yaml
+  h_48b74706cf95a4 1-43
+workflows/codefresh-csdp/versions/1.1.34/workflowTemplate.yaml
+  h_48b74706cf95a4 1-457
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "690d1870709a105ffb3daaa71d360859a8212a95",
+  "prompts": {},
+  "humans": {
+    "h_48b74706cf95a4": {
+      "author": "Bohdan Pysarenko <bohdan.pisarenko@octopus.com>"
+    }
+  }
+}
